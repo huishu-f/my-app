@@ -1,0 +1,28 @@
+frontend/src/app/(dashboard)/layout.tsx
+  s_6390c3ebd6b433::t_3fc587d399f586 12-13
+frontend/src/components/LoginRequired.tsx
+  s_6390c3ebd6b433::t_78a7d628a23a0f 3-5,7-8,10,26-27,35
+frontend/src/components/WriteCta.tsx
+  s_6390c3ebd6b433::t_80dc3533dc8275 1-17
+frontend/src/app/page.tsx
+  s_6390c3ebd6b433::t_f2d095e4e7a248 11
+  s_6390c3ebd6b433::t_410342163cfed1 82
+frontend/src/services/auth/hooks.ts
+  s_6390c3ebd6b433::t_928743037f7854 60-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "d499f515ff91f3a6e181fd43085710126b48b112",
+  "prompts": {},
+  "sessions": {
+    "s_6390c3ebd6b433": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "58de0d23-bc0f-4b42-85f5-d0a062313791",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
