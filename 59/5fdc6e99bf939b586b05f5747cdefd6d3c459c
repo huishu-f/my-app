@@ -1,0 +1,51 @@
+frontend/src/app/posts/[id]/page.tsx
+  s_99f4a321a2c861::t_72e023fcb44aef 238
+  s_99f4a321a2c861::t_595966af06379f 230
+frontend/src/app/global-error.tsx
+  s_99f4a321a2c861::t_0f7070ae05c624 34-36,40-43
+frontend/src/components/ThemeToggle.tsx
+  s_99f4a321a2c861::t_e5cdf680052183 28
+frontend/src/app/styles/components.css
+  s_99f4a321a2c861::t_4b9316e7fc8ab4 75
+  s_99f4a321a2c861::t_ad2549ee38663c 146
+  s_99f4a321a2c861::t_c48bac069646a8 601-602
+  s_99f4a321a2c861::t_37fa6cc6966e70 897
+frontend/src/app/(dashboard)/profile/page.tsx
+  s_99f4a321a2c861::t_ef9a6458d2c1ad 226,229
+frontend/src/app/(dashboard)/write/_components/WriteEditor.tsx
+  s_99f4a321a2c861::t_4d87a4b2ed6190 538,547
+  s_99f4a321a2c861::t_5e923577a2f8ba 559
+frontend/src/components/ArticleCard.tsx
+  s_99f4a321a2c861::t_bbe604a38c2ccb 110,115
+  s_99f4a321a2c861::t_db261627055be9 80
+frontend/src/app/posts/_components/PostSidebar.tsx
+  s_99f4a321a2c861::t_cc8fb73bb1b3ce 12
+  s_99f4a321a2c861::t_6f91b96c89450a 39,41-43,47
+frontend/next.config.ts
+  s_99f4a321a2c861::t_612d4fe8d09354 67
+frontend/src/app/posts/[id]/_components/PostActions.tsx
+  s_99f4a321a2c861::t_5fcdc0bfc17f27 14
+  s_99f4a321a2c861::t_41307be535be60 75-77,79,83,86-87,89-91,93,97,100-101
+frontend/src/app/error.tsx
+  s_99f4a321a2c861::t_062d2bfead4c72 43
+frontend/src/components/layout/MobileMenu.tsx
+  s_99f4a321a2c861::t_dda45930d3a4ad 50
+frontend/src/app/(auth)/login/page.tsx
+  s_99f4a321a2c861::t_a3d97dac603186 143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "595fdc6e99bf939b586b05f5747cdefd6d3c459c",
+  "prompts": {},
+  "sessions": {
+    "s_99f4a321a2c861": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "53c75bd3-be2b-487e-98b1-4485e5f763f7",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
