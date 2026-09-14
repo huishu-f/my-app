@@ -1,0 +1,34 @@
+frontend/src/app/styles/components.css
+  s_40520e55afe519::t_68dfbd81de6803 841,843-844,847,849-850,854-858
+  s_40520e55afe519::t_03b6e384653d9d 629-661
+  s_40520e55afe519::t_bf89c0047fad82 827,830-840
+  s_40520e55afe519::t_e5d50313536d11 845-846,848,851-853
+  s_40520e55afe519::t_107a5125fc97d6 842
+frontend/src/components/layout/Navbar.tsx
+  s_40520e55afe519::t_157f89b2af9428 33,35-37,40,42,44-68
+  s_40520e55afe519::t_db971dc07c526f 23-25,28-32,39
+  s_40520e55afe519::t_e2a798b72fb67b 43
+  s_40520e55afe519::t_781fd75f1ac15f 34,70-72
+  s_40520e55afe519::t_f503948c7aa706 38,41
+frontend/src/components/layout/MobileMenu.tsx
+  s_40520e55afe519::t_64e1d19c86e359 65
+  s_40520e55afe519::t_10beda08501dc7 77
+frontend/next-env.d.ts
+  s_40520e55afe519::t_15757ac326ad21 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "8d5182ecb918dc072f97cf64ee703d0fe39b7ca1",
+  "prompts": {},
+  "sessions": {
+    "s_40520e55afe519": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "905beefb-db33-46a4-9580-c5baf9aec8e8",
+        "model": "telechat-3"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
