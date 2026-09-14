@@ -1,0 +1,46 @@
+frontend/next-env.d.ts
+  s_a406fd555b1375::t_47f50f8f292e49 3
+frontend/src/app/(dashboard)/settings/_components/SettingsForm.tsx
+  s_a406fd555b1375::t_a7cc815a5b595d 134
+  s_a406fd555b1375::t_0603f58e937609 150
+  s_a406fd555b1375::t_a67e6b7c72e373 160
+  s_a406fd555b1375::t_80396a2717873f 176
+  s_a406fd555b1375::t_a7bb8c3571f417 251
+  s_a406fd555b1375::t_9776b07b771165 190
+  s_a406fd555b1375::t_5ba48125acecc5 201
+  s_a406fd555b1375::t_98a61dbe812fd1 235
+  s_a406fd555b1375::t_cd4f7006794307 268
+frontend/src/lib/use-fetch.ts
+  s_a406fd555b1375::t_294d702a12d5a1 64-82,85
+  s_a406fd555b1375::t_7ca921eddb30ed 17-21
+frontend/src/components/WriteCta.tsx
+  s_a406fd555b1375::t_c1d0ef61578ee4 3,11
+frontend/src/app/(dashboard)/write/_components/WriteEditor.tsx
+  s_a406fd555b1375::t_286b6b066a426d 461
+  s_a406fd555b1375::t_39a9ee32de1336 142,144,150-155,157
+  s_a406fd555b1375::t_4b596c1bccd60b 362
+  s_a406fd555b1375::t_194fdfdb4a5011 529
+  s_a406fd555b1375::t_150436a50d310d 423,447
+  s_a406fd555b1375::t_7027e03b6239ac 343
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "d56f911277d40d48dc8e7024ae276f210ebab6b8",
+  "prompts": {},
+  "humans": {
+    "h_7a7e6c68a7d90b": {
+      "author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  },
+  "sessions": {
+    "s_a406fd555b1375": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "679baddf-3f18-4621-9665-7131e09fbab0",
+        "model": "telechat-3"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
