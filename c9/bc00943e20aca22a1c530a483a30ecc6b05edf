@@ -1,0 +1,41 @@
+frontend/src/app/(dashboard)/profile/_components/ProfilePageContent.tsx
+  s_f0514e376a0f3e::t_013a33f12934ec 1-262
+frontend/src/server/config/env.ts
+  s_f0514e376a0f3e::t_359e6fae43fbaf 38
+frontend/src/components/auth-provider.tsx
+  s_f0514e376a0f3e::t_697406092d1c23 61-63
+  s_f0514e376a0f3e::t_6c41003c6f252d 13
+frontend/src/app/(dashboard)/settings/page.tsx
+  s_f0514e376a0f3e::t_d59ed389cdab6f 3,11-12,14,18
+frontend/src/app/(dashboard)/profile/page.tsx
+  s_f0514e376a0f3e::t_4653d1528c57ee 13,17-18,20,23
+frontend/src/server/modules/auth/auth-cookie.helper.ts
+  s_f0514e376a0f3e::t_4d0e445f0c156b 13
+frontend/src/services/auth/hooks.ts
+  s_f0514e376a0f3e::t_9dd0d310393e4b 78
+README.md
+  s_f0514e376a0f3e::t_22170c60af49de 92
+frontend/src/app/(dashboard)/write/page.tsx
+  s_f0514e376a0f3e::t_6a5322fbda8879 3,10,12
+frontend/src/app/(dashboard)/settings/_components/SettingsForm.tsx
+  s_f0514e376a0f3e::t_874df2fec0f4d1 25,27
+  s_f0514e376a0f3e::t_1268a89167eae2 42,44,62,65-68
+frontend/src/lib/auth-status.ts
+  s_f0514e376a0f3e::t_1ef7bbe908a8f8 7,13-15,26-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "c9bc00943e20aca22a1c530a483a30ecc6b05edf",
+  "prompts": {},
+  "sessions": {
+    "s_f0514e376a0f3e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8060049f-4385-4f0a-8b76-751a585a5fda",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
