@@ -1,0 +1,60 @@
+frontend/src/app/api/config/route.ts
+  s_e806d78e25ce66::t_d88fd9c557e565 28
+frontend/src/app/api/posts/[id]/like/route.ts
+  s_e806d78e25ce66::t_cca0845efd204b 18
+frontend/src/app/posts/[id]/page.tsx
+  s_e806d78e25ce66::t_b3d0f3083e38b5 47-58
+  s_e806d78e25ce66::t_69066637e9359f 25
+  s_e806d78e25ce66::t_98e28017a69b3b 46
+frontend/src/app/api/comments/[id]/route.ts
+  s_e806d78e25ce66::t_c94030d237cf68 37
+frontend/src/components/providers.tsx
+  s_e806d78e25ce66::t_91d2a41f6a6e94 7,12-15
+  s_e806d78e25ce66::t_ad8ee8b4f8ffc0 16
+frontend/src/server/modules/blog/services/markdown.service.ts
+  s_e806d78e25ce66::t_a6971faeb18c4c 11-51
+frontend/src/app/api/posts/[id]/favorite/route.ts
+  s_e806d78e25ce66::t_1535e27980b799 18
+frontend/src/app/layout.tsx
+  s_e806d78e25ce66::t_64a277d396c564 7
+  s_e806d78e25ce66::t_edb9cd8d50c8da 61-70
+frontend/src/app/page.tsx
+  s_e806d78e25ce66::t_d7c561b550b7c8 81
+  s_e806d78e25ce66::t_498df5c4d00c19 13-14,19-21
+  s_e806d78e25ce66::t_8162f6d36b6f9b 12
+frontend/src/lib/sanitize.ts
+  s_e806d78e25ce66::t_bb84834dd59ceb 3
+  s_e806d78e25ce66::t_5c3984e30dc53c 9
+  s_e806d78e25ce66::t_1df01ce0252f8b 6
+frontend/src/app/styles/animations.css
+  s_e806d78e25ce66::t_79ca8ec831dae9 92,94
+frontend/src/components/layout/Navbar.tsx
+  s_e806d78e25ce66::t_578c0a6876f464 23-25
+frontend/src/app/api/posts/[id]/route.ts
+  s_e806d78e25ce66::t_fd71e1fcd1e4f2 41
+  s_e806d78e25ce66::t_abf2a093b3df75 60
+frontend/src/app/api/posts/[id]/comments/route.ts
+  s_e806d78e25ce66::t_754acdff839224 41
+frontend/package.json
+  s_e806d78e25ce66::t_ecae1045620364 22
+frontend/src/app/api/posts/route.ts
+  s_e806d78e25ce66::t_ddb59ec723c3b2 43
+pnpm-lock.yaml
+  s_e806d78e25ce66::t_dcf239c8a1dcfd 47-49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "26ea771b447946213cc13dd8a6befa30b71eef17",
+  "prompts": {},
+  "sessions": {
+    "s_e806d78e25ce66": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a137c3b4-09e4-42cc-a238-ba47532b30a2",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}

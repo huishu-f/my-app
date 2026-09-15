@@ -1,0 +1,131 @@
+frontend/src/app/posts/[id]/_components/DeletePostButton.tsx
+  s_ccf359a3fa11ef::t_d2c990b7639cf1 60
+  s_ccf359a3fa11ef::t_0962c7f83e10c1 64
+  s_ccf359a3fa11ef::t_6e8171378a2b2c 70
+frontend/src/components/ui/Modal.tsx
+  s_ccf359a3fa11ef::t_b137d317cd76b5 84
+frontend/src/components/ui/PinnedBadge.tsx
+  s_ccf359a3fa11ef::t_ecb372a4c6ed58 11
+frontend/src/components/ThemeToggle.tsx
+  s_ccf359a3fa11ef::t_aec291ee6ae844 48
+  s_ccf359a3fa11ef::t_515e88f756d7e4 38
+frontend/src/app/posts/[id]/page.tsx
+  s_ccf359a3fa11ef::t_815c2c5f88a2bc 129
+  s_ccf359a3fa11ef::t_8b0903bf4911ce 220
+  s_ccf359a3fa11ef::t_4429e113dc58af 146
+frontend/src/components/layout/Navbar.tsx
+  s_ccf359a3fa11ef::t_0e756f169c8f26 23
+frontend/src/app/(dashboard)/profile/page.tsx
+  s_ccf359a3fa11ef::t_685852ef22be21 169
+  s_ccf359a3fa11ef::t_e214ff2b541a97 230
+  s_ccf359a3fa11ef::t_7287bbf533e2b5 157
+  s_ccf359a3fa11ef::t_e8aced210f3534 163
+  s_ccf359a3fa11ef::t_2a6aa83d80a5ee 174
+  s_ccf359a3fa11ef::t_4be86fb4276c8b 128
+frontend/src/app/(dashboard)/profile/_components/ProfileTabs.tsx
+  s_ccf359a3fa11ef::t_ea461126e10e87 55
+  s_ccf359a3fa11ef::t_f6831a431e5e34 69
+  s_ccf359a3fa11ef::t_fe20a1eaded697 83
+  s_ccf359a3fa11ef::t_aa2f3c1d9872e5 50
+frontend/src/app/styles/tokens.css
+  s_ccf359a3fa11ef::t_cc909c491ac9bd 48
+  s_ccf359a3fa11ef::t_d3fa44c21cfc66 204,206
+frontend/src/components/layout/UserMenu.tsx
+  s_ccf359a3fa11ef::t_b919b731e369fd 71
+  s_ccf359a3fa11ef::t_a34442e80628eb 178
+  s_ccf359a3fa11ef::t_1c392e4ff8a199 161
+frontend/src/app/styles/components.css
+  s_ccf359a3fa11ef::t_f2dfd5631bbea6 652-654
+  s_ccf359a3fa11ef::t_e6d1d360161319 272
+  s_ccf359a3fa11ef::t_66c22ab19ae567 702-704
+  s_ccf359a3fa11ef::t_66acf4545a4536 751-753
+  s_ccf359a3fa11ef::t_45f53773a42219 589-593
+frontend/src/app/posts/[id]/_components/PostHeadStats.tsx
+  s_ccf359a3fa11ef::t_acb95766efe2c4 30
+  s_ccf359a3fa11ef::t_f25df56dc49d7e 35
+  s_ccf359a3fa11ef::t_7bbe8190b76bb7 25
+frontend/src/app/posts/[id]/error.tsx
+  s_ccf359a3fa11ef::t_13310ad4962f91 16
+frontend/src/app/(dashboard)/write/_components/WriteEditor.tsx
+  s_ccf359a3fa11ef::t_b96429af3ef211 334
+  s_ccf359a3fa11ef::t_d7b101373d4ce1 403
+  s_ccf359a3fa11ef::t_3fd8cef6b9846c 539
+  s_ccf359a3fa11ef::t_c6888e201b42d4 317
+  s_ccf359a3fa11ef::t_10927a62a11842 325
+  s_ccf359a3fa11ef::t_ee8ef961e3b113 380
+  s_ccf359a3fa11ef::t_c88dabb501c7df 194
+frontend/src/components/PasswordToggle.tsx
+  s_ccf359a3fa11ef::t_4367d6b5a9ab00 20
+frontend/src/app/posts/_components/PostSidebar.tsx
+  s_ccf359a3fa11ef::t_dfbe0b6a3fd869 42
+frontend/src/app/posts/_components/PostsSearchInput.tsx
+  s_ccf359a3fa11ef::t_18842ca285765e 74
+  s_ccf359a3fa11ef::t_0bf906694a4593 92
+frontend/src/app/posts/[id]/_components/PostActions.tsx
+  s_ccf359a3fa11ef::t_bef71ddbfd0790 91
+  s_ccf359a3fa11ef::t_a423f15bf10d19 113
+  s_ccf359a3fa11ef::t_fffcb813ac586b 119
+frontend/src/components/ui/Button.tsx
+  s_ccf359a3fa11ef::t_d682494f0cff1d 54
+frontend/src/components/BackToTop.tsx
+  s_ccf359a3fa11ef::t_0c98927aa2a50a 34
+frontend/src/app/page.tsx
+  s_ccf359a3fa11ef::t_8612e7d69744da 153
+frontend/src/components/MarkdownToolbar.tsx
+  s_ccf359a3fa11ef::t_a7f216c3d694df 45
+frontend/src/app/posts/[id]/_components/CommentsSection.tsx
+  s_ccf359a3fa11ef::t_1e400827bd5ea5 172
+  s_ccf359a3fa11ef::t_07b6ffaf329b20 183
+frontend/src/app/(auth)/login/page.tsx
+  s_ccf359a3fa11ef::t_da0e5b3969eb63 99
+  s_ccf359a3fa11ef::t_42cfa0b8376b94 155
+  s_ccf359a3fa11ef::t_843ff3d8b39dfe 136
+  s_ccf359a3fa11ef::t_953644a0f7ee0a 118
+frontend/src/app/(dashboard)/layout.tsx
+  s_ccf359a3fa11ef::t_36a79b5c93e070 21
+frontend/src/app/(auth)/register/page.tsx
+  s_ccf359a3fa11ef::t_6b600317700091 208
+  s_ccf359a3fa11ef::t_525ca78f728b56 232
+  s_ccf359a3fa11ef::t_1eb169e2256b88 253
+  s_ccf359a3fa11ef::t_3915cfda84469a 187
+  s_ccf359a3fa11ef::t_3476f6543ef140 274
+  s_ccf359a3fa11ef::t_1c3fb72a8f9311 290
+  s_ccf359a3fa11ef::t_12a2c220a9f372 299
+frontend/src/components/ArticleCard.tsx
+  s_ccf359a3fa11ef::t_2eba33c3f3e6a0 145
+  s_ccf359a3fa11ef::t_feba830cd20e98 140
+  s_ccf359a3fa11ef::t_8ec4f2fe347ea9 121
+frontend/src/components/layout/MobileMenu.tsx
+  s_ccf359a3fa11ef::t_abcee1b834134f 61,63
+  s_ccf359a3fa11ef::t_96d90fe9c89d35 52
+frontend/src/app/posts/error.tsx
+  s_ccf359a3fa11ef::t_e1de87307837d8 16
+frontend/src/app/(dashboard)/profile/_components/RemoveFavoriteButton.tsx
+  s_ccf359a3fa11ef::t_5e3125b4697b5e 45
+frontend/src/app/(dashboard)/settings/_components/SettingsForm.tsx
+  s_ccf359a3fa11ef::t_2f6d81e817a5c8 267
+  s_ccf359a3fa11ef::t_3e00efd2b01c34 236
+  s_ccf359a3fa11ef::t_3fc98132d7dc6f 251
+  s_ccf359a3fa11ef::t_c1867ebf80b7ee 274
+  s_ccf359a3fa11ef::t_496d72998536be 200
+  s_ccf359a3fa11ef::t_ad186afe0a00bc 207
+  s_ccf359a3fa11ef::t_a17783a3f79ac8 190
+  s_ccf359a3fa11ef::t_4790891a3f8d63 138
+  s_ccf359a3fa11ef::t_af0d2c718cd0b9 219
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "91179a63a6fdfefd8a284b60776317244acb3d9f",
+  "prompts": {},
+  "sessions": {
+    "s_ccf359a3fa11ef": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6e0b0651-18ae-45b5-b4e0-ae1f07323db2",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}

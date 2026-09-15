@@ -1,0 +1,21 @@
+frontend/src/app/error.tsx
+  s_40520e55afe519::t_404b7b71018bb9 32,35
+frontend/src/app/not-found.tsx
+  s_40520e55afe519::t_4966f10264313c 11,14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "8e7aae1a2040b64e06bf52e46c0b55a39c649daf",
+  "prompts": {},
+  "sessions": {
+    "s_40520e55afe519": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "905beefb-db33-46a4-9580-c5baf9aec8e8",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
