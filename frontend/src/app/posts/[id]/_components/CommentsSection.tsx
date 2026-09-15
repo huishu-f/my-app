@@ -8,7 +8,7 @@
 
 import { useOptimistic, useTransition, useState } from 'react';
 import Link from 'next/link';
-import { AlertCircle, MessageCircle } from 'lucide-react';
+import { AlertCircle, MessageCircle, Send, Check, Trash2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
@@ -161,6 +161,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                 disabled={!commentText.trim() || isPending}
                 loading={isPending}
               >
+                <Send size={16} strokeWidth={2.5} />
                 {t('submitComment')}
               </Button>
             </div>
@@ -182,7 +183,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
             icon={<AlertCircle size={20} strokeWidth={2.5} />}
             title={t('commentLoadError')}
             action={
-              <Button variant="ghost" size="sm" onClick={() => refetchComments()}>
+              <Button variant="ghost" onClick={() => refetchComments()}>
                 {tCommon('retry')}
               </Button>
             }
@@ -231,6 +232,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                         onClick={saveEdit}
                         loading={updateCommentMutation.isPending}
                       >
+                        <Check size={14} strokeWidth={2.5} />
                         {tCommon('save')}
                       </Button>
                       <Button
@@ -316,6 +318,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
               }
             }}
           >
+            <Trash2 size={16} strokeWidth={2.5} />
             {t('confirmDeleteBtn')}
           </Button>
         </div>

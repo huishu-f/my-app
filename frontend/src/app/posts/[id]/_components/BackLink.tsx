@@ -1,7 +1,7 @@
 /**
  * @file BackLink.tsx
- * @description 智能返回链接 — 优先 router.back() 回到来源页，
- *              无浏览历史时（如直接从 URL 进入）回退到 /posts。
+ * @description 智能返回链接 — 有站内软导航历史时 router.back() 回来源页，
+ *              否则（直接从 URL/分享链接进入）回退到 /posts。
  *              使用 button 元素避免 hydration mismatch，click 时判断历史。
  */
 'use client';
@@ -9,19 +9,21 @@
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { hasInAppHistory } from '@/lib/navigation';
 
 /**
- * BackLink 智能返回链接，有浏览历史时返回上一页，无历史时回退到文章列表
+ * BackLink 智能返回链接，有站内浏览历史时返回上一页，否则回退到文章列表
  */
 export function BackLink() {
   const router = useRouter();
   const t = useTranslations('common');
 
   /**
-   * 返回按钮点击处理：有浏览历史则返回上一页，否则跳转文章列表
+   * 返回按钮点击处理：站内软导航过则 back()，否则跳文章列表。
+   * 判据见 hasInAppHistory（history.length 在手机 webview 下恒 >1，back 会退出站点）
    */
   const handleBack = () => {
-    if (typeof window !== 'undefined' && window.history.length > 1) {
+    if (hasInAppHistory()) {
       router.back();
     } else {
       router.push('/posts');

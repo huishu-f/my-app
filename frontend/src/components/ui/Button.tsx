@@ -28,9 +28,9 @@ const sizeClass: Record<ButtonSize, string> = {
   lg: 'h-11 px-6 rounded-lg text-(length:--type-md) leading-normal',
 };
 
-/** 按钮基础样式，含布局、过渡动画和禁用态 */
+/** 按钮基础样式，含布局、过渡动画和禁用态；whitespace-nowrap 防英文长文案在按钮内折行（溢出交给外层容器 flex-wrap） */
 const baseClass =
-  "inline-flex items-center justify-center gap-1.5 font-medium transition-[background-color,color,border-color,box-shadow,opacity,transform] duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] &[aria-disabled='true']:opacity-50 &[aria-disabled='true']:pointer-events-none";
+  "inline-flex items-center justify-center gap-1.5 whitespace-nowrap font-medium transition-[background-color,color,border-color,box-shadow,opacity,transform] duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] &[aria-disabled='true']:opacity-50 &[aria-disabled='true']:pointer-events-none";
 
 /**
  * Button 通用按钮，支持 ref 作为普通 prop 传入（React 19 原生 ref as prop）

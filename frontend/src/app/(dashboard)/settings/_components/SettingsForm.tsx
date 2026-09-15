@@ -145,7 +145,8 @@ export function SettingsForm({}: SettingsFormProps = {}) {
         setMe(null);
         clearAuthStatus();
         toast.success(t('pwdChanged'));
-        router.push('/login');
+        // replace 而非 push：会话已清，返回键回 /settings 只会闪「请先登录」空态
+        router.replace('/login');
         return { error: null };
       } catch (err) {
         if (err instanceof ApiRequestError && err.isUnauthorized) {

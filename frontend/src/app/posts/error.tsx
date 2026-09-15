@@ -25,7 +25,7 @@ export default function PostsError() {
           title={t('postsErrorTitle')}
           description={t('postsErrorDesc')}
           action={
-            <Button href="/posts" variant="ghost" size="sm">
+            <Button href="/posts" variant="ghost">
               {t('reload')}
             </Button>
           }

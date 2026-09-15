@@ -23,7 +23,7 @@ export default function PostDetailError() {
           title={t('postErrorTitle')}
           description={t('postErrorDesc')}
           action={
-            <Button href="/posts" variant="ghost" size="sm">
+            <Button href="/posts" variant="ghost">
               {t('backToList')}
             </Button>
           }

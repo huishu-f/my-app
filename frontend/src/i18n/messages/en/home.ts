@@ -7,19 +7,19 @@ const home: Messages = {
   brandSection: 'Brand intro',
   heroBadge: 'Multi-author technical writing',
   codeComment: '// authGuard: verify cookie + inject user',
-  heroTitleLine1: 'People who take craft seriously',
+  heroTitleLine1: 'Serious makers',
   heroTitlePrefix: 'keep ',
-  heroTitleEm: 'deep engineering notes',
+  heroTitleEm: 'deep notes',
   heroLead: 'Focused on architecture and engineering practice — thoughts worth reading twice.',
   browsePosts: 'Browse posts',
   startWriting: 'Start writing',
   latestSection: 'Latest posts',
   latestTitle: 'Latest posts',
-  latestSubtitle: 'Freshly published technical articles and engineering practices',
+  latestSubtitle: 'Fresh technical articles and engineering practice',
   viewAll: 'View all',
   viewAllCount: 'View all {count}',
   loadErrorTitle: 'Failed to load posts',
-  loadErrorDesc: 'Network error or the service is temporarily unavailable. Please refresh and try again later.',
+  loadErrorDesc: 'Network error or the service is down. Refresh and try again.',
 };
 
 export default home;

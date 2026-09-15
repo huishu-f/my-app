@@ -6,7 +6,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Trash2, Edit } from 'lucide-react';
+import { Trash2, Pencil } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { Button } from '@/components/ui/Button';
@@ -50,7 +50,8 @@ export function DeletePostButton({
   const confirmDelete = () => {
     deleteMutation.mutate(postId, {
       onSuccess: () => {
-        if (redirectTo) router.push(redirectTo);
+        // replace 而非 push：文章已删除，若留历史则返回键回到详情页直接 404
+        if (redirectTo) router.replace(redirectTo);
         else setShowDelete(false);
       },
       onError: () => toast.error(tCommon('deleteFailed')),
@@ -59,11 +60,11 @@ export function DeletePostButton({
 
   return (
     <>
-      {/* 按变体渲染：full=编辑+删除按钮组，compact=仅删除按钮 */}
+      {/* 按变体渲染：full=编辑+删除按钮组，compact=仅删除按钮（增删改查带语义图标：Pencil/Trash2） */}
       {variant === 'full' ? (
         <div className="row-sm border-stroke mt-4 border-t pt-4">
           <Button variant="ghost" size="sm" href={`/write?id=${postId}`}>
-            <Edit size={14} strokeWidth={2.5} />
+            <Pencil size={14} strokeWidth={2.5} />
             {t('editPost')}
           </Button>
           <Button variant="danger" size="sm" onClick={() => setShowDelete(true)}>
@@ -88,6 +89,7 @@ export function DeletePostButton({
             {tCommon('cancel')}
           </Button>
           <Button variant="danger" onClick={confirmDelete} loading={deleteMutation.isPending}>
+            <Trash2 size={16} strokeWidth={2.5} />
             {tCommon('delete')}
           </Button>
         </div>

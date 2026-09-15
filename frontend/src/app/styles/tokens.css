@@ -67,9 +67,9 @@
   --color-slate-tint: #5a8670;
   --color-slate-base: #67b090;
 
-  /* 暗色主题 hover 覆盖（变亮而非变暗） */
+  /* 暗色主题 hover 覆盖（变亮而非变暗）；btn-hover-bg 无需覆盖——
+   * 其公式基于 heading 半透明叠加，暗色下 heading 自动为浅色 */
   --color-card-hover-bg: var(--color-200);
-  --color-btn-hover-bg: var(--color-300);
 
   /* 阴影透明度（Dark 适度加深，避免过度沉重） */
   --shadow-opacity-sm: 0.36;
@@ -99,10 +99,12 @@
   --color-faint: var(--color-400);
   --color-accent: var(--color-900);
 
-  /* 按钮 */
-  --color-btn-bg: var(--color-100);
+  /* 按钮 — ghost 底色用半透明 heading 叠加而非实色：
+   * 原实色 color-100 与卡片背景（--color-card-bg）同值，ghost 按钮放进卡片会隐身；
+   * 半透明叠加在页面白底、卡片灰底、明暗双主题上都有可辨对比 */
+  --color-btn-bg: color-mix(in srgb, var(--color-heading) 5%, transparent);
   --color-btn-text: var(--color-600);
-  --color-btn-hover-bg: var(--color-200);
+  --color-btn-hover-bg: color-mix(in srgb, var(--color-heading) 9%, transparent);
   --color-btn-hover-text: var(--color-800);
 
   /* 链接 */

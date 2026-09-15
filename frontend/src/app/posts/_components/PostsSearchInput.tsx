@@ -50,7 +50,9 @@ export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
       else params.delete('q');
       params.delete('page');
       const qs = params.toString();
-      router.push(qs ? `/posts?${qs}` : '/posts');
+      // replace 而非 push：搜索每敲一轮就进一条历史的话，返回键要连按 N 次
+      // 才能走出输入过程（手机端侧滑返回尤其明显）；URL 状态照常被书签/分享
+      router.replace(qs ? `/posts?${qs}` : '/posts');
     }, DEBOUNCE_MS);
   }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -72,7 +74,7 @@ export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
     params.delete('q');
     params.delete('page');
     const qs = params.toString();
-    router.push(qs ? `/posts?${qs}` : '/posts');
+    router.replace(qs ? `/posts?${qs}` : '/posts');
   };
 
   return (

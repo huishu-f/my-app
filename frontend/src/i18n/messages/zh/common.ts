@@ -24,6 +24,15 @@ const common = {
   retry: '重试',
   actionFailed: '操作失败',
   pinned: '置顶',
+  /** 分类展示名映射（数据值保持中文原值，仅展示层翻译；共享映射见 src/lib/category.ts） */
+  categoryNames: {
+    技术: '技术',
+    设计: '设计',
+    生活: '生活',
+    产品: '产品',
+    创业: '创业',
+    其他: '其他',
+  },
 };
 
 export type Messages = typeof common;

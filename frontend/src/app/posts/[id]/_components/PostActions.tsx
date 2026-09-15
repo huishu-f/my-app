@@ -105,7 +105,7 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
   };
 
   return (
-    <div className="row-lg border-stroke mt-8 border-t border-b py-8">
+    <div className="row-lg border-stroke mt-8 flex-wrap border-t border-b py-8">
       {/* 点赞 / 取消点赞按钮 */}
       <Button
         variant={optimisticState.liked ? 'primary' : 'outline'}

@@ -7,7 +7,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { Eye, ArrowLeft, ChevronDown, X, Columns2, Pencil } from 'lucide-react';
+import { Eye, ChevronDown, X, Columns2, Pencil, Check, Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { handleApiError } from '@/lib/error-toast';
@@ -24,25 +24,14 @@ import { ApiRequestError } from '@/lib/api/request';
 import { estimateReadingTime } from '@/lib/markdown';
 import { sanitizeArticleContent } from '@/lib/sanitize';
 import { HIGHLIGHT_ALIASES, MARKED_OPTIONS, highlightCode } from '@/lib/markdown-highlight';
+import { CATEGORY_LABEL_KEYS, CATEGORY_VALUES } from '@/lib/category';
+import { hasInAppHistory } from '@/lib/navigation';
 import type { PostData } from '@my-app/shared';
 
 /**
  * 动态加载 marked + highlight.js，避免 ~100KB 阻塞初始加载
  */
 let markdownRendererPromise: Promise<(content: string) => Promise<string>> | null = null;
-
-/**
- * 分类选项展示名翻译键映射 — 选项 value 保持中文原值（数据层跨语言一致），
- * 展示文案经 write.categoryNames 命名空间翻译
- */
-const CATEGORY_LABEL_KEYS = {
-  技术: 'categoryNames.技术',
-  设计: 'categoryNames.设计',
-  生活: 'categoryNames.生活',
-  产品: 'categoryNames.产品',
-  创业: 'categoryNames.创业',
-  其他: 'categoryNames.其他',
-} as const;
 
 /**
  * 懒加载并返回 Markdown 渲染函数
@@ -261,7 +250,7 @@ export function WriteEditor() {
           title={t('loadErrorTitle')}
           description={t('loadErrorDesc')}
           action={
-            <Button href="/profile" variant="ghost" size="sm">
+            <Button href="/profile" variant="ghost">
               {t('backToMyPosts')}
             </Button>
           }
@@ -355,7 +344,8 @@ export function WriteEditor() {
         }
       } else {
         toast.success(isEditMode ? t('postUpdated') : t('postPublished'));
-        router.push(data?.post?.id ? `/posts/${data.post.id}` : '/posts');
+        // replace 而非 push：发布已完成，返回键不该回到写作编辑器
+        router.replace(data?.post?.id ? `/posts/${data.post.id}` : '/posts');
       }
     };
 
@@ -375,10 +365,15 @@ export function WriteEditor() {
   };
 
   /**
-   * 返回我的文章列表页
+   * 返回：有站内软导航历史则 back()（如从文章详情「编辑」进入时返回详情），
+   * 否则兜底跳个人中心。判据见 hasInAppHistory（防手机 webview 下 back 退出站点）
    */
   const handleBack = () => {
-    router.push('/profile');
+    if (hasInAppHistory()) {
+      router.back();
+    } else {
+      router.push('/profile');
+    }
   };
 
   return (
@@ -522,9 +517,9 @@ export function WriteEditor() {
                   onChange={(e) => setCategory(e.target.value)}
                   className={`input-field input-focus appearance-none pr-8`}
                 >
-                  {(['技术', '设计', '生活', '产品', '创业', '其他'] as const).map((c) => (
+                  {CATEGORY_VALUES.map((c) => (
                     <option key={c} value={c}>
-                      {CATEGORY_LABEL_KEYS[c] ? t(CATEGORY_LABEL_KEYS[c]) : c}
+                      {tCommon(CATEGORY_LABEL_KEYS[c])}
                     </option>
                   ))}
                 </select>
@@ -615,16 +610,15 @@ export function WriteEditor() {
             </FormField>
           </div>
 
-          {/* 底部操作区 */}
-          <div className={`row-md border-stroke mt-8 justify-between border-t pt-6`}>
+          {/* 底部操作区 — flex-wrap：移动端字数统计与按钮组自动分行，按钮组换行后靠右 */}
+          <div className={`row-md border-stroke mt-8 flex-wrap justify-between border-t pt-6`}>
             <span className={`text-muted text-(length:--type-sm) leading-normal`}>
               {content.length > 0
                 ? t('charCount', { count: content.length, minutes: estimateReadingTime(content) })
                 : ''}
             </span>
-            <div className="row-sm">
+            <div className="row-sm max-md:ml-auto">
               <Button variant="ghost" size="md" onClick={handleBack}>
-                <ArrowLeft size={14} strokeWidth={2.5} />
                 {tCommon('back')}
               </Button>
               {/* 存草稿（BUG-03 修复）：新建与草稿编辑可用；已发布文章不提供转草稿，避免误操作下架 */}
@@ -637,6 +631,7 @@ export function WriteEditor() {
                   disabled={mutation.isPending}
                   onClick={() => savePost(true)}
                 >
+                  <Check size={16} strokeWidth={2.5} />
                   {isEditMode ? t('updateDraft') : t('saveDraft')}
                 </Button>
               )}
@@ -648,6 +643,12 @@ export function WriteEditor() {
                 loading={mutation.isPending}
                 disabled={mutation.isPending}
               >
+                {/* 图标随语义切换：发布=Send，更新已发布文章=Check（与文案条件一致） */}
+                {isEditMode && !editingPost?.isDraft ? (
+                  <Check size={16} strokeWidth={2.5} />
+                ) : (
+                  <Send size={16} strokeWidth={2.5} />
+                )}
                 {isEditMode ? (editingPost?.isDraft ? t('publishPost') : t('updatePost')) : t('publishPost')}
               </Button>
             </div>

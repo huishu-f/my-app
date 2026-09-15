@@ -14,7 +14,7 @@ const nav: Messages = {
   settings: 'Settings',
   logout: 'Sign out',
   logoutSuccess: 'Signed out',
-  logoutFailed: 'Sign out failed, please try again',
+  logoutFailed: 'Sign out failed — try again',
   openMenu: 'Open menu',
   closeMenu: 'Close menu',
   themeToggle: 'Toggle theme',

@@ -254,13 +254,14 @@ export function ProfilePageContent() {
                 <StatsGrid items={stats} />
               </div>
 
-              {/* 操作按钮：横排 */}
+              {/* 操作按钮：横排 — lg 侧栏仅 300px，英文 nowrap 下双 flex-1 会撑破卡片，
+                  ghost 按钮 lg 改自然宽度，主按钮填充剩余空间 */}
               <div className="row-sm gap-3 mt-6">
                 <Button href="/write" size="md" className="flex-1">
-                  <PenLine size={14} strokeWidth={2.5} />
+                  <PenLine size={16} strokeWidth={2.5} />
                   {t('writeArticle')}
                 </Button>
-                <Button href="/settings" variant="ghost" size="md" className="flex-1">
+                <Button href="/settings" variant="ghost" size="md" className="flex-1 lg:flex-none">
                   {t('editProfile')}
                 </Button>
               </div>

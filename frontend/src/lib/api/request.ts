@@ -249,7 +249,9 @@ export async function request<T>(
         authRedirectTimer = null;
       }, 5000);
       const currentPath = window.location.pathname + window.location.search;
-      window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
+      // replace 而非 href 赋值：href 会留下当前 401 页的历史，
+      // 返回键回来再次 401 再被踢回登录页，形成死循环
+      window.location.replace(`/login?redirect=${encodeURIComponent(currentPath)}`);
     }
   }
 

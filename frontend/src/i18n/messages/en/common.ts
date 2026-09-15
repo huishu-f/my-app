@@ -21,11 +21,19 @@ const common: Messages = {
   cancel: 'Cancel',
   edit: 'Edit',
   delete: 'Delete',
-  deleteFailed: 'Delete failed, please try again',
-  confirmDelete: 'Confirm deletion',
+  deleteFailed: 'Delete failed — try again',
+  confirmDelete: 'Delete',
   retry: 'Retry',
   actionFailed: 'Something went wrong',
   pinned: 'Pinned',
+  categoryNames: {
+    技术: 'Technology',
+    设计: 'Design',
+    生活: 'Life',
+    产品: 'Product',
+    创业: 'Startup',
+    其他: 'Other',
+  },
 };
 
 export default common;

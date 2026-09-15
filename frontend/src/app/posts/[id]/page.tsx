@@ -17,6 +17,7 @@ import {
 import { Container } from '@/components/ui/Container';
 import { Avatar } from '@/components/ui/Avatar';
 import { formatDate, getInitials, splitName } from '@/lib/format';
+import { CATEGORY_LABEL_KEYS, isKnownCategory } from '@/lib/category';
 import type { Locale } from '@/i18n/config';
 import { estimateReadingTime, stripHtml, stripMarkdown } from '@/lib/markdown';
 import { isSafeImageUrl } from '@/lib/validators';
@@ -213,9 +214,14 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
   /** 作者头像首字母缩写 */
   const t = await getTranslations('post');
   const tNav = await getTranslations('nav');
+  const tCommon = await getTranslations('common');
   const locale = (await getLocale()) as Locale;
   const { firstName, lastName } = splitName(post.authorName || '');
   const authorInitials = post.authorName ? getInitials(firstName, lastName) : '';
+  /** 分类展示名（数据值保持中文原值，仅展示层翻译；未知值原样显示） */
+  const categoryLabel = isKnownCategory(post.category)
+    ? tCommon(CATEGORY_LABEL_KEYS[post.category])
+    : post.category;
 
   return (
     <PostStateProvider initialPost={post}>
@@ -229,7 +235,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
             {/* 文章头部 */}
             <header className="article-head animate-fade-in mb-10">
               <div className="row-sm mb-5">
-                <span className="chip">{post.category}</span>
+                <span className="chip">{categoryLabel}</span>
               </div>
 
               <h1 className="article-title display-serif text-heading mt-0 text-(length:--type-5xl) leading-tight font-bold tracking-[-0.025em] max-md:text-(length:--type-4xl)">

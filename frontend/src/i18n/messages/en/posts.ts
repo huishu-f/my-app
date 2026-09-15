@@ -5,7 +5,7 @@ import type { Messages } from '../zh/posts';
 
 const posts: Messages = {
   title: 'All posts',
-  subtitle: 'Browse everything published, filtered by the categories and tags you care about.',
+  subtitle: 'Browse all posts — filter by category or tag.',
   listSection: 'All posts',
   filter: 'Filters',
   categories: 'Categories',
@@ -16,10 +16,10 @@ const posts: Messages = {
   totalWithPage: '{count} posts · Page {current}/{total}',
   totalOnly: '{count} posts',
   noResultsTitle: 'No matching posts',
-  noResultsDesc: 'Try adjusting the filters or search keywords',
+  noResultsDesc: 'Try different filters or keywords',
   clearFilters: 'Clear filters',
   loadErrorTitle: 'Failed to load posts',
-  loadErrorDesc: 'Network error or the service is temporarily unavailable. Please refresh and try again later.',
+  loadErrorDesc: 'Network error or the service is down. Refresh and try again.',
   pagination: 'Pagination',
   prevPage: 'Previous page',
   nextPage: 'Next page',

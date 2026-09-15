@@ -7,10 +7,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { tagClassFor, tagVariantFor } from '@/components/ui/Tag';
 import { Button } from '@/components/ui/Button';
+import { CATEGORY_LABEL_KEYS, isKnownCategory } from '@/lib/category';
 import type { PostSidebarProps } from '@my-app/shared';
 import { buildPostsUrl } from '../_lib/buildPostsUrl';
 
@@ -27,6 +27,8 @@ export function PostSidebar({
   zeroResults,
 }: PostSidebarProps) {
   const t = useTranslations('posts');
+  /** 分类展示名翻译（common.categoryNames，数据值保持中文原值仅展示层翻译） */
+  const tCommon = useTranslations('common');
   /** 移动端筛选面板展开标记 */
   const [showFilter, setShowFilter] = useState(false);
   const searchParams = useSearchParams();
@@ -45,7 +47,6 @@ export function PostSidebar({
         size="sm"
         className="mb-5 lg:hidden"
       >
-        <Filter size={16} strokeWidth={2.5} />
         {t('filter')}
       </Button>
 
@@ -76,7 +77,13 @@ export function PostSidebar({
                             : 'text-body hover:bg-surface hover:text-heading'
                         }`}
                       >
-                        <span>{name === '全部' ? t('allCategories') : name}</span>
+                        <span>
+                          {name === '全部'
+                            ? t('allCategories')
+                            : isKnownCategory(name)
+                              ? tCommon(CATEGORY_LABEL_KEYS[name])
+                              : name}
+                        </span>
                       </Link>
                     </li>
                   );

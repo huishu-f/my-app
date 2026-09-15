@@ -37,7 +37,7 @@ export function LoginRequired({ icon, description }: LoginRequiredProps) {
         title={t('loginRequired')}
         description={description}
         action={
-          <Button href={`/login?redirect=${pathname}`} size="sm">
+          <Button href={`/login?redirect=${pathname}`}>
             {t('goLogin')}
           </Button>
         }

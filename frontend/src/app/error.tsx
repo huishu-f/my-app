@@ -55,7 +55,7 @@ export default function Error({ error, reset }: ErrorBoundaryProps) {
           <Button variant="ghost" href="/">
             {t('goHome')}
           </Button>
-          <Button variant="ghost" size="sm" onClick={copyError}>
+          <Button variant="ghost" onClick={copyError}>
             {copied ? t('copied') : t('copyError')}
           </Button>
         </div>

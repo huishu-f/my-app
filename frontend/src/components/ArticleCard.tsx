@@ -12,6 +12,7 @@ import { Avatar } from './ui/Avatar';
 import { Tag, tagVariantFor } from './ui/Tag';
 import { formatCount, formatDate } from '@/lib/format';
 import type { Locale } from '@/i18n/config';
+import { CATEGORY_LABEL_KEYS, isKnownCategory } from '@/lib/category';
 import { stripHtml, stripMarkdown } from '@/lib/markdown';
 import { isSafeImageUrl } from '@/lib/validators';
 import type { ArticleCardProps } from '@my-app/shared';
@@ -36,6 +37,11 @@ export const ArticleCard = memo(function ArticleCard({
   const t = useTranslations('common');
   /** 文章封面图地址 */
   const coverImage = post.coverImage;
+
+  /** 分类展示名（数据值保持中文原值，仅展示层翻译；未知值原样显示） */
+  const categoryLabel = isKnownCategory(post.category)
+    ? t(CATEGORY_LABEL_KEYS[post.category])
+    : post.category;
 
   /** 是否为垂直卡片布局 */
   const isVertical = variant === 'vertical';
@@ -72,7 +78,7 @@ export const ArticleCard = memo(function ArticleCard({
         {/* 分类与徽章区域 */}
         <div className="row-sm">
           <span className="text-heading text-(length:--type-xs) leading-normal font-semibold tracking-[0.04em] uppercase">
-            {post.category}
+            {categoryLabel}
           </span>
           {badge}
         </div>
@@ -107,7 +113,7 @@ export const ArticleCard = memo(function ArticleCard({
         {/* 分类与徽章区域 */}
         <div className="row-sm">
           <span className="text-heading text-(length:--type-xs) leading-normal font-semibold tracking-[0.04em] uppercase">
-            {post.category}
+            {categoryLabel}
           </span>
           {badge}
         </div>

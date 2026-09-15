@@ -36,15 +36,6 @@ const write = {
   saveDraft: '保存草稿',
   publishPost: '发布文章',
   updatePost: '更新文章',
-  /** 分类选项展示名映射（数据值保持中文原值，仅展示层翻译） */
-  categoryNames: {
-    技术: '技术',
-    设计: '设计',
-    生活: '生活',
-    产品: '产品',
-    创业: '创业',
-    其他: '其他',
-  },
   /** Markdown 工具栏 */
   toolbarBold: '加粗 (⌘B)',
   toolbarItalic: '斜体 (⌘I)',

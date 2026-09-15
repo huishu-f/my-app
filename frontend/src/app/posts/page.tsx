@@ -144,7 +144,7 @@ export default async function PostsPage({
                 title={t('loadErrorTitle')}
                 description={t('loadErrorDesc')}
                 action={
-                  <Button href="/posts" variant="ghost" size="sm">
+                  <Button href="/posts" variant="ghost">
                     {tCommon('refresh')}
                   </Button>
                 }
@@ -158,7 +158,7 @@ export default async function PostsPage({
                 description={t('noResultsDesc')}
                 action={
                   hasFilters ? (
-                    <Button href="/posts" variant="ghost" size="sm">
+                    <Button href="/posts" variant="ghost">
                       {t('clearFilters')}
                     </Button>
                   ) : undefined

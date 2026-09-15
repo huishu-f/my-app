@@ -38,12 +38,21 @@ export function UserMenu() {
    */
   const hoverOpenedRef = useRef(false);
 
+  /** 用户展示名与头像缩写 */
+  const displayName = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`.trim();
+  const initials = getInitials(user?.firstName ?? '', user?.lastName ?? '');
+
   const handleLogout = () => {
+    // 先关菜单、先回首页，再发登出请求：
+    // 若在受保护页（/profile 等）等登出完成再跳转，setMe(null) 会让 AuthGate
+    // 先闪出「请先登录」空态、随后才跳首页（中间页闪现）。Navbar 不随路由卸载，
+    // 登出完成后全局登录态在首页自然更新为游客态。
+    // replace 而非 push：避免回退键返回已登出的受保护页
+    setUserMenuOpen(false);
+    router.replace('/');
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
         toast.success(t('logoutSuccess'));
-        setUserMenuOpen(false);
-        router.push('/');
       },
       onError: () => {
         toast.error(t('logoutFailed'));
@@ -88,18 +97,23 @@ export function UserMenu() {
 
   return (
     // 交互时序说明（修复 BUG-04：首次点击无响应）：
-    // 鼠标移入容器会先触发 mouseenter 展开菜单，随后 click 若做无条件翻转会把菜单收回，
+    // 鼠标移入容器会先触发 pointerenter 展开菜单，随后 click 若做无条件翻转会把菜单收回，
     // 表现为“第一次点击没反应、第二次才展开”；此前 onFocus 与 click 叠加也是同样竞争。
     // 因此：hover 展开时点击视为“接管控制权并保持展开”；非 hover 引起（键盘 Enter /
-    // 点击已接管后再点）才执行翻转，toggle 能力完整保留
+    // 点击已接管后再点）才执行翻转，toggle 能力完整保留。
+    // hover 展开仅对 pointerType === 'mouse' 生效：触屏会模拟 mouseenter/mouseleave，
+    // 点菜单项时容器先收到 leave 把浮层收起（pointer-events-none），click 落空穿透到
+    // 页面内容上误触路由跳转，且点头像永远被“hover 接管”关不掉——门控后触屏纯点击 toggle
     <div
       ref={userMenuRef}
       className="relative"
-      onMouseEnter={() => {
+      onPointerEnter={(e) => {
+        if (e.pointerType !== 'mouse') return;
         hoverOpenedRef.current = true;
         setUserMenuOpen(true);
       }}
-      onMouseLeave={() => {
+      onPointerLeave={(e) => {
+        if (e.pointerType !== 'mouse') return;
         hoverOpenedRef.current = false;
         setUserMenuOpen(false);
       }}
@@ -126,29 +140,31 @@ export function UserMenu() {
         className="ring-stroke/50 [@media(hover:hover)]:hover:bg-surface flex h-9 w-9 items-center justify-center rounded-full transition-[box-shadow,background-color] duration-150 ease-out [@media(hover:hover)]:hover:ring-1"
       >
         <Avatar
-          initials={getInitials(user?.firstName ?? '', user?.lastName ?? '')}
+          initials={initials}
           src={user?.avatar || undefined}
           size="sm"
-          alt={t('avatarAlt', { name: `${user?.firstName ?? ''} ${user?.lastName ?? ''}`.trim() })}
+          alt={t('avatarAlt', { name: displayName })}
         />
       </button>
 
-      {/* 用户下拉菜单 — 常挂载 + transition 双向切换（进出场对称，见全局动画规范） */}
+      {/* 用户下拉菜单 — 常挂载 + transition 双向切换（进出场对称，见全局动画规范）。
+          右对齐贴头像（距屏幕右缘 16px）；移动端收窄宽度（w-52）、菜单项升到
+          44px 触摸档 + 16px 字号，图标成列左对齐，信息头保持头像左、文案右的紧凑行 */}
       <div
         className={`absolute top-full right-0 z-50 pt-2 ${userMenuOpen ? '' : 'pointer-events-none'}`}
       >
         <div
-          className={`border-card-border bg-page ease-smooth w-56 origin-top overflow-hidden rounded-xl border shadow-lg transition-[opacity,transform,visibility] duration-200 ${
+          className={`border-card-border bg-page ease-smooth w-56 origin-top-right overflow-hidden rounded-xl border shadow-lg transition-[opacity,transform,visibility] duration-200 max-md:w-52 ${
             userMenuOpen ? 'visible scale-100 opacity-100' : 'invisible scale-[0.98] opacity-0'
           }`}
         >
-          {/* 用户信息头 */}
-          <div className="row-sm px-3.5 py-3">
+          {/* 用户信息头 — 头像在左、姓名/用户名在右 */}
+          <div className="row-sm px-3.5 py-3 max-md:py-3.5">
             <Avatar
-              initials={getInitials(user?.firstName ?? '', user?.lastName ?? '')}
+              initials={initials}
               src={user?.avatar || undefined}
               size="sm"
-              alt={t('avatarAlt', { name: `${user?.firstName ?? ''} ${user?.lastName ?? ''}`.trim() })}
+              alt={t('avatarAlt', { name: displayName })}
             />
             <div className="min-w-0">
               <p className="text-heading m-0 truncate text-(length:--type-sm) leading-normal font-semibold">
@@ -162,7 +178,7 @@ export function UserMenu() {
 
           <div className="border-stroke/60 mx-3 border-t" />
 
-          {/* 菜单项 */}
+          {/* 菜单项 — 左对齐，图标成列；移动端 44px 触摸目标 + 16px 字号 */}
           <div className="p-1.5">
             {userMenuItems.map((item) => {
               const Icon = item.icon;
@@ -171,12 +187,12 @@ export function UserMenu() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setUserMenuOpen(false)}
-                  className="row-sm text-body hover:bg-surface hover:text-heading group rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out"
+                  className="row-sm text-body hover:bg-surface hover:text-heading group rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:gap-2.5 max-md:px-3 max-md:text-(length:--type-md)"
                 >
                   <Icon
                     size={14}
                     strokeWidth={2.5}
-                    className="text-faint group-hover:text-heading shrink-0 transition-colors duration-150 ease-out"
+                    className="text-faint group-hover:text-heading h-3.5 w-3.5 shrink-0 transition-colors duration-150 ease-out max-md:h-4 max-md:w-4"
                   />
                   {t(item.labelKey)}
                 </Link>
@@ -190,9 +206,13 @@ export function UserMenu() {
           <div className="p-1.5">
             <button
               onClick={handleLogout}
-              className="row-sm text-faint hover:bg-state-error-bg hover:text-state-error w-full rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out"
+              className="row-sm text-faint hover:bg-state-error-bg hover:text-state-error w-full rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:gap-2.5 max-md:px-3 max-md:text-(length:--type-md)"
             >
-              <LogOut size={14} strokeWidth={2.5} className="shrink-0" />
+              <LogOut
+                size={14}
+                strokeWidth={2.5}
+                className="h-3.5 w-3.5 shrink-0 max-md:h-4 max-md:w-4"
+              />
               {t('logout')}
             </button>
           </div>

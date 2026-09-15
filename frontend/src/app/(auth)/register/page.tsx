@@ -9,7 +9,7 @@
 import { useActionState, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, Clock, ArrowRight, User, UserPlus, Check, X } from 'lucide-react';
+import { Mail, Lock, Clock, User, UserPlus, Check, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { PasswordToggle } from '@/components/PasswordToggle';
 import { SubmitButton } from '@/components/ui/SubmitButton';
@@ -126,7 +126,8 @@ export default function RegisterPage() {
       try {
         await authApi.register({ firstName, lastName, username, email, password });
         toast.success(t('registerSuccess'));
-        router.push('/login');
+        // replace 而非 push：注册已提交，返回键不该回到这份表单
+        router.replace('/login');
         return { error: null };
       } catch (err) {
         if (err instanceof ApiRequestError) {
@@ -295,9 +296,8 @@ export default function RegisterPage() {
       {/* 登录引导 */}
       <div className="auth-switch">
         {t('hasAccount')}
-        <Link href="/login" className="auth-switch-link inline-flex items-center gap-0.5">
+        <Link href="/login" className="auth-switch-link">
           {t('loginNow')}
-          <ArrowRight size={14} strokeWidth={2.5} />
         </Link>
       </div>
     </div>

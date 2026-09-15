@@ -10,16 +10,16 @@ const profile: Messages = {
   statsLikes: 'Likes',
   statsViews: 'Views',
   writeArticle: 'Write',
-  editProfile: 'Edit profile',
+  editProfile: 'Edit',
   articlesTab: 'Posts ({count})',
   favoritesTab: 'Favorites ({count})',
   noArticlesTitle: 'No posts yet',
   noArticlesDesc: 'Start writing your first post',
   noFavoritesTitle: 'No favorites yet',
-  noFavoritesDesc: 'Browse posts and tap the favorite button — posts you love will appear here',
-  removeFavorite: 'Remove favorite',
-  removeFavoriteSuccess: 'Removed from favorites',
-  removeFavoriteFailed: 'Action failed, please try again',
+  noFavoritesDesc: 'Favorite a post and it will show up here',
+  removeFavorite: 'Unfavorite',
+  removeFavoriteSuccess: 'Unfavorited',
+  removeFavoriteFailed: 'Failed — try again',
 };
 
 export default profile;

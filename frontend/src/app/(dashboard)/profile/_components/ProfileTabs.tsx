@@ -66,8 +66,8 @@ export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
               title={t('noArticlesTitle')}
               description={t('noArticlesDesc')}
               action={
-                <Button href="/write" size="sm">
-                  <PenLine size={14} strokeWidth={2.5} />
+                <Button href="/write">
+                  <PenLine size={16} strokeWidth={2.5} />
                   {t('writeArticle')}
                 </Button>
               }
