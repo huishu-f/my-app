@@ -1,0 +1,14 @@
+frontend/next.config.ts
+  h_7a7e6c68a7d90b 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "2bcc5bde929a4235b15da6ece1b861f720ff7bf5",
+  "prompts": {},
+  "humans": {
+    "h_7a7e6c68a7d90b": {
+      "author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
