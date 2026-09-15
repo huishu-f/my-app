@@ -11,7 +11,7 @@ import type { PageHeaderProps } from '@my-app/shared';
 export function PageHeader({ title, subtitle, actions, className = '' }: PageHeaderProps) {
   return (
     <header
-      className={`page-header anim-fade-up stagger-1 ${
+      className={`page-header animate-fade-in ${
         actions ? 'page-actions' : ''
       } ${className}`.trim()}
     >

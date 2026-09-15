@@ -10,6 +10,7 @@ import { useActionState, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, Clock, ArrowRight, User, UserPlus, Check, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { PasswordToggle } from '@/components/PasswordToggle';
 import { SubmitButton } from '@/components/ui/SubmitButton';
 import { FormField } from '@/components/ui/FormField';
@@ -57,12 +58,13 @@ function validateField(id: FieldId, value: string): boolean {
 }
 
 /** 各字段校验失败的错误提示文案 */
-const errorMsgs: Record<FieldId, string> = {
-  firstName: '1-50 个字符',
-  lastName: '1-50 个字符',
-  username: '仅允许字母、数字、下划线，3-30 字符',
-  email: '请输入有效的邮箱地址',
-  password: '密码至少 6 位',
+/** 各字段校验失败错误文案的翻译键（渲染/提交时经 t() 取当前语言文案） */
+const errorMsgKeys: Record<FieldId, string> = {
+  firstName: 'errNameLength',
+  lastName: 'errNameLength',
+  username: 'errUsername',
+  email: 'invalidEmail',
+  password: 'errPassword',
 };
 
 /**
@@ -70,6 +72,7 @@ const errorMsgs: Record<FieldId, string> = {
  */
 export default function RegisterPage() {
   const router = useRouter();
+  const t = useTranslations('auth');
 
   /** 各表单字段的状态集合（实时校验用） */
   const [fields, setFields] = useState<Record<FieldId, FieldState>>({
@@ -115,23 +118,23 @@ export default function RegisterPage() {
       for (const id of fieldIds) {
         const value = { firstName, lastName, username, email, password }[id];
         if (!value || !validateField(id, value)) {
-          return { error: errorMsgs[id] };
+          return { error: t(errorMsgKeys[id] as never) };
         }
       }
 
       // API 调用
       try {
         await authApi.register({ firstName, lastName, username, email, password });
-        toast.success('注册成功，请登录');
+        toast.success(t('registerSuccess'));
         router.push('/login');
         return { error: null };
       } catch (err) {
         if (err instanceof ApiRequestError) {
-          if (err.status === 409) return { error: '邮箱或用户名已被注册' };
+          if (err.status === 409) return { error: t('duplicateAccount') };
           if (err.details?.length) return { error: err.details.map((d) => d.message).join('；') };
           return { error: err.message };
         }
-        return { error: err instanceof Error ? err.message : '注册失败，请重试' };
+        return { error: err instanceof Error ? err.message : t('registerFailed') };
       }
     },
     initialState,
@@ -156,8 +159,8 @@ export default function RegisterPage() {
     <div className="auth-card">
       {/* 标题区 */}
       <div className="mb-10">
-        <h1 className="auth-title">创建账号</h1>
-        <p className="auth-subtitle">注册后即可发布文章、评论与互动。</p>
+        <h1 className="auth-title">{t('registerTitle')}</h1>
+        <p className="auth-subtitle">{t('registerSubtitle')}</p>
       </div>
 
       {/* 提交错误提示 */}
@@ -172,9 +175,9 @@ export default function RegisterPage() {
         {/* 名 + 姓 */}
         <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
           <FormField
-            label="名"
+            label={t('firstName')}
             required
-            error={fields.firstName.valid === false ? errorMsgs.firstName : undefined}
+            error={fields.firstName.valid === false ? t('errNameLength') : undefined}
           >
             <Input
               id="firstName"
@@ -193,9 +196,9 @@ export default function RegisterPage() {
           </FormField>
 
           <FormField
-            label="姓"
+            label={t('lastName')}
             required
-            error={fields.lastName.valid === false ? errorMsgs.lastName : undefined}
+            error={fields.lastName.valid === false ? t('errNameLength') : undefined}
           >
             <Input
               id="lastName"
@@ -216,10 +219,10 @@ export default function RegisterPage() {
 
         {/* 用户名 */}
         <FormField
-          label="用户名"
+          label={t('username')}
           required
-          hint="可用字母、数字、下划线，3-30 字符"
-          error={fields.username.valid === false ? errorMsgs.username : undefined}
+          hint={t('usernameHint')}
+          error={fields.username.valid === false ? t('errUsername') : undefined}
         >
           <Input
             id="username"
@@ -239,9 +242,9 @@ export default function RegisterPage() {
 
         {/* 邮箱 */}
         <FormField
-          label="邮箱"
+          label={t('email')}
           required
-          error={fields.email.valid === false ? errorMsgs.email : undefined}
+          error={fields.email.valid === false ? t('invalidEmail') : undefined}
         >
           <Input
             id="email"
@@ -260,15 +263,15 @@ export default function RegisterPage() {
 
         {/* 密码 */}
         <FormField
-          label="密码"
+          label={t('password')}
           required
-          error={fields.password.valid === false ? errorMsgs.password : undefined}
+          error={fields.password.valid === false ? t('errPassword') : undefined}
         >
           <Input
             id="password"
             name="password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="至少 6 位"
+            placeholder={t('pwdPlaceholderMin')}
             autoComplete="new-password"
             value={fields.password.value}
             onChange={(e) => updateField('password', e.target.value)}
@@ -280,20 +283,20 @@ export default function RegisterPage() {
           <PasswordStrength password={fields.password.value} />
         </FormField>
 
-        <SubmitButton className="w-full mt-2">注册</SubmitButton>
+        <SubmitButton className="w-full mt-2">{t('registerSubmit')}</SubmitButton>
       </form>
 
       {/* 限流提示 */}
       <div className="auth-rate-hint">
         <Clock size={13} strokeWidth={2.5} />
-        <span>5 分钟内最多 5 次尝试</span>
+        <span>{t('rateLimit')}</span>
       </div>
 
       {/* 登录引导 */}
       <div className="auth-switch">
-        已有账号？
+        {t('hasAccount')}
         <Link href="/login" className="auth-switch-link inline-flex items-center gap-0.5">
-          立即登录 →
+          {t('loginNow')}
           <ArrowRight size={14} strokeWidth={2.5} />
         </Link>
       </div>

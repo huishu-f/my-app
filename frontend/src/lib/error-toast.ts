@@ -11,7 +11,7 @@ import { ApiRequestError } from '@/lib/api/request';
  * @param err 捕获的错误对象
  * @param fallbackMsg 非 ApiRequestError 时的兜底提示
  */
-export function handleApiError(err: Error, fallbackMsg = '操作失败'): void {
+export function handleApiError(err: Error, fallbackMsg = ''): void {
   if (err instanceof ApiRequestError) {
     if (err.details?.length) {
       toast.error(err.details.map((d) => d.message).join('；'));

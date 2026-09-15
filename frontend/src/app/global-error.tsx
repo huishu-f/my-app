@@ -25,6 +25,25 @@ export default function GlobalError({
     console.error(error);
   }, [error]);
 
+  /**
+   * 轻量双语：global-error 渲染时 Provider 链可能已崩溃，无法使用 next-intl，
+   * 直接读取语言偏好 Cookie 选择文案（与 i18n/config 的 LOCALE_COOKIE 约定一致）
+   */
+  const isEn =
+    typeof document !== 'undefined' &&
+    document.cookie.match(/(?:^|;\s*)locale=en/)?.[0] !== undefined;
+  const copy = isEn
+    ? {
+        title: 'Something went wrong',
+        desc: 'A critical error occurred. Try reloading — if the problem persists, please try again later.',
+        reload: 'Reload',
+      }
+    : {
+        title: '出错了',
+        desc: '应用发生了严重错误。请尝试重新加载，如果问题持续出现请稍后再试。',
+        reload: '重新加载',
+      };
+
   return (
     <html lang="zh-CN">
       <body className="antialiased">
@@ -67,7 +86,7 @@ export default function GlobalError({
               letterSpacing: '-0.02em',
             }}
           >
-            出错了
+            {copy.title}
           </h1>
           <p
             className="text-muted"
@@ -78,7 +97,7 @@ export default function GlobalError({
               maxWidth: '400px',
             }}
           >
-            应用发生了严重错误。请尝试重新加载，如果问题持续出现请稍后再试。
+            {copy.desc}
           </p>
           <button
             onClick={reset}
@@ -99,7 +118,7 @@ export default function GlobalError({
               transition: 'opacity 150ms ease-out',
             }}
           >
-            重新加载
+            {copy.reload}
           </button>
         </div>
       </body>

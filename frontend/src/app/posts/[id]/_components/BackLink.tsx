@@ -8,12 +8,14 @@
 
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 /**
  * BackLink 智能返回链接，有浏览历史时返回上一页，无历史时回退到文章列表
  */
 export function BackLink() {
   const router = useRouter();
+  const t = useTranslations('common');
 
   /**
    * 返回按钮点击处理：有浏览历史则返回上一页，否则跳转文章列表
@@ -32,7 +34,7 @@ export function BackLink() {
       className="text-muted hover:text-heading mb-8 inline-flex items-center gap-2 text-(length:--type-sm) font-medium transition-colors duration-150 cursor-pointer"
     >
       <ArrowLeft size={15} strokeWidth={2.5} />
-      返回
+      {t('back')}
     </button>
   );
 }

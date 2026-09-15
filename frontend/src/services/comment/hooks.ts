@@ -6,6 +6,7 @@
  */
 import { useCallback } from 'react';
 import toast from '@/lib/toast';
+import { useTranslations } from 'next-intl';
 import { useAsyncAction } from '@/lib/use-async-action';
 import { useFetch } from '@/lib/use-fetch';
 import type {
@@ -38,10 +39,11 @@ export function useComments(postId: string) {
  * @returns useAsyncAction 提交函数与提交状态
  */
 export function useCreateComment(postId: string) {
+  const t = useTranslations('post');
   const action = useCallback((dto: CreateCommentDto) => commentApi.create(postId, dto), [postId]);
   return useAsyncAction<CreateCommentDto, CommentData>(action, {
-    onSuccess: () => toast.success('评论已发表'),
-    onError: () => toast.error('发表评论失败'),
+    onSuccess: () => toast.success(t('commentCreated')),
+    onError: () => toast.error(t('commentCreateFailed')),
   });
 }
 
@@ -51,15 +53,16 @@ export function useCreateComment(postId: string) {
  * @returns useAsyncAction 提交函数与提交状态
  */
 export function useUpdateComment() {
+  const t = useTranslations('post');
   const action = useCallback(
     ({ commentId, dto }: UpdateCommentMutationVars) => commentApi.update(commentId, dto),
     [],
   );
   return useAsyncAction<UpdateCommentMutationVars, CommentData>(action, {
-    onSuccess: () => toast.success('评论已更新'),
+    onSuccess: () => toast.success(t('commentUpdated')),
     onError: (err: Error) => {
       // 403 非评论作者
-      toast.error(err.message || '编辑评论失败');
+      toast.error(err.message || t('commentUpdateFailed'));
     },
   });
 }
@@ -70,11 +73,12 @@ export function useUpdateComment() {
  * @returns useAsyncAction 提交函数与提交状态
  */
 export function useDeleteComment() {
+  const t = useTranslations('post');
   const action = useCallback((commentId: string) => commentApi.remove(commentId), []);
   return useAsyncAction<string, null>(action, {
-    onSuccess: () => toast.success('评论已删除'),
+    onSuccess: () => toast.success(t('commentDeleted')),
     onError: (err: Error) => {
-      toast.error(err.message || '删除评论失败');
+      toast.error(err.message || t('commentDeleteFailed'));
     },
   });
 }

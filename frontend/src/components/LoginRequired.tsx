@@ -8,6 +8,7 @@
 
 import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Container } from './ui/Container';
 import { EmptyState } from './ui/EmptyState';
 import { Button } from './ui/Button';
@@ -28,15 +29,16 @@ interface LoginRequiredProps {
  */
 export function LoginRequired({ icon, description }: LoginRequiredProps) {
   const pathname = usePathname() || '/';
+  const t = useTranslations('common');
   return (
     <Container className="page-section">
       <EmptyState
         icon={icon}
-        title="请先登录"
+        title={t('loginRequired')}
         description={description}
         action={
           <Button href={`/login?redirect=${pathname}`} size="sm">
-            去登录
+            {t('goLogin')}
           </Button>
         }
       />

@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Trash2, Edit } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
@@ -31,11 +32,13 @@ interface DeletePostButtonProps extends PostIdProps {
  */
 export function DeletePostButton({
   postId,
-  description = '确定要删除这篇文章吗？此操作无法撤销，文章及其所有评论将被永久移除。',
+  description,
   redirectTo,
   variant = 'full',
 }: DeletePostButtonProps) {
   const router = useRouter();
+  const t = useTranslations('post');
+  const tCommon = useTranslations('common');
   /** 删除确认弹窗显示状态 */
   const [showDelete, setShowDelete] = useState(false);
   /** 删除文章的 mutation 实例 */
@@ -50,7 +53,7 @@ export function DeletePostButton({
         if (redirectTo) router.push(redirectTo);
         else setShowDelete(false);
       },
-      onError: () => toast.error('删除失败，请重试'),
+      onError: () => toast.error(tCommon('deleteFailed')),
     });
   };
 
@@ -61,29 +64,31 @@ export function DeletePostButton({
         <div className="row-sm border-stroke mt-4 border-t pt-4">
           <Button variant="ghost" size="sm" href={`/write?id=${postId}`}>
             <Edit size={14} strokeWidth={2.5} />
-            编辑文章
+            {t('editPost')}
           </Button>
           <Button variant="danger" size="sm" onClick={() => setShowDelete(true)}>
             <Trash2 size={14} strokeWidth={2.5} />
-            删除文章
+            {t('deletePost')}
           </Button>
         </div>
       ) : (
         <Button variant="danger" size="sm" onClick={() => setShowDelete(true)}>
           <Trash2 size={14} strokeWidth={2.5} />
-          删除
+          {tCommon('delete')}
         </Button>
       )}
 
       {/* 删除确认弹窗 */}
-      <Modal open={showDelete} onClose={() => setShowDelete(false)} title="确认删除">
-        <p className="text-muted text-(length:--type-base) leading-normal">{description}</p>
+      <Modal open={showDelete} onClose={() => setShowDelete(false)} title={tCommon('confirmDelete')}>
+        <p className="text-muted text-(length:--type-base) leading-normal">
+          {description ?? t('deletePostDesc')}
+        </p>
         <div className="mt-6 flex justify-end gap-2">
           <Button variant="ghost" onClick={() => setShowDelete(false)}>
-            取消
+            {tCommon('cancel')}
           </Button>
           <Button variant="danger" onClick={confirmDelete} loading={deleteMutation.isPending}>
-            删除
+            {tCommon('delete')}
           </Button>
         </div>
       </Modal>

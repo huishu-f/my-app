@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import { MessageCircle, PenLine, FileText, Bookmark } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { ArticleCard } from '@/components/ArticleCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
@@ -33,6 +34,7 @@ interface ProfileTabsProps {
  */
 export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
   /** 当前激活的 Tab 面板 */
+  const t = useTranslations('profile');
   const [tab, setTab] = useState<Tab>('articles');
   /** 收藏列表本地态：取消收藏后即时剔除该项，避免整页刷新（SSR props 仅作初始值） */
   const [favoriteList, setFavoriteList] = useState(favorites);
@@ -40,33 +42,33 @@ export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
   return (
     <div className="min-w-0">
       {/* Tab 切换 */}
-      <div className="segmented anim-fade-up stagger-2">
+      <div className="segmented animate-fade-in">
         <button
           onClick={() => setTab('articles')}
           className={`segmented-item ${tab === 'articles' ? 'segmented-item-on' : ''}`}
         >
-          文章（{published.length}）
+          {t('articlesTab', { count: published.length })}
         </button>
         <button
           onClick={() => setTab('favorites')}
           className={`segmented-item ${tab === 'favorites' ? 'segmented-item-on' : ''}`}
         >
-          收藏（{favoriteList.length}）
+          {t('favoritesTab', { count: favoriteList.length })}
         </button>
       </div>
 
-      {/* 文章列表 */}
+      {/* 文章列表 — Tab 条件渲染会 remount，不携带入场动画以保证切换即时 */}
       {tab === 'articles' && (
-        <div className="anim-fade-up stagger-3 mt-10">
+        <div className="mt-10">
           {published.length === 0 ? (
             <EmptyState
               icon={<FileText size={20} strokeWidth={2.5} />}
-              title="还没有文章"
-              description="开始写你的第一篇文章吧"
+              title={t('noArticlesTitle')}
+              description={t('noArticlesDesc')}
               action={
                 <Button href="/write" size="sm">
                   <PenLine size={14} strokeWidth={2.5} />
-                  写文章
+                  {t('writeArticle')}
                 </Button>
               }
             />
@@ -88,14 +90,14 @@ export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
         </div>
       )}
 
-      {/* 收藏列表 */}
+      {/* 收藏列表 — 同上，切换即时 */}
       {tab === 'favorites' && (
-        <div className="anim-fade-up stagger-3 mt-10">
+        <div className="mt-10">
           {favoriteList.length === 0 ? (
             <EmptyState
               icon={<Bookmark size={20} strokeWidth={2.5} />}
-              title="还没有收藏"
-              description="浏览文章并点击收藏按钮，喜欢的文章会出现在这里"
+              title={t('noFavoritesTitle')}
+              description={t('noFavoritesDesc')}
             />
           ) : (
             <div className="card-list">

@@ -2,6 +2,7 @@
  * @file FormField.tsx
  * @description 表单字段组件，封装 label、提示文案、错误提示，并通过自动提取子元素 id 关联 label
  */
+import { useTranslations } from 'next-intl';
 import type { FormFieldProps } from '@my-app/shared';
 
 /**
@@ -16,6 +17,7 @@ export function FormField({
   className = '',
   children,
 }: FormFieldProps) {
+  const t = useTranslations('common');
   /**
    * 从子元素中提取 id 关联到 label
    * @returns 子元素的 id 属性值
@@ -35,7 +37,7 @@ export function FormField({
       >
         {label}
         {required && (
-          <span className="text-state-error ml-1" aria-label="必填">
+          <span className="text-state-error ml-1" aria-label={t('required')}>
             *
           </span>
         )}

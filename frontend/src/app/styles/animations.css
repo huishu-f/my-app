@@ -1,28 +1,34 @@
 /**
- * animations.css — 动画定义
+ * animations.css — 全局动画规范（全站唯一实现源）
  *
- * 包含全站关键帧动画（fade-in-up / fade-in / shake / spin / breathing）
- * 和对应的工具类（anim-fade-up / shake / animate-*）。
+ * ═══════════════════════ 规范速查 ═══════════════════════
+ * 入场语言：纯淡入（opacity-only）。全系统不做方向性位移入场，
+ * 只保留一种例外质感：浮层微缩放（Modal/下拉菜单 2%）。
  *
- * 交错延迟工具类 stagger-1 ~ stagger-6 用于列表项逐个入场，
- * 配合 anim-fade-up 实现级联动画效果（值越大延迟越久）。
+ * 缓动（两条曲线，各司其职）：
+ *   var(--ease-smooth) = cubic-bezier(0.22, 1, 0.36, 1)
+ *     → 所有空间运动（缩放/旋转），快速起步、长尾收势
+ *   ease-out → 所有状态反馈与纯透明度过渡（颜色/阴影/淡入淡出）
+ *
+ * 时长（三档制，禁止自创时长）：
+ *   150ms — 交互状态反馈（hover/active/focus 的颜色、阴影）
+ *   200ms — 浮层进出（Modal、下拉菜单、移动端面板、BackToTop）
+ *   300ms — 路由级区块入场（animate-fade-in）与装饰运动
+ *           （导航指示器、logo、封面缩放、主题/汉堡图标）
+ *   例外：一次性反馈（shake 350ms）与常驻循环（spin/breathing/pulse）
+ *
+ * 硬性约束：
+ *   1. 只动 opacity / transform（GPU 合成，不触发重排重绘）
+ *   2. 禁止 transition-all、max-height 等布局属性参与动画
+ *   3. 入场动画只放路由级区块；数据刷新（翻页/筛选/Tab 切换）不重播
+ *   4. 浮层进出对称：入场与出场同几何反方向；关闭动画播完再卸载
+ *      （常挂载元素用 transition 切状态天然可逆；挂载型浮层配 pop-in/pop-out）
+ * ═══════════════════════════════════════════════════════
  */
 
 /* 关键帧 — Keyframes */
 
-/* 渐入上移：列表项/区块入场动画 */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 纯渐入：封面图/弹窗/TOC 等无位移的淡入 */
+/* 纯淡入：全站唯一入场语言（路由级区块/封面图/TOC/3D 装饰） */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -32,7 +38,31 @@
   }
 }
 
-/* 左右抖动：表单错误时提示条震动反馈 */
+/* 浮层淡入：Modal 面板等挂载型浮层（200ms 档），2% 微缩放撑住质感、不带位移 */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 浮层淡出：pop-in 的镜像 */
+@keyframes pop-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+/* 左右抖动：表单错误时提示条震动反馈（一次性，无对称要求） */
 @keyframes shake {
   0%,
   100% {
@@ -53,7 +83,7 @@
   }
 }
 
-/* 呼吸缩放：首页 Hero 装饰圆点脉动效果 */
+/* 呼吸缩放：首页 Hero 装饰圆点脉动效果（装饰豁免，常驻循环） */
 @keyframes breathing {
   0%,
   100% {
@@ -66,40 +96,7 @@
   }
 }
 
-/* 交错延迟工具类 — 配合 anim-fade-up 使用，为列表项设置 40ms 递增延迟 */
-
-@utility stagger-1 {
-  animation-delay: 40ms;
-}
-@utility stagger-2 {
-  animation-delay: 80ms;
-}
-@utility stagger-3 {
-  animation-delay: 120ms;
-}
-@utility stagger-4 {
-  animation-delay: 160ms;
-}
-@utility stagger-5 {
-  animation-delay: 200ms;
-}
-@utility stagger-6 {
-  animation-delay: 240ms;
-}
-
-/* 渐入上移入场：页面区块/卡片列表项逐个出现 */
-@utility anim-fade-up {
-  animation: fade-in-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-/* 抖动：表单提交错误时 Alert 组件震动 */
+/* 抖动：表单提交错误时 Alert 组件震动（一次性反馈） */
 @utility shake {
   animation: shake 0.35s ease-in-out;
-}
-
-/* 路由级淡入：切路由时内容区无感知淡入，替代骨架屏闪现 */
-@utility route-fade-in {
-  animation: fade-in 0.15s ease-out;
 }

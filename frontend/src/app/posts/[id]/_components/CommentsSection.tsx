@@ -9,6 +9,7 @@
 import { useOptimistic, useTransition, useState } from 'react';
 import Link from 'next/link';
 import { AlertCircle, MessageCircle } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
@@ -21,6 +22,7 @@ import {
 } from '@/services/comment/hooks';
 import { usePostPageAuth } from '@/hooks/usePostPageAuth';
 import { getInitials, splitName, formatRelativeTime } from '@/lib/format';
+import type { Locale } from '@/i18n/config';
 import type { CommentsSectionProps, Comment } from '@my-app/shared';
 
 /** 模块级空数组常量，避免 useOptimistic 因新引用而重置 */
@@ -31,6 +33,9 @@ const EMPTY_COMMENTS: Comment[] = [];
  * @param props {@link CommentsSectionProps}
  */
 export function CommentsSection({ postId, user: ssrUser, postAuthorId }: CommentsSectionProps) {
+  const t = useTranslations('post');
+  const tCommon = useTranslations('common');
+  const locale = useLocale() as Locale;
   const { data: commentsData, isError, refetch: refetchComments } = useComments(postId);
   /** 评论列表（实际状态） */
   const comments = commentsData?.comments ?? EMPTY_COMMENTS;
@@ -126,7 +131,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
   return (
     <section className="mt-10 mb-12">
       <h2 className="text-heading mb-6 text-(length:--type-2xl) leading-snug font-semibold">
-        评论{' '}
+        {t('commentsTitle')}{' '}
         <span className="text-muted ml-1.5 text-(length:--type-sm) font-normal opacity-80">
           · {optimisticComments.length}
         </span>
@@ -145,7 +150,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                   submitComment();
                 }
               }}
-              placeholder="写下你的想法...（1-2000 字符，⌘/Ctrl+Enter 发送）"
+              placeholder={t('commentPlaceholder')}
               maxLength={2000}
               rows={4}
               className="textarea-field"
@@ -156,16 +161,16 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                 disabled={!commentText.trim() || isPending}
                 loading={isPending}
               >
-                发表评论
+                {t('submitComment')}
               </Button>
             </div>
           </>
         ) : (
           <div className="card border-stroke text-muted rounded-xl border p-6 text-center text-(length:--type-base) leading-normal">
             <Link href={`/login?redirect=/posts/${postId}`} className="text-accent hover:underline">
-              登录
+              {t('commentLoginBefore')}
             </Link>
-            后参与评论
+            {t('commentLoginAfter')}
           </div>
         )}
       </div>
@@ -175,10 +180,10 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
         {isError ? (
           <EmptyState
             icon={<AlertCircle size={20} strokeWidth={2.5} />}
-            title="评论加载失败"
+            title={t('commentLoadError')}
             action={
               <Button variant="ghost" size="sm" onClick={() => refetchComments()}>
-                重试
+                {tCommon('retry')}
               </Button>
             }
           />
@@ -186,8 +191,8 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
           optimisticComments.length === 0 && (
             <EmptyState
               icon={<MessageCircle size={20} strokeWidth={2.5} />}
-              title="还没有评论"
-              description="来说点什么吧"
+              title={t('noCommentsTitle')}
+              description={t('noCommentsDesc')}
             />
           )
         )}
@@ -208,7 +213,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                   <span className="text-heading text-(length:--type-base) leading-normal font-semibold">
                     {c.userName}
                   </span>
-                  <span className="meta-text">{formatRelativeTime(c.createdAt)}</span>
+                  <span className="meta-text">{formatRelativeTime(c.createdAt, locale)}</span>
                 </div>
 
                 {editingId === c.id ? (
@@ -226,7 +231,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                         onClick={saveEdit}
                         loading={updateCommentMutation.isPending}
                       >
-                        保存
+                        {tCommon('save')}
                       </Button>
                       <Button
                         variant="ghost"
@@ -236,7 +241,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                           setEditText('');
                         }}
                       >
-                        取消
+                        {tCommon('cancel')}
                       </Button>
                     </div>
                   </div>
@@ -250,17 +255,17 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                         {isCommentAuthor && (
                           <button
                             onClick={() => startEdit(c.id, c.content)}
-                            className="text-muted hover:text-heading text-(length:--type-xs) leading-normal transition-colors duration-200"
+                            className="text-muted hover:text-heading text-(length:--type-xs) leading-normal transition-colors duration-150 ease-out"
                           >
-                            编辑
+                            {tCommon('edit')}
                           </button>
                         )}
                         {canDelete && (
                           <button
                             onClick={() => setDeleteTargetId(c.id)}
-                            className="text-muted hover:text-heading text-(length:--type-xs) leading-normal transition-colors duration-200"
+                            className="text-muted hover:text-heading text-(length:--type-xs) leading-normal transition-colors duration-150 ease-out"
                           >
-                            删除
+                            {tCommon('delete')}
                           </button>
                         )}
                       </div>
@@ -274,7 +279,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
         {optimisticComments.length > visibleCount && (
           <div className="mt-6 text-center">
             <Button variant="ghost" size="sm" onClick={() => setVisibleCount((c) => c + 5)}>
-              加载更多评论（剩余 {optimisticComments.length - visibleCount} 条）
+              {t('loadMoreComments', { count: optimisticComments.length - visibleCount })}
             </Button>
           </div>
         )}
@@ -284,14 +289,14 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
       <Modal
         open={deleteTargetId !== null}
         onClose={() => setDeleteTargetId(null)}
-        title="删除评论"
+        title={t('deleteCommentTitle')}
       >
         <p className="text-body text-(length:--type-base) leading-normal">
-          确认删除这条评论吗？此操作不可撤销。
+          {t('deleteCommentDesc')}
         </p>
         <div className="mt-8 flex justify-end gap-2">
           <Button variant="ghost" onClick={() => setDeleteTargetId(null)}>
-            取消
+            {tCommon('cancel')}
           </Button>
           <Button
             variant="danger"
@@ -311,7 +316,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
               }
             }}
           >
-            确认删除
+            {t('confirmDeleteBtn')}
           </Button>
         </div>
       </Modal>

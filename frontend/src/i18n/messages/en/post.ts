@@ -1,0 +1,51 @@
+/**
+ * post 模块（英文）— 键结构由 zh/post.ts 的 Messages 类型约束
+ */
+import type { Messages } from '../zh/post';
+
+const post: Messages = {
+  back: 'Back',
+  readingTime: '{minutes} min read',
+  notFoundTitle: 'Post not found',
+  tocLabel: 'Table of contents',
+  tocNav: 'In-article navigation',
+  readingProgress: 'Reading progress',
+  toc: 'Contents',
+  like: 'Like',
+  liked: 'Liked',
+  favorite: 'Favorite',
+  favorited: 'Favorited',
+  loginToLike: 'Sign in to like',
+  loginToFavorite: 'Sign in to favorite',
+  commentsCount: '{count} comments',
+  likeSuccess: 'Liked',
+  unlikeSuccess: 'Like removed',
+  favoriteSuccess: 'Favorited',
+  unfavoriteSuccess: 'Removed from favorites',
+  editPost: 'Edit post',
+  deletePost: 'Delete post',
+  deletePostDesc: 'Are you sure you want to delete this post? This action cannot be undone — the post and all its comments will be permanently removed.',
+  postDeleted: 'Post deleted',
+  commentsTitle: 'Comments',
+  commentPlaceholder: 'Share your thoughts... (1-2000 characters, ⌘/Ctrl+Enter to submit)',
+  submitComment: 'Post comment',
+  commentLoginBefore: 'Sign in',
+  commentLoginAfter: ' to join the conversation',
+  commentLoadError: 'Failed to load comments',
+  noCommentsTitle: 'No comments yet',
+  noCommentsDesc: 'Be the first to share your thoughts',
+  loadMoreComments: 'Load more comments ({count} remaining)',
+  deleteCommentTitle: 'Delete comment',
+  deleteCommentDesc: 'Are you sure you want to delete this comment? This action cannot be undone.',
+  confirmDeleteBtn: 'Delete',
+  commentCreated: 'Comment posted',
+  commentCreateFailed: 'Failed to post comment',
+  commentUpdated: 'Comment updated',
+  commentUpdateFailed: 'Failed to update comment',
+  commentDeleted: 'Comment deleted',
+  commentDeleteFailed: 'Failed to delete comment',
+  prevPost: 'Previous post',
+  nextPost: 'Next post',
+};
+
+export default post;

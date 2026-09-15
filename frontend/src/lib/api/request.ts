@@ -11,6 +11,7 @@ import { ApiRequestError } from '@my-app/shared';
 export { ApiRequestError };
 import type { ApiResponse, RequestOptions, ValidationErrorDetail } from '@my-app/shared';
 import { AUTH_TOKEN_COOKIE } from '@/lib/auth-constants';
+import { LOCALE_COOKIE } from '@/i18n/config';
 
 /** 鉴权 Cookie 名称（与后端 auth-cookie.helper 共用 lib/auth-constants.ts） */
 export const AUTH_COOKIE = AUTH_TOKEN_COOKIE;
@@ -19,6 +20,37 @@ const DEFAULT_TIMEOUT = 15_000;
 
 /** 接口基础地址：API Routes 集成在同域，客户端和服务端统一用 /api */
 const BASE_URL = '/api';
+
+/** 底层错误消息双语字典（同构层无法使用 React 上下文，按当前 locale 取文案） */
+const ERROR_MESSAGES = {
+  zh: {
+    timeout: '请求超时，请稍后重试',
+    network: '网络请求失败，请检查服务是否可用',
+    requestFailed: (status: number) => `请求失败（${status}）`,
+  },
+  en: {
+    timeout: 'Request timed out, please try again later',
+    network: 'Network request failed, please check if the service is available',
+    requestFailed: (status: number) => `Request failed (${status})`,
+  },
+} as const;
+
+/**
+ * 解析当前语言偏好：客户端读 document.cookie（同步、零开销）；
+ * 服务端回退 zh（服务端抛出的底层错误极少直接展示给用户，后端业务 message 才是主要来源）
+ */
+function currentLocale(): 'zh' | 'en' {
+  if (typeof document !== 'undefined') {
+    const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${LOCALE_COOKIE}=(\\w+)`));
+    if (match?.[1] === 'en') return 'en';
+  }
+  return 'zh';
+}
+
+/** 按当前语言取底层错误消息字典 */
+function errorMessages() {
+  return ERROR_MESSAGES[currentLocale()];
+}
 
 /**
  * 服务端请求时读取 httpOnly Cookie 并转发给后端，动态导入 next/headers 避免将服务端模块打包到客户端
@@ -175,10 +207,10 @@ export async function request<T>(
       if (signal?.aborted) {
         throw new ApiRequestError(0, 0, 'Request aborted');
       }
-      throw new ApiRequestError(0, 0, '请求超时，请稍后重试');
+      throw new ApiRequestError(0, 0, errorMessages().timeout);
     }
     // 网络错误 / 后端未启动
-    throw new ApiRequestError(0, 0, '网络请求失败，请检查服务是否可用');
+    throw new ApiRequestError(0, 0, errorMessages().network);
   } finally {
     clearTimeout(timeoutId);
   }
@@ -191,7 +223,7 @@ export async function request<T>(
       payload = JSON.parse(text);
     } catch {
       // 非 JSON，按状态码抛出
-      throw new ApiRequestError(res.status, res.status, `请求失败（${res.status}）`);
+      throw new ApiRequestError(res.status, res.status, errorMessages().requestFailed(res.status));
     }
   }
 
@@ -221,7 +253,7 @@ export async function request<T>(
     }
   }
 
-  const message = payload?.message || `请求失败（${res.status}）`;
+  const message = payload?.message || errorMessages().requestFailed(res.status);
   throw new ApiRequestError(res.status, payload?.code ?? res.status, message, payload?.details);
 }
 

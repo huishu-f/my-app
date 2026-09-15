@@ -3,6 +3,7 @@
  * @description Next.js 构建配置：转译共享包、安全响应头、图片域名白名单与打包优化；生产构建期生效，影响产物输出
  */
 import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 /**
  * 可选加载 @next/bundle-analyzer 实现打包体积分析
@@ -92,4 +93,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(nextConfig);
+/** next-intl 插件：加载 src/i18n/request.ts 的请求级语言配置（默认路径） */
+const withNextIntl = createNextIntlPlugin();
+
+export default withBundleAnalyzer(withNextIntl(nextConfig));

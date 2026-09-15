@@ -6,6 +6,7 @@
 'use client';
 
 import { useActionState, useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { MapPin, Globe, Info, Check, Lock, Image as ImageIcon } from 'lucide-react';
 import { PasswordToggle } from '@/components/PasswordToggle';
@@ -54,6 +55,8 @@ const initialPasswordState: PasswordState = { error: null };
  */
 export function SettingsForm({}: SettingsFormProps = {}) {
   const router = useRouter();
+  const t = useTranslations('settings');
+  const tCommon = useTranslations('common');
   const { user, refreshMe, setMe } = useAuth();
 
   /** 当前选中的设置标签页 */
@@ -115,11 +118,11 @@ export function SettingsForm({}: SettingsFormProps = {}) {
         } catch {
           // 刷新失败不阻塞保存流程
         }
-        toast.success('资料已保存');
+        toast.success(t('profileSaved'));
         return { error: null };
       } catch (err) {
-        const msg = err instanceof Error ? err.message : '保存失败';
-        handleApiError(err as Error, '保存失败');
+        const msg = err instanceof Error ? err.message : t('saveFailed');
+        handleApiError(err as Error, t('saveFailed'));
         return { error: msg };
       }
     },
@@ -133,22 +136,22 @@ export function SettingsForm({}: SettingsFormProps = {}) {
       const newPassword = (formData.get('newPwd') as string) ?? '';
       const confirm = (formData.get('confirmPwd') as string) ?? '';
 
-      if (newPassword.length < 6) return { error: '新密码至少 6 位' };
-      if (newPassword !== confirm) return { error: '两次密码不一致' };
-      if (newPassword === currentPassword) return { error: '新密码不能与当前密码相同' };
+      if (newPassword.length < 6) return { error: t('pwdTooShort') };
+      if (newPassword !== confirm) return { error: t('pwdMismatch') };
+      if (newPassword === currentPassword) return { error: t('pwdSame') };
 
       try {
         await authApi.changePassword({ currentPassword, newPassword });
         setMe(null);
         clearAuthStatus();
-        toast.success('密码修改成功，请重新登录');
+        toast.success(t('pwdChanged'));
         router.push('/login');
         return { error: null };
       } catch (err) {
         if (err instanceof ApiRequestError && err.isUnauthorized) {
-          return { error: '当前密码不正确' };
+          return { error: t('pwdIncorrect') };
         }
-        return { error: err instanceof Error ? err.message : '修改失败，请检查网络后重试' };
+        return { error: err instanceof Error ? err.message : t('pwdChangeFailed') };
       }
     },
     initialPasswordState,
@@ -159,7 +162,7 @@ export function SettingsForm({}: SettingsFormProps = {}) {
   const pwdError = pwdState.error;
 
   return (
-    <>
+    <div className="animate-fade-in">
       {/* 资料/密码分段切换 */}
       <div className="segmented mb-8">
         <button
@@ -167,21 +170,21 @@ export function SettingsForm({}: SettingsFormProps = {}) {
           aria-pressed={tab === 'profile'}
           className={`segmented-item ${tab === 'profile' ? 'segmented-item-on' : ''}`}
         >
-          个人资料
+          {t('tabProfile')}
         </button>
         <button
           onClick={() => setTab('password')}
           aria-pressed={tab === 'password'}
           className={`segmented-item ${tab === 'password' ? 'segmented-item-on' : ''}`}
         >
-          修改密码
+          {t('tabPassword')}
         </button>
       </div>
 
       {/* 个人资料表单 */}
       {tab === 'profile' && (
         <form action={profileAction} className="form-stack">
-          <div className="anim-fade-up stagger-1 flex items-center gap-8">
+          <div className="flex items-center gap-8">
             <Avatar
               initials={userInitials}
               src={avatar || undefined}
@@ -189,7 +192,7 @@ export function SettingsForm({}: SettingsFormProps = {}) {
               className="shrink-0"
             />
             <div className="min-w-0 flex-1">
-              <FormField label="头像 URL" hint="粘贴图片链接，建议方形 256x256">
+              <FormField label={t('avatarUrl')} hint={t('avatarHint')}>
                 <Input
                   id="avatar"
                   name="avatar"
@@ -204,8 +207,8 @@ export function SettingsForm({}: SettingsFormProps = {}) {
             </div>
           </div>
 
-          <div className="anim-fade-up stagger-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <FormField label="名" required>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <FormField label={t('firstName')} required>
               <Input
                 id="firstName"
                 name="firstName"
@@ -215,7 +218,7 @@ export function SettingsForm({}: SettingsFormProps = {}) {
                 maxLength={50}
               />
             </FormField>
-            <FormField label="姓" required>
+            <FormField label={t('lastName')} required>
               <Input
                 id="lastName"
                 name="lastName"
@@ -228,9 +231,8 @@ export function SettingsForm({}: SettingsFormProps = {}) {
           </div>
 
           <FormField
-            label="个人简介"
-            hint="简短的自我介绍，最多 280 字符"
-            className="anim-fade-up stagger-3"
+            label={t('bio')}
+            hint={t('bioHint')}
           >
             <textarea
               id="bio"
@@ -244,8 +246,8 @@ export function SettingsForm({}: SettingsFormProps = {}) {
             <div className="meta-text mt-1 text-right">{bio.length} / 280</div>
           </FormField>
 
-          <div className="anim-fade-up stagger-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <FormField label="所在地" hint="可选">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <FormField label={t('location')} hint={tCommon('optional')}>
               <Input
                 id="location"
                 name="location"
@@ -256,7 +258,7 @@ export function SettingsForm({}: SettingsFormProps = {}) {
                 leftIcon={<MapPin size={18} strokeWidth={2.5} />}
               />
             </FormField>
-            <FormField label="个人网站" hint="可选">
+            <FormField label={t('website')} hint={tCommon('optional')}>
               <Input
                 id="website"
                 name="website"
@@ -269,10 +271,10 @@ export function SettingsForm({}: SettingsFormProps = {}) {
             </FormField>
           </div>
 
-          <div className="anim-fade-up stagger-5 flex justify-end pt-4">
+          <div className="flex justify-end pt-4">
             <SubmitButton>
               <Check size={16} strokeWidth={2.5} />
-              保存修改
+              {t('saveChanges')}
             </SubmitButton>
           </div>
         </form>
@@ -286,13 +288,13 @@ export function SettingsForm({}: SettingsFormProps = {}) {
             <Alert
               variant="error"
               icon={<Info size={16} strokeWidth={2.5} />}
-              className="anim-fade-up stagger-1 shake"
+              className="shake"
             >
               {pwdError}
             </Alert>
           )}
 
-          <FormField label="当前密码" required className="anim-fade-up stagger-1">
+          <FormField label={t('currentPwd')} required>
             <Input
               id="currentPwd"
               name="currentPwd"
@@ -305,7 +307,7 @@ export function SettingsForm({}: SettingsFormProps = {}) {
             />
           </FormField>
 
-          <FormField label="新密码" hint="至少 6 位" required className="anim-fade-up stagger-2">
+          <FormField label={t('newPwd')} hint={t('newPwdHint')} required>
             <Input
               id="newPwd"
               name="newPwd"
@@ -319,7 +321,7 @@ export function SettingsForm({}: SettingsFormProps = {}) {
             <PasswordStrength password={newPwd} />
           </FormField>
 
-          <FormField label="确认新密码" required className="anim-fade-up stagger-3">
+          <FormField label={t('confirmPwd')} required>
             <Input
               id="confirmPwd"
               name="confirmPwd"
@@ -332,14 +334,14 @@ export function SettingsForm({}: SettingsFormProps = {}) {
             />
           </FormField>
 
-          <div className="anim-fade-up stagger-4 flex justify-end pt-4">
+          <div className="flex justify-end pt-4">
             <SubmitButton>
               <Check size={16} strokeWidth={2.5} />
-              更新密码
+              {t('updatePwd')}
             </SubmitButton>
           </div>
         </form>
       )}
-    </>
+    </div>
   );
 }

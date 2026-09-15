@@ -5,6 +5,7 @@
 'use client';
 
 import { Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/Container';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
@@ -14,19 +15,22 @@ import { Button } from '@/components/ui/Button';
  * 列表数据获取失败时展示
  */
 export default function PostsError() {
+  const t = useTranslations('errors');
   return (
     <Container className="page-section">
       {/* 错误提示与刷新入口 */}
-      <EmptyState
-        icon={<Search size={20} strokeWidth={2.5} />}
-        title="文章加载失败"
-        description="网络异常或服务暂时不可用，请稍后刷新页面重试"
-        action={
-          <Button href="/posts" variant="ghost" size="sm">
-            刷新页面
-          </Button>
-        }
-      />
+      <div className="animate-fade-in">
+        <EmptyState
+          icon={<Search size={20} strokeWidth={2.5} />}
+          title={t('postsErrorTitle')}
+          description={t('postsErrorDesc')}
+          action={
+            <Button href="/posts" variant="ghost" size="sm">
+              {t('reload')}
+            </Button>
+          }
+        />
+      </div>
     </Container>
   );
 }

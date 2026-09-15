@@ -5,6 +5,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import type { PostTocProps, TocItem } from '@my-app/shared';
 
 /**
@@ -12,6 +13,7 @@ import type { PostTocProps, TocItem } from '@my-app/shared';
  * @param props {@link PostTocProps}
  */
 export function PostToc({ articleId }: PostTocProps) {
+  const t = useTranslations('post');
   /** 目录标题项列表 */
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
   /** 当前高亮的标题 ID */
@@ -127,12 +129,12 @@ export function PostToc({ articleId }: PostTocProps) {
   const activeIndex = tocItems.findIndex((h) => h.id === activeId);
 
   return (
-    <aside className="toc hidden w-56 shrink-0 lg:block" aria-label="文章目录">
+    <aside className="toc hidden w-56 shrink-0 lg:block" aria-label={t('tocLabel')}>
       <div className="animate-fade-in sticky top-20 hidden lg:block">
         {/* 阅读进度条 */}
         <div className="mb-5">
           <div className="text-faint mb-2 flex items-center justify-between text-(length:--type-2xs)">
-            <span>阅读进度</span>
+            <span>{t('readingProgress')}</span>
             <span>{Math.round(progress * 100)}%</span>
           </div>
           <div className="bg-stroke h-0.75 w-full overflow-hidden rounded-full">
@@ -146,7 +148,7 @@ export function PostToc({ articleId }: PostTocProps) {
         {/* 目录标签 */}
         <div className="toc-label text-faint mb-4 flex items-center gap-2 text-(length:--type-xs) leading-normal font-semibold tracking-[0.05em] uppercase">
           <span className="inline-block h-3 w-0.5 rounded-full bg-current opacity-50" />
-          目录
+          {t('toc')}
           <span className="bg-stroke text-muted ml-1 rounded-full px-2 py-px text-(length:--type-2xs) font-medium tracking-normal normal-case">
             {tocItems.length}
           </span>
@@ -155,7 +157,7 @@ export function PostToc({ articleId }: PostTocProps) {
         {/* 目录列表 */}
         <nav
           className="toc-list border-stroke flex flex-col gap-1 border-l"
-          aria-label="文章内导航"
+          aria-label={t('tocNav')}
         >
           {tocItems.map((h) => {
             const active = activeId === h.id;
@@ -170,12 +172,12 @@ export function PostToc({ articleId }: PostTocProps) {
                 aria-current={active ? 'location' : undefined}
                 aria-label={h.text}
                 title={h.text}
-                className={`toc-item block border-l-2 py-2 text-left leading-snug transition-all duration-200 ${
+                className={`toc-item block border-l-2 py-2 text-left leading-snug transition-all duration-150 ease-out ${
                   h.sub ? 'pl-6 text-(length:--type-xs)' : 'pl-3 text-(length:--type-sm)'
                 } ${
                   active
                     ? 'border-accent text-heading -ml-px font-medium'
-                    : 'text-muted hover:border-heading hover:text-heading -ml-px border-transparent transition-colors duration-200'
+                    : 'text-muted hover:border-heading hover:text-heading -ml-px border-transparent transition-colors duration-150 ease-out'
                 }`}
               >
                 <span className="block truncate">{h.text}</span>

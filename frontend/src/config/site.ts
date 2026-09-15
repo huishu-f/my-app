@@ -8,8 +8,6 @@ export const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:30
 
 /** 站点元数据 */
 export const SITE_METADATA = {
-  title: '我的博客',
-  description: '个人技术写作 · 极致极简 · 黑白灰质感',
   locale: 'zh_CN',
 } as const;
 
@@ -19,8 +17,8 @@ export const PROTECTED_ROUTES = ['/write', '/settings', '/profile'];
 /** 每页文章数量 */
 export const PAGE_SIZE = 9;
 
-/** 顶部导航链接 */
+/** 顶部导航链接（label 键指向 i18n messages 的 nav 命名空间） */
 export const NAV_LINKS = [
-  { href: '/', label: '首页' },
-  { href: '/posts', label: '文章' },
+  { href: '/', key: 'home' },
+  { href: '/posts', key: 'posts' },
 ] as const;

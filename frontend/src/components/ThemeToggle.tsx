@@ -5,18 +5,18 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
 
 /**
- * 客户端环境检测 — 替代传统的 useState(false) + useEffect(setMounted(true)) 模式。
- *
- * useSyncExternalStore 的 getServerSnapshot 在 SSR 时返回 false，
+ * 客户端环境检测 — useSyncExternalStore 的 getServerSnapshot 在 SSR 时返回 false，
  * hydration 后 getSnapshot 返回 true，实现无闪烁的客户端门控。
  *
- * 注：React 19.3 提供了 use(browser()) 一等 API 来做这件事，
- * 但 Next.js 16.3.5 的编译版 react-dom 尚未导出 browser 函数，
- * 待框架更新后可切换。
+ * 注：React 19.3 起 react-dom 已导出 browser()，可改用 use(browser())。
+ * 但 browser() 的语义是整个组件退出 SSR —— 按钮将不在初始 HTML 中，
+ * JS 加载后才出现，导航栏右侧会产生布局跳动；本按钮需要 SSR 直出，
+ * 故保留 useSyncExternalStore 模式（SSR 在场 + 客户端取真值）。
  */
 const emptySubscribe = () => () => {};
 const isClient = () => true;
@@ -28,6 +28,7 @@ const isServer = () => false;
 export function ThemeToggle() {
   const isBrowser = useSyncExternalStore(emptySubscribe, isClient, isServer);
   const { resolvedTheme, setTheme } = useTheme();
+  const t = useTranslations('nav');
 
   const isDark = isBrowser && resolvedTheme === 'dark';
 
@@ -36,8 +37,8 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      aria-label="切换主题"
-      className="text-muted [@media(hover:hover)]:hover:bg-surface [@media(hover:hover)]:hover:text-heading relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg transition-[background-color,color] duration-150"
+      aria-label={t('themeToggle')}
+      className="text-muted [@media(hover:hover)]:hover:bg-surface [@media(hover:hover)]:hover:text-heading relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg transition-[background-color,color] duration-150 ease-out"
     >
       {/* 太阳图标（亮色模式时显示）— span 用 flex 消除行内基线对齐导致的偏移，保证在按钮内绝对居中 */}
       <span

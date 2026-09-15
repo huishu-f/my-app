@@ -11,6 +11,7 @@ import { useActionState, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Mail, Lock, Clock, Info } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { PasswordToggle } from '@/components/PasswordToggle';
 import { Alert } from '@/components/ui/Alert';
 import { SubmitButton } from '@/components/ui/SubmitButton';
@@ -37,6 +38,8 @@ const initialState: LoginState = { emailError: null, pwdError: null };
  * LoginContent 登录表单内容，含 useSearchParams，需被 Suspense 包裹
  */
 function LoginContent() {
+  const t = useTranslations('auth');
+  const tCommon = useTranslations('common');
   const searchParams = useSearchParams();
   const { refreshMe } = useAuth();
 
@@ -62,8 +65,8 @@ function LoginContent() {
       const password = (formData.get('password') as string) ?? '';
 
       // 客户端校验
-      if (!isValidEmail(email)) return { emailError: '请输入有效的邮箱地址', pwdError: null };
-      if (!password) return { emailError: null, pwdError: '请输入密码' };
+      if (!isValidEmail(email)) return { emailError: t('invalidEmail'), pwdError: null };
+      if (!password) return { emailError: null, pwdError: t('emptyPwd') };
 
       // API 调用
       try {
@@ -73,7 +76,7 @@ function LoginContent() {
         } catch {
           // me 请求失败不阻塞登录流程
         }
-        toast.success('登录成功');
+        toast.success(t('loginSuccess'));
         // 登录成功后使用硬导航跳转：未登录时对 /write 的 RSC 导航会被 proxy 307 到 /login，
         // 该响应会污染客户端 Router Cache（/write 键下缓存了登录页 payload），
         // 导致登录后 push('/write') 命中污染缓存而落回登录页。硬导航绕开客户端缓存，确保可靠跳转
@@ -81,11 +84,11 @@ function LoginContent() {
         return { emailError: null, pwdError: null };
       } catch (err) {
         if (err instanceof ApiRequestError) {
-          if (err.isUnauthorized) return { emailError: null, pwdError: '邮箱或密码错误' };
-          if (err.isForbidden) return { emailError: '账号已被禁用', pwdError: null };
+          if (err.isUnauthorized) return { emailError: null, pwdError: t('emailOrPwdError') };
+          if (err.isForbidden) return { emailError: t('accountDisabled'), pwdError: null };
           return { emailError: err.message, pwdError: null };
         }
-        return { emailError: null, pwdError: err instanceof Error ? err.message : '登录失败' };
+        return { emailError: null, pwdError: err instanceof Error ? err.message : t('loginFailed') };
       }
     },
     initialState,
@@ -95,20 +98,20 @@ function LoginContent() {
     <div className="auth-card">
       {/* 标题区 */}
       <div className="mb-10">
-        <h1 className="auth-title">欢迎回来</h1>
-        <p className="auth-subtitle">登录你的账号以发布文章、评论与点赞。</p>
+        <h1 className="auth-title">{t('loginTitle')}</h1>
+        <p className="auth-subtitle">{t('loginSubtitle')}</p>
       </div>
 
       {/* 重定向提示 */}
       {hasRedirect && (
         <Alert variant="info" icon={<Info size={18} strokeWidth={2.5} />} className="mb-6">
-          请先登录以继续访问目标页面
+          {t('redirectNotice')}
         </Alert>
       )}
 
       {/* 登录表单 */}
       <form action={formAction} noValidate className="auth-form-stack">
-        <FormField label="邮箱" error={formState.emailError ?? undefined}>
+        <FormField label={t('email')} error={formState.emailError ?? undefined}>
           <Input
             id="email"
             name="email"
@@ -121,12 +124,12 @@ function LoginContent() {
           />
         </FormField>
 
-        <FormField label="密码" error={formState.pwdError ?? undefined}>
+        <FormField label={t('password')} error={formState.pwdError ?? undefined}>
           <Input
             id="password"
             name="password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="输入密码"
+            placeholder={t('pwdPlaceholder')}
             autoComplete="current-password"
             defaultValue=""
             leftIcon={<Lock size={18} strokeWidth={2.5} />}
@@ -136,23 +139,23 @@ function LoginContent() {
         </FormField>
 
         <div className="text-right">
-          <span className="text-muted text-(length:--type-xs)">忘记密码？请联系管理员重置</span>
+          <span className="text-muted text-(length:--type-xs)">{t('forgotPwd')}</span>
         </div>
 
-        <SubmitButton className="w-full mt-1">登录</SubmitButton>
+        <SubmitButton className="w-full mt-1">{t('loginSubmit')}</SubmitButton>
       </form>
 
       {/* 限流提示 */}
       <div className="auth-rate-hint">
         <Clock size={13} strokeWidth={2.5} />
-        <span>5 分钟内最多 5 次尝试</span>
+        <span>{t('rateLimit')}</span>
       </div>
 
       {/* 注册引导 */}
       <div className="auth-switch">
-        还没有账号？
+        {t('noAccount')}
         <Link href="/register" className="auth-switch-link">
-          立即注册 →
+          {t('registerNow')}
         </Link>
       </div>
     </div>

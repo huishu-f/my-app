@@ -6,6 +6,7 @@
 
 import { useEffect, useState } from 'react';
 import { MapPin, Globe, Calendar, Users, Check, PenLine } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { StatsGrid } from '@/components/ui/StatsGrid';
@@ -53,6 +54,8 @@ const META_ICON = 'size-[13px] text-faint';
  */
 export function ProfilePageContent() {
   const { user, loading } = useAuth();
+  const t = useTranslations('profile');
+  const tCommon = useTranslations('common');
   /** 已发布文章列表 */
   const [published, setPublished] = useState<Post[]>([]);
   /** 收藏文章列表 */
@@ -86,8 +89,8 @@ export function ProfilePageContent() {
       <div className="flex min-h-[60vh] flex-col items-center justify-center">
         <EmptyState
           icon={<UserCircle size={20} strokeWidth={2.5} />}
-          title="加载中..."
-          description="正在获取个人资料"
+          title={tCommon('loading')}
+          description={tCommon('loadingProfile')}
         />
       </div>
     );
@@ -97,9 +100,9 @@ export function ProfilePageContent() {
   const userInitials = getInitials(user.firstName, user.lastName);
   /** 用户统计 */
   const stats = [
-    { label: '文章', value: formatCount(user.stats?.articles ?? 0) },
-    { label: '获赞', value: formatCount(user.stats?.likes ?? 0) },
-    { label: '阅读量', value: formatCount(user.stats?.views ?? 0) },
+    { label: t('statsArticles'), value: formatCount(user.stats?.articles ?? 0) },
+    { label: t('statsLikes'), value: formatCount(user.stats?.likes ?? 0) },
+    { label: t('statsViews'), value: formatCount(user.stats?.views ?? 0) },
   ];
   /** 社交链接（补充协议前缀） */
   const socialTwitter = user.social?.twitter
@@ -122,9 +125,9 @@ export function ProfilePageContent() {
   return (
     <div className="grid grid-cols-1 gap-12 lg:grid-cols-[300px_1fr]">
       {/* 左侧：资料卡（sticky） */}
-      <aside className="anim-fade-up stagger-1">
+      <aside className="animate-fade-in">
         <div className="sticky top-20">
-          <section className="card overflow-hidden rounded-2xl shadow-sm">
+          <section className="card shadow-sm overflow-hidden">
             {/* 顶部渐变 banner */}
             <div
               className="h-24 w-full"
@@ -153,7 +156,7 @@ export function ProfilePageContent() {
                   {user.verified && (
                     <span
                       className="bg-accent text-page inline-flex h-4 w-4 items-center justify-center rounded-full"
-                      title="已认证"
+                      title={t('verified')}
                     >
                       <Check size={10} strokeWidth={2.5} />
                     </span>
@@ -166,7 +169,7 @@ export function ProfilePageContent() {
 
               {/* 简介 */}
               <p className="text-body mt-4 text-(length:--type-sm) leading-relaxed">
-                {user.bio || '暂无简介'}
+                {user.bio || t('noBio')}
               </p>
 
               {/* 技能标签 */}
@@ -255,10 +258,10 @@ export function ProfilePageContent() {
               <div className="row-sm gap-3 mt-6">
                 <Button href="/write" size="md" className="flex-1">
                   <PenLine size={14} strokeWidth={2.5} />
-                  写文章
+                  {t('writeArticle')}
                 </Button>
                 <Button href="/settings" variant="ghost" size="md" className="flex-1">
-                  编辑资料
+                  {t('editProfile')}
                 </Button>
               </div>
             </div>

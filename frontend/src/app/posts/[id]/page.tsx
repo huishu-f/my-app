@@ -5,6 +5,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import '@/app/styles/hljs-theme.css';
@@ -15,7 +16,8 @@ import {
 } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Avatar } from '@/components/ui/Avatar';
-import { formatDateCN, getInitials, splitName } from '@/lib/format';
+import { formatDate, getInitials, splitName } from '@/lib/format';
+import type { Locale } from '@/i18n/config';
 import { estimateReadingTime, stripHtml, stripMarkdown } from '@/lib/markdown';
 import { isSafeImageUrl } from '@/lib/validators';
 import { tagClassFor, tagVariantFor } from '@/components/ui/Tag';
@@ -85,13 +87,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id: rawId } = await params;
   const id = decodeId(rawId);
+  const tMeta = await getTranslations('meta');
+  const tPost = await getTranslations('post');
   try {
     const data = await getPublicPostServer(id);
     const post = data.post;
     const cleanTitle = stripMarkdown(post.title);
     const description = stripHtml(post.summary || post.content).slice(0, 160);
     return {
-      title: `${cleanTitle} · 我的博客`,
+      title: `${cleanTitle} · ${tMeta('siteTitle')}`,
       description,
       alternates: { canonical: `/posts/${id}` },
       openGraph: {
@@ -108,7 +112,7 @@ export async function generateMetadata({
       },
     };
   } catch {
-    return { title: '文章不存在 · 我的博客' };
+    return { title: `${tPost('notFoundTitle')} · ${tMeta('siteTitle')}` };
   }
 }
 
@@ -117,6 +121,7 @@ export async function generateMetadata({
  * @param id 文章 id，用于获取相邻文章
  */
 async function NeighborPosts({ id }: { id: string }) {
+  const tPost = await getTranslations('post');
   const neighborPosts = await getNeighborPostsServer(id).catch(() => null);
   const prevPost = neighborPosts?.prev ?? null;
   const nextPost = neighborPosts?.next ?? null;
@@ -132,7 +137,7 @@ async function NeighborPosts({ id }: { id: string }) {
         >
           <span className="text-faint flex items-center gap-1 text-(length:--type-xs) font-medium">
             <ChevronLeft size={14} strokeWidth={2.5} />
-            上一篇
+            {tPost('prevPost')}
           </span>
           <span className="text-heading group-hover:text-accent line-clamp-2 text-(length:--type-base) font-semibold transition-colors duration-150">
             {stripMarkdown(prevPost.title)}
@@ -147,7 +152,7 @@ async function NeighborPosts({ id }: { id: string }) {
           className="card card-hover group flex flex-col gap-1 p-4 text-right"
         >
           <span className="text-faint flex items-center justify-end gap-1 text-(length:--type-xs) font-medium">
-            下一篇
+            {tPost('nextPost')}
             <ChevronRight size={14} strokeWidth={2.5} />
           </span>
           <span className="text-heading group-hover:text-accent line-clamp-2 text-(length:--type-base) font-semibold transition-colors duration-150">
@@ -206,6 +211,9 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
   }
 
   /** 作者头像首字母缩写 */
+  const t = await getTranslations('post');
+  const tNav = await getTranslations('nav');
+  const locale = (await getLocale()) as Locale;
   const { firstName, lastName } = splitName(post.authorName || '');
   const authorInitials = post.authorName ? getInitials(firstName, lastName) : '';
 
@@ -219,7 +227,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
             <BackLink />
 
             {/* 文章头部 */}
-            <header className="article-head anim-fade-up stagger-1 mb-10">
+            <header className="article-head animate-fade-in mb-10">
               <div className="row-sm mb-5">
                 <span className="chip">{post.category}</span>
               </div>
@@ -240,8 +248,8 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
                       {post.authorName}
                     </span>
                     <span className="author-sub meta-text">
-                      {formatDateCN(post.publishedAt || post.createdAt)} · 约{' '}
-                      {estimateReadingTime(post.content)} 分钟阅读
+                      {formatDate(post.publishedAt || post.createdAt, locale)} · {' '}
+                      {t('readingTime', { minutes: estimateReadingTime(post.content) })}
                     </span>
                   </div>
                 </div>
@@ -274,7 +282,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
             )}
 
             {/* 文章正文 */}
-            <div id="article-content" className="article-content-wrapper anim-fade-up stagger-3">
+            <div id="article-content" className="article-content-wrapper animate-fade-in">
               <div className="article-content" dangerouslySetInnerHTML={{ __html: post.content }} />
 
               {/* 文章标签 */}
@@ -345,8 +353,8 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
               '@context': 'https://schema.org',
               '@type': 'BreadcrumbList',
               itemListElement: [
-                { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE_URL}/` },
-                { '@type': 'ListItem', position: 2, name: '文章', item: `${SITE_URL}/posts` },
+                { '@type': 'ListItem', position: 1, name: tNav('home'), item: `${SITE_URL}/` },
+                { '@type': 'ListItem', position: 2, name: tNav('posts'), item: `${SITE_URL}/posts` },
                 { '@type': 'ListItem', position: 3, name: stripMarkdown(post.title) },
               ],
             }).replace(/</g, '\\u003c'),

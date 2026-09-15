@@ -8,6 +8,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { Eye, ArrowLeft, ChevronDown, X, Columns2, Pencil } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { handleApiError } from '@/lib/error-toast';
 import { Container } from '@/components/ui/Container';
@@ -29,6 +30,19 @@ import type { PostData } from '@my-app/shared';
  * 动态加载 marked + highlight.js，避免 ~100KB 阻塞初始加载
  */
 let markdownRendererPromise: Promise<(content: string) => Promise<string>> | null = null;
+
+/**
+ * 分类选项展示名翻译键映射 — 选项 value 保持中文原值（数据层跨语言一致），
+ * 展示文案经 write.categoryNames 命名空间翻译
+ */
+const CATEGORY_LABEL_KEYS = {
+  技术: 'categoryNames.技术',
+  设计: 'categoryNames.设计',
+  生活: 'categoryNames.生活',
+  产品: 'categoryNames.产品',
+  创业: 'categoryNames.创业',
+  其他: 'categoryNames.其他',
+} as const;
 
 /**
  * 懒加载并返回 Markdown 渲染函数
@@ -121,6 +135,8 @@ export function WriteEditor() {
   const mutation = isEditMode ? updatePostMutation : createPostMutation;
 
   /** 标题输入值 */
+  const t = useTranslations('write');
+  const tCommon = useTranslations('common');
   const [title, setTitle] = useState('');
   /** 文章分类 */
   const [category, setCategory] = useState('技术');
@@ -242,11 +258,11 @@ export function WriteEditor() {
       <Container className="page-section">
         <EmptyState
           icon={<Pencil size={20} strokeWidth={2.5} />}
-          title="文章加载失败"
-          description="网络异常或文章不存在，请返回重试"
+          title={t('loadErrorTitle')}
+          description={t('loadErrorDesc')}
           action={
             <Button href="/profile" variant="ghost" size="sm">
-              返回我的文章
+              {t('backToMyPosts')}
             </Button>
           }
         />
@@ -307,13 +323,13 @@ export function WriteEditor() {
    */
   const savePost = (asDraft: boolean) => {
     if (!title.trim()) {
-      const msg = '请输入文章标题';
+      const msg = t('titleRequired');
       setFormError(msg);
       toast.error(msg);
       return;
     }
     if (!content.trim()) {
-      const msg = '请输入文章内容';
+      const msg = t('contentRequired');
       setFormError(msg);
       toast.error(msg);
       return;
@@ -332,22 +348,22 @@ export function WriteEditor() {
 
     const onSuccess = (data: PostData) => {
       if (asDraft) {
-        toast.success(isEditMode ? '草稿已更新' : '草稿已保存');
+        toast.success(isEditMode ? t('draftUpdated') : t('draftSaved'));
         // 新建草稿：URL 切换为编辑态，后续继续编辑/发布均基于该草稿 id
         if (!isEditMode && data?.post?.id) {
           router.replace(`/write?id=${encodeURIComponent(data.post.id)}`);
         }
       } else {
-        toast.success(isEditMode ? '文章已更新' : '文章已发布');
+        toast.success(isEditMode ? t('postUpdated') : t('postPublished'));
         router.push(data?.post?.id ? `/posts/${data.post.id}` : '/posts');
       }
     };
 
     const onError = (err: Error) => {
       if (err instanceof ApiRequestError && err.isUnauthorized) {
-        toast.error('请先登录后再操作');
+        toast.error(t('loginRequired'));
       } else {
-        handleApiError(err, '保存失败');
+        handleApiError(err, tCommon('saveFailed'));
       }
     };
 
@@ -370,7 +386,7 @@ export function WriteEditor() {
       <PageHeader
         title={
           <h1 className="page-title max-md:page-title-mobile">
-            {isEditMode ? '编辑文章' : '写文章'}
+            {isEditMode ? t('editTitle') : t('createTitle')}
           </h1>
         }
         actions={
@@ -380,7 +396,7 @@ export function WriteEditor() {
                 type="button"
                 onClick={() => setViewMode('edit')}
                 className={`segmented-item lg:hidden ${viewMode === 'edit' ? 'segmented-item-on' : ''}`}
-                aria-label="仅编辑"
+                aria-label={t('viewEdit')}
               >
                 <Pencil size={12} strokeWidth={2.5} />
               </button>
@@ -388,16 +404,16 @@ export function WriteEditor() {
                 type="button"
                 onClick={() => setViewMode('split')}
                 className={`segmented-item ${viewMode === 'split' ? 'segmented-item-on' : ''}`}
-                aria-label="分栏"
+                aria-label={t('viewSplit')}
               >
                 <Columns2 size={12} strokeWidth={2.5} />
-                <span className="hidden sm:inline">分栏</span>
+                <span className="hidden sm:inline">{t('viewSplit')}</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode('preview')}
                 className={`segmented-item lg:hidden ${viewMode === 'preview' ? 'segmented-item-on' : ''}`}
-                aria-label="仅预览"
+                aria-label={t('viewPreview')}
               >
                 <Eye size={12} strokeWidth={2.5} />
               </button>
@@ -407,13 +423,13 @@ export function WriteEditor() {
       />
 
       <form id="write-form" onSubmit={handleSave}>
-        <div className="form-stack">
+        <div className="form-stack animate-fade-in">
           {/* 标题输入区 */}
-          <div className="stagger-2">
+          <div>
             <input
               id="title"
               type="text"
-              placeholder="输入文章标题"
+              placeholder={t('titlePlaceholder')}
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
@@ -430,28 +446,28 @@ export function WriteEditor() {
           </div>
 
           {/* 正文 — 分栏编辑器 */}
-          <div className="stagger-3">
+          <div>
             {/* 桌面端分栏 */}
             <div className="hidden grid-cols-2 gap-4 lg:grid">
-              <div className="border-stroke-strong bg-page flex flex-col rounded-lg border">
+              <div className="border-stroke-strong bg-page input-focus-within flex flex-col rounded-lg border">
                 <div className="border-stroke border-b px-3 py-2">
                   <MarkdownToolbar onInsert={insertMarkdown} />
                 </div>
                 <textarea
                   ref={contentRef}
                   id="content"
-                  placeholder="开始写作..."
+                  placeholder={t('contentPlaceholder')}
                   onKeyDown={(e) => {
                     if (e.metaKey || e.ctrlKey) {
                       if (e.key === 'b') {
                         e.preventDefault();
-                        insertMarkdown('**', '**', '加粗文字');
+                        insertMarkdown('**', '**', t('phBold'));
                       } else if (e.key === 'i') {
                         e.preventDefault();
-                        insertMarkdown('*', '*', '斜体文字');
+                        insertMarkdown('*', '*', t('phItalic'));
                       } else if (e.key === 'k') {
                         e.preventDefault();
-                        insertMarkdown('[', '](https://)', '链接文字');
+                        insertMarkdown('[', '](https://)', t('phLink'));
                       }
                     }
                   }}
@@ -464,7 +480,7 @@ export function WriteEditor() {
                 <div
                   className="article-content text-(length:--type-md) leading-loose"
                   dangerouslySetInnerHTML={{
-                    __html: previewHtml || "<span class='text-faint'>暂无内容</span>",
+                    __html: previewHtml || `<span class='text-faint'>${t('noContent')}</span>`,
                   }}
                 />
               </div>
@@ -476,7 +492,7 @@ export function WriteEditor() {
                 <div
                   className="article-content border-stroke-strong bg-page min-h-[60vh] rounded-lg border p-6 text-(length:--type-md) leading-loose"
                   dangerouslySetInnerHTML={{
-                    __html: previewHtml || "<span class='text-faint'>暂无内容</span>",
+                    __html: previewHtml || `<span class='text-faint'>${t('noContent')}</span>`,
                   }}
                 />
               ) : (
@@ -485,7 +501,7 @@ export function WriteEditor() {
                   <textarea
                     ref={contentRef}
                     id="content"
-                    placeholder="开始写作..."
+                    placeholder={t('contentPlaceholder')}
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     rows={20}
@@ -497,8 +513,8 @@ export function WriteEditor() {
           </div>
 
           {/* 分类与标签 */}
-          <div className="stagger-4 grid grid-cols-1 gap-4 sm:grid-cols-[180px_1fr]">
-            <FormField label="分类">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-[180px_1fr]">
+            <FormField label={t('categoryLabel')}>
               <div className="relative">
                 <select
                   id="category"
@@ -506,9 +522,9 @@ export function WriteEditor() {
                   onChange={(e) => setCategory(e.target.value)}
                   className={`input-field input-focus appearance-none pr-8`}
                 >
-                  {['技术', '设计', '生活', '产品', '创业', '其他'].map((c) => (
+                  {(['技术', '设计', '生活', '产品', '创业', '其他'] as const).map((c) => (
                     <option key={c} value={c}>
-                      {c}
+                      {CATEGORY_LABEL_KEYS[c] ? t(CATEGORY_LABEL_KEYS[c]) : c}
                     </option>
                   ))}
                 </select>
@@ -520,22 +536,22 @@ export function WriteEditor() {
               </div>
             </FormField>
 
-            <FormField label="标签" hint="按回车添加标签（最多 5 个）">
+            <FormField label={t('tagLabel')} hint={t('tagHint')}>
               <div>
                 <div className="flex flex-wrap gap-2">
-                  {tags.map((t) => (
+                  {tags.map((item) => (
                     <Tag
-                      key={t}
-                      variant={tagVariantFor(t)}
+                      key={item}
+                      variant={tagVariantFor(item)}
                       size="md"
                       className="inline-flex items-center gap-1"
                     >
-                      {t}
+                      {item}
                       <button
                         type="button"
-                        onClick={() => removeTag(t)}
-                        className={`inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-current/70 transition-colors duration-150 hover:text-current`}
-                        aria-label="删除标签"
+                        onClick={() => removeTag(item)}
+                        className={`inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-current/70 transition-colors duration-150 ease-out hover:text-current`}
+                        aria-label={t('removeTag')}
                       >
                         <X size={12} strokeWidth={2.5} />
                       </button>
@@ -548,7 +564,7 @@ export function WriteEditor() {
                       onChange={(e) => setTagInput(e.target.value)}
                       onKeyDown={handleTagKeyDown}
                       onBlur={handleTagBlur}
-                      placeholder="添加标签"
+                      placeholder={t('tagPlaceholder')}
                       className={`border-stroke bg-page text-body placeholder:text-faint input-focus h-9 w-32 rounded-md border px-3 text-(length:--type-xs) leading-normal`}
                     />
                   )}
@@ -558,8 +574,8 @@ export function WriteEditor() {
           </div>
 
           {/* 封面图 */}
-          <div className="stagger-4">
-            <FormField label="封面图链接" hint="可选，输入图片 URL">
+          <div>
+            <FormField label={t('coverLabel')} hint={t('coverHint')}>
               <div className="row-sm">
                 <input
                   type="url"
@@ -572,7 +588,7 @@ export function WriteEditor() {
                   <div className="border-stroke-strong shrink-0 overflow-hidden rounded-lg border">
                     <Image
                       src={coverImage.trim()}
-                      alt="封面预览"
+                      alt={t('coverPreview')}
                       width={40}
                       height={40}
                       unoptimized
@@ -586,10 +602,10 @@ export function WriteEditor() {
           </div>
 
           {/* 摘要 */}
-          <div className="stagger-4">
-            <FormField label="摘要" hint="可选，留空则自动从正文截取（最多 500 字）">
+          <div>
+            <FormField label={t('summaryLabel')} hint={t('summaryHint')}>
               <textarea
-                placeholder="输入文章摘要，用于列表与分享展示..."
+                placeholder={t('summaryPlaceholder')}
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
                 maxLength={500}
@@ -600,16 +616,16 @@ export function WriteEditor() {
           </div>
 
           {/* 底部操作区 */}
-          <div className={`row-md border-stroke stagger-6 mt-8 justify-between border-t pt-6`}>
+          <div className={`row-md border-stroke mt-8 justify-between border-t pt-6`}>
             <span className={`text-muted text-(length:--type-sm) leading-normal`}>
               {content.length > 0
-                ? `已输入 ${content.length} 字符 · 约 ${estimateReadingTime(content)} 分钟阅读`
+                ? t('charCount', { count: content.length, minutes: estimateReadingTime(content) })
                 : ''}
             </span>
             <div className="row-sm">
               <Button variant="ghost" size="md" onClick={handleBack}>
                 <ArrowLeft size={14} strokeWidth={2.5} />
-                返回
+                {tCommon('back')}
               </Button>
               {/* 存草稿（BUG-03 修复）：新建与草稿编辑可用；已发布文章不提供转草稿，避免误操作下架 */}
               {(!isEditMode || editingPost?.isDraft) && (
@@ -621,7 +637,7 @@ export function WriteEditor() {
                   disabled={mutation.isPending}
                   onClick={() => savePost(true)}
                 >
-                  {isEditMode ? '更新草稿' : '保存草稿'}
+                  {isEditMode ? t('updateDraft') : t('saveDraft')}
                 </Button>
               )}
               <Button
@@ -632,7 +648,7 @@ export function WriteEditor() {
                 loading={mutation.isPending}
                 disabled={mutation.isPending}
               >
-                {isEditMode ? (editingPost?.isDraft ? '发布文章' : '更新文章') : '发布文章'}
+                {isEditMode ? (editingPost?.isDraft ? t('publishPost') : t('updatePost')) : t('publishPost')}
               </Button>
             </div>
           </div>

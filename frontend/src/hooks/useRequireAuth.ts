@@ -6,6 +6,7 @@
 'use client';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import type { User } from '@my-app/shared';
 
@@ -17,6 +18,7 @@ import type { User } from '@my-app/shared';
  */
 export function useRequireAuth(user: User | null, redirectPath: string) {
   const router = useRouter();
+  const t = useTranslations('common');
   /**
    * 鉴权校验回调
    * @param action 需要登录后执行的动作
@@ -24,12 +26,12 @@ export function useRequireAuth(user: User | null, redirectPath: string) {
   return useCallback(
     (action: () => void) => {
       if (!user) {
-        toast.info('请先登录');
+        toast.info(t('loginRequired'));
         router.push(`/login?redirect=${encodeURIComponent(redirectPath)}`);
         return;
       }
       action();
     },
-    [user, redirectPath, router],
+    [user, redirectPath, router, t],
   );
 }

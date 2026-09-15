@@ -5,6 +5,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import type { ErrorBoundaryProps } from '@my-app/shared';
@@ -15,6 +16,7 @@ import type { ErrorBoundaryProps } from '@my-app/shared';
  * @param reset 重置错误边界并重新渲染页面的函数
  */
 export default function Error({ error, reset }: ErrorBoundaryProps) {
+  const t = useTranslations('errors');
   /** 是否已复制错误信息 */
   const [copied, setCopied] = useState(false);
 
@@ -41,20 +43,20 @@ export default function Error({ error, reset }: ErrorBoundaryProps) {
 
   return (
     <Container className="page-section">
-      <div className="flex min-h-[50vh] flex-col items-center justify-center text-center">
+      <div className="animate-fade-in flex min-h-[50vh] flex-col items-center justify-center text-center">
         <h1 className="display-serif text-heading mb-5 text-(length:--type-6xl) leading-tight font-bold">
-          出错了
+          {t('errorTitle')}
         </h1>
         <p className="text-muted mb-10 max-w-100 text-(length:--type-lg) leading-relaxed">
-          页面加载时发生了错误。请尝试重新加载，如果问题持续出现请稍后再试。
+          {t('errorDesc')}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button onClick={reset}>重新加载</Button>
+          <Button onClick={reset}>{t('reload')}</Button>
           <Button variant="ghost" href="/">
-            返回首页
+            {t('goHome')}
           </Button>
           <Button variant="ghost" size="sm" onClick={copyError}>
-            {copied ? '已复制' : '复制错误信息'}
+            {copied ? t('copied') : t('copyError')}
           </Button>
         </div>
       </div>

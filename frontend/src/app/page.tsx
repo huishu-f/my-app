@@ -9,6 +9,7 @@ import { ArticleCard } from '@/components/ArticleCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { PinnedBadge } from '@/components/ui/PinnedBadge';
 import { WriteCta } from '@/components/WriteCta';
+import { getTranslations } from 'next-intl/server';
 import { listPostsServer } from '@/services/blog/server';
 
 /** ISR：构建时预渲染 + 60s 重验证，写操作 revalidateTag('posts') 即时失效 */
@@ -21,6 +22,8 @@ export const revalidate = 60;
  * 数据新鲜度：listPosts 走 Data Cache（60s + posts 标签）
  */
 export default async function HomePage() {
+  const t = await getTranslations('home');
+  const tCommon = await getTranslations('common');
 
   /** 最新文章列表（接口失败时为 null，区块不渲染） */
   const postsData = await listPostsServer({ page: 1, limit: 6 }).catch(() => null);
@@ -33,38 +36,38 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="hero-section" aria-label="品牌介绍">
+      <section className="hero-section" aria-label={t('brandSection')}>
         <Container>
           <div className="grid grid-cols-1 items-center gap-(--space-10) max-lg:gap-10 lg:grid-cols-[1fr_480px]">
             {/* 左文案 */}
             <div className="max-w-130 max-lg:max-w-none">
-              <div className="anim-fade-up stagger-1 row-sm m-0 mb-8 flex">
+              <div className="animate-fade-in row-sm m-0 mb-8 flex">
                 <span
                   className="hero-dot animate-breathing inline-block h-1.5 w-1.5 shrink-0 rounded-full"
                   aria-hidden="true"
                 />
                 <span className="text-muted text-(length:--type-sm) font-medium tracking-[0.02em]">
-                  多作者技术写作平台
+                  {t('heroBadge')}
                 </span>
               </div>
 
               <h1
-                className="anim-fade-up stagger-2 display-serif text-heading hero-title m-0 mb-8"
+                className="animate-fade-in display-serif text-heading hero-title m-0 mb-8"
                 style={{ textWrap: 'balance' } as { textWrap: 'balance' }}
               >
-                认真做事的人
+                {t('heroTitleLine1')}
                 <br />
-                工程的{' '}
-                <em className="underline-accent text-heading font-medium italic">深度笔记</em>
+                {t('heroTitlePrefix')}{' '}
+                <em className="underline-accent text-heading font-medium italic">{t('heroTitleEm')}</em>
               </h1>
 
-              <p className="anim-fade-up stagger-3 text-body hero-lead m-0 mb-10">
-                聚焦架构与工程实践，记录值得反复读的思考。
+              <p className="animate-fade-in text-body hero-lead m-0 mb-10">
+                {t('heroLead')}
               </p>
 
-              <div className="anim-fade-up stagger-4 flex flex-wrap items-center gap-5">
+              <div className="animate-fade-in flex flex-wrap items-center gap-5">
                 <Button href="/posts" size="lg">
-                  浏览文章
+                  {t('browsePosts')}
                   <svg
                     width="14"
                     height="14"
@@ -74,7 +77,7 @@ export default async function HomePage() {
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="transition-transform duration-200 group-hover:translate-x-[2px]"
+                    className="transition-transform duration-150 ease-out group-hover:translate-x-[2px]"
                   >
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
@@ -83,8 +86,8 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* 右 Mac 代码窗口 */}
-            <div className="hero-code-window overflow-hidden" aria-hidden="true">
+            {/* 右 Mac 代码窗口 — 纯渐入（不带位移：入场动画的 transform 会覆盖窗口的 3D 透视姿态） */}
+            <div className="hero-code-window animate-fade-in overflow-hidden" aria-hidden="true">
               {/* 窗口栏 */}
               <div className="hero-titlebar row-sm border-stroke border-b px-5 py-3.5">
                 <span className="hero-dot-close h-3 w-3 shrink-0 rounded-full transition-transform duration-200 hover:scale-110" />
@@ -98,7 +101,7 @@ export default async function HomePage() {
               {/* 代码主体 */}
               <pre className="text-body m-0 overflow-x-auto px-6 py-5 font-mono text-(length:--type-xs) leading-loose max-md:px-4 max-md:py-4">
                 <code className="bg-none font-[inherit]">
-                  <span className="tok-comment">{'// 鉴权守卫：Cookie 校验 + 注入 user'}</span>
+                  <span className="tok-comment">{t('codeComment')}</span>
                   {'\n'}
                   <span className="tok-key">export const</span>{' '}
                   <span className="tok-fn">authGuard</span> <span className="tok-punct">=</span>{' '}
@@ -140,34 +143,36 @@ export default async function HomePage() {
 
       {/* 最新文章区 — 接口失败或无文章时不渲染 */}
       {postsLoadError ? (
-        <section className="page-section" aria-label="近期文章">
+        <section className="page-section animate-fade-in" aria-label={t('latestSection')}>
           <Container>
             <div className="mb-8 flex items-end justify-between gap-4">
               <div>
-                <h2 className="section-title">近期文章</h2>
+                <h2 className="section-title">{t('latestTitle')}</h2>
               </div>
             </div>
             <EmptyState
               icon={<Search size={20} strokeWidth={2.5} />}
-              title="文章加载失败"
-              description="网络异常或服务暂时不可用，请稍后刷新页面重试"
-              action={<Button href="/">刷新页面</Button>}
+              title={t('loadErrorTitle')}
+              description={t('loadErrorDesc')}
+              action={<Button href="/">{tCommon('refresh')}</Button>}
             />
           </Container>
         </section>
       ) : (
         latestPosts.length > 0 && (
-          <section className="page-section" aria-label="近期文章">
+          <section className="page-section animate-fade-in" aria-label={t('latestSection')}>
             <Container>
             <div className="mb-8 flex items-end justify-between gap-4">
               <div>
-                <h2 className="section-title">近期文章</h2>
+                <h2 className="section-title">{t('latestTitle')}</h2>
                 <p className="text-muted mt-2 text-(length:--type-sm) leading-normal">
-                  最新发布的技术文章与工程实践
+                  {t('latestSubtitle')}
                 </p>
               </div>
                 <Button href="/posts" variant="ghost" size="sm">
-                  {hasMore ? `查看全部 ${postsData?.total ?? ''} 篇` : '查看全部'}
+                  {hasMore
+                    ? t('viewAllCount', { count: postsData?.total ?? '' })
+                    : t('viewAll')}
                 </Button>
               </div>
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

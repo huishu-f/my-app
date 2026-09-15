@@ -19,15 +19,20 @@ import {
 } from '@/services/blog/server';
 import { PAGE_SIZE } from '@/config/site';
 import { Suspense } from 'react';
+import { getTranslations } from 'next-intl/server';
 import { PostSidebar } from './_components/PostSidebar';
 import { PostsSearchInput } from './_components/PostsSearchInput';
 import { buildPostsUrl } from './_lib/buildPostsUrl';
 
-/** 文章列表页 SEO 元数据 */
-export const metadata: Metadata = {
-  title: '全部文章 · 我的博客',
-  description: '浏览所有已发布内容，按分类或标签筛选你感兴趣的话题。',
-};
+/** 文章列表页 SEO 元数据（随语言切换） */
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('posts');
+  const tMeta = await getTranslations('meta');
+  return {
+    title: `${t('title')} · ${tMeta('siteTitle')}`,
+    description: t('subtitle'),
+  };
+}
 
 /** 列表页 ISR 重新验证间隔（秒） */
 export const revalidate = 60;
@@ -42,6 +47,8 @@ export default async function PostsPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const t = await getTranslations('posts');
+  const tCommon = await getTranslations('common');
   const sp = await searchParams;
 
   const category = typeof sp.category === 'string' ? sp.category : undefined;
@@ -69,6 +76,7 @@ export default async function PostsPage({
   ]);
 
   const postsLoadError = postsResult === null;
+  // “全部”是 URL 数据层的固定哨兵值（跨语言一致，不随翻译变化），展示层由 PostSidebar 翻译
   const categories = ['全部', ...(categoriesData?.categories ?? [])];
   const tags = tagsData?.tags ?? [];
   const currentCategory = category ?? '全部';
@@ -104,8 +112,8 @@ export default async function PostsPage({
   return (
     <Container className="page-section">
       <PageHeader
-        title="全部文章"
-        subtitle="浏览所有已发布内容，按分类或标签筛选你感兴趣的话题。"
+        title={t('title')}
+        subtitle={t('subtitle')}
       />
 
       {/* 侧边栏（分类/标签筛选）与列表主体 */}
@@ -117,42 +125,48 @@ export default async function PostsPage({
           currentTag={currentTag}
           zeroResults={posts.length === 0}
         >
-          <div className="anim-fade-up stagger-2 mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="animate-fade-in mb-6 flex flex-wrap items-center justify-between gap-4">
             <p className="text-body text-(length:--type-sm) leading-normal font-medium">
-              共 {total} 篇{totalPages > 1 ? ` · 第 ${currentPage}/${totalPages} 页` : ''}
+              {totalPages > 1
+                ? t('totalWithPage', { count: total, current: currentPage, total: totalPages })
+                : t('totalOnly', { count: total })}
             </p>
             <div className="row-md flex-wrap">
               <PostsSearchInput initialValue={q ?? ''} />
             </div>
           </div>
 
-          {/* 列表三态：加载失败 / 空结果 / 卡片列表 */}
+          {/* 列表三态：加载失败 / 空结果 / 卡片列表 — 共享同一入场节奏（） */}
           {postsLoadError ? (
-            <EmptyState
-              icon={<Search size={20} />}
-              title="文章加载失败"
-              description="网络异常或服务暂时不可用，请稍后刷新页面重试"
-              action={
-                <Button href="/posts" variant="ghost" size="sm">
-                  刷新页面
-                </Button>
-              }
-            />
-          ) : posts.length === 0 ? (
-            <EmptyState
-              icon={<Search size={20} />}
-              title="没有符合条件的文章"
-              description="尝试调整筛选条件或搜索关键词"
-              action={
-                hasFilters ? (
+            <div className="animate-fade-in">
+              <EmptyState
+                icon={<Search size={20} />}
+                title={t('loadErrorTitle')}
+                description={t('loadErrorDesc')}
+                action={
                   <Button href="/posts" variant="ghost" size="sm">
-                    清除筛选
+                    {tCommon('refresh')}
                   </Button>
-                ) : undefined
-              }
-            />
+                }
+              />
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="animate-fade-in">
+              <EmptyState
+                icon={<Search size={20} />}
+                title={t('noResultsTitle')}
+                description={t('noResultsDesc')}
+                action={
+                  hasFilters ? (
+                    <Button href="/posts" variant="ghost" size="sm">
+                      {t('clearFilters')}
+                    </Button>
+                  ) : undefined
+                }
+              />
+            </div>
           ) : (
-            <div className="card-list">
+            <div className="card-list animate-fade-in">
               {posts.map((p, i) => (
                 <ArticleCard
                   key={p.id}
@@ -168,16 +182,16 @@ export default async function PostsPage({
 
           {/* 分页导航，仅超过一页时渲染 */}
           {totalPages > 1 && (
-            <nav className="mt-12 flex items-center justify-center gap-2" aria-label="分页导航">
+            <nav className="mt-12 flex items-center justify-center gap-2" aria-label={t('pagination')}>
               {currentPage === 1 ? (
-                <span className="page-btn pointer-events-none w-9 opacity-40" aria-label="上一页">
+                <span className="page-btn pointer-events-none w-9 opacity-40" aria-label={t('prevPage')}>
                   <ChevronLeft size={16} />
                 </span>
               ) : (
                 <Link
                   href={buildPostsUrl(baseParams, { page: String(Math.max(1, currentPage - 1)) })}
                   className="page-btn w-9"
-                  aria-label="上一页"
+                  aria-label={t('prevPage')}
                 >
                   <ChevronLeft size={16} />
                 </Link>
@@ -187,7 +201,7 @@ export default async function PostsPage({
                   key={n}
                   href={buildPostsUrl(baseParams, { page: String(n) })}
                   aria-current={n === currentPage ? 'page' : undefined}
-                  aria-label={`第 ${n} 页`}
+                  aria-label={t('pageN', { n })}
                   className={`page-btn min-w-9 px-2.5 text-(length:--type-sm) ${
                     n === currentPage
                       ? 'page-btn-active'
@@ -198,7 +212,7 @@ export default async function PostsPage({
                 </Link>
               ))}
               {currentPage === totalPages ? (
-                <span className="page-btn pointer-events-none w-9 opacity-40" aria-label="下一页">
+                <span className="page-btn pointer-events-none w-9 opacity-40" aria-label={t('nextPage')}>
                   <ChevronRight size={16} />
                 </span>
               ) : (
@@ -207,7 +221,7 @@ export default async function PostsPage({
                     page: String(Math.min(totalPages, currentPage + 1)),
                   })}
                   className="page-btn w-9"
-                  aria-label="下一页"
+                  aria-label={t('nextPage')}
                 >
                   <ChevronRight size={16} />
                 </Link>

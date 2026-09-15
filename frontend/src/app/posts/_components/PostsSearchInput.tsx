@@ -7,6 +7,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { PostsSearchInputProps } from '@my-app/shared';
 
 /** 防抖延迟（ms） */
@@ -17,6 +18,7 @@ const DEBOUNCE_MS = 300;
  * @param props {@link PostsSearchInputProps}
  */
 export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
+  const t = useTranslations('posts');
   const router = useRouter();
   const searchParams = useSearchParams();
   /** 当前搜索输入值 */
@@ -86,7 +88,7 @@ export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
         name="q"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="搜索文章..."
+        placeholder={t('searchPlaceholder')}
         className="border-stroke-strong bg-page text-body placeholder:text-faint input-focus h-10 w-full max-w-50 rounded-lg border py-0 pr-3 pl-9 text-(length:--type-sm) leading-normal"
       />
       {/* 清除按钮：有输入时展示 */}
@@ -94,7 +96,7 @@ export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
         <button
           type="button"
           onClick={clearSearch}
-          aria-label="清除搜索"
+          aria-label={t('clearSearch')}
           className="text-faint hover:bg-surface hover:text-heading absolute top-1/2 right-2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full transition-colors duration-150"
         >
           <X size={14} strokeWidth={2.5} />

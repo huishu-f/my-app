@@ -8,6 +8,7 @@
  */
 import { useCallback } from 'react';
 import toast from '@/lib/toast';
+import { useTranslations } from 'next-intl';
 import { useAsyncAction } from '@/lib/use-async-action';
 import { useFetch } from '@/lib/use-fetch';
 import { useAuth } from '@/components/auth-provider';
@@ -63,11 +64,15 @@ export function useUpdatePost() {
  * @returns useAsyncAction 提交函数与提交状态
  */
 export function useDeletePost() {
-  const action = useCallback(async (id: string) => {
-    await blogApi.deletePost(id);
-    toast.success('文章已删除');
-    return null;
-  }, []);
+  const t = useTranslations('post');
+  const action = useCallback(
+    async (id: string) => {
+      await blogApi.deletePost(id);
+      toast.success(t('postDeleted'));
+      return null;
+    },
+    [t],
+  );
   return useAsyncAction<string, null>(action);
 }
 
@@ -110,6 +115,7 @@ function useTogglePostAssociation<TData extends { [K in TKey]: boolean }, TKey e
   dataKey: TKey,
 ) {
   const { user, patchMe } = useAuth();
+  const t = useTranslations('common');
   const action = useCallback(
     async (id: string): Promise<TData> => {
       const data = await apiFn(id);
@@ -123,5 +129,7 @@ function useTogglePostAssociation<TData extends { [K in TKey]: boolean }, TKey e
     },
     [user, patchMe, apiFn, userField, dataKey],
   );
-  return useAsyncAction<string, TData>(action, { onError: () => toast.error('操作失败') });
+  return useAsyncAction<string, TData>(action, {
+    onError: () => toast.error(t('actionFailed')),
+  });
 }

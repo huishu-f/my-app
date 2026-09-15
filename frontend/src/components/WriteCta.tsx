@@ -4,15 +4,17 @@
  */
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Button } from './ui/Button';
 
 /**
  * WriteCta 首页开始写作入口
  */
 export function WriteCta() {
+  const t = useTranslations('home');
   return (
     <Button href="/write" variant="ghost" size="lg">
-      开始写作
+      {t('startWriting')}
     </Button>
   );
 }

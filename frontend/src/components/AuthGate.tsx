@@ -8,6 +8,7 @@ import { useAuth } from '@/components/auth-provider';
 import { LoginRequired } from '@/components/LoginRequired';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { UserCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 /**
  * AuthGate 鉴权守卫
@@ -17,6 +18,8 @@ import { UserCircle } from 'lucide-react';
  */
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
+  const t = useTranslations('common');
+  const tErrors = useTranslations('errors');
 
   if (loading) {
     return (
@@ -24,8 +27,8 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
         {/* 鉴权加载中，显示空状态骨架 */}
         <EmptyState
           icon={<UserCircle size={20} strokeWidth={2.5} />}
-          title="加载中..."
-          description="正在验证登录状态"
+          title={t('loading')}
+          description={t('verifyingAuth')}
         />
       </div>
     );
@@ -35,7 +38,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     return (
       <LoginRequired
         icon={<UserCircle size={20} strokeWidth={2.5} />}
-        description="登录后即可访问你的个人中心、写文章和账号设置"
+        description={tErrors('dashboardLoginDesc')}
       />
     );
   }

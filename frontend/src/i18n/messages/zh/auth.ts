@@ -1,0 +1,46 @@
+/**
+ * auth 模块 — 登录/注册页与密码相关组件
+ */
+const auth = {
+  loginTitle: '欢迎回来',
+  loginSubtitle: '登录你的账号以发布文章、评论与点赞。',
+  registerTitle: '创建账号',
+  registerSubtitle: '注册后即可发布文章、评论与互动。',
+  redirectNotice: '请先登录以继续访问目标页面',
+  firstName: '名',
+  lastName: '姓',
+  username: '用户名',
+  usernameHint: '可用字母、数字、下划线，3-30 字符',
+  email: '邮箱',
+  password: '密码',
+  pwdPlaceholder: '输入密码',
+  pwdPlaceholderMin: '至少 6 位',
+  loginSubmit: '登录',
+  registerSubmit: '注册',
+  forgotPwd: '忘记密码？请联系管理员重置',
+  rateLimit: '5 分钟内最多 5 次尝试',
+  noAccount: '还没有账号？',
+  registerNow: '立即注册 →',
+  hasAccount: '已有账号？',
+  loginNow: '立即登录 →',
+  loginSuccess: '登录成功',
+  registerSuccess: '注册成功，请登录',
+  invalidEmail: '请输入有效的邮箱地址',
+  emptyPwd: '请输入密码',
+  emailOrPwdError: '邮箱或密码错误',
+  accountDisabled: '账号已被禁用',
+  loginFailed: '登录失败',
+  duplicateAccount: '邮箱或用户名已被注册',
+  registerFailed: '注册失败，请重试',
+  errNameLength: '1-50 个字符',
+  errUsername: '仅允许字母、数字、下划线，3-30 字符',
+  errPassword: '密码至少 6 位',
+  strengthWeak: '密码强度：弱',
+  strengthMedium: '密码强度：中',
+  strengthStrong: '密码强度：强',
+  showPassword: '显示密码',
+  hidePassword: '隐藏密码',
+};
+
+export type Messages = typeof auth;
+export default auth;

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Filter } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { tagClassFor, tagVariantFor } from '@/components/ui/Tag';
 import { Button } from '@/components/ui/Button';
 import type { PostSidebarProps } from '@my-app/shared';
@@ -25,6 +26,7 @@ export function PostSidebar({
   children,
   zeroResults,
 }: PostSidebarProps) {
+  const t = useTranslations('posts');
   /** 移动端筛选面板展开标记 */
   const [showFilter, setShowFilter] = useState(false);
   const searchParams = useSearchParams();
@@ -44,7 +46,7 @@ export function PostSidebar({
         className="mb-5 lg:hidden"
       >
         <Filter size={16} strokeWidth={2.5} />
-        筛选
+        {t('filter')}
       </Button>
 
       <div className="flex gap-12 max-lg:flex-col">
@@ -54,8 +56,8 @@ export function PostSidebar({
         >
           <div className="content-stack-lg sticky top-20">
             {/* 分类筛选区块 */}
-            <div className="anim-fade-up stagger-2">
-              <h3 className="filter-heading mb-3">分类</h3>
+            <div className="animate-fade-in">
+              <h3 className="filter-heading mb-3">{t('categories')}</h3>
               <ul className="space-y-1">
                 {categories.map((name) => {
                   const active = currentCategory === name;
@@ -74,7 +76,7 @@ export function PostSidebar({
                             : 'text-body hover:bg-surface hover:text-heading'
                         }`}
                       >
-                        <span>{name}</span>
+                        <span>{name === '全部' ? t('allCategories') : name}</span>
                       </Link>
                     </li>
                   );
@@ -83,12 +85,12 @@ export function PostSidebar({
             </div>
 
             {/* 标签筛选区块 */}
-            <div className="anim-fade-up stagger-3">
-              <h3 className="filter-heading mb-3">标签</h3>
+            <div className="animate-fade-in">
+              <h3 className="filter-heading mb-3">{t('tags')}</h3>
               <div className="flex flex-wrap gap-2">
-                {tags.map((t) => {
-                  const tagName = typeof t === 'string' ? t : t.name;
-                  const tagCount = typeof t === 'string' ? 0 : t.count;
+                {tags.map((item) => {
+                  const tagName = typeof item === 'string' ? item : item.name;
+                  const tagCount = typeof item === 'string' ? 0 : item.count;
                   const active = currentTag === tagName;
                   return (
                     <Link

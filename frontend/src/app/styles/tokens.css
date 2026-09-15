@@ -208,8 +208,13 @@
     ui-sans-serif, system-ui, -apple-system, 'Noto Sans SC', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* 动画 */
-  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  /* 动画 — 全局规范令牌（规范详见 animations.css 头部）
+   * --ease-smooth：所有空间运动（缩放/旋转）的统一曲线，Tailwind 侧可用 ease-smooth
+   * 纯淡入（opacity-only）按规范用 ease-out */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  --animate-pop-in: pop-in 0.2s var(--ease-smooth) both;
+  --animate-pop-out: pop-out 0.2s var(--ease-smooth) both;
   --animate-spin: spin 0.6s linear infinite;
   --animate-breathing: breathing 4.5s ease-in-out infinite;
 }

@@ -6,10 +6,12 @@ import { memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Eye, Heart } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { CoverFallback } from './ui/CoverFallback';
 import { Avatar } from './ui/Avatar';
 import { Tag, tagVariantFor } from './ui/Tag';
-import { formatCount, formatDateCN } from '@/lib/format';
+import { formatCount, formatDate } from '@/lib/format';
+import type { Locale } from '@/i18n/config';
 import { stripHtml, stripMarkdown } from '@/lib/markdown';
 import { isSafeImageUrl } from '@/lib/validators';
 import type { ArticleCardProps } from '@my-app/shared';
@@ -21,7 +23,6 @@ import type { ArticleCardProps } from '@my-app/shared';
 export const ArticleCard = memo(function ArticleCard({
   post,
   href,
-  index = 0,
   badge,
   tags,
   actions,
@@ -30,6 +31,9 @@ export const ArticleCard = memo(function ArticleCard({
   className = '',
   variant = 'horizontal',
 }: ArticleCardProps) {
+  /** 当前语言（日期本地化用） */
+  const locale = useLocale() as Locale;
+  const t = useTranslations('common');
   /** 文章封面图地址 */
   const coverImage = post.coverImage;
 
@@ -50,7 +54,7 @@ export const ArticleCard = memo(function ArticleCard({
           fill
           sizes={isVertical ? '(max-width: 768px) 100vw, 400px' : '(max-width: 640px) 100vw, 200px'}
           referrerPolicy="no-referrer"
-          className="aspect-16/10 w-full rounded-lg object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          className="aspect-16/10 w-full rounded-lg object-cover transition-transform duration-300 ease-smooth group-hover:scale-[1.03]"
         />
       ) : (
         <CoverFallback className={isVertical ? 'aspect-16/10 w-full' : 'sm:h-full'} />
@@ -90,7 +94,7 @@ export const ArticleCard = memo(function ArticleCard({
             {post.authorName}
           </span>
           <span className="meta-dot" aria-hidden="true" />
-          <span>{formatDateCN(post.publishedAt || post.createdAt)}</span>
+          <span>{formatDate(post.publishedAt || post.createdAt, locale)}</span>
         </div>
       </div>
     </div>
@@ -136,7 +140,7 @@ export const ArticleCard = memo(function ArticleCard({
             {post.authorName}
           </span>
           <span className="meta-dot" aria-hidden="true" />
-          <span>{formatDateCN(post.publishedAt || post.createdAt)}</span>
+          <span>{formatDate(post.publishedAt || post.createdAt, locale)}</span>
           <span className="meta-dot" aria-hidden="true" />
           <span className="row-xs">
             <Eye size={12} strokeWidth={2.5} />
@@ -162,7 +166,7 @@ export const ArticleCard = memo(function ArticleCard({
         {/* 阅读全文引导 — hover 时强调 */}
         {href && (
           <span className="read-more text-faint group-hover:text-accent mt-2 inline-flex items-center gap-1 text-(length:--type-xs) font-semibold transition-colors duration-150">
-            阅读全文
+            {t('readMore')}
             <svg
               width="12"
               height="12"
@@ -172,7 +176,7 @@ export const ArticleCard = memo(function ArticleCard({
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="transition-transform duration-200 group-hover:translate-x-[2px]"
+              className="transition-transform duration-150 ease-out group-hover:translate-x-[2px]"
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
@@ -182,10 +186,10 @@ export const ArticleCard = memo(function ArticleCard({
     </div>
   );
 
-  /** 卡片容器class，含进入动画和交错延迟 */
-  const baseClass = `group relative card card-hover anim-fade-up ${
-    isVertical ? 'p-5' : 'p-6'
-  } ${index < 5 ? `stagger-${index + 1}` : ''} ${className}`;
+  /** 卡片容器class — 不携带入场动画：
+   *  卡片复用于列表翻页/筛选/Tab 切换等数据刷新场景，逐卡瀑布入场会在这些场景误播；
+   *  路由级入场由列表容器（card-list）统一承担单层 animate-fade-in */
+  const baseClass = `group relative card card-hover ${isVertical ? 'p-5' : 'p-6'} ${className}`;
 
   return (
     <div className={baseClass}>

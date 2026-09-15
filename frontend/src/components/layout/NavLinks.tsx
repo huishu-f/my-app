@@ -6,6 +6,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { NAV_LINKS } from '@/config/site';
 
 /**
@@ -13,6 +14,7 @@ import { NAV_LINKS } from '@/config/site';
  */
 export function NavLinks() {
   const pathname = usePathname();
+  const t = useTranslations('nav');
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -20,7 +22,7 @@ export function NavLinks() {
   };
 
   return (
-    <div className="flex items-center gap-4 max-md:hidden">
+    <div className="flex items-center gap-1.5 max-md:hidden">
       {NAV_LINKS.map((link) => {
         const active = isActive(link.href);
         return (
@@ -32,7 +34,7 @@ export function NavLinks() {
               active ? 'nav-link-active' : 'nav-item-inactive'
             }`}
           >
-            {link.label}
+            {t(link.key)}
           </Link>
         );
       })}

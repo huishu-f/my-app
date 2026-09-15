@@ -8,6 +8,7 @@
 
 import { useOptimistic, useTransition } from 'react';
 import { Heart, Bookmark, MessageCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { useToggleLike, useToggleFavorite } from '@/services/blog/hooks';
 import { usePostPageAuth } from '@/hooks/usePostPageAuth';
@@ -35,6 +36,7 @@ interface OptimisticState {
  * @param props {@link PostActionsProps}
  */
 export function PostActions({ user: ssrUser }: PostActionsProps) {
+  const t = useTranslations('post');
   /** 点赞 mutation 实例 */
   const likeMutation = useToggleLike();
   /** 收藏 mutation 实例 */
@@ -74,7 +76,7 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
         const data = await likeMutation.mutate(post.id);
         if (data) {
           updatePost((prev) => ({ ...prev, likes: data.likes }));
-          toast.success(data.liked ? '已点赞' : '已取消点赞');
+          toast.success(data.liked ? t('likeSuccess') : t('unlikeSuccess'));
         }
       });
     });
@@ -96,7 +98,7 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
         const data = await favoriteMutation.mutate(post.id);
         if (data) {
           updatePost((prev) => ({ ...prev, favorites: data.favorites }));
-          toast.success(data.favorited ? '已收藏' : '已取消收藏');
+          toast.success(data.favorited ? t('favoriteSuccess') : t('unfavoriteSuccess'));
         }
       });
     });
@@ -112,7 +114,7 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
         loading={isPending}
         disabled={isPending}
         aria-pressed={optimisticState.liked}
-        title={!user ? '登录后可点赞' : undefined}
+        title={!user ? t('loginToLike') : undefined}
         className={`rounded-full ${guestCls}`}
       >
         <Heart
@@ -121,7 +123,7 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
           className={optimisticState.liked ? 'fill-current' : ''}
           aria-hidden="true"
         />
-        {optimisticState.liked ? '已点赞' : '点赞'} · {formatCount(optimisticState.likes)}
+        {optimisticState.liked ? t('liked') : t('like')} · {formatCount(optimisticState.likes)}
       </Button>
 
       {/* 收藏 / 取消收藏按钮 */}
@@ -132,7 +134,7 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
         loading={isPending}
         disabled={isPending}
         aria-pressed={optimisticState.favorited}
-        title={!user ? '登录后可收藏' : undefined}
+        title={!user ? t('loginToFavorite') : undefined}
         className={`rounded-full ${guestCls}`}
       >
         <Bookmark
@@ -141,13 +143,13 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
           className={optimisticState.favorited ? 'fill-current' : ''}
           aria-hidden="true"
         />
-        {optimisticState.favorited ? '已收藏' : '收藏'} · {formatCount(optimisticState.favorites)}
+        {optimisticState.favorited ? t('favorited') : t('favorite')} · {formatCount(optimisticState.favorites)}
       </Button>
 
       {/* 评论数展示 */}
       <span className="text-muted inline-flex items-center gap-1.5 text-(length:--type-sm)">
         <MessageCircle size={16} strokeWidth={2.5} />
-        {post.commentsCount} 条评论
+        {t('commentsCount', { count: post.commentsCount })}
       </span>
     </div>
   );

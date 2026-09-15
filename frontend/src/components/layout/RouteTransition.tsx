@@ -1,8 +1,10 @@
 /**
  * @file RouteTransition.tsx
- * @description 路由级淡入过渡 — 监听 pathname 变化，给内容区添加无感知淡入效果。
- *              纯 CSS opacity 过渡，不依赖 framer-motion 等第三方库。
- *              原理：pathname 变化时重置 key 触发 remount，CSS animation 播放 fade-in
+ * @description 路由过渡容器 — pathname 变化时重置 key 触发内容区 remount，
+ *              使页面级入场动画（animate-fade-in）在客户端导航时能重新播放。
+ *              本身不叠加额外动画：入场动效由各页面路由级区块统一承担，
+ *              避免双层 opacity 过渡相乘造成的冗余开销与观感模糊
+ *              （设计依据见 styles/animations.css 全局动画规范）。
  */
 'use client';
 
@@ -15,9 +17,5 @@ import { usePathname } from 'next/navigation';
 export function RouteTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  return (
-    <div key={pathname} className="route-fade-in">
-      {children}
-    </div>
-  );
+  return <div key={pathname}>{children}</div>;
 }

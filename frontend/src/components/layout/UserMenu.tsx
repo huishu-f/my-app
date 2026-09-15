@@ -7,25 +7,27 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LogOut, User, PenLine, Settings, UserCircle } from 'lucide-react';
+import { LogOut, LogIn, PenLine, Settings, UserCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { Avatar } from '../ui/Avatar';
 import { useAuth } from '@/components/auth-provider';
 import { useLogout } from '@/services/auth/hooks';
 import { getInitials } from '@/lib/format';
 
-/** 用户下拉菜单项配置 */
+/** 用户下拉菜单项配置（label 键指向 nav 命名空间） */
 const userMenuItems = [
-  { href: '/profile', label: '个人中心', icon: UserCircle },
-  { href: '/write', label: '写文章', icon: PenLine },
-  { href: '/settings', label: '账号设置', icon: Settings },
-];
+  { href: '/profile', labelKey: 'profile', icon: UserCircle },
+  { href: '/write', labelKey: 'write', icon: PenLine },
+  { href: '/settings', labelKey: 'settings', icon: Settings },
+] as const;
 
 /**
  * UserMenu 用户菜单，登录/未登录状态切换与头像下拉
  */
 export function UserMenu() {
   const router = useRouter();
+  const t = useTranslations('nav');
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const { user } = useAuth();
   const logoutMutation = useLogout();
@@ -39,12 +41,12 @@ export function UserMenu() {
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        toast.success('已登出');
+        toast.success(t('logoutSuccess'));
         setUserMenuOpen(false);
         router.push('/');
       },
       onError: () => {
-        toast.error('登出失败，请重试');
+        toast.error(t('logoutFailed'));
       },
     });
   };
@@ -73,12 +75,13 @@ export function UserMenu() {
     return (
       <Link
         href="/login"
-        aria-label="登录"
-        className="text-muted [@media(hover:hover)]:hover:bg-surface [@media(hover:hover)]:hover:text-heading flex h-9 items-center justify-center gap-1.5 rounded-lg px-3 text-(length:--type-sm) font-medium leading-normal transition-[background-color,color] duration-150 max-md:w-9 max-md:px-0"
+        aria-label={t('login')}
+        className="text-muted [@media(hover:hover)]:hover:bg-surface [@media(hover:hover)]:hover:text-heading flex h-9 items-center justify-center gap-1.5 rounded-lg px-3 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:w-9 max-md:px-0"
       >
-        <User size={16} strokeWidth={2.5} className="h-4 w-4 shrink-0 max-md:hidden" />
-        <User size={20} strokeWidth={2.5} className="hidden h-5 w-5 max-md:block" />
-        <span className="max-md:hidden">登录</span>
+        {/* LogIn — 未登录态入口语义（人像 User 图标留给已登录头像场景） */}
+        <LogIn size={16} strokeWidth={2.5} className="h-4 w-4 shrink-0 max-md:hidden" />
+        <LogIn size={20} strokeWidth={2.5} className="hidden h-5 w-5 max-md:block" />
+        <span className="max-md:hidden">{t('login')}</span>
       </Link>
     );
   }
@@ -117,80 +120,84 @@ export function UserMenu() {
             setUserMenuOpen((v) => !v);
           }
         }}
-        aria-label="用户菜单"
+        aria-label={t('userMenu')}
         aria-expanded={userMenuOpen}
         aria-haspopup="menu"
-        className="ring-stroke/50 [@media(hover:hover)]:hover:bg-black/[0.04] dark:[@media(hover:hover)]:hover:bg-white/[0.08] flex h-9 w-9 items-center justify-center rounded-full transition-[box-shadow,background-color] duration-150 [@media(hover:hover)]:hover:ring-1"
+        className="ring-stroke/50 [@media(hover:hover)]:hover:bg-surface flex h-9 w-9 items-center justify-center rounded-full transition-[box-shadow,background-color] duration-150 ease-out [@media(hover:hover)]:hover:ring-1"
       >
         <Avatar
           initials={getInitials(user?.firstName ?? '', user?.lastName ?? '')}
           src={user?.avatar || undefined}
           size="sm"
-          alt={`${user?.firstName ?? ''} ${user?.lastName ?? ''}的头像`}
+          alt={t('avatarAlt', { name: `${user?.firstName ?? ''} ${user?.lastName ?? ''}`.trim() })}
         />
       </button>
 
-      {/* 用户下拉菜单 */}
-      {userMenuOpen && (
-        <div className="absolute top-full right-0 z-50 pt-2">
-          <div className="border-card-border bg-page animate-fade-in w-56 overflow-hidden rounded-xl border shadow-lg shadow-black/[0.08]">
-            {/* 用户信息头 */}
-            <div className="row-sm px-3.5 py-3">
-              <Avatar
-                initials={getInitials(user?.firstName ?? '', user?.lastName ?? '')}
-                src={user?.avatar || undefined}
-                size="sm"
-                alt={`${user?.firstName ?? ''} ${user?.lastName ?? ''}的头像`}
-              />
-              <div className="min-w-0">
-                <p className="text-heading m-0 truncate text-(length:--type-sm) leading-normal font-semibold">
-                  {user?.firstName} {user?.lastName}
-                </p>
-                <p className="text-faint m-0 truncate text-(length:--type-2xs) leading-normal">
-                  @{user?.username}
-                </p>
-              </div>
-            </div>
-
-            <div className="border-stroke/60 mx-3 border-t" />
-
-            {/* 菜单项 */}
-            <div className="p-1.5">
-              {userMenuItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setUserMenuOpen(false)}
-                    className="row-sm text-body hover:bg-surface hover:text-heading group rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150"
-                  >
-                    <Icon
-                      size={14}
-                      strokeWidth={2.5}
-                      className="text-faint group-hover:text-heading shrink-0 transition-colors duration-150"
-                    />
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="border-stroke/60 mx-3 border-t" />
-
-            {/* 退出登录 */}
-            <div className="p-1.5">
-              <button
-                onClick={handleLogout}
-                className="row-sm text-faint hover:bg-state-error-bg hover:text-state-error w-full rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150"
-              >
-                <LogOut size={14} strokeWidth={2.5} className="shrink-0" />
-                退出登录
-              </button>
+      {/* 用户下拉菜单 — 常挂载 + transition 双向切换（进出场对称，见全局动画规范） */}
+      <div
+        className={`absolute top-full right-0 z-50 pt-2 ${userMenuOpen ? '' : 'pointer-events-none'}`}
+      >
+        <div
+          className={`border-card-border bg-page ease-smooth w-56 origin-top overflow-hidden rounded-xl border shadow-lg transition-[opacity,transform,visibility] duration-200 ${
+            userMenuOpen ? 'visible scale-100 opacity-100' : 'invisible scale-[0.98] opacity-0'
+          }`}
+        >
+          {/* 用户信息头 */}
+          <div className="row-sm px-3.5 py-3">
+            <Avatar
+              initials={getInitials(user?.firstName ?? '', user?.lastName ?? '')}
+              src={user?.avatar || undefined}
+              size="sm"
+              alt={t('avatarAlt', { name: `${user?.firstName ?? ''} ${user?.lastName ?? ''}`.trim() })}
+            />
+            <div className="min-w-0">
+              <p className="text-heading m-0 truncate text-(length:--type-sm) leading-normal font-semibold">
+                {user?.firstName} {user?.lastName}
+              </p>
+              <p className="text-faint m-0 truncate text-(length:--type-2xs) leading-normal">
+                @{user?.username}
+              </p>
             </div>
           </div>
+
+          <div className="border-stroke/60 mx-3 border-t" />
+
+          {/* 菜单项 */}
+          <div className="p-1.5">
+            {userMenuItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setUserMenuOpen(false)}
+                  className="row-sm text-body hover:bg-surface hover:text-heading group rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out"
+                >
+                  <Icon
+                    size={14}
+                    strokeWidth={2.5}
+                    className="text-faint group-hover:text-heading shrink-0 transition-colors duration-150 ease-out"
+                  />
+                  {t(item.labelKey)}
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="border-stroke/60 mx-3 border-t" />
+
+          {/* 退出登录 */}
+          <div className="p-1.5">
+            <button
+              onClick={handleLogout}
+              className="row-sm text-faint hover:bg-state-error-bg hover:text-state-error w-full rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out"
+            >
+              <LogOut size={14} strokeWidth={2.5} className="shrink-0" />
+              {t('logout')}
+            </button>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

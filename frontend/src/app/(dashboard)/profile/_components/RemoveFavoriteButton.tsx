@@ -5,6 +5,7 @@
 'use client';
 
 import { BookmarkX } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { Button } from '@/components/ui/Button';
 import { useToggleFavorite } from '@/services/blog/hooks';
@@ -23,6 +24,8 @@ interface RemoveFavoriteButtonProps extends PostIdProps {
  * @param props {@link RemoveFavoriteButtonProps}
  */
 export function RemoveFavoriteButton({ postId, onRemoved }: RemoveFavoriteButtonProps) {
+  const t = useTranslations('profile');
+  const tCommon = useTranslations('common');
   /** 取消收藏的 mutation 实例 */
   const toggleFavoriteMutation = useToggleFavorite();
 
@@ -34,15 +37,15 @@ export function RemoveFavoriteButton({ postId, onRemoved }: RemoveFavoriteButton
       onClick={() =>
         toggleFavoriteMutation.mutate(postId, {
           onSuccess: () => {
-            toast.success('已取消收藏');
+            toast.success(t('removeFavoriteSuccess'));
             onRemoved?.();
           },
-          onError: () => toast.error('操作失败'),
+          onError: () => toast.error(t('removeFavoriteFailed')),
         })
       }
     >
       <BookmarkX size={14} strokeWidth={2.5} />
-      取消收藏
+      {t('removeFavorite')}
     </Button>
   );
 }

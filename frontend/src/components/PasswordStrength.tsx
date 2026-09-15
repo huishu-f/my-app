@@ -31,9 +31,7 @@ function strengthColor(score: number): string {
   return 'var(--color-state-success)';
 }
 
-/** 密码强度文字标签数组，索引对应分数 */
-const labels = ['', '密码强度：弱', '密码强度：中', '密码强度：强'];
-
+import { useTranslations } from 'next-intl';
 import type { PasswordStrengthProps } from '@my-app/shared';
 
 /**
@@ -41,6 +39,7 @@ import type { PasswordStrengthProps } from '@my-app/shared';
  * @param props {@link PasswordStrengthProps}
  */
 export function PasswordStrength({ password }: PasswordStrengthProps) {
+  const t = useTranslations('auth');
   /** 当前密码的强度分数 */
   const score = getStrength(password);
   if (!password) return null;
@@ -55,7 +54,7 @@ export function PasswordStrength({ password }: PasswordStrengthProps) {
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className="h-[3px] flex-1 rounded-xs transition-colors duration-200"
+            className="h-[3px] flex-1 rounded-xs transition-colors duration-150 ease-out"
             style={{
               background: i < score ? activeColor : 'var(--color-stroke)',
             }}
@@ -64,7 +63,7 @@ export function PasswordStrength({ password }: PasswordStrengthProps) {
       </div>
       {/* 强度文字标签 */}
       <span className="mt-1 block text-(length:--type-2xs)" style={{ color: activeColor }}>
-        {labels[score]}
+        {t(score <= 1 ? 'strengthWeak' : score === 2 ? 'strengthMedium' : 'strengthStrong')}
       </span>
     </>
   );
