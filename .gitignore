@@ -18,6 +18,7 @@ dist/
 # Misc
 .DS_Store
 *.pem
+.temp/
 
 # Debug logs
 npm-debug.log*
@@ -32,17 +33,19 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# Vercel
-.vercel
+# Next.js
+.next/
+frontend/.next/
 
 # TypeScript
 *.tsbuildinfo
 
 # IDE
 .idea/
-.vscode/
+.vscode/settings.local.json
 *.swp
 *.swo
 
 # OS
 Thumbs.db
+.env*

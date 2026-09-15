@@ -1,61 +1,47 @@
 /**
  * @file proxy.ts
- * @description Next.js 路由代理，在请求进入页面之前拦截未登录访问私有路径。
- *
- * 环节闭环：
- * - 用户访问私有页面 → Proxy 检测 Cookie → 无 Cookie 则重定向登录页
- * - 登录成功 → Cookie 种入 → 后续请求自动放行
- * - 登出 → Cookie 清除 → 再次访问私有页面被拦截
- *
- * 注意：httpOnly Cookie 无法通过 JS 读取是否存在，
- * 但 Proxy 运行在 Edge Runtime，可通过 request.cookies.get() 读取。
+ * @description Next.js 16 Proxy 中间件，负责路由守卫。
+ *              受保护路由检查 auth_token cookie，缺失则重定向 /login?redirect=<原路径>
+ *              注意：proxy 运行在 Edge Runtime，可读取 httpOnly Cookie；
+ *              仅拦截浏览器入站请求，服务端组件内的 fetch 不经过此处。
+ *              API Routes 已集成到同域 Next.js App Router，不再需要 API 代理。
  */
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-
-/** 需要登录才能访问的路径前缀 */
-const PRIVATE_PATHNAMES = ["/dashboard", "/profile", "/settings", "/write", "/my-articles", "/favorites", "/notifications", "/reading-list"];
-
-/** Cookie 名称 — 与后端 res.cookie() 的第一个参数保持一致 */
-const AUTH_COOKIE_NAME = "auth_token";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { AUTH_COOKIE } from '@/lib/api/request';
+import { PROTECTED_ROUTES } from '@/config/site';
 
 /**
- * 判断当前路径是否属于私有区域
- *
- * 严格匹配路径前缀：完全等于或以下一级 / 开头的子路径都视为私有。
- *
+ * 判断路径是否属于受保护路由
  * @param pathname 当前请求路径
- * @returns 类型谓词，true=私有路径需要鉴权
+ * @returns 是否受保护
  */
-function isPrivatePath(pathname: string) {
-  return PRIVATE_PATHNAMES.some((p) => pathname === p || pathname.startsWith(p + "/"));
+function isProtectedRoute(pathname: string): boolean {
+  return PROTECTED_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
 }
 
 /**
- * Next.js Proxy 入口
- *
- * 检查请求 Cookie：未登录用户访问私有路径时附带 redirect 参数跳转到登录页。
- * 公开路径直接放行。
- *
+ * Proxy 入口函数，处理路由守卫
  * @param request Next.js 请求对象
- * @returns 放行响应或重定向到登录页的响应
+ * @returns NextResponse — 路由守卫 redirect / 放行 next
  */
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+  const { pathname, search } = request.nextUrl;
 
-  if (!token && isPrivatePath(pathname)) {
-    const loginUrl = new URL("/login", request.url);
-    // 携带原始路径，登录成功后可跳转回去
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
+  // ── 路由守卫 ──
+  if (isProtectedRoute(pathname)) {
+    const authToken = request.cookies.get(AUTH_COOKIE)?.value;
+    if (!authToken) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', `${pathname}${search}`);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   return NextResponse.next();
 }
 
-/** Proxy 配置 */
+/** proxy 匹配规则：拦截非静态资源的页面路由（不再拦截 /api） */
 export const config = {
-  /** 匹配所有路径，由 proxy 内部判断是否需要拦截（排除 API、静态资源与图标） */
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
 };

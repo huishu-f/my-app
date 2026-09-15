@@ -1,43 +1,36 @@
-import type { AuthResponse } from "@my-app/shared";
-import { http } from "@/lib/api";
-import type { ChangePasswordDto, LoginDto, RegisterDto } from "./types";
+/**
+ * @file api.ts
+ * @description 认证模块 API 层。对齐后端 API.md，前缀 /auth，采用 HttpOnly Cookie 鉴权，
+ *              提供登录/注册/登出/修改密码/更新资料等接口调用。
+ */
+import { api } from '@/lib/api/request';
+import type {
+  AuthUserResponse,
+  ChangePasswordDto,
+  LoginDto,
+  RegisterDto,
+  UpdateProfileDto,
+} from '@my-app/shared';
 
-// ─── 端点 ──────────────────────────────────────────────
+/**
+ * 认证模块 API 集合
+ */
+export const authApi = {
+  /** 获取当前登录用户（authGuard），skipAuthRedirect 避免未登录时触发重定向 */
+  me: () => api.get<AuthUserResponse>('/auth/me', undefined, { skipAuthRedirect: true }),
 
-export const AUTH_ENDPOINTS = {
-  LOGIN: "/auth/login",
-  REGISTER: "/auth/register",
-  LOGOUT: "/auth/logout",
-  CHANGE_PASSWORD: "/auth/change-password",
-  ME: "/auth/me",
-} as const;
+  /** 登录（无鉴权，限流），成功后端下发 Cookie @param dto 登录表单数据 */
+  login: (dto: LoginDto) => api.post<null>('/auth/login', dto, { skipAuthRedirect: true }),
 
-// ─── 纯函数 ────────────────────────────────────────────
+  /** 注册（无鉴权，限流），仅创建用户，不下发登录态 @param dto 注册表单数据 */
+  register: (dto: RegisterDto) => api.post<AuthUserResponse>('/auth/register', dto),
 
-/** 获取当前用户信息 */
-export async function fetchUser(): Promise<AuthResponse["user"]> {
-  const res = await http.get<AuthResponse>(AUTH_ENDPOINTS.ME, { skipAuthRedirect: true });
-  if (!res?.user) throw new Error("获取用户信息失败");
-  return res.user;
-}
+  /** 登出（authGuard），清除 Cookie 并使 Token 失效 */
+  logout: () => api.post<null>('/auth/logout'),
 
-/** 登录 → 拉取用户信息（skipAuthRedirect：凭据错误不应触发 401 全局跳转） */
-export async function loginUser(data: LoginDto): Promise<AuthResponse["user"]> {
-  await http.post(AUTH_ENDPOINTS.LOGIN, data, { skipAuthRedirect: true });
-  return fetchUser();
-}
+  /** 修改密码（authGuard，限流），成功后清除登录态 @param dto 修改密码表单数据 */
+  changePassword: (dto: ChangePasswordDto) => api.post<null>('/auth/change-password', dto),
 
-/** 注册 */
-export function registerUser(data: RegisterDto) {
-  return http.post(AUTH_ENDPOINTS.REGISTER, data);
-}
-
-/** 登出（后端失败也静默） */
-export function logoutUser() {
-  return http.post(AUTH_ENDPOINTS.LOGOUT).catch(() => {});
-}
-
-/** 修改密码 */
-export function changePassword(data: ChangePasswordDto) {
-  return http.post(AUTH_ENDPOINTS.CHANGE_PASSWORD, data);
-}
+  /** 更新个人资料（authGuard），同步评论/文章冗余字段 @param dto 更新资料表单数据 */
+  updateProfile: (dto: UpdateProfileDto) => api.put<AuthUserResponse>('/auth/profile', dto),
+};
