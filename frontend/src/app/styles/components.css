@@ -112,7 +112,7 @@
 
 /* 统计数值 */
 @utility stat-value {
-  @apply text-heading text-(length:--type-3xl) font-bold;
+  @apply text-heading text-(length:--type-3xl) font-bold tabular-nums;
 }
 
 /* 统计标签 */
@@ -663,7 +663,7 @@ select:disabled {
   opacity: 0;
   transition: opacity 200ms ease-out;
   pointer-events: none;
-  z-index: 39;
+  z-index: 30;
 }
 .nav-bar-shadow.visible {
   opacity: 1;

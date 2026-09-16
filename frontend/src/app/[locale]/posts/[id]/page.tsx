@@ -248,7 +248,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ loc
                 <span className="chip">{categoryLabel}</span>
               </div>
 
-              <h1 className="article-title display-serif text-heading mt-0 text-(length:--type-5xl) leading-tight font-bold tracking-[-0.025em] max-md:text-(length:--type-4xl)">
+              <h1 className="article-title display-serif text-heading mt-0 text-(length:--type-5xl) leading-tight font-bold tracking-[-0.025em] max-md:text-(length:--type-4xl) text-balance">
                 {stripMarkdown(post.title)}
               </h1>
 

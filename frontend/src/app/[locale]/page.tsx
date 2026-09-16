@@ -63,8 +63,7 @@ export default async function HomePage({
               </div>
 
               <h1
-                className="animate-fade-in display-serif text-heading hero-title m-0 mb-8"
-                style={{ textWrap: 'balance' } as { textWrap: 'balance' }}
+                className="animate-fade-in display-serif text-heading hero-title m-0 mb-8 text-balance"
               >
                 {t('heroTitleLine1')}
                 <br />

@@ -6,7 +6,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Link, useRouter } from '@/i18n/navigation';
-import { LogOut, LogIn, PenLine, Settings, UserCircle } from 'lucide-react';
+import { LogOut, LogIn, Settings, NotepadText, UserRound, SquareArrowUpRightIcon, SquareArrowRightExit, BookUser, Columns3Cog } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { Avatar } from '../ui/Avatar';
@@ -16,9 +16,9 @@ import { getInitials } from '@/lib/format';
 
 /** 用户下拉菜单项配置（label 键指向 nav 命名空间） */
 const userMenuItems = [
-  { href: '/profile', labelKey: 'profile', icon: UserCircle },
-  { href: '/write', labelKey: 'write', icon: PenLine },
-  { href: '/settings', labelKey: 'settings', icon: Settings },
+  { href: '/profile', labelKey: 'profile', icon: BookUser },
+  { href: '/write', labelKey: 'write', icon: NotepadText },
+  { href: '/settings', labelKey: 'settings', icon: Columns3Cog },
 ] as const;
 
 /**
@@ -147,20 +147,20 @@ export function UserMenu() {
       </button>
 
       {/* 用户下拉菜单 — 常挂载 + transition 双向切换（进出场对称，见全局动画规范）。
-          右对齐贴头像（距屏幕右缘 16px）；移动端收窄宽度（w-52）、菜单项升到
-          44px 触摸档 + 16px 字号，图标成列左对齐，信息头保持头像左、文案右的紧凑行 */}
+          PC 与移动端统一：16px 图标、text-muted 配色、py-2 行高，
+          移动端仅增大触摸目标（min-h-11）和字号（15px），不改变图标尺寸和配色 */}
       <div
         className={`absolute top-full right-0 z-50 pt-2 ${userMenuOpen ? '' : 'pointer-events-none'}`}
       >
         <div
           role="menu"
           aria-label={t('userMenu')}
-          className={`border-card-border bg-page ease-smooth w-56 origin-top-right overflow-hidden rounded-xl border shadow-lg transition-[opacity,transform,visibility] duration-200 max-md:w-52 ${
+          className={`border-card-border bg-page ease-smooth w-56 origin-top-right overflow-hidden rounded-xl border shadow-lg transition-[opacity,transform,visibility] duration-200 ${
             userMenuOpen ? 'visible scale-100 opacity-100' : 'invisible scale-[0.98] opacity-0'
           }`}
         >
           {/* 用户信息头 — 头像在左、姓名/用户名在右 */}
-          <div className="row-sm px-3.5 py-3 max-md:py-3.5">
+          <div className="row-sm px-3.5 py-3">
             <Avatar
               initials={initials}
               src={user?.avatar || undefined}
@@ -179,7 +179,7 @@ export function UserMenu() {
 
           <div className="border-stroke/60 mx-3 border-t" />
 
-          {/* 菜单项 — 左对齐，图标成列；移动端 44px 触摸目标 + 16px 字号 */}
+          {/* 菜单项 — 图标 16px、text-muted，与 navbar 图标视觉重量一致 */}
           <div className="p-1.5">
             {userMenuItems.map((item) => {
               const Icon = item.icon;
@@ -189,12 +189,12 @@ export function UserMenu() {
                   href={item.href}
                   role="menuitem"
                   onClick={() => setUserMenuOpen(false)}
-                  className="row-sm text-body hover:bg-surface hover:text-heading group rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:gap-2.5 max-md:px-3 max-md:text-(length:--type-md)"
+                  className="row-sm text-body hover:bg-surface hover:text-heading group min-h-10 rounded-lg px-2.5 py-2 text-(length:--type-base) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:px-3 max-md:text-(length:--type-md)"
                 >
                   <Icon
-                    size={14}
+                    size={16}
                     strokeWidth={2.5}
-                    className="text-faint group-hover:text-heading h-3.5 w-3.5 shrink-0 transition-colors duration-150 ease-out max-md:h-4 max-md:w-4"
+                    className="text-muted group-hover:text-heading h-4 w-4 shrink-0 transition-colors duration-150 ease-out"
                   />
                   {t(item.labelKey)}
                 </Link>
@@ -209,12 +209,12 @@ export function UserMenu() {
             <button
               onClick={handleLogout}
               role="menuitem"
-              className="row-sm text-faint hover:bg-state-error-bg hover:text-state-error w-full rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:gap-2.5 max-md:px-3 max-md:text-(length:--type-md)"
+              className="row-sm text-muted hover:bg-state-error-bg hover:text-state-error group w-full min-h-10 rounded-lg px-2.5 py-2 text-(length:--type-base) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:px-3 max-md:text-(length:--type-md)"
             >
-              <LogOut
-                size={14}
+              <SquareArrowRightExit
+                size={16}
                 strokeWidth={2.5}
-                className="h-3.5 w-3.5 shrink-0 max-md:h-4 max-md:w-4"
+                className="h-4 w-4 shrink-0 transition-colors duration-150 ease-out group-hover:text-state-error"
               />
               {t('logout')}
             </button>
