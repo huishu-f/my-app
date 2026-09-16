@@ -59,5 +59,5 @@ export function proxy(request: NextRequest) {
 
 /** proxy 匹配规则：拦截非静态资源的页面路由（不拦截 /api） */
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|api).*)'],
 };
