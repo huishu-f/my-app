@@ -6,7 +6,17 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Link, useRouter } from '@/i18n/navigation';
-import { LogOut, LogIn, Settings, NotepadText, UserRound, SquareArrowUpRightIcon, SquareArrowRightExit, BookUser, Columns3Cog } from 'lucide-react';
+import {
+  LogOut,
+  LogIn,
+  Settings,
+  NotepadText,
+  UserRound,
+  SquareArrowUpRightIcon,
+  SquareArrowRightExit,
+  BookUser,
+  Columns3Cog,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import { Avatar } from '../ui/Avatar';
@@ -209,12 +219,12 @@ export function UserMenu() {
             <button
               onClick={handleLogout}
               role="menuitem"
-              className="row-sm text-muted hover:bg-state-error-bg hover:text-state-error group w-full min-h-10 rounded-lg px-2.5 py-2 text-(length:--type-base) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:px-3 max-md:text-(length:--type-md)"
+              className="row-sm text-muted hover:bg-state-error-bg hover:text-state-error group min-h-10 w-full rounded-lg px-2.5 py-2 text-(length:--type-base) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:px-3 max-md:text-(length:--type-md)"
             >
               <SquareArrowRightExit
                 size={16}
                 strokeWidth={2.5}
-                className="h-4 w-4 shrink-0 transition-colors duration-150 ease-out group-hover:text-state-error"
+                className="group-hover:text-state-error h-4 w-4 shrink-0 transition-colors duration-150 ease-out"
               />
               {t('logout')}
             </button>

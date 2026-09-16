@@ -57,7 +57,27 @@ export function PostToc({ articleId }: PostTocProps) {
   }, [articleId]);
 
   /**
-   * 监听标题可见性变化高亮当前章节，并计算滚动进度
+   * 滚动进度计算 — 独立于标题，无标题时也正常工作
+   */
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        setProgress(docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0);
+        ticking = false;
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /**
+   * 监听标题可见性变化高亮当前章节
    */
   useEffect(() => {
     if (tocItems.length === 0) return;
@@ -78,25 +98,7 @@ export function PostToc({ articleId }: PostTocProps) {
     );
     headings.forEach((h) => observer.observe(h));
 
-    // 滚动进度计算
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0);
-        ticking = false;
-      });
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', onScroll);
-    };
+    return () => observer.disconnect();
   }, [tocItems]);
 
   /**
@@ -123,15 +125,13 @@ export function PostToc({ articleId }: PostTocProps) {
     };
   }, []);
 
-  if (tocItems.length === 0) return null;
-
   /** 当前高亮标题在目录中的索引 */
   const activeIndex = tocItems.findIndex((h) => h.id === activeId);
 
   return (
     <aside className="toc hidden w-56 shrink-0 lg:block" aria-label={t('tocLabel')}>
       <div className="animate-fade-in sticky top-20 hidden lg:block">
-        {/* 阅读进度条 */}
+        {/* 阅读进度条 — 即使无标题也显示，不依赖 tocItems */}
         <div className="mb-5">
           <div className="text-faint mb-2 flex items-center justify-between text-(length:--type-2xs)">
             <span>{t('readingProgress')}</span>
@@ -145,52 +145,54 @@ export function PostToc({ articleId }: PostTocProps) {
           </div>
         </div>
 
-        {/* 目录标签 */}
-        <div className="toc-label text-faint mb-4 flex items-center gap-2 text-(length:--type-xs) leading-normal font-semibold tracking-[0.05em] uppercase">
-          <span className="inline-block h-3 w-0.5 rounded-full bg-current opacity-50" />
-          {t('toc')}
-          <span className="bg-stroke text-muted ml-1 rounded-full px-2 py-px text-(length:--type-2xs) font-medium tracking-normal normal-case">
-            {tocItems.length}
-          </span>
-        </div>
+        {/* 目录 — 无标题时隐藏目录区域，仅保留进度条 */}
+        {tocItems.length > 0 && (
+          <>
+            <div className="toc-label text-faint mb-4 flex items-center gap-2 text-(length:--type-xs) leading-normal font-semibold tracking-[0.05em] uppercase">
+              <span className="inline-block h-3 w-0.5 rounded-full bg-current opacity-50" />
+              {t('toc')}
+              <span className="bg-stroke text-muted ml-1 rounded-full px-2 py-px text-(length:--type-2xs) font-medium tracking-normal normal-case">
+                {tocItems.length}
+              </span>
+            </div>
 
-        {/* 目录列表 */}
-        <nav
-          className="toc-list border-stroke flex flex-col gap-1 border-l"
-          aria-label={t('tocNav')}
-        >
-          {tocItems.map((h) => {
-            const active = activeId === h.id;
-            return (
-              <a
-                key={h.id}
-                href={`#${h.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToHeading(h.id);
-                }}
-                aria-current={active ? 'location' : undefined}
-                aria-label={h.text}
-                title={h.text}
-                className={`toc-item block border-l-2 py-2 text-left leading-snug transition-all duration-150 ease-out ${
-                  h.sub ? 'pl-6 text-(length:--type-xs)' : 'pl-3 text-(length:--type-sm)'
-                } ${
-                  active
-                    ? 'border-accent text-heading -ml-px font-medium'
-                    : 'text-muted hover:border-heading hover:text-heading -ml-px border-transparent transition-colors duration-150 ease-out'
-                }`}
-              >
-                <span className="block truncate">{h.text}</span>
-              </a>
-            );
-          })}
-        </nav>
+            <nav
+              className="toc-list border-stroke flex flex-col gap-1 border-l"
+              aria-label={t('tocNav')}
+            >
+              {tocItems.map((h) => {
+                const active = activeId === h.id;
+                return (
+                  <a
+                    key={h.id}
+                    href={`#${h.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToHeading(h.id);
+                    }}
+                    aria-current={active ? 'location' : undefined}
+                    aria-label={h.text}
+                    title={h.text}
+                    className={`toc-item block border-l-2 py-2 text-left leading-snug transition-all duration-150 ease-out ${
+                      h.sub ? 'pl-6 text-(length:--type-xs)' : 'pl-3 text-(length:--type-sm)'
+                    } ${
+                      active
+                        ? 'border-accent text-heading -ml-px font-medium'
+                        : 'text-muted hover:border-heading hover:text-heading -ml-px border-transparent transition-colors duration-150 ease-out'
+                    }`}
+                  >
+                    <span className="block truncate">{h.text}</span>
+                  </a>
+                );
+              })}
+            </nav>
 
-        {/* 底部位置指示 */}
-        {activeIndex >= 0 && (
-          <div className="text-faint mt-4 text-(length:--type-2xs)">
-            {activeIndex + 1} / {tocItems.length}
-          </div>
+            {activeIndex >= 0 && (
+              <div className="text-faint mt-4 text-(length:--type-2xs)">
+                {activeIndex + 1} / {tocItems.length}
+              </div>
+            )}
+          </>
         )}
       </div>
     </aside>

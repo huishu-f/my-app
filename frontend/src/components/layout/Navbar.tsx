@@ -48,7 +48,7 @@ export function Navbar() {
           {/* 右侧功能区 — ml-auto 贴右，统一 4px 节奏收紧：
               组内 gap-1（图标按钮 36px 触达区，视觉间距 ~20px），
               组间 gap-1.5 / PC gap-2，分组仅靠一条弱分割线 + 留白区分，不堆砌线条 */}
-          <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-1.5">
             {/* 组1：导航（PC 链接 / 移动端汉堡）+ 主题切换 */}
             <div className="flex items-center gap-1">
               <NavLinks />

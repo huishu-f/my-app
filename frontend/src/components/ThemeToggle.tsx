@@ -7,7 +7,7 @@
 import { useSyncExternalStore } from 'react';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, SunMedium } from 'lucide-react';
 
 /**
  * 客户端环境检测 — useSyncExternalStore 的 getServerSnapshot 在 SSR 时返回 false，
@@ -48,7 +48,7 @@ export function ThemeToggle() {
             : 'translate-y-0 rotate-0 opacity-100'
         }`}
       >
-        <Sun size={20} strokeWidth={2.5} className="h-5 w-5" />
+        <SunMedium size={20} strokeWidth={2.5} className="h-5 w-5" />
       </span>
       {/* 月亮图标（暗色模式时显示） */}
       <span
