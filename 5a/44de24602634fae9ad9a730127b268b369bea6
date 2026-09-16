@@ -1,0 +1,31 @@
+frontend/src/components/layout/Navbar.tsx
+  h_7a7e6c68a7d90b 51
+frontend/src/components/ThemeToggle.tsx
+  h_7a7e6c68a7d90b 10,51
+frontend/src/app/[locale]/posts/[id]/_components/PostToc.tsx
+  s_d9a5abfba249ca::t_2c4b62c930c924 134,148-195
+  s_d9a5abfba249ca::t_bd2c5a37195086 60-80,101
+frontend/src/components/layout/UserMenu.tsx
+  h_7a7e6c68a7d90b 18,222,227
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5a44de24602634fae9ad9a730127b268b369bea6",
+  "prompts": {},
+  "humans": {
+    "h_7a7e6c68a7d90b": {
+      "author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  },
+  "sessions": {
+    "s_d9a5abfba249ca": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "98301cfa-f623-4635-8ece-b6befc03207f",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
