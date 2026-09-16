@@ -18,6 +18,7 @@ const profile = {
   removeFavorite: '取消收藏',
   removeFavoriteSuccess: '已取消收藏',
   removeFavoriteFailed: '操作失败，请重试',
+  roleWriter: '作者',
 };
 
 export type Messages = typeof profile;

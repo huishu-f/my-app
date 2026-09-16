@@ -30,8 +30,8 @@ export default function GlobalError({
    * 直接读取语言偏好 Cookie 选择文案（与 i18n/config 的 LOCALE_COOKIE 约定一致）
    */
   const isEn =
-    typeof document !== 'undefined' &&
-    document.cookie.match(/(?:^|;\s*)locale=en/)?.[0] !== undefined;
+    typeof window !== 'undefined' &&
+    window.location.pathname.startsWith('/en');
   const copy = isEn
     ? {
         title: 'Something went wrong',
@@ -45,7 +45,7 @@ export default function GlobalError({
       };
 
   return (
-    <html lang="zh-CN">
+    <html lang={isEn ? 'en' : 'zh-CN'}>
       <body className="antialiased">
         <style>{`
           :root {

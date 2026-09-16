@@ -8,6 +8,9 @@
 /** 固定分类数据值（中文哨兵值，写入与查询均使用原值） */
 export const CATEGORY_VALUES = ['技术', '设计', '生活', '产品', '创业', '其他'] as const;
 
+/** 「全部」分类哨兵值 — 跨语言固定常量，用于 URL 数据层表示不筛选分类 */
+export const ALL_CATEGORY = '全部';
+
 /** 分类数据值类型 */
 export type CategoryValue = (typeof CATEGORY_VALUES)[number];
 

@@ -7,7 +7,7 @@
 'use client';
 
 import { useCurrentUser } from './useCurrentUser';
-import { usePostState, type PostStateValue } from '@/app/posts/[id]/_components/PostStateProvider';
+import { usePostState, type PostStateValue } from '@/app/[locale]/posts/[id]/_components/PostStateProvider';
 import { useRequireAuth } from './useRequireAuth';
 import type { User } from '@my-app/shared';
 

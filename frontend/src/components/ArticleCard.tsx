@@ -3,7 +3,7 @@
  * @description 文章卡片组件，展示封面、标题、摘要、标签、作者及统计数据，支持跳转链接和附加操作
  */
 import { memo } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { Eye, Heart } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -77,7 +77,7 @@ export const ArticleCard = memo(function ArticleCard({
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         {/* 分类与徽章区域 */}
         <div className="row-sm">
-          <span className="text-heading text-(length:--type-xs) leading-normal font-semibold tracking-[0.04em] uppercase">
+          <span className="text-heading text-(length:--type-xs) leading-normal font-semibold tracking-[0.04em]">
             {categoryLabel}
           </span>
           {badge}
@@ -112,7 +112,7 @@ export const ArticleCard = memo(function ArticleCard({
       <div className="flex min-w-0 flex-1 flex-col gap-3">
         {/* 分类与徽章区域 */}
         <div className="row-sm">
-          <span className="text-heading text-(length:--type-xs) leading-normal font-semibold tracking-[0.04em] uppercase">
+          <span className="text-heading text-(length:--type-xs) leading-normal font-semibold tracking-[0.04em]">
             {categoryLabel}
           </span>
           {badge}

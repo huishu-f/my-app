@@ -5,7 +5,7 @@
 
 'use client';
 import { useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
 import type { User } from '@my-app/shared';

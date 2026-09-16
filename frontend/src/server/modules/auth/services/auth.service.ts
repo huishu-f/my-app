@@ -74,7 +74,7 @@ export function createAuthService(deps: {
       bio: '',
       location: '',
       website: '',
-      joined: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      joined: new Date().toISOString(),
       role: 'Writer',
       company: '',
       verified: false,

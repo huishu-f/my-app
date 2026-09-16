@@ -3,7 +3,7 @@
  * @description 通用按钮组件，支持 primary/ghost/outline/danger 四种变体和多尺寸，可根据 href 自动渲染为链接
  *              React 19：ref 作为普通 prop 传递，无需 forwardRef 包装
  */
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type {
   ButtonProps,
   ButtonVariant,

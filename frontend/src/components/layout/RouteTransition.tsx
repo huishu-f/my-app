@@ -8,7 +8,7 @@
  */
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/i18n/navigation';
 
 /**
  * RouteTransition 路由过渡容器

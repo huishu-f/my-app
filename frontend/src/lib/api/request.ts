@@ -11,7 +11,7 @@ import { ApiRequestError } from '@my-app/shared';
 export { ApiRequestError };
 import type { ApiResponse, RequestOptions, ValidationErrorDetail } from '@my-app/shared';
 import { AUTH_TOKEN_COOKIE } from '@/lib/auth-constants';
-import { LOCALE_COOKIE } from '@/i18n/config';
+import { SITE_URL } from '@/config/site';
 
 /** 鉴权 Cookie 名称（与后端 auth-cookie.helper 共用 lib/auth-constants.ts） */
 export const AUTH_COOKIE = AUTH_TOKEN_COOKIE;
@@ -36,13 +36,12 @@ const ERROR_MESSAGES = {
 } as const;
 
 /**
- * 解析当前语言偏好：客户端读 document.cookie（同步、零开销）；
+ * 解析当前语言偏好：客户端从 URL 路径前缀提取（/en → en，其余 → zh）；
  * 服务端回退 zh（服务端抛出的底层错误极少直接展示给用户，后端业务 message 才是主要来源）
  */
 function currentLocale(): 'zh' | 'en' {
-  if (typeof document !== 'undefined') {
-    const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${LOCALE_COOKIE}=(\\w+)`));
-    if (match?.[1] === 'en') return 'en';
+  if (typeof window !== 'undefined') {
+    return window.location.pathname.startsWith('/en') ? 'en' : 'zh';
   }
   return 'zh';
 }
@@ -114,8 +113,8 @@ async function buildServerUrl(path: string, query?: RequestOptions['query']): Pr
     // headers() 不可用（非 Next.js 上下文），fallback
   }
 
-  // 最终 fallback：本地开发默认地址
-  return `http://localhost:3000${relativeUrl}`;
+  // 最终 fallback：使用 SITE_URL（与 site.ts 同源，默认 localhost:3000）
+  return `${SITE_URL.replace(/\/$/, '')}${relativeUrl}`;
 }
 
 /** 客户端 401 防抖锁，避免多个并行请求同时触发重定向 */

@@ -20,6 +20,7 @@ const profile: Messages = {
   removeFavorite: 'Unfavorite',
   removeFavoriteSuccess: 'Unfavorited',
   removeFavoriteFailed: 'Failed — try again',
+  roleWriter: 'Writer',
 };
 
 export default profile;

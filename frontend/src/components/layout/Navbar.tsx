@@ -3,7 +3,7 @@
  * @description 顶部导航栏 — Server Component 外壳，渲染品牌标识和导航链接
  *              交互部分（用户菜单、移动端菜单）由 Client 岛屿组件承担
  */
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { BookOpen } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ThemeToggle } from '../ThemeToggle';

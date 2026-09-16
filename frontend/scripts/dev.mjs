@@ -21,6 +21,9 @@ const root = path.resolve(__dirname, '..');
 const PORT = Number(process.env.DEV_PORT || process.env.PORT || 3000);
 const freePortOnly = process.argv.includes('--free-port-only');
 
+/* ── 0. 清理 NODE_ENV — 外部环境可能设了 production，导致 next dev 行为异常（CSP 不加 unsafe-eval 等） ── */
+delete process.env.NODE_ENV;
+
 /* ── 1. 清理 fetch-cache ── */
 try {
   rmSync(path.join(root, '.next/cache/fetch-cache'), { recursive: true, force: true });

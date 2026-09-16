@@ -7,18 +7,24 @@ import toast from '@/lib/toast';
 import { ApiRequestError } from '@/lib/api/request';
 
 /**
+ * 从 API 错误中提取最准确的用户可见消息
+ * @param err 捕获的错误对象
+ * @param fallbackMsg 非 ApiRequestError 时的兜底提示
+ * @returns 适合显示给用户的错误文案
+ */
+export function resolveApiErrorMessage(err: Error, fallbackMsg = ''): string {
+  if (err instanceof ApiRequestError) {
+    if (err.details?.length) return err.details.map((d) => d.message).join('；');
+    return err.message;
+  }
+  return err.message || fallbackMsg;
+}
+
+/**
  * 统一处理 mutation/API 调用错误并 toast 提示
  * @param err 捕获的错误对象
  * @param fallbackMsg 非 ApiRequestError 时的兜底提示
  */
 export function handleApiError(err: Error, fallbackMsg = ''): void {
-  if (err instanceof ApiRequestError) {
-    if (err.details?.length) {
-      toast.error(err.details.map((d) => d.message).join('；'));
-    } else {
-      toast.error(err.message);
-    }
-  } else {
-    toast.error(err.message || fallbackMsg);
-  }
+  toast.error(resolveApiErrorMessage(err, fallbackMsg));
 }

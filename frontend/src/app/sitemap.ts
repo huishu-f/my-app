@@ -10,6 +10,7 @@ import {
   getTagsServer,
 } from '@/services/blog/server';
 import { SITE_URL } from '@/config/site';
+import { routing } from '@/i18n/routing';
 
 /** Sitemap 每小时重新生成一次 */
 export const revalidate = 3600;
@@ -26,17 +27,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   await connection();
 
   const baseUrl = SITE_URL;
+  const locales = routing.locales;
 
-  // 静态页面
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 1 },
+  // 静态页面（为每个 locale 生成对应 URL）
+  const staticPages: MetadataRoute.Sitemap = locales.flatMap((locale) => [
+    { url: `${baseUrl}/${locale}`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 1 },
     {
-      url: `${baseUrl}/posts`,
+      url: `${baseUrl}/${locale}/posts`,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
     },
-  ];
+  ]);
 
   // 并行获取文章、分类、标签数据
   const [postsData, categoriesData, tagsData] = await Promise.all([
@@ -45,29 +47,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getTagsServer().catch(() => ({ tags: [] })),
   ]);
 
-  // 动态文章页面
-  const postPages: MetadataRoute.Sitemap = (postsData?.posts ?? []).map((post) => ({
-    url: `${baseUrl}/posts/${post.id}`,
-    lastModified: new Date(post.updatedAt || post.createdAt),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }));
+  // 动态文章页面（为每个 locale 生成）
+  const postPages: MetadataRoute.Sitemap = (postsData?.posts ?? []).flatMap((post) =>
+    locales.map((locale) => ({
+      url: `${baseUrl}/${locale}/posts/${post.id}`,
+      lastModified: new Date(post.updatedAt || post.createdAt),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    })),
+  );
 
-  // 分类页面
-  const categoryPages: MetadataRoute.Sitemap = (categoriesData.categories ?? []).map((c) => ({
-    url: `${baseUrl}/posts?category=${encodeURIComponent(c)}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }));
+  // 分类页面（为每个 locale 生成）
+  const categoryPages: MetadataRoute.Sitemap = (categoriesData.categories ?? []).flatMap((c) =>
+    locales.map((locale) => ({
+      url: `${baseUrl}/${locale}/posts?category=${encodeURIComponent(c)}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    })),
+  );
 
-  // 标签页面
-  const tagPages: MetadataRoute.Sitemap = (tagsData.tags ?? []).map((t) => ({
-    url: `${baseUrl}/posts?tag=${encodeURIComponent(t.name)}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.5,
-  }));
+  // 标签页面（为每个 locale 生成）
+  const tagPages: MetadataRoute.Sitemap = (tagsData.tags ?? []).flatMap((t) =>
+    locales.map((locale) => ({
+      url: `${baseUrl}/${locale}/posts?tag=${encodeURIComponent(t.name)}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.5,
+    })),
+  );
 
   return [...staticPages, ...postPages, ...categoryPages, ...tagPages];
 }

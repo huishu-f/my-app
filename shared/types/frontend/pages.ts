@@ -23,7 +23,3 @@ export interface ErrorBoundaryProps {
   reset: () => void;
 }
 
-/**
- * 设置页面 tab 类型：profile 个人资料 / password 修改密码
- */
-export type SettingsTab = 'profile' | 'password';
