@@ -38,10 +38,12 @@ const userMenuItems = [
 export function UserMenu() {
   const router = useRouter();
   const t = useTranslations('nav');
+  /** 用户下拉菜单展开状态 */
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const { user } = useAuth();
   const logoutMutation = useLogout();
   const isLoggedIn = !!user;
+  /** 菜单容器 Ref — 供 useDismissable 外部点击判定 */
   const userMenuRef = useRef<HTMLDivElement>(null);
   /**
    * 菜单最近一次是否由 hover 引起展开（见 onClick 接管逻辑说明，修复 BUG-04）
@@ -49,9 +51,13 @@ export function UserMenu() {
   const hoverOpenedRef = useRef(false);
 
   /** 用户展示名与头像缩写 */
+  /** 用户展示名与头像缩写 */
   const displayName = `${user?.firstName ?? ''} ${user?.lastName ?? ''}`.trim();
   const initials = getInitials(user?.firstName ?? '', user?.lastName ?? '');
 
+  /**
+   * 退出登录：先关菜单并回首页，再异步发起登出请求，成功/失败以 toast 反馈
+   */
   const handleLogout = () => {
     // 先关菜单、先回首页，再发登出请求：
     // 若在受保护页（/profile 等）等登出完成再跳转，setMe(null) 会让 AuthGate

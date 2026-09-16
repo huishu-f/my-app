@@ -32,24 +32,33 @@ interface LoginState {
   pwdError: string | null;
 }
 
-/** 初始状态 */
+/** 登录表单初始状态（无错误） */
 const initialState: LoginState = { emailError: null, pwdError: null };
 
 /**
  * LoginContent 登录表单内容，含 useSearchParams，需被 Suspense 包裹
  */
+/**
+ * LoginContent 登录表单内容（含 useSearchParams，须被 Suspense 包裹防止 CSR bailout）
+ */
 function LoginContent() {
+  /** 认证文案翻译函数 */
   const t = useTranslations('auth');
+  /** 通用文案翻译函数 */
   const tCommon = useTranslations('common');
+  /** URL 搜索参数（读取 redirect） */
   const searchParams = useSearchParams();
+  /** 登录态刷新方法（登录成功后拉取用户信息） */
   const { refreshMe } = useAuth();
 
+  /** 原始重定向地址（默认首页） */
   const redirectRaw = searchParams.get('redirect') || '/';
+  /** 校验后的安全重定向地址（仅允许站内路径） */
   const safeR = safeRedirect(redirectRaw);
 
   /** 是否显示明文密码 */
   const [showPassword, setShowPassword] = useState(false);
-  /** 是否由受保护页重定向而来 */
+  /** 是否由受保护页重定向而来（展示提示条） */
   const hasRedirect = searchParams.has('redirect');
 
 /**
@@ -159,7 +168,8 @@ function LoginContent() {
 }
 
 /**
- * LoginPage 登录页，Suspense 包裹 useSearchParams，避免静态生成 CSR bailout
+ * LoginPage 登录页组件
+ * 以 Suspense 包裹含 useSearchParams 的表单内容，避免静态生成时 CSR bailout
  */
 export default function LoginPage() {
   return (

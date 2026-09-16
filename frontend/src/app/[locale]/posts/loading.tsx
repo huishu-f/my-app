@@ -1,21 +1,23 @@
 /**
  * @file loading.tsx
- * @description 文章列表页加载骨架屏，匹配列表页实际布局（PageHeader、侧边栏、卡片列表）；仅路由数据加载期间渲染
+ * @description 文章列表页加载骨架屏：按列表页实际布局（页头、侧边栏、搜索栏、卡片列表）
+ *              逐块渲染 animate-pulse 占位，仅路由段数据加载期间展示。
  */
 import { Container } from '@/components/ui/Container';
 
 /**
- * Loading 文章列表页加载骨架屏
- * 匹配列表页实际布局：PageHeader + 侧边栏 + 卡片列表
+ * Loading 文章列表页加载骨架屏组件
  */
 export default function Loading() {
   return (
     <Container className="page-section">
+      {/* 页头骨架：标题 + 副标题 */}
       <div className="page-header">
         <div className="bg-surface h-8 w-48 animate-pulse rounded-lg" />
         <div className="bg-surface mt-1.5 h-4 w-72 animate-pulse rounded" />
       </div>
 
+      {/* 主体两列布局骨架：侧边栏 + 列表区 */}
       <div className="flex gap-12 max-lg:flex-col">
         {/* 侧边栏骨架 */}
         <aside className="w-65 shrink-0 max-lg:hidden">

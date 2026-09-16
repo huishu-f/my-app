@@ -1,6 +1,8 @@
 /**
  * @file kv-user.repository.ts
- * @description 基于 KV 存储的用户仓储实现：用户 CRUD，并同步维护 email/username 索引，供 auth 模块使用
+ * @description 基于 KV 存储的用户仓储实现。负责用户实体的 CRUD，
+ *              并在写入时同步维护 users:email: 与 users:username: 两个索引 key，
+ *              供 auth 模块的用户查询与唯一性校验使用。仅限服务端（server-only）。
  */
 
 import 'server-only';
@@ -12,17 +14,25 @@ export type { UserRepository };
 
 /**
  * 用户仓储实现
- * @description 扩展 KVRepository 维护 users:email: 与 users:username: 索引，支持按 email 查询与占用校验
+ * @description 继承泛型 KVRepository<User>（集合名 users），
+ *              在 create/update/delete 时同步维护 email/username 索引，
+ *              对外实现 shared 包定义的 UserRepository 接口。
  */
 export class KVUserRepository extends KVRepository<User> implements UserRepository {
+  /**
+   * 初始化用户仓储
+   * @description 以 'users' 作为 KV 集合名调用父类构造器
+   */
   constructor() {
     super('users');
   }
 
   /**
    * 按 email 查询用户
-   * @param email 用户邮箱，查询前统一转为小写
-   * @returns 匹配的用户，未找到返回 undefined
+   * @param email 用户邮箱，查询前统一转为小写以做不区分大小写匹配
+   * @returns 匹配到的第一个用户，未找到返回 undefined
+   * @example
+   * await repo.findByEmail('Foo@Bar.com')
    */
   // ponytail: 全量扫描查找 email，用户量增大后应使用已有的 users:email: 索引直接 GET。
   async findByEmail(email: string): Promise<User | undefined> {
@@ -32,10 +42,10 @@ export class KVUserRepository extends KVRepository<User> implements UserReposito
   }
 
   /**
-   * 判断 email/username 是否已存在
-   * @param email 用户邮箱，查询前统一转为小写
-   * @param username 用户名
-   * @returns 任一存在返回 true，均不存在返回 false
+   * 判断 email 或 username 是否已被占用
+   * @param email 用户邮箱，统一转小写后比较
+   * @param username 用户名，区分大小写精确比较
+   * @returns 任一已存在返回 true，均不存在返回 false
    */
   async existsByEmailOrUsername(email: string, username: string): Promise<boolean> {
     const normalizedEmail = email.toLowerCase();
@@ -44,9 +54,10 @@ export class KVUserRepository extends KVRepository<User> implements UserReposito
   }
 
   /**
-   * 覆盖父类 create：创建用户并同步维护 email/username 索引
-   * @param user 待创建的用户
-   * @returns 创建后的用户
+   * 创建用户（覆盖父类）
+   * @description 先写入 email/username 索引（指向用户 ID），再调用父类 create 落库
+   * @param user 待创建的完整用户对象
+   * @returns 创建成功后的用户对象
    */
   async create(user: User): Promise<User> {
     const kv = getKV();
@@ -56,10 +67,11 @@ export class KVUserRepository extends KVRepository<User> implements UserReposito
   }
 
   /**
-   * 覆盖父类 update：更新成功后同步维护 email/username 索引
+   * 更新用户（覆盖父类）
+   * @description 父类更新成功后，按最新 email/username 重写索引，保证索引与实体一致
    * @param id 用户ID
-   * @param partial 待更新的用户字段
-   * @returns 更新后的用户，用户不存在返回 undefined
+   * @param partial 待更新的用户字段子集
+   * @returns 更新后的用户对象，用户不存在时返回 undefined
    */
   async update(id: string, partial: Partial<User>): Promise<User | undefined> {
     const kv = getKV();
@@ -72,7 +84,8 @@ export class KVUserRepository extends KVRepository<User> implements UserReposito
   }
 
   /**
-   * 覆盖父类 delete：删除用户并同步清空 email/username 索引
+   * 删除用户（覆盖父类）
+   * @description 删除前先查回用户，用空串清空 email/username 索引，再调用父类 delete
    * @param id 用户ID
    * @returns 是否删除成功
    */

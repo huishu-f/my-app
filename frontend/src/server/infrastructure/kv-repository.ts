@@ -1,6 +1,8 @@
 /**
- * @file kv-repository.ts
- * @description KV 仓储抽象基类，基于 Redis Hash 提供实体 CRUD 与种子数据初始化；供业务仓储继承，仅服务端使用
+ * @file KV 仓储抽象基类
+ * @description 基于 Redis Hash 的实体仓储基类：每个实体集合占一个 Hash 键
+ *              （HSET {collectionKey} {id} {JSON}），提供实体 CRUD 与空集合时的种子数据初始化。
+ *              业务仓储继承本类即可获得完整数据访问能力。引入 'server-only' 保证仅服务端使用。
  */
 import 'server-only';
 import { getKV } from './kv-mock';
@@ -8,9 +10,10 @@ import { InternalServerError } from '@server/errors';
 import { logger } from '@server/utils/logger';
 
 /**
- * KV 仓储抽象基类，替代 JsonRepository
- * @description 使用 Redis Hash 存储实体集合，结构为 HSET {collectionKey} {id} {JSON}，提供 CRUD 操作，
- *              Redis 原子操作无需乐观锁；泛型 T 为实体类型，须包含 id 字段
+ * KV 仓储抽象基类
+ * @description 使用 Redis Hash 存储实体集合：field 为实体 id，value 为实体 JSON 字符串；
+ *              读取时由本类负责 JSON.parse。Redis 单命令原子，无需乐观锁。
+ *              泛型 T 为实体类型，必须包含 string 类型的 id 字段
  */
 export abstract class KVRepository<T extends { id: string }> {
   /** 实体集合对应的 Hash 键名 */
@@ -26,8 +29,8 @@ export abstract class KVRepository<T extends { id: string }> {
 
   /**
    * 查询全部实体
-   * @returns 实体数组，集合为空时返回空数组
-   * @throws KV 读取失败时抛出 InternalServerError
+   * @returns 实体数组，集合不存在或为空时返回空数组
+   * @throws KV 读取抛错时抛出 InternalServerError
    */
   async findAll(): Promise<T[]> {
     try {
@@ -45,7 +48,7 @@ export abstract class KVRepository<T extends { id: string }> {
    * 根据 ID 查询实体
    * @param id 实体 ID
    * @returns 实体，不存在时返回 undefined
-   * @throws KV 读取失败时抛出 InternalServerError
+   * @throws KV 读取抛错时抛出 InternalServerError
    */
   async findById(id: string): Promise<T | undefined> {
     try {
@@ -54,6 +57,7 @@ export abstract class KVRepository<T extends { id: string }> {
       if (!json) return undefined;
       return JSON.parse(json) as T;
     } catch (err) {
+      // 已是业务错误直接透传，不重复包装
       if (err instanceof InternalServerError) throw err;
       logger.error('读取数据失败', { collection: this.collectionKey, id, error: String(err) });
       throw new InternalServerError('读取数据失败');
@@ -61,10 +65,11 @@ export abstract class KVRepository<T extends { id: string }> {
   }
 
   /**
-   * 创建实体，同 ID 已存在时直接覆盖
+   * 创建实体
+   * @description 以 id 为 field 写入 Hash，同 ID 已存在时直接覆盖（不报错）
    * @param item 待创建的实体
-   * @returns 创建后的实体
-   * @throws KV 写入失败时抛出 InternalServerError
+   * @returns 创建后的实体（原样返回）
+   * @throws KV 写入抛错时抛出 InternalServerError
    */
   async create(item: T): Promise<T> {
     try {
@@ -78,11 +83,12 @@ export abstract class KVRepository<T extends { id: string }> {
   }
 
   /**
-   * 部分更新实体，合并已有数据并固定 ID
+   * 部分更新实体
+   * @description 读取原实体后浅合并 partial，并固定 id 不被覆盖，再整体写回
    * @param id 实体 ID
-   * @param partial 待更新的字段
-   * @returns 更新后的实体，不存在时返回 undefined
-   * @throws KV 读写失败时抛出 InternalServerError
+   * @param partial 待合并的字段
+   * @returns 更新后的完整实体，实体不存在时返回 undefined
+   * @throws KV 读写抛错时抛出 InternalServerError
    */
   async update(id: string, partial: Partial<T>): Promise<T | undefined> {
     try {
@@ -103,8 +109,8 @@ export abstract class KVRepository<T extends { id: string }> {
   /**
    * 删除实体
    * @param id 实体 ID
-   * @returns 是否删除成功，实体不存在时返回 false
-   * @throws KV 删除失败时抛出 InternalServerError
+   * @returns 是否删除成功（实际删除了字段），实体不存在时返回 false
+   * @throws KV 删除抛错时抛出 InternalServerError
    */
   async delete(id: string): Promise<boolean> {
     try {
@@ -118,9 +124,10 @@ export abstract class KVRepository<T extends { id: string }> {
   }
 
   /**
-   * 初始化种子数据，仅当集合为空时写入
+   * 初始化种子数据
+   * @description 幂等操作：仅当集合当前为空且种子非空时，批量写入全部种子实体
    * @param data 种子实体列表
-   * @throws KV 读取或写入失败时抛出 InternalServerError
+   * @throws KV 写入抛错时抛出 InternalServerError
    */
   async seed(data: T[]): Promise<void> {
     const existing = await this.findAll();

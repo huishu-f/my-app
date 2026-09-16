@@ -1,17 +1,20 @@
 /**
  * @file loading.tsx
- * @description 文章详情页加载骨架屏，匹配详情页实际布局（返回链接、文章头部、封面、正文、TOC 侧边栏）；仅路由数据加载期间渲染
+ * @description 文章详情页加载骨架屏：按详情页实际布局
+ *              （返回链接、文章头部、封面、正文、上下篇、TOC 侧边栏）渲染 animate-pulse 占位，
+ *              仅路由段数据加载期间展示。
  */
 import { Container } from '@/components/ui/Container';
 
 /**
- * Loading 文章详情页加载骨架屏
- * 匹配详情页实际布局：返回链接 + 文章头部 + 封面 + 正文 + TOC 侧边栏
+ * Loading 文章详情页加载骨架屏组件
  */
 export default function Loading() {
   return (
     <Container className="page-section">
+      {/* 两列布局骨架：主列 + TOC 侧边栏 */}
       <div className="grid grid-cols-1 gap-10 pb-12 max-lg:gap-0 max-lg:pb-8 lg:grid-cols-[1fr_220px]">
+        {/* 主列：文章主体 */}
         <article>
           {/* 返回链接 */}
           <div className="mb-8 flex items-center gap-2">

@@ -1,6 +1,7 @@
 /**
  * @file DeletePostButton.tsx
- * @description 文章删除按钮组，支持 full(详情页带编辑入口) 与 compact(个人中心仅删除) 两种变体
+ * @description 文章删除按钮组：full 变体（详情页，编辑+删除）与 compact 变体（个人中心，仅删除），
+ *              点击删除弹出确认弹窗，确认后调用删除接口。
  */
 'use client';
 
@@ -27,7 +28,8 @@ interface DeletePostButtonProps extends PostIdProps {
 }
 
 /**
- * DeletePostButton 文章删除按钮组，根据变体渲染完整按钮组或紧凑删除按钮，弹出确认弹窗后调用删除接口
+ * DeletePostButton 文章删除按钮组组件
+ * 按变体渲染按钮组，点击删除弹确认弹窗，确认后调用删除接口并按配置跳转
  * @param props {@link DeletePostButtonProps}
  */
 export function DeletePostButton({
@@ -36,8 +38,11 @@ export function DeletePostButton({
   redirectTo,
   variant = 'full',
 }: DeletePostButtonProps) {
+  /** 国际化路由实例 */
   const router = useRouter();
+  /** 文章文案翻译函数 */
   const t = useTranslations('post');
+  /** 通用文案翻译函数 */
   const tCommon = useTranslations('common');
   /** 删除确认弹窗显示状态 */
   const [showDelete, setShowDelete] = useState(false);
@@ -45,7 +50,7 @@ export function DeletePostButton({
   const deleteMutation = useDeletePost();
 
   /**
-   * 确认删除处理，调用删除接口成功后跳转或关闭弹窗
+   * 确认删除处理：成功后跳转 redirectTo 或关闭弹窗；失败 toast 提示
    */
   const confirmDelete = () => {
     deleteMutation.mutate(postId, {

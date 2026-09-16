@@ -22,7 +22,7 @@ import { authApi } from '@/services/auth/api';
 import { ApiRequestError } from '@/lib/api/request';
 import type { FieldId, FieldState } from '@my-app/shared';
 
-/** 表单字段初始状态 */
+/** 单个表单字段的初始状态（未输入、未触碰、未校验） */
 const initialField: FieldState = { value: '', touched: false, valid: null };
 
 /** 注册提交状态 */
@@ -31,7 +31,7 @@ interface RegisterState {
   error: string | null;
 }
 
-/** 注册表单初始状态 */
+/** 注册表单初始状态（无错误） */
 const initialState: RegisterState = { error: null };
 
 /**
@@ -68,10 +68,13 @@ const errorMsgKeys: Record<FieldId, string> = {
 };
 
 /**
- * RegisterPage 注册页
+ * RegisterPage 注册页组件
+ * 5 字段实时校验（图标反馈）+ useActionState 提交，成功后 replace 到登录页
  */
 export default function RegisterPage() {
+  /** 国际化路由实例 */
   const router = useRouter();
+  /** 认证文案翻译函数 */
   const t = useTranslations('auth');
 
   /** 各表单字段的状态集合（实时校验用） */

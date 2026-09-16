@@ -1,8 +1,7 @@
 /**
  * @file PostHeadStats.tsx
- * @description 文章详情页头部 meta 统计（阅读量/点赞/评论）。
- *              从 PostStateProvider 读取实时展示态，点赞/收藏/评论交互后
- *              与正文操作栏计数同步更新，避免 SSR 静态值与客户端状态不一致。
+ * @description 文章详情页头部统计条（阅读量/点赞/评论数）。
+ *              从 PostStateProvider 读取实时展示态，交互后与正文操作栏计数同步更新。
  */
 'use client';
 
@@ -11,10 +10,15 @@ import { formatCount } from '@/lib/format';
 import { usePostState } from './PostStateProvider';
 
 /**
- * PostHeadStats 头部统计，渲染阅读量、点赞数、评论数三个统计项；
- * views 为只读（浏览上报），likes/favorites/commentsCount 从 PostStateProvider 读取，交互后与操作栏同步刷新
+ * PostHeadStats 头部统计组件
+ * 渲染三个统计项：views（只读）、likes 与 commentsCount（交互后与操作栏同步刷新）
+ */
+/**
+ * PostHeadStats 头部统计组件
+ * 渲染三个统计项：views（只读，挂载时本地 +1）、likes 与 commentsCount（交互后同步刷新）
  */
 export function PostHeadStats() {
+  /** 文章展示态来源 */
   const { post } = usePostState();
 
   return (

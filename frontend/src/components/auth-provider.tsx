@@ -32,10 +32,13 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 /**
  * AuthProvider 登录态 Provider，挂载时仅当 auth_status cookie 存在才请求 /auth/me（避免游客 401）；401/403 一律视为游客态；storage 事件同步多标签页登出
+ * @param props children — 需要注入登录态的子树
  * @returns 渲染包裹 children 的登录态 Context Provider
  */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  /** 当前登录用户，null 表示游客态 */
   const [user, setUser] = useState<User | null>(null);
+  /** 初始探测进行中标记 */
   const [loading, setLoading] = useState(true);
 
   /**
@@ -53,6 +56,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  /**
+   * 挂载时探测登录态（有 auth_status cookie 才请求），并注册多标签页登出同步
+   */
   useEffect(() => {
     // 游客无 auth_status cookie：不发请求，直接就绪
     if (hasAuthStatus()) {
@@ -86,6 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser((prev) => (prev ? { ...prev, ...partial } : prev));
   }, []);
 
+  /** Context 值缓存：依赖不变时保持引用稳定，避免子组件无谓重渲染 */
   const value = useMemo(
     () => ({ user, loading, refreshMe, setMe, patchMe }),
     [user, loading, refreshMe, setMe, patchMe],

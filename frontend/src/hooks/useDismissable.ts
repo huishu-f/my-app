@@ -1,9 +1,7 @@
 /**
- * @file useDismissable.ts
- * @description 统一 Escape 键 + 外部点击关闭逻辑，消除 MobileMenu / UserMenu 重复的 useEffect
- *              — open 为 true 时注册 keydown(Escape) + mousedown(外部点击) 监听
- *              — 可选 lockScroll 锁定 body 滚动（菜单/模态场景）
- *              — refs 数组指定"内部"区域，点击这些区域不触发关闭
+ * @file 可关闭浮层 Hook
+ * @description 统一浮层（下拉菜单、移动端菜单）的关闭交互：
+ *              open 为 true 时注册 Escape 键关闭与外部点击关闭监听，可选锁定 body 滚动。
  */
 'use client';
 
@@ -11,15 +9,18 @@ import { useEffect, useRef, type RefObject } from 'react';
 
 /** useDismissable 可选配置 */
 interface DismissableOptions {
-  /** 锁定 body 滚动（菜单/模态框场景） */
+  /** 是否锁定 body 滚动（菜单/模态框场景），关闭时自动恢复 */
   lockScroll?: boolean;
 }
 
 /**
- * @param open 是否展开（false 时不注册任何监听）
- * @param onClose 关闭回调
- * @param refs "内部"区域 ref 列表，点击这些区域外部时触发 onClose
- * @param options 可选配置
+ * 浮层关闭交互 Hook
+ * @param open 浮层是否展开（false 时不注册任何监听）
+ * @param onClose 关闭回调（Escape 键或点击 refs 区域外触发）
+ * @param refs 视为"内部"区域的 ref 列表，点击这些区域之外时触发 onClose
+ * @param options 可选配置（见 DismissableOptions）
+ * @example
+ * useDismissable(menuOpen, closeMenu, [menuRef, buttonRef], { lockScroll: true });
  */
 export function useDismissable(
   open: boolean,

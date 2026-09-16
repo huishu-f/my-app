@@ -1,6 +1,7 @@
 /**
  * @file ProfileTabs.tsx
- * @description 个人中心 Tab 切换组件，切换 文章/收藏 两个面板
+ * @description 个人中心 Tab 面板：我的文章/我的收藏切换，
+ *              两个面板各含空态与卡片列表；收藏列表为本地态，取消收藏后即时剔除。
  */
 'use client';
 
@@ -14,7 +15,7 @@ import { RemoveFavoriteButton } from './RemoveFavoriteButton';
 import type { Post } from '@my-app/shared';
 
 /**
- * Tab 面板类型：文章/收藏
+ * Tab 面板类型：文章 / 收藏
  */
 type Tab = 'articles' | 'favorites';
 
@@ -33,8 +34,9 @@ interface ProfileTabsProps {
  * @param props {@link ProfileTabsProps}
  */
 export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
-  /** 当前激活的 Tab 面板 */
+  /** 个人中心文案翻译函数 */
   const t = useTranslations('profile');
+  /** 当前激活的 Tab 面板 */
   const [tab, setTab] = useState<Tab>('articles');
   /** 收藏列表本地态：取消收藏后即时剔除该项，避免整页刷新（SSR props 仅作初始值） */
   const [favoriteList, setFavoriteList] = useState(favorites);

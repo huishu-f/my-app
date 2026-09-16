@@ -1,6 +1,8 @@
 /**
  * @file page.tsx
- * @description 文章详情页，展示文章正文、目录、操作栏与评论区，作者可编辑删除
+ * @description 文章详情页：渲染文章头部（作者/统计）、封面、正文、标签、
+ *              操作栏（点赞/收藏）、评论区、目录侧边栏与上下篇导航；
+ *              已发布内容走 ISR 快路径静态化，草稿预览走慢路径动态渲染。
  */
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
@@ -130,15 +132,25 @@ export async function generateMetadata({
  * NeighborPosts 相邻文章导航 — 异步 Server Component，用 Suspense 包裹实现流式渲染
  * @param id 文章 id，用于获取相邻文章
  */
+/**
+ * NeighborPosts 上下篇导航 — 异步 Server Component
+ * 获取相邻文章并渲染上一篇/下一篇卡片；接口失败或无相邻文章时返回 null
+ * @param id 当前文章 id
+ */
 async function NeighborPosts({ id }: { id: string }) {
+  /** 详情页文案翻译函数 */
   const tPost = await getTranslations('post');
+  /** 相邻文章数据（接口失败为 null） */
   const neighborPosts = await getNeighborPostsServer(id).catch(() => null);
+  /** 上一篇（较早），无则为 null */
   const prevPost = neighborPosts?.prev ?? null;
+  /** 下一篇（较晚），无则为 null */
   const nextPost = neighborPosts?.next ?? null;
 
   if (!prevPost && !nextPost) return null;
 
   return (
+    /* 双列导航：左上一篇、右下一篇，缺位时占位保持网格对齐 */
     <nav className="mt-10 mb-8 grid gap-4 sm:grid-cols-2">
       {prevPost ? (
         <Link
@@ -186,13 +198,14 @@ async function NeighborPosts({ id }: { id: string }) {
  * @param params 路由动态参数，含文章 id
  */
 export default async function PostDetailPage({ params }: { params: Promise<{ locale: string; id: string }> }) {
-  /** locale 验证 + setRequestLocale（启用静态渲染） */
+  /** 解析并校验 locale，写入请求级存储以启用静态渲染 */
   const { locale, id: rawId } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  /** 解码后的原始文章 id */
   const id = decodeId(rawId);
 
-  /** 快路径：公开文章详情，草稿对公开视角 404 */
+  /** 文章数据：快路径（已发布）直接填充 */
   let post: Post | null = null;
   /** 当前用户：慢路径（草稿预览）时填充；快路径恒为 null，作者 UI 由客户端岛屿 useAuth 判定 */
   let user: User | null = null;
@@ -222,11 +235,13 @@ export default async function PostDetailPage({ params }: { params: Promise<{ loc
     }
   }
 
-  /** 作者头像首字母缩写 */
+  /** 详情页/导航/通用文案翻译函数 */
   const t = await getTranslations('post');
   const tNav = await getTranslations('nav');
   const tCommon = await getTranslations('common');
+  /** 拆分作者姓名并计算头像首字母缩写 */
   const { firstName, lastName } = splitName(post.authorName || '');
+  /** 作者头像缩写，无作者名时为空串 */
   const authorInitials = post.authorName ? getInitials(firstName, lastName) : '';
   /** 分类展示名（数据值保持中文原值，仅展示层翻译；未知值原样显示） */
   const categoryLabel = getCategoryLabel(post.category, tCommon as (k: string) => string);
@@ -236,6 +251,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ loc
       <Container className="page-section">
         <div className="grid grid-cols-1 gap-10 pb-12 max-lg:gap-0 max-lg:pb-8 lg:grid-cols-[1fr_220px]">
           {/* 主列（文章正文区） */}
+          {/* 主列：文章正文区 */}
           <article>
             {/* 返回列表导航 */}
             <BackLink />

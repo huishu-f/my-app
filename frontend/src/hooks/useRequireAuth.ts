@@ -1,8 +1,8 @@
 /**
- * @file useRequireAuth.ts
- * @description 客户端鉴权守卫 Hook，未登录时提示并携带来源路径跳转登录页，已登录时执行回调操作；供需要登录后才能触发的写操作使用
+ * @file 客户端鉴权守卫 Hook
+ * @description 为需要登录才能触发的写操作（评论、点赞、收藏等）提供统一守卫：
+ *              未登录时 toast 提示并携带来源路径跳转登录页，已登录时直接执行业务动作。
  */
-
 'use client';
 import { useCallback } from 'react';
 import { useRouter } from '@/i18n/navigation';
@@ -12,17 +12,21 @@ import { buildLoginRedirect } from '@/lib/navigation';
 import type { User } from '@my-app/shared';
 
 /**
- * 鉴权守卫 Hook，未登录时提示并跳转登录页
+ * 鉴权守卫 Hook
  * @param user 当前用户（null 表示未登录）
- * @param redirectPath 登录后重定向路径
- * @returns requireAuth 函数，未登录时提示并跳转，已登录时执行传入的 action
+ * @param redirectPath 登录成功后的重定向路径
+ * @returns requireAuth 守卫函数——未登录时 toast 提示并跳转登录页，已登录时执行传入的 action
+ * @example
+ * const requireAuth = useRequireAuth(user, `/posts/${postId}`);
+ * requireAuth(() => startEditing());
  */
 export function useRequireAuth(user: User | null, redirectPath: string) {
   const router = useRouter();
   const t = useTranslations('common');
   /**
-   * 鉴权校验回调
-   * @param action 需要登录后执行的动作
+   * 鉴权守卫函数
+   * @param action 已登录时执行的业务动作
+   * @returns 无返回值（通过 action 或跳转产生副作用）
    */
   return useCallback(
     (action: () => void) => {

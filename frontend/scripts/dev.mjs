@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
- * @file dev.mjs
- * @description 开发启动编排脚本
- *              1. 清理 .next/cache/fetch-cache（继承原 dev 脚本行为）
- *              2. 释放 DEV_PORT 上的残留进程，避免"端口被占用"报错
- *              3. 启动 next dev（透传参数、信号与输出）
+ * @file 开发启动编排脚本
+ * @description 开发环境启动前的准备工作与 next dev 托管：
+ *              1. 清理 NODE_ENV（外部环境可能误设 production）
+ *              2. 清理 .next/cache/fetch-cache
+ *              3. 释放 DEV_PORT 上的残留进程，避免"端口被占用"
+ *              4. 启动 next dev（透传参数、信号与输出）
  *
  * 用法：
  *   pnpm dev            — 完整启动（清缓存 + 释放端口 + next dev）
@@ -33,7 +34,13 @@ try {
 
 /* ── 2. 释放端口上的残留进程 ── */
 
-/** 查询占用指定端口的进程 PID 列表（跨平台：Windows 用 netstat，其余用 lsof） */
+/**
+ * 查询占用指定端口的进程 PID 列表
+ * @param port 端口号
+ * @returns 占用该端口的进程 PID 数组；查询失败或端口空闲返回空数组
+ * @description 跨平台实现：Windows 用 netstat，其余平台用 lsof。
+ *              始终排除自身 PID
+ */
 function pidsOnPort(port) {
   if (process.platform === 'win32') {
     try {
@@ -89,7 +96,7 @@ if (freePortOnly) process.exit(0);
 /* ── 3. 启动 next dev ── */
 const require = createRequire(import.meta.url);
 const nextBin = require.resolve('next/dist/bin/next');
-// 透传本脚本之后的参数（如 --turbo / -p 3001）
+// 透传本脚本之后的参数（如 --turbo / -p 3001），剔除内部参数
 const passthrough = process.argv.slice(2).filter((a) => a !== '--free-port-only');
 
 const child = spawn(process.execPath, [nextBin, 'dev', ...passthrough], {

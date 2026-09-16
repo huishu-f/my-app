@@ -1,10 +1,12 @@
-import { randomUUID } from 'node:crypto';
-import 'server-only';
-
 /**
  * @file blog.service.ts
- * @description blog 模块核心业务服务，提供文章 CRUD、点赞、收藏、分类/标签查询、站点配置管理等操作
+ * @description blog 模块核心业务服务工厂：文章 CRUD（含草稿切换）、浏览/点赞/收藏、
+ *              分类与标签查询、站点配置管理、相邻文章查询，
+ *              并同步作者统计与用户点赞/收藏记录。仅限服务端（server-only）。
  */
+
+import { randomUUID } from 'node:crypto';
+import 'server-only';
 
 import type { Post, User, SiteConfig, BlogService } from '@my-app/shared';
 import {
@@ -41,8 +43,12 @@ export type { BlogService };
 
 /**
  * 生成 URL / 文件友好的 slug
+ * @description 小写化、NFD 分解去变音符号、非字母数字（含汉字）替换为连字符、
+ *              去首尾连字符，最长截取 30 字符
  * @param title 文章标题
- * @returns 规范化后的 slug（小写、去变音符号、非字母数字替换为连字符，最长 30 字符）
+ * @returns 规范化后的 slug；标题无有效字符时返回空串
+ * @example
+ * slug('Hello, 世界!') // 'hello-世界'
  */
 export function slug(title: string): string {
   return title
@@ -56,8 +62,10 @@ export function slug(title: string): string {
 
 /**
  * 生成文章 ID
- * @param title 文章标题（用于生成 slug 部分）
- * @returns 时间戳-slug-uuid前缀 格式的唯一 ID
+ * @param title 文章标题，用于生成 slug 部分，slug 为空时回退 'post'
+ * @returns `${时间戳}-${slug}-${uuid前8位}` 格式的唯一 ID
+ * @example
+ * generatePostId('我的新文章') // '1726500000000-我的新文章-a1b2c3d4'
  */
 export function generatePostId(title: string): string {
   const titleSlug = slug(title);
@@ -67,9 +75,13 @@ export function generatePostId(title: string): string {
 }
 
 /**
- * 解析并规范化标签（trim + toLowerCase 去重）
- * @param input 原始标签输入，支持字符串（逗号分隔）或字符串数组
+ * 解析并规范化标签
+ * @description 支持逗号分隔字符串或字符串数组输入；逐项 trim + toLowerCase，
+ *              过滤空串、去重，最多保留 20 个
+ * @param input 原始标签输入，undefined/null 返回空数组
  * @returns 规范化后的标签数组（最多 20 个）
+ * @example
+ * parseTags('React, TypeScript, react') // ['react', 'typescript']
  */
 export function parseTags(input: string | string[] | undefined): string[] {
   if (input === undefined || input === null) return [];
@@ -84,8 +96,10 @@ export function parseTags(input: string | string[] | undefined): string[] {
 
 /**
  * 校验封面图 URL — 拦截内网/元数据地址，防止 SSRF
+ * @description 空/未传直接放行；必须为 http(s) URL；host 命中 localhost、回环、
+ *              私有网段、链路本地、IPv6 本地/ULA 等内网特征则拒绝
  * @param value 封面图 URL
- * @throws 非 http(s) URL 或内网地址时抛出 UnprocessableEntityError
+ * @throws 非 http(s) URL、指向内网地址或格式无法解析时抛出 UnprocessableEntityError
  */
 export function validateCoverImage(value: string | undefined): void {
   if (value === undefined || value === '') return;
@@ -117,8 +131,10 @@ export function validateCoverImage(value: string | undefined): void {
 
 /**
  * 计算孤立分类清理后的分类数组
+ * @description 遍历全部文章，收集非草稿且带分类的文章的分类名（trim 后去重），
+ *              草稿文章的分类不计入，从而清理无文章引用的分类
  * @param posts 全部文章列表
- * @returns 已发布文章中去重后的分类数组
+ * @returns 已发布文章中去重后的分类数组（Set 插入序）
  */
 export function cleanupCategories(posts: Post[]): string[] {
   const used = new Set<string>();
@@ -133,7 +149,7 @@ export function cleanupCategories(posts: Post[]): string[] {
 /**
  * 规范化文本：去除首尾空白后校验非空
  * @param value 原始文本
- * @param field 字段名称（用于错误提示）
+ * @param field 字段名称，用于拼装错误提示
  * @returns 去空白后的文本
  * @throws 空白字符串时抛出 ValidationError
  */
@@ -149,7 +165,7 @@ function normalizeText(value: string, field: string): string {
  * 断言当前用户为文章所有者
  * @param post 文章对象
  * @param currentUserId 当前用户 ID
- * @throws 文章无作者信息或非作者操作时抛出 ForbiddenError
+ * @throws 文章无作者信息或当前用户非作者时抛出 ForbiddenError
  */
 function assertPostOwner(post: Post, currentUserId: string): void {
   // 缺少 authorId 的文章无法校验所有权，禁止任何用户操作
@@ -163,8 +179,8 @@ function assertPostOwner(post: Post, currentUserId: string): void {
 
 /**
  * 创建 blog 服务
- * @param deps 依赖对象，包含 repo、userRepo、commentRepo
- * @returns BlogService 实例
+ * @param deps 依赖对象，包含 repo（博客仓储）、userRepo（用户仓储）、commentRepo（评论仓储）
+ * @returns 实现 BlogService 的服务对象
  */
 export function createBlogService(deps: {
   repo: BlogRepository;
@@ -172,9 +188,11 @@ export function createBlogService(deps: {
   commentRepo: CommentRepository;
 }): BlogService {
   /**
-   * 获取文章列表（支持分页、分类、标签、关键词筛选及草稿模式）
-   * @param options 列表查询选项
-   * @returns 分页后的文章列表数据
+   * 获取文章列表
+   * @description 支持草稿模式（需登录，仅返回本人草稿）、分类/标签/关键词筛选，
+   *              排序后按 page/limit 分页（limit 夹在 1-100）
+   * @param options 列表查询选项（draft/category/tag/q/page/limit/user）
+   * @returns 分页数据：posts 当前页文章、total 总数、totalPages 总页数
    */
   async function listPosts(options: ListPostsOptions): Promise<PostsListData> {
     const db = await deps.repo.read();
@@ -227,10 +245,10 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 文章排序：草稿按更新时间倒序，已发布按置顶优先 + 发布时间倒序
-   * @param posts 待排序文章
+   * 文章排序（原地排序）
+   * @param posts 待排序文章数组
    * @param isDraftMode 是否为草稿模式
-   * @returns 排序后的文章数组
+   * @returns 排序后的同一数组：草稿按 updatedAt 倒序；已发布按置顶优先 + 发布时间（缺省 createdAt）倒序
    */
   function sortPosts(posts: Post[], isDraftMode: boolean): Post[] {
     if (isDraftMode) {
@@ -247,12 +265,14 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 获取文章详情（纯读路径，无副作用），浏览量计数已抽离至 incrementView（由客户端上报接口触发），
-   * 使 getPost 可安全进入 Data Cache 而不影响计数准确性
+   * 获取文章详情（纯读路径，无副作用）
+   * @description 浏览计数已抽离至 incrementView（由客户端上报接口触发），
+   *              使 getPost 可安全进入 Data Cache；草稿仅作者可见，其余情况一律 404；
+   *              返回的 content 为渲染后的安全 HTML，contentRaw 保留原始 Markdown 供编辑器预填
    * @param id 文章 ID
    * @param user 当前用户（可选，用于判断草稿访问权限）
-   * @returns 文章对象
-   * @throws 文章不存在或无权访问时抛出 NotFoundError
+   * @returns 文章对象（content 已渲染为 HTML，另含 contentRaw）
+   * @throws 文章不存在或无权访问草稿时抛出 NotFoundError
    */
   async function getPost(id: string, user?: { id: string }): Promise<Post> {
     const db = await deps.repo.read();
@@ -279,9 +299,10 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 记录一次文章浏览（仅已发布文章计数），供客户端浏览上报接口（POST /api/posts/[id]/view）调用，
-   * 与 getPost 读路径解耦：详情页可静态缓存，计数由真实访问触发，不影响缓存命中与 TTFB
-   * @param id 文章 ID
+   * 记录一次文章浏览（仅已发布文章计数）
+   * @description 与 getPost 读路径解耦：详情页可静态缓存，计数由真实访问触发；
+   *              文章/浏览计数与作者 stats.views 均为异步写入（fire-and-forget），失败仅记日志不抛错
+   * @param id 文章 ID，草稿或不存在时静默忽略
    */
   async function incrementView(id: string): Promise<void> {
     const db = await deps.repo.read();
@@ -323,9 +344,11 @@ export function createBlogService(deps: {
 
   /**
    * 创建文章
-   * @param dto 创建文章参数（含 authorId）
+   * @description 校验标题/正文/分类非空与封面图安全后创建；摘要缺省时自动生成；
+   *              草稿强制不置顶；已发布文章记录 publishedAt、刷新分类列表并递增作者 articles 统计
+   * @param dto 创建文章参数，含 authorId
    * @returns 创建成功的文章对象
-   * @throws 作者不存在时抛出 NotFoundError，coverImage 格式错误抛出 UnprocessableEntityError
+   * @throws 标题/正文/分类为空抛 ValidationError；封面图不合法抛 UnprocessableEntityError；作者不存在抛 NotFoundError
    */
   async function createPost(dto: CreatePostDto & { authorId: string }): Promise<Post> {
     const title = normalizeText(dto.title, '标题');
@@ -387,12 +410,15 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 更新文章，支持草稿<->发布状态切换并同步作者统计
+   * 更新文章（支持草稿 <-> 发布状态切换）
+   * @description 在 updateWithRetry 中完成查找、所有权断言、字段合并与分类刷新；
+   *              草稿转发布记 publishedAt（作者 articles +1），发布转草稿清 publishedAt（articles -1）；
+   *              摘要规则：显式传 summary 用其 trim 值，否则正文变更时重新生成，否则保持原值
    * @param id 文章 ID
-   * @param dto 更新参数
-   * @param currentUserId 当前用户 ID（用于权限校验）
+   * @param dto 更新参数，字段均可选
+   * @param currentUserId 当前用户 ID，用于权限校验
    * @returns 更新后的文章对象
-   * @throws 文章不存在抛出 NotFoundError，无权操作抛出 ForbiddenError
+   * @throws 文章不存在抛 NotFoundError；无权操作抛 ForbiddenError；字段校验失败抛相应错误
    */
   async function updatePost(id: string, dto: UpdatePostDto, currentUserId: string): Promise<Post> {
     let prevIsDraft = false;
@@ -485,10 +511,12 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 删除文章，级联删除评论并清理所有用户的点赞/收藏记录
+   * 删除文章
+   * @description 删除后级联删除该文章评论、清理所有用户点赞/收藏记录中的该文章 ID、
+   *              已发布文章递减作者 articles 统计；后续清理均为尽力而为，失败仅记日志不影响删除结果
    * @param id 文章 ID
-   * @param currentUserId 当前用户 ID（用于权限校验）
-   * @throws 文章不存在抛出 NotFoundError，无权操作抛出 ForbiddenError
+   * @param currentUserId 当前用户 ID，用于权限校验
+   * @throws 文章不存在抛 NotFoundError；无权操作抛 ForbiddenError
    */
   async function deletePost(id: string, currentUserId: string): Promise<void> {
     const post = await deps.repo.updateWithRetry<Post>((db) => {
@@ -559,11 +587,13 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 点赞/取消点赞文章，先写用户数据再写博客数据，失败时回滚
+   * 点赞/取消点赞文章
+   * @description 委托 toggleUserPostAssociation 完成用户与文章双向数据更新，
+   *              随后同步文章作者的 stats.likes（失败仅记日志）
    * @param id 文章 ID
    * @param currentUserId 当前用户 ID
-   * @returns 点赞状态和总点赞数
-   * @throws 文章不存在抛出 NotFoundError，草稿文章抛出 ForbiddenError
+   * @returns 点赞状态（liked）与最新点赞总数（likes）
+   * @throws 文章不存在抛 NotFoundError；草稿文章抛 ForbiddenError；用户不存在抛 NotFoundError
    */
   async function likePost(
     id: string,
@@ -592,7 +622,12 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 收藏/取消收藏文章，先写用户数据再写博客数据，失败时回滚
+   * 收藏/取消收藏文章
+   * @description 与点赞同构，委托 toggleUserPostAssociation，仅不维护作者统计
+   * @param id 文章 ID
+   * @param currentUserId 当前用户 ID
+   * @returns 收藏状态（favorited）与最新收藏总数（favorites）
+   * @throws 文章不存在抛 NotFoundError；草稿文章抛 ForbiddenError；用户不存在抛 NotFoundError
    */
   async function toggleFavorite(
     id: string,
@@ -608,7 +643,16 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 点赞/收藏的共用 toggle 逻辑：先写用户数据，再写博客数据，失败时回滚
+   * 点赞/收藏的共用 toggle 逻辑
+   * @description 先写用户数据（userField 集合增删文章 ID），再在 updateWithRetry 中
+   *              更新文章计数（postField）；文章更新失败时回滚用户数据，回滚失败仅记日志
+   * @param id 文章 ID
+   * @param currentUserId 当前用户 ID
+   * @param userField 用户侧字段名：likedArticles 或 favoritedArticles
+   * @param postField 文章侧计数字段名：likes 或 favorites
+   * @returns wasPresent 该文章是否已在用户集合中（true 表示本次为取消操作）、
+   *          count 更新后的文章计数、authorId 文章作者 ID（可能为 undefined）
+   * @throws 用户不存在抛 NotFoundError；文章不存在/草稿抛出 blogging 阶段的原始异常（回滚后重抛）
    */
   async function toggleUserPostAssociation(
     id: string,
@@ -658,8 +702,9 @@ export function createBlogService(deps: {
 
   /**
    * 获取当前用户收藏的文章列表
+   * @description 按用户的收藏顺序返回，仅含目前存在的已发布文章（草稿不进入收藏列表）
    * @param currentUserId 当前用户 ID
-   * @returns 按收藏顺序排列的已发布文章列表
+   * @returns 收藏文章数组，无收藏返回空数组
    * @throws 用户不存在时抛出 NotFoundError
    */
   async function listFavoritePosts(currentUserId: string): Promise<Post[]> {
@@ -680,7 +725,7 @@ export function createBlogService(deps: {
 
   /**
    * 获取所有分类
-   * @returns 分类名称数组
+   * @returns 博客数据库中维护的分类名称数组
    */
   async function getCategories(): Promise<string[]> {
     const db = await deps.repo.read();
@@ -688,8 +733,9 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 获取所有标签（已发布文章中的标签，去重后按字母排序）
-   * @returns 标签列表（含文章数量）
+   * 获取所有标签
+   * @description 统计已发布文章中的标签（trim + toLowerCase 归一化）出现次数，按标签名字母序返回
+   * @returns 标签列表，每项含标签名 name 与出现次数 count
    */
   async function getTags(): Promise<{ name: string; count: number }[]> {
     const db = await deps.repo.read();
@@ -711,7 +757,7 @@ export function createBlogService(deps: {
 
   /**
    * 获取站点配置
-   * @returns 站点配置对象
+   * @returns 站点配置对象（blogName、author）
    */
   async function getConfig(): Promise<SiteConfig> {
     const db = await deps.repo.read();
@@ -720,10 +766,12 @@ export function createBlogService(deps: {
 
   /**
    * 更新站点配置
+   * @description 仅 Admin 角色可修改；blogName/author 为空时回退默认值，
+   *              兜底值与 KV 仓库默认配置、页脚展示一致
    * @param dto 站点配置参数（博客名称、作者名）
    * @param userId 操作用户 ID
    * @returns 更新后的站点配置
-   * @throws 用户不存在时抛出 NotFoundError
+   * @throws 用户不存在抛 NotFoundError；非管理员抛 ForbiddenError
    */
   async function updateConfig(dto: UpdateSiteConfigDto, userId: string): Promise<SiteConfig> {
     // 校验请求用户确实存在（防止已删除用户操作）
@@ -746,9 +794,11 @@ export function createBlogService(deps: {
   }
 
   /**
-   * 获取相邻文章（上一篇/下一篇），仅从已发布文章中查找
+   * 获取相邻文章（上一篇/下一篇）
+   * @description 在已发布文章中按发布时间（缺省 createdAt）倒序排列后，
+   *              取当前文章前一位为 prev（较新），后一位为 next（较旧）
    * @param id 当前文章 ID
-   * @returns prev 为较新的一篇，next 为较旧的一篇
+   * @returns prev 为较新的一篇，next 为较旧的一篇；当前文章不在已发布列表中时两者均为 null
    */
   async function getNeighborPosts(id: string): Promise<{ prev: Post | null; next: Post | null }> {
     const db = await deps.repo.read();

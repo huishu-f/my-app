@@ -1,6 +1,7 @@
 /**
- * @file toast.ts
- * @description react-hot-toast 包装模块，补充 info() 方法以兼容原 sonner API
+ * @file toast 提示封装
+ * @description 重新导出 react-hot-toast 并为其补充 info() 方法，
+ *              兼容原 sonner 的 toast.info() 调用方式，业务方无需感知底层库差异。
  */
 
 import toast, { type DefaultToastOptions } from 'react-hot-toast';

@@ -1,8 +1,7 @@
 /**
  * @file CommentsSection.tsx
- * @description 文章评论区，支持发表、编辑、删除评论，未登录时引导登录。
- *              利用 React 19 useOptimistic 实现评论发表的乐观更新——
- *              评论提交瞬间即显示在列表中，API 完成后刷新确认，失败自动移除。
+ * @description 文章评论区：发表（乐观更新）、编辑、删除（确认弹窗）与分页加载更多，
+ *              未登录时展示登录引导；评论计数与操作栏通过 PostStateProvider 同步。
  */
 'use client';
 
@@ -25,17 +24,23 @@ import { getInitials, splitName, formatRelativeTime } from '@/lib/format';
 import type { Locale } from '@/i18n/config';
 import type { CommentsSectionProps, Comment } from '@my-app/shared';
 
-/** 模块级空数组常量，避免 useOptimistic 因新引用而重置 */
+/** 模块级空数组常量，作为评论列表兜底值，避免 useOptimistic 因新引用而重置 */
 const EMPTY_COMMENTS: Comment[] = [];
 
 /**
- * CommentsSection 评论区
- * @param props {@link CommentsSectionProps}
+ * CommentsSection 评论区组件
+ * @param props.postId 文章 ID
+ * @param props.user SSR 传入的用户，作客户端登录态初始兜底
+ * @param props.postAuthorId 文章作者 ID（作者可删除任意评论）
  */
 export function CommentsSection({ postId, user: ssrUser, postAuthorId }: CommentsSectionProps) {
+  /** 文章文案翻译函数 */
   const t = useTranslations('post');
+  /** 通用文案翻译函数 */
   const tCommon = useTranslations('common');
+  /** 当前 locale，用于相对时间格式化 */
   const locale = useLocale() as Locale;
+  /** 评论列表查询（isError 错误态 / refetchComments 手动刷新） */
   const { data: commentsData, isError, refetch: refetchComments } = useComments(postId);
   /** 评论列表（实际状态） */
   const comments = commentsData?.comments ?? EMPTY_COMMENTS;
@@ -104,6 +109,8 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
 
   /**
    * 进入评论编辑模式
+   * @param cId 评论 ID
+   * @param content 评论当前内容（填入编辑框）
    */
   const startEdit = (cId: string, content: string) => {
     setEditingId(cId);
@@ -111,7 +118,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
   };
 
   /**
-   * 保存编辑后的评论
+   * 保存编辑后的评论：调用更新接口，成功后退出编辑模式并刷新列表
    */
   const saveEdit = () => {
     const text = editText.trim();
@@ -197,10 +204,14 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
             />
           )
         )}
+        {/* 评论卡片列表：按可见数量截断渲染 */}
         {optimisticComments.slice(0, visibleCount).map((c) => {
+          /** 当前用户是否为该评论作者（可编辑可删除） */
           const isCommentAuthor = !!user && c.userId === user.id;
+          /** 是否可删除：评论作者或文章作者均可 */
           const canDelete =
             isCommentAuthor || (!!user && !!postAuthorId && postAuthorId === user.id);
+          /** 评论者姓名拆分（用于头像缩写） */
           const { firstName, lastName } = splitName(c.userName);
           return (
             <div key={c.id} className="card card-hover row-md p-4">
@@ -278,6 +289,8 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
             </div>
           );
         })}
+        {/* 加载更多：剩余数量提示按钮 */}
+        {/* 加载更多：剩余数量提示按钮 */}
         {optimisticComments.length > visibleCount && (
           <div className="mt-6 text-center">
             <Button variant="ghost" size="sm" onClick={() => setVisibleCount((c) => c + 5)}>
@@ -287,7 +300,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
         )}
       </div>
 
-      {/* 删除确认弹窗 */}
+      {/* 删除确认弹窗：确认后调用接口，成功刷新列表并同步评论计数 -1 */}
       <Modal
         open={deleteTargetId !== null}
         onClose={() => setDeleteTargetId(null)}

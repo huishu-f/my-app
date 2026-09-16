@@ -1,27 +1,31 @@
 /**
- * @file format.ts
- * @description 通用格式化工具：头像首字母提取、数字格式化、locale 感知的日期与相对时间格式化
- *              （原 utils.ts 拆分而来，供全站组件使用）
+ * @file 通用格式化工具
+ * @description 提供头像首字母提取、姓名拆分、数字千分位、
+ *              以及随 locale 切换的日期与相对时间格式化，供全站组件复用。
  */
 import type { Locale } from '@/i18n/config';
 
-/** locale → Intl 日期格式化 BCP 47 标签 */
+/** locale → Intl 所需 BCP 47 语言标签映射 */
 const DATE_LOCALE: Record<Locale, string> = { zh: 'zh-CN', en: 'en-US' };
 
 /**
- * 首字母头像 — 从 firstName/lastName 提取 initials
+ * 提取姓名首字母用于头像占位
  * @param firstName 名
  * @param lastName 姓
- * @returns 大写的姓名首字母组合，无输入时返回 "U"
+ * @returns 大写的首字母组合（如 "ZS"）；两者均为空时返回 "U"（Unknown）
+ * @example
+ * getInitials('三', '张') // "SZ"
  */
 export function getInitials(firstName: string, lastName: string): string {
   return ((firstName || '').charAt(0) + (lastName || '').charAt(0)).toUpperCase() || 'U';
 }
 
 /**
- * 从全名（空格分隔）拆分出 firstName / lastName，用于 getInitials
- * @param fullName 空格分隔的全名（如 "张 三" 或 "张三"）
- * @returns { firstName, lastName } 元组
+ * 将空格分隔的全名拆分为名与姓
+ * @param fullName 全名字符串（如 "张 三" 或单段 "张三"）
+ * @returns 拆分结果：首段为 firstName，其余合并为 lastName
+ * @example
+ * splitName('张 三') // { firstName: '张', lastName: '三' }
  */
 export function splitName(fullName: string): { firstName: string; lastName: string } {
   return {
@@ -31,19 +35,19 @@ export function splitName(fullName: string): { firstName: string; lastName: stri
 }
 
 /**
- * 数字格式化 — 千分位逗号分隔，显示完整数字
+ * 数字千分位格式化
  * @param n 输入数字
- * @returns 千分位格式化的字符串，如 "1,234,567"
+ * @returns 千分位逗号分隔的字符串（如 "1,234,567"），始终显示完整数字
  */
 export function formatCount(n: number): string {
   return n.toLocaleString('en-US');
 }
 
 /**
- * 日期格式化（随 locale）
- * @param dateStr 日期字符串（可被 Date 解析）
+ * 日期格式化（随 locale 输出本地化长格式）
+ * @param dateStr 可被 Date 解析的日期字符串
  * @param locale 当前语言，默认 zh（中文 "2024年4月5日" / 英文 "April 5, 2024"）
- * @returns 本地化日期字符串
+ * @returns 本地化日期字符串；无法解析时原样返回
  */
 export function formatDate(dateStr: string, locale: Locale = 'zh'): string {
   const d = new Date(dateStr);
@@ -57,9 +61,13 @@ export function formatDate(dateStr: string, locale: Locale = 'zh'): string {
 
 /**
  * 相对时间格式化（随 locale）
- * @param dateStr 日期字符串（可被 Date 解析）
+ * @param dateStr 可被 Date 解析的日期字符串
  * @param locale 当前语言，默认 zh
- * @returns 相对时间字符串："刚刚 / x 分钟前 / x 小时前 / x 天前 / x 周前"（en: "just now / x min ago / ..."），超过 30 天返回本地化日期
+ * @returns 相对时间文案：刚刚 / x 分钟前 / x 小时前 / x 天前 / x 周前
+ *          （英文对应 just now / x min ago / x hr ago / x days ago / x wk ago）；
+ *          超过 30 天回退为本地化日期格式；无法解析时原样返回
+ * @example
+ * formatRelativeTime('2026-09-16T00:00:00Z') // "刚刚"（假设当前时间很接近）
  */
 export function formatRelativeTime(dateStr: string, locale: Locale = 'zh'): string {
   const d = new Date(dateStr);

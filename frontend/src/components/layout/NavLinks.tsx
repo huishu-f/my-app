@@ -16,6 +16,10 @@ export function NavLinks() {
   const pathname = usePathname();
   const t = useTranslations('nav');
 
+  /**
+   * 判断导航路由是否处于激活态
+   * @param href 导航链接地址
+   */
   const isActive = (href: string) => isRouteActive(pathname, href);
 
   return (

@@ -1,8 +1,7 @@
 /**
  * @file PostStateProvider.tsx
- * @description 文章详情页展示态 Provider — 以原生 React 状态提升（lifting state up）
- *              管理文章的点赞/收藏/评论计数。
- *              初始值来自 SSR props（服务端已获取），交互后用接口响应数据本地更新，
+ * @description 文章详情页展示态 Provider：以 React 状态提升方式集中管理文章数据
+ *              （点赞/收藏/评论计数）。初始值来自 SSR props，交互后用接口响应本地更新，
  *              全程零额外请求。
  */
 'use client';
@@ -24,8 +23,9 @@ export interface PostStateValue {
 const PostStateContext = createContext<PostStateValue | null>(null);
 
 /**
- * PostStateProvider 文章详情页状态 Provider
+ * PostStateProvider 文章详情页状态 Provider 组件
  * @param props.initialPost SSR 传入的文章数据（初始展示态）
+ * @param props.children 子组件树
  */
 export function PostStateProvider({
   initialPost,

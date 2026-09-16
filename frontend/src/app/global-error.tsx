@@ -1,15 +1,17 @@
 /**
  * @file global-error.tsx
- * @description 根布局错误边界，捕获 layout.tsx 级别错误，必须渲染自己的 html/body
+ * @description 全局错误边界，捕获根布局级别（layout.tsx）的渲染错误；
+ *              因 Provider 链可能已崩溃，无法使用 next-intl，此处按 URL 前缀做轻量双语，
+ *              且必须自带 <html>/<body> 结构与内联样式，不依赖任何全局 CSS。
  */
 'use client';
 
 import { useEffect } from 'react';
 
 /**
- * GlobalError 全局错误页
- * @param error 错误对象信息
- * @param reset 重置错误边界并重新渲染页面的函数
+ * GlobalError 根级全局错误页
+ * @param props.error 捕获到的错误对象（含可选 digest 摘要）
+ * @param props.reset 重置错误边界并尝试重新渲染的函数，绑定到「重新加载」按钮
  */
 export default function GlobalError({
   error,
@@ -26,12 +28,14 @@ export default function GlobalError({
   }, [error]);
 
   /**
-   * 轻量双语：global-error 渲染时 Provider 链可能已崩溃，无法使用 next-intl，
-   * 直接读取语言偏好 Cookie 选择文案（与 i18n/config 的 LOCALE_COOKIE 约定一致）
+   * 轻量双语判定：客户端读取路径前缀判断是否英文站
+   * （global-error 渲染时 next-intl Provider 链可能已崩溃，只能直读 URL）
    */
   const isEn =
     typeof window !== 'undefined' &&
     window.location.pathname.startsWith('/en');
+  /** 当前语言的文案集合（标题/描述/按钮） */
+  /** 当前语言的文案集合（标题/描述/按钮） */
   const copy = isEn
     ? {
         title: 'Something went wrong',
@@ -47,6 +51,7 @@ export default function GlobalError({
   return (
     <html lang={isEn ? 'en' : 'zh-CN'}>
       <body className="antialiased">
+        {/* 内联定义明/暗两套 CSS 变量，脱离 globals.css 独立成活 */}
         <style>{`
           :root {
             --color-page: #ffffff;
@@ -118,6 +123,7 @@ export default function GlobalError({
               transition: 'opacity 150ms ease-out',
             }}
           >
+            {/* 重新加载按钮，触发错误边界 reset */}
             {copy.reload}
           </button>
         </div>

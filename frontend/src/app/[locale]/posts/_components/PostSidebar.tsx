@@ -1,6 +1,7 @@
 /**
  * @file PostSidebar.tsx
- * @description 文章列表侧边栏，提供分类与标签筛选导航
+ * @description 文章列表侧边栏：分类与标签筛选导航，
+ *              移动端折叠为可展开面板，children 作为右侧列表内容区插槽。
  */
 'use client';
 
@@ -27,15 +28,17 @@ export function PostSidebar({
   zeroResults,
 }: PostSidebarProps) {
   const t = useTranslations('posts');
-  /** 分类展示名翻译（common.categoryNames，数据值保持中文原值仅展示层翻译） */
+  /** 通用文案翻译（分类展示名经 common.categoryNames 在展示层翻译，数据值保持原值） */
   const tCommon = useTranslations('common');
   /** 移动端筛选面板展开标记 */
   const [showFilter, setShowFilter] = useState(false);
+  /** 当前 URL 搜索参数，构建筛选链接时保留既有条件 */
   const searchParams = useSearchParams();
   /** 零结果时筛选链接附带清除搜索词 q，避免无意义叠加；否则维持 q 现状（传 null=删除不影响，因 buildPostsUrl 只在值为 null/空时删 key） */
   const clearQ: Record<string, string | null> = zeroResults ? { q: null } : {};
-  /** 当前分类是否有效（不在分类列表中时切换标签清除分类，避免无效参数叠加） */
+  /** 分类集合，用于校验当前分类有效性 */
   const validCategorySet = new Set(categories);
+  /** 当前分类无效（不在列表中）时，切换标签需顺带清除分类，避免无效参数叠加 */
   const shouldClearCategory = !!(currentCategory && !validCategorySet.has(currentCategory));
 
   return (
@@ -60,7 +63,9 @@ export function PostSidebar({
             <div className="animate-fade-in">
               <h3 className="filter-heading mb-3">{t('categories')}</h3>
               <ul className="space-y-1">
+                {/* 分类链接：选中「全部」时删除 category 参数 */}
                 {categories.map((name) => {
+                  /** 该分类是否为当前选中态 */
                   const active = currentCategory === name;
                   return (
                     <li key={name}>
@@ -93,9 +98,11 @@ export function PostSidebar({
             <div className="animate-fade-in">
               <h3 className="filter-heading mb-3">{t('tags')}</h3>
               <div className="flex flex-wrap gap-2">
+                {/* 兼容字符串与 {name,count} 两种标签数据形态 */}
                 {tags.map((item) => {
                   const tagName = typeof item === 'string' ? item : item.name;
                   const tagCount = typeof item === 'string' ? 0 : item.count;
+                  /** 该标签是否为当前选中态（再次点击即取消） */
                   const active = currentTag === tagName;
                   return (
                     <Link

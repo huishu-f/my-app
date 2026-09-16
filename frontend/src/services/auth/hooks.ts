@@ -1,8 +1,8 @@
 /**
- * @file hooks.ts
- * @description 认证模块 Hooks。基于 authApi 封装，提供登录/注册/登出等提交操作
- *              （useAsyncAction 管理提交态，内置成功副作用）。
- *              当前登录态读取请使用 useAuth()（全局 Context，见 @/components/auth-provider）。
+ * @file 认证模块 Hooks
+ * @description 基于 authApi 封装的登录/注册/登出提交操作，
+ *              由 useAsyncAction 管理提交状态并内置成功副作用。
+ *              当前登录态的读取请使用 useAuth()（全局 Context，见 @/components/auth-provider）。
  */
 import { useCallback } from 'react';
 import { useAsyncAction } from '@/lib/use-async-action';
@@ -12,9 +12,13 @@ import type { AuthUserResponse, LoginDto, RegisterDto } from '@my-app/shared';
 import { authApi } from './api';
 
 /**
- * 登录 Hook，成功后拉取用户刷新全局登录态（cookie 已由后端下发）；me 拉取失败不阻塞登录流程，后续路由切换会重试
- * @param dto 登录表单数据
- * @returns useAsyncAction 提交函数与提交状态
+ * 登录 Hook
+ * @returns useAsyncAction 的提交器与 isPending 状态
+ * @description 登录成功后拉取 /auth/me 刷新全局登录态（Cookie 已由后端下发）；
+ *              me 拉取失败不阻塞登录流程，后续路由切换会自然重试
+ * @example
+ * const { mutate: login, isPending } = useLogin();
+ * login(dto, { onSuccess: () => router.push('/') });
  */
 export function useLogin() {
   const { refreshMe } = useAuth();
@@ -34,9 +38,9 @@ export function useLogin() {
 }
 
 /**
- * 注册 Hook，仅创建用户，不下发登录态，需显式登录
- * @param dto 注册表单数据
- * @returns useAsyncAction 提交函数与提交状态
+ * 注册 Hook
+ * @returns useAsyncAction 的提交器与 isPending 状态
+ * @description 仅创建用户不下发登录态，注册成功后由调用方引导用户登录
  */
 export function useRegister() {
   const action = useCallback((dto: RegisterDto) => authApi.register(dto), []);
@@ -44,8 +48,10 @@ export function useRegister() {
 }
 
 /**
- * 登出 Hook，成功后清除全局登录态，UI 回到游客态
- * @returns useAsyncAction 提交函数与提交状态
+ * 登出 Hook
+ * @returns useAsyncAction 的提交器与 isPending 状态
+ * @description 登出成功后清除 auth_status Cookie（并广播跨标签页登出信号），
+ *              同时将全局登录态置空，UI 回到游客态
  */
 export function useLogout() {
   const { setMe } = useAuth();

@@ -1,7 +1,8 @@
 /**
  * @file SettingsForm.tsx
- * @description 账号设置表单（个人资料 + 修改密码），利用 React 19 useActionState
- *              管理提交状态，useFormStatus（SubmitButton）自动追踪 pending。
+ * @description 账号设置表单：个人资料与修改密码两个 Tab，
+ *              均以 React 19 useActionState 管理提交、SubmitButton 自动追踪 pending；
+ *              修改密码成功后清空登录态并跳登录页。
  */
 'use client';
 
@@ -24,15 +25,22 @@ import { authApi } from '@/services/auth/api';
 import { ApiRequestError } from '@/lib/api/request';
 import { getInitials } from '@/lib/format';
 
-type FormError = { error: string | null };
+/**
+ * 表单提交状态（useActionState 返回值）
+ */
+type FormError = { /** 提交错误文案，成功为 null */ error: string | null };
 
 /**
- * SettingsForm 账号设置表单
+ * SettingsForm 账号设置表单组件
  */
 export function SettingsForm() {
+  /** 国际化路由实例 */
   const router = useRouter();
+  /** 设置页文案翻译函数 */
   const t = useTranslations('settings');
+  /** 通用文案翻译函数 */
   const tCommon = useTranslations('common');
+  /** 登录态（user 数据 / 刷新 / 手动清除） */
   const { user, refreshMe, setMe } = useAuth();
 
   /** 当前选中的设置标签页 */
@@ -64,7 +72,7 @@ export function SettingsForm() {
   const [showConfirm, setShowConfirm] = useState(false);
 
   /**
-   * 用户信息加载后回填表单各字段
+   * 用户信息加载后回填表单各字段（受控输入的初始值来源）
    */
   useEffect(() => {
     if (!user) return;
@@ -76,7 +84,10 @@ export function SettingsForm() {
     setWebsite(user.website ?? '');
   }, [user]);
 
-  /** 资料提交 action — React 19 useActionState */
+  /**
+   * 资料提交 action — React 19 useActionState：
+   * 收集表单字段调用更新接口，成功后刷新登录态并 toast，失败回填错误信息
+   */
   const [, profileAction] = useActionState<FormError, FormData>(
     async (_prev, formData) => {
       const profile = {
@@ -105,7 +116,10 @@ export function SettingsForm() {
     { error: null },
   );
 
-  /** 密码修改 action — React 19 useActionState */
+  /**
+   * 密码修改 action — React 19 useActionState：
+   * 校验长度/一致性/新旧不同后调用接口，成功后清除登录态并跳登录页（旧密码已失效）
+   */
   const [pwdState, pwdAction] = useActionState<FormError, FormData>(
     async (_prev, formData) => {
       const currentPassword = (formData.get('currentPwd') as string) ?? '';
@@ -136,6 +150,7 @@ export function SettingsForm() {
 
   /** 用户头像首字母缩写 */
   const userInitials = getInitials(firstName, lastName);
+  /** 密码表单当前错误文案 */
   const pwdError = pwdState.error;
 
   return (

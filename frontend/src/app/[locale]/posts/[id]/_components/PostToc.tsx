@@ -1,6 +1,8 @@
 /**
  * @file PostToc.tsx
- * @description 文章目录侧边栏，从渲染后的 DOM 提取标题、高亮当前章节并展示阅读进度
+ * @description 文章目录侧边栏：从渲染后的 DOM 提取 h2/h3 构建目录，
+ *              IntersectionObserver 高亮当前章节，滚动进度条展示阅读进度；
+ *              点击目录项平滑滚动到对应标题。
  */
 'use client';
 
@@ -14,8 +16,9 @@ import { useRafScroll } from '@/hooks/useRafScroll';
  * @param props {@link PostTocProps}
  */
 export function PostToc({ articleId }: PostTocProps) {
+  /** 文章文案翻译函数 */
   const t = useTranslations('post');
-  /** 目录标题项列表 */
+  /** 目录标题项列表（从 DOM 提取） */
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
   /** 当前高亮的标题 ID */
   const [activeId, setActiveId] = useState<string>('');
@@ -148,7 +151,9 @@ export function PostToc({ articleId }: PostTocProps) {
               className="toc-list border-stroke flex flex-col gap-1 border-l"
               aria-label={t('tocNav')}
             >
+              {/* 目录项：h3 缩进为子级，当前项高亮左边框 */}
               {tocItems.map((h) => {
+                /** 该标题是否为当前高亮项 */
                 const active = activeId === h.id;
                 return (
                   <a

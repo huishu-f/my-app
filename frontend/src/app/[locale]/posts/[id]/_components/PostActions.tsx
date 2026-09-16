@@ -1,8 +1,7 @@
 /**
  * @file PostActions.tsx
- * @description 文章操作栏，提供点赞、收藏与评论数展示，未登录时引导登录。
- *              利用 React 19 useOptimistic 实现点赞/收藏的乐观更新——
- *              点击瞬间 UI 即时反映新状态，API 完成后确认，失败自动回退。
+ * @description 文章操作栏：点赞/收藏按钮（乐观更新）与评论数展示，
+ *              未登录点击时经 requireAuth 引导登录。
  */
 'use client';
 
@@ -32,21 +31,28 @@ interface OptimisticState {
 }
 
 /**
- * PostActions 文章操作栏
- * @param props {@link PostActionsProps}
+ * PostActions 文章操作栏组件
+ * @param props.user SSR 传入的用户，作客户端登录态初始兜底
  */
 export function PostActions({ user: ssrUser }: PostActionsProps) {
+  /** 文章文案翻译函数 */
+  /** 文章文案翻译函数 */
   const t = useTranslations('post');
   /** 点赞 mutation 实例 */
   const likeMutation = useToggleLike();
   /** 收藏 mutation 实例 */
   const favoriteMutation = useToggleFavorite();
 
+  /** 文章展示态（计数与状态来源） */
   const { post } = usePostState();
+  /** 详情页鉴权 + 状态更新 + 登录拦截三合一 hook */
   const { user, updatePost, requireAuth } = usePostPageAuth(post.id, ssrUser);
 
+  /** 当前用户是否已点赞（基于用户数据派生） */
   const liked = !!user?.likedArticles?.includes(post.id);
+  /** 当前用户是否已收藏（基于用户数据派生） */
   const favorited = !!user?.favoritedArticles?.includes(post.id);
+  /** 未登录时按钮降透明度提示 */
   const guestCls = !user ? 'opacity-60' : '';
 
   /** 乐观状态：基于实际 post + liked/favorited 派生，transition 中 addOptimistic 即时更新 */
@@ -85,7 +91,7 @@ export function PostActions({ user: ssrUser }: PostActionsProps) {
   };
 
   /**
-   * 切换收藏 — 乐观更新
+   * 切换收藏 — 乐观更新：瞬间切换收藏态与计数 ±1，API 确认后 updatePost 校准，失败自动回退
    */
   const toggleFavorite = () => {
     requireAuth(() => {

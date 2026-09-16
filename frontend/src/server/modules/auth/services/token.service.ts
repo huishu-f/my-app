@@ -1,6 +1,8 @@
 /**
  * @file token.service.ts
- * @description JWT token 服务工厂：签发、验证、解码 token，验证失败返回错误类型标记而非抛异常
+ * @description JWT token 服务工厂：提供 token 的签发（generate）、校验（verify）、
+ *              解码（decode）。verify 失败不抛异常，而是返回带 errorType 标记的结果对象，
+ *              便于调用方区分「过期」与「无效」两种失败。仅限服务端（server-only）。
  */
 
 import 'server-only';
@@ -13,16 +15,29 @@ export type { TokenVerifyResult, TokenService };
 
 /**
  * 创建 token 服务
- * @returns 包含 generate/verify/decode 的 TokenService；generate 过期时长取 env.JWT_EXPIRES_IN（默认 7d）
+ * @returns 实现 TokenService 的对象，包含 generate/verify/decode 三个方法
+ * @example
+ * const svc = createTokenService();
+ * const token = svc.generate({ id, email, tokenVersion: 0 });
+ * const result = svc.verify(token);
  */
 export function createTokenService(): TokenService {
   return {
-    /** 签发 JWT，payload 为认证载荷，过期时长取 env.JWT_EXPIRES_IN */
+    /**
+     * 签发 JWT
+     * @param payload 认证载荷（id、email、tokenVersion）
+     * @returns 签名后的 JWT 字符串，过期时长取 env.JWT_EXPIRES_IN
+     */
     generate: (payload: AuthPayload) => {
       const expiresIn = env.JWT_EXPIRES_IN as jwt.SignOptions['expiresIn']; // token 过期时长，取自 env.JWT_EXPIRES_IN
       return jwt.sign(payload, env.JWT_SECRET, { expiresIn });
     },
-    /** 校验 token 签名与有效期：过期返回 expired，其余无效情况返回 invalid */
+    /**
+     * 校验 token 的签名与有效期
+     * @param token JWT 字符串
+     * @returns 成功返回 { success: true, payload }；过期返回 errorType 'expired'，
+     *          其余无效情况（签名错误、格式错误等）返回 errorType 'invalid'
+     */
     verify: (token: string): TokenVerifyResult => {
       try {
         const payload = jwt.verify(token, env.JWT_SECRET) as AuthPayload;
@@ -34,7 +49,12 @@ export function createTokenService(): TokenService {
         return { success: false, errorType: 'invalid' };
       }
     },
-    /** 解码 token 载荷，不校验签名与有效期，解码失败返回 null */
+    /**
+     * 解码 token 载荷
+     * @param token JWT 字符串
+     * @returns 载荷对象，解码失败返回 null
+     * @warning 不校验签名与有效期，仅用于刷新场景读取过期 token 的内容
+     */
     decode: (token: string): AuthPayload | null => {
       try {
         return jwt.decode(token) as AuthPayload;

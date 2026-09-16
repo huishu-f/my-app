@@ -1,6 +1,6 @@
 /**
  * @file error.tsx
- * @description 文章详情页错误边界，提供精准的错误提示与返回操作
+ * @description 文章详情页错误边界：路由段渲染/数据异常时展示错误提示与返回列表入口
  */
 'use client';
 
@@ -11,9 +11,11 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
 
 /**
- * PostDetailError 文章详情页错误边界，渲染加载失败提示与返回文章列表入口
+ * PostDetailError 文章详情页错误边界组件
+ * 渲染加载失败提示与「返回文章列表」按钮
  */
 export default function PostDetailError() {
+  /** 错误文案翻译函数 */
   const t = useTranslations('errors');
   return (
     <Container className="page-section">

@@ -1,12 +1,13 @@
 /**
- * @file sanitize.ts
- * @description HTML 消毒工具，使用 dompurify 支持 SSR 和客户端。
- *              标签/属性白名单与 server 端 sanitize-html（markdown.service.ts）共享 ALLOWED_TAGS，
- *              新增标签只需改这一处。
+ * @file HTML 消毒
+ * @description 基于 dompurify 的 HTML 白名单消毒，同时兼容服务端与客户端环境。
+ *              标签/属性白名单与服务端 sanitize-html 共享同一份定义，
+ *              新增允许的标签或属性只需修改本文件。
  */
 
 /**
- * 允许的 HTML 标签白名单（与 server 端 sanitize-html 共用同一份定义，新增标签只改这里）
+ * 允许保留的 HTML 标签白名单
+ * @description 与服务端 sanitize-html（markdown.service.ts）共用同一份列表，新增标签只改这里
  */
 export const ALLOWED_TAGS = [
   'p',
@@ -63,11 +64,11 @@ export const ALLOWED_TAGS = [
   'address',
   'time',
   'small',
-  'input', // checkbox 列表（markdown 任务列表）
+  'input', // markdown 任务列表的 checkbox
 ] as const;
 
 /**
- * 允许的 HTML 属性白名单（DOMPurify 全局配置）
+ * 允许保留的 HTML 属性白名单（用于 DOMPurify 全局配置）
  */
 export const ALLOWED_ATTR = [
   'href',
@@ -95,9 +96,11 @@ export const ALLOWED_ATTR = [
 ] as const;
 
 /**
- * 使用 dompurify，支持服务端和客户端
- * @param html 可能含恶意脚本的 HTML 字符串
- * @returns 消毒后的安全 HTML
+ * 消毒 HTML 内容（dompurify 动态加载，兼容 SSR 与客户端）
+ * @param html 可能包含恶意脚本的 HTML 字符串
+ * @returns 按白名单消毒后的安全 HTML；空输入返回空字符串
+ * @warning dompurify 加载失败时回退为正则兜底消毒（移除 script/iframe/object/embed/form/noscript、
+ *          事件属性与 javascript: 协议链接），兜底方案的覆盖面弱于 DOMPurify
  */
 export async function sanitizeArticleContent(html: string): Promise<string> {
   if (!html) return '';

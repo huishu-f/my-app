@@ -1,6 +1,8 @@
 /**
  * @file WriteEditor.tsx
- * @description 写文章/编辑文章客户端组件，支持标题、分类、标签、正文编辑与发布
+ * @description 写文章/编辑文章客户端编辑器：标题/分类/标签/正文/封面/摘要表单，
+ *              桌面分栏实时 Markdown 预览（懒加载 marked + highlight.js）、快捷键插入标记、
+ *              发布/存草稿双提交路径，编辑模式按 URL id 拉取文章预填。
  */
 'use client';
 
@@ -106,25 +108,36 @@ function getMarkdownRenderer(): Promise<(content: string) => Promise<string>> {
 }
 
 /**
- * WriteEditor 写文章编辑器
+ * WriteEditor 写文章编辑器组件
  */
 export function WriteEditor() {
+  /** 国际化路由实例 */
   const router = useRouter();
+  /** URL 搜索参数（读取 id 判定编辑模式） */
   const searchParams = useSearchParams();
+  /** 编辑目标文章 id（URL 参数） */
   const editId = searchParams.get('id');
+  /** 是否编辑模式（存在 id 即编辑） */
   const isEditMode = !!editId;
+  /** 编辑目标的文章数据查询（新建模式传空串不启用） */
   const {
     data: postData,
+    /** 文章加载中标记 */
     isLoading: isLoadingPost,
+    /** 文章加载失败标记 */
     isError: isPostError,
   } = usePostData(editId || '');
+  /** 正在编辑的文章实体 */
   const editingPost = postData?.post;
 
+  /** 创建文章 mutation */
   const createPostMutation = useCreatePost();
+  /** 更新文章 mutation */
   const updatePostMutation = useUpdatePost();
+  /** 当前模式对应的提交 mutation（按钮 loading 态共用） */
   const mutation = isEditMode ? updatePostMutation : createPostMutation;
 
-  /** 标题输入值 */
+  /** 写作页与通用文案翻译函数 */
   const t = useTranslations('write');
   const tCommon = useTranslations('common');
   const [title, setTitle] = useState('');
@@ -239,10 +252,12 @@ export function WriteEditor() {
     [], // ← 空依赖：通过 contentValueRef 读取最新 content，避免每次按键重建
   );
 
+  // 编辑模式加载中：整页骨架
   if (isEditMode && isLoadingPost) {
     return <LoadingSkeleton />;
   }
 
+  // 编辑模式加载失败：错误态 + 返回个人中心
   if (isEditMode && isPostError) {
     return (
       <Container className="page-section">
@@ -298,7 +313,7 @@ export function WriteEditor() {
   };
 
   /**
-   * 表单提交处理，触发保存文章
+   * 表单提交处理：阻止默认行为后以「发布」路径保存文章
    * @param e 表单提交事件
    */
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
@@ -307,9 +322,10 @@ export function WriteEditor() {
   };
 
   /**
-   * 保存文章（发布 or 存草稿），BUG-03 修复：写文章/编辑草稿页支持「保存草稿」，
-   * 发布走 isDraft=false，草稿走 isDraft=true，API 层已原生支持
-   * @param asDraft 是否保存为草稿（true 时 isDraft=true，不进公开列表）
+   * 保存文章（发布或存草稿）
+   * 发布走 isDraft=false，草稿走 isDraft=true（不进公开列表）；
+   * 新建草稿成功后 URL 切换为该草稿的编辑态，发布成功后 replace 到文章详情
+   * @param asDraft 是否保存为草稿
    */
   const savePost = (asDraft: boolean) => {
     if (!title.trim()) {
@@ -326,6 +342,7 @@ export function WriteEditor() {
     }
     setFormError('');
 
+    /** 提交给接口的文章数据 */
     const dto = {
       title: title.trim(),
       content,
@@ -336,6 +353,7 @@ export function WriteEditor() {
       coverImage: coverImage.trim() || undefined,
     };
 
+    /** 保存成功回调：按模式 toast 提示并导航 */
     const onSuccess = (data: PostData) => {
       if (asDraft) {
         toast.success(isEditMode ? t('draftUpdated') : t('draftSaved'));
@@ -350,6 +368,7 @@ export function WriteEditor() {
       }
     };
 
+    /** 保存失败回调：未登录提示重新登录，其余统一错误 toast */
     const onError = (err: Error) => {
       if (err instanceof ApiRequestError && err.isUnauthorized) {
         toast.error(t('loginRequired'));

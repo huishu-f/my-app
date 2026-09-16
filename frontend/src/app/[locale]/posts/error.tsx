@@ -1,6 +1,7 @@
 /**
  * @file error.tsx
- * @description 文章列表页错误边界，列表数据获取失败时展示错误提示与刷新入口；仅路由数据加载失败时触发
+ * @description 文章列表页错误边界：路由段数据（文章/分类/标签）获取失败时渲染，
+ *              展示错误提示与刷新入口。
  */
 'use client';
 
@@ -11,10 +12,11 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
 
 /**
- * PostsError 文章列表页错误边界
- * 列表数据获取失败时展示
+ * PostsError 文章列表页错误边界组件
+ * 渲染加载失败提示与「刷新」按钮（跳回 /posts 清空筛选重试）
  */
 export default function PostsError() {
+  /** 错误文案翻译函数 */
   const t = useTranslations('errors');
   return (
     <Container className="page-section">

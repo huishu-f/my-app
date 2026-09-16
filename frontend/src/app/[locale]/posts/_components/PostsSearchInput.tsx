@@ -1,6 +1,7 @@
 /**
  * @file PostsSearchInput.tsx
- * @description 文章列表搜索输入框，防抖更新 URL 搜索参数并保持外部同步
+ * @description 文章列表搜索输入框：输入防抖 300ms 后以 replace 更新 URL 的 q 参数，
+ *              外部 URL 变化（清除筛选等）时反向同步输入框值。
  */
 'use client';
 
@@ -19,8 +20,11 @@ const DEBOUNCE_MS = 300;
  * @param props {@link PostsSearchInputProps}
  */
 export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
+  /** 列表页文案翻译函数 */
   const t = useTranslations('posts');
+  /** 国际化路由实例，用于 replace 更新 URL */
   const router = useRouter();
+  /** 当前 URL 搜索参数，构建搜索 URL 时保留既有条件 */
   const searchParams = useSearchParams();
   /** 当前搜索输入值 */
   const [query, setQuery] = useState(initialValue);
@@ -39,7 +43,8 @@ export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
   }, []);
 
   /**
-   * 防抖更新 URL 搜索参数，将搜索关键词同步到 URL
+   * 防抖更新 URL 搜索参数：query 变化后延迟 300ms，
+   * 与 URL 现值相同则跳过；写入 q、清空 page，用 replace 避免每敲一轮字就进一条历史
    */
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);

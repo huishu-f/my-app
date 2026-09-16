@@ -9,18 +9,19 @@
 import { useEffect } from 'react';
 import { api } from '@/lib/api/request';
 
-/** 同一页面会话内已上报的文章 ID（防 StrictMode 双计数与快速重挂载重复计数） */
+/** 模块级集合：本页面会话内已上报的文章 ID（防 StrictMode 双计数与快速重挂载重复计数） */
 const reported = new Set<string>();
-/** 上限：超过后清空全部，防止长会话 Set 无限增长（漏报一两次无害，后端有 rate limit） */
+/** 集合容量上限：超过后清空全部，防长会话 Set 无限增长（漏报一两次无害，后端有 rate limit） */
 const REPORTED_CAP = 50;
 
 /**
- * ViewReporter 浏览量上报
+ * ViewReporter 浏览量上报组件
  * @param props.postId 文章 ID
  */
 export function ViewReporter({ postId }: { postId: string }) {
   /**
-   * 挂载后上报一次浏览量，已上报过的文章跳过（防 StrictMode 双计数）
+   * 挂载后上报一次浏览量：已上报过的文章跳过（防 StrictMode 双计数），
+   * 失败静默（keepalive 保证页面卸载后仍送达，计数非关键路径）
    */
   useEffect(() => {
     if (!postId || reported.has(postId)) return;

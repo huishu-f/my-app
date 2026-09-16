@@ -5,11 +5,17 @@
 import { Bold, Italic, Heading, Link as LinkIcon, Code, Code2, List, Quote } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+/**
+ * MarkdownToolbar 组件入参
+ */
 interface MarkdownToolbarProps {
   /** 在 textarea 当前光标位置插入文本的回调 */
   onInsert: (before: string, after?: string, placeholder?: string) => void;
 }
 
+/**
+ * 工具栏单个按钮配置
+ */
 interface ToolButton {
   /** 按钮展示图标 */
   icon: typeof Bold;
@@ -23,6 +29,7 @@ interface ToolButton {
   placeholderKey?: 'phBold' | 'phItalic' | 'phHeading' | 'phLink' | 'phList' | 'phQuote';
 }
 
+/** 工具栏按钮配置列表：加粗、斜体、标题、链接、行内代码、代码块、列表、引用 */
 const TOOLS: ToolButton[] = [
   { icon: Bold, labelKey: 'toolbarBold', before: '**', after: '**', placeholderKey: 'phBold' },
   { icon: Italic, labelKey: 'toolbarItalic', before: '*', after: '*', placeholderKey: 'phItalic' },
@@ -40,6 +47,10 @@ const TOOLS: ToolButton[] = [
   { icon: Quote, labelKey: 'toolbarQuote', before: '> ', placeholderKey: 'phQuote' },
 ];
 
+/**
+ * MarkdownToolbar Markdown 编辑工具栏
+ * @param props {@link MarkdownToolbarProps}
+ */
 export function MarkdownToolbar({ onInsert }: MarkdownToolbarProps) {
   const t = useTranslations('write');
 

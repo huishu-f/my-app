@@ -1,6 +1,7 @@
 /**
  * @file RemoveFavoriteButton.tsx
- * @description 取消收藏按钮，调用 toggleFavorite 接口移除收藏并提示结果
+ * @description 取消收藏按钮：调用 toggleFavorite 接口移除收藏，
+ *              成功/失败分别 toast 提示，成功后回调父级更新列表。
  */
 'use client';
 
@@ -20,11 +21,14 @@ interface RemoveFavoriteButtonProps extends PostIdProps {
 }
 
 /**
- * RemoveFavoriteButton 取消收藏按钮
- * @param props {@link RemoveFavoriteButtonProps}
+ * RemoveFavoriteButton 取消收藏按钮组件
+ * @param props.postId 文章 ID
+ * @param props.onRemoved 取消成功回调（父级即时移除卡片）
  */
 export function RemoveFavoriteButton({ postId, onRemoved }: RemoveFavoriteButtonProps) {
+  /** 个人中心文案翻译函数 */
   const t = useTranslations('profile');
+  /** 通用文案翻译函数（当前实现未直接使用，保留以备扩展） */
   const tCommon = useTranslations('common');
   /** 取消收藏的 mutation 实例 */
   const toggleFavoriteMutation = useToggleFavorite();

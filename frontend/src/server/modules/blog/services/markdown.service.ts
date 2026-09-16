@@ -1,10 +1,11 @@
-import 'server-only';
-
 /**
  * @file markdown.service.ts
- * @description Markdown 渲染服务，将 Markdown 文本转为安全的 HTML，防止 XSS 攻击。
- *              使用 marked + marked-highlight + highlight.js 实现代码语法高亮。
+ * @description Markdown 渲染服务：将文章 Markdown 正文渲染为带代码高亮的安全 HTML。
+ *              渲染链路：marked（+ marked-highlight 接入 highlight.js 做语法高亮）
+ *              → sanitize-html 白名单过滤，防止 XSS。仅限服务端（server-only）。
  */
+
+import 'server-only';
 
 import { Marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
@@ -27,22 +28,42 @@ import { HIGHLIGHT_ALIASES, MARKED_OPTIONS, highlightCode } from '@/lib/markdown
 
 // 注册常用语言（覆盖大部分技术博客需求），未注册的语言回退到 highlightAuto
 // 语言别名表与客户端预览（WriteEditor）共用 lib/markdown-highlight.ts，新增语言两处同步
+
+/**
+ * 可注册的代码高亮语言模块表
+ * @description key 为主语言名，value 为 highlight.js 语言定义；仅注册此处列出的语言
+ */
 const LANGUAGE_MODULES: Record<string, Parameters<typeof hljs.registerLanguage>[1]> = {
+  /** JavaScript */
   javascript,
+  /** TypeScript */
   typescript,
+  /** Python */
   python,
+  /** Bash */
   bash,
+  /** JSON */
   json,
+  /** XML/HTML */
   xml,
+  /** CSS */
   css,
+  /** SQL */
   sql,
+  /** Go */
   go,
+  /** Rust */
   rust,
+  /** Java */
   java,
+  /** YAML */
   yaml,
+  /** Markdown */
   markdown,
+  /** Shell */
   shell,
 };
+// 按别名表批量注册：主语言与其全部别名共用同一个语言模块
 for (const [lang, aliases] of Object.entries(HIGHLIGHT_ALIASES)) {
   const mod = LANGUAGE_MODULES[lang];
   if (mod) {
@@ -54,9 +75,9 @@ import sanitizeHtml from 'sanitize-html';
 import { ALLOWED_TAGS } from '@/lib/sanitize';
 
 /**
- * 创建带代码高亮能力的 Marked 实例
- * - markedHighlight 拦截 code block，调用 highlightCode 进行语法高亮
- * - 未知语言时自动检测，失败则原样返回
+ * 带代码高亮能力的 Marked 实例
+ * @description markedHighlight 拦截代码块调用 highlightCode 完成语法高亮；
+ *              未知语言时自动检测，检测失败则原样返回
  */
 const marked = new Marked(
   markedHighlight({
@@ -67,7 +88,11 @@ const marked = new Marked(
 
 marked.setOptions(MARKED_OPTIONS);
 
-// sanitize-html 允许的标签和属性白名单（标签集合与客户端 lib/sanitize.ts 共享 ALLOWED_TAGS）
+/**
+ * sanitize-html 过滤配置
+ * @description 允许的标签/属性白名单（标签集合与客户端 lib/sanitize.ts 共享 ALLOWED_TAGS）；
+ *              外链 a 标签自动补 target/rel 安全属性；禁用标签采用转义而非删除，保留原文文本
+ */
 const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: [...ALLOWED_TAGS],
   allowedAttributes: {
@@ -106,8 +131,12 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
 
 /**
  * 将 Markdown 文本渲染为安全的 HTML（含代码语法高亮）
- * @param markdown 原始 Markdown 文本
- * @returns 经过 sanitize 的 HTML 字符串，可直接用于 dangerouslySetInnerHTML
+ * @param markdown 原始 Markdown 文本，空串直接返回空字符串
+ * @returns 先经 marked 高亮渲染、再经 sanitize-html 白名单过滤的 HTML 字符串，
+ *          可直接用于 dangerouslySetInnerHTML
+ * @example
+ * renderMarkdown('# Hello\n\n```js\ncode()\n```')
+ * @warning 输出虽经白名单过滤，仍应只配合 dangerouslySetInnerHTML 使用，不要再拼接未净化的内容
  */
 export function renderMarkdown(markdown: string): string {
   if (!markdown) return '';

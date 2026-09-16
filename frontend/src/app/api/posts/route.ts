@@ -1,6 +1,8 @@
 /**
- * @file route.ts
- * @description 文章列表与创建接口 /api/posts，提供 GET/POST；GET 匿名且非草稿视图 CDN 缓存 60s、登录视图禁缓存，POST 需登录并即时失效 posts/categories/tags 派生缓存
+ * @file 文章接口（列表）
+ * @description 文章列表与创建端点 /api/posts，提供 GET 与 POST 两个方法；
+ *              GET 登录可选：匿名且非草稿视图为纯已发布内容，允许 CDN 缓存 60s，登录视图（含草稿/个性化数据）禁缓存避免跨用户泄漏；
+ *              POST 需登录：创建文章后即时失效 posts/categories/tags 三类标签缓存
  */
 import { type NextRequest } from 'next/server';
 import { revalidateTag } from 'next/cache';
@@ -15,11 +17,12 @@ import { requireAuth, tryAuth } from '@/server/modules/auth/auth.guard';
 import { parseCreatePostBody, parseListQuery } from '@/server/modules/blog/blog.validators';
 
 /**
- * 获取文章列表（可选登录）
- * 匿名且非草稿视图为纯已发布内容，允许 CDN 缓存；登录视角含草稿与个性化数据，禁缓存避免跨用户泄漏
- * @param request 路由请求，读取查询参数与登录凭证
- * @returns 文章列表及分页统计（成功响应包裹，公开视图带缓存头）
- * @throws 查询或鉴权异常时统一由 sendError 返回错误响应
+ * 获取文章列表
+ * @description 登录可选；解析查询参数后按用户视角（匿名/登录）列出文章，
+ *              匿名且非草稿视图为纯已发布内容，附加 60s 公开缓存头；登录视图含草稿与个性化数据，不缓存
+ * @param request 路由请求对象，查询字符串提供分页/筛选条件，Cookie 提供登录凭证
+ * @returns 成功响应，data 为文章列表及分页统计（公开视图响应带 CDN 缓存头）
+ * @throws 查询参数校验失败或鉴权异常时，由 sendError 统一返回错误响应
  */
 export async function GET(request: NextRequest) {
   try {
@@ -43,10 +46,12 @@ export async function GET(request: NextRequest) {
 }
 
 /**
- * 创建文章（需登录）
- * @param request 路由请求，读取 JSON 请求体与登录凭证
- * @returns 新创建的文章（创建成功响应包裹）
- * @throws 鉴权失败或创建异常时统一由 sendError 返回错误响应
+ * 创建文章
+ * @description 需登录；解析请求体后以当前登录用户为作者创建文章，
+ *              创建成功即时失效 posts/categories/tags 标签缓存，保证列表与聚合数据立即更新
+ * @param request 路由请求对象，JSON 请求体提供文章字段，Cookie 提供登录凭证
+ * @returns 创建成功响应（201），data 为新创建的文章对象
+ * @throws 鉴权失败（未登录）、请求体校验失败或创建异常时，由 sendError 统一返回错误响应
  */
 export async function POST(request: NextRequest) {
   try {

@@ -19,14 +19,22 @@ import { useDismissable } from '@/hooks/useDismissable';
 export function MobileMenu() {
   const pathname = usePathname();
   const t = useTranslations('nav');
+  /** 移动端菜单展开状态 */
   const [mobileOpen, setMobileOpen] = useState(false);
+  /** 客户端挂载标记 — portal 依赖 document，需挂载后渲染 */
   const [mounted, setMounted] = useState(false);
+  /** 菜单面板 Ref — 供 useDismissable 外部点击判定 */
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   /** 切换按钮 Ref — 用于外部点击判定时排除按钮自身 */
   const toggleRef = useRef<HTMLButtonElement>(null);
 
+  /**
+   * 判断导航路由是否处于激活态
+   * @param href 导航链接地址
+   */
   const isActive = (href: string) => isRouteActive(pathname, href);
 
+  /** 挂载后标记 mounted，允许 portal 渲染 */
   useEffect(() => {
     setMounted(true);
   }, []);

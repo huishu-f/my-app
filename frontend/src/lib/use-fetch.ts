@@ -1,49 +1,58 @@
 /**
- * @file use-fetch.ts
- * @description 通用数据获取 hook — 以原生 React（useState + useEffect）+ fetch API 封装
- *              data / loading / error 三态与 refetch。
+ * @file 通用数据获取 Hook
+ * @description 基于原生 useState + useEffect + fetch 封装 data / loading / error 三态与 refetch。
  *              内置特性：
- *              - 请求去重：模块级 in-flight Map，相同 cacheKey 的并发请求共享同一个 Promise
- *                引用计数管理：组件卸载时仅递减计数，计数归零才 abort，避免误杀共享请求
- *              - SWR 语义：短时间窗口内（默认 2s）重复请求返回缓存数据，后台静默刷新
- *              - AbortController 取消语义：依赖变化与组件卸载时中止未完成请求
- *
- *              ⚠️ cacheKey 设计：调用方应传入显式 cacheKey（如 'comments:postId'），
- *              避免生产构建 minify 后 fetcher.toString() 碰撞。
- *              未传 cacheKey 时回退到 deps.join('::')。
+ *              - 请求去重：模块级 in-flight Map，相同 cacheKey 的并发请求共享同一 Promise；
+ *                引用计数管理，组件卸载仅递减计数，归零才真正 abort，避免误杀共享请求
+ *              - SWR 语义：短窗口（默认 2s）内命中缓存先返回缓存数据，同时后台静默刷新
+ *              - AbortController 取消：依赖变化与组件卸载时中止在途请求
+ *              - 失败自动重试（默认最多 2 次，固定 1s 间隔）
+ *              ⚠️ 调用方应传入显式 cacheKey（如 'comments:postId'），
+ *              未传时回退 deps.join('::')，生产构建 minify 后可能产生 key 冲突。
  */
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-/** SWR 窗口：短时间内重复请求返回缓存，后台静默刷新 */
+/** SWR 窗口时长（ms）：窗口内重复请求返回缓存并后台刷新 */
 const SWR_WINDOW = 2_000;
 
-/** 最大重试次数 */
+/** 失败自动重试的最大次数 */
 const MAX_RETRIES = 2;
-/** 重试间隔（毫秒）— 固定延迟，非指数退避 */
+/** 重试间隔（ms），固定延迟而非指数退避 */
 const RETRY_DELAY = 1_000;
 
-/** in-flight 请求条目（含引用计数） */
+/** in-flight 请求表条目 */
 interface InflightEntry {
+  /** 共享的请求 Promise */
   promise: Promise<unknown>;
+  /** 请求的 AbortController */
   abort: AbortController;
-  /** 引用计数：多个组件共享同一请求时，仅当计数归零才 abort 并删除 */
+  /** 引用计数：多个组件共享同一请求时，归零才 abort 并删除条目 */
   refCount: number;
 }
 
-/** 模块级 in-flight 请求表：key → InflightEntry，并发请求去重 */
+/** 模块级 in-flight 请求表：cacheKey → 请求条目，实现并发去重 */
 const inflight = new Map<string, InflightEntry>();
 
-/** 模块级 SWR 缓存：key → { data, timestamp }，短时间窗口内返回缓存 */
+/** 模块级 SWR 缓存：cacheKey → { data, timestamp }，短窗口内返回缓存 */
 const swrCache = new Map<string, { data: unknown; timestamp: number }>();
 
-/** 生成请求唯一 key：优先用显式 cacheKey，回退到 deps 拼接 */
+/**
+ * 生成请求缓存 key
+ * @param cacheKey 调用方显式指定的 key
+ * @param deps 依赖数组（无 cacheKey 时用元素拼接）
+ * @returns 优先返回显式 cacheKey，否则 deps.join('::')
+ */
 function makeKey(cacheKey: string | undefined, deps: React.DependencyList): string {
   return cacheKey ?? deps.join('::');
 }
 
-/** 递减引用计数，计数归零时 abort 并清理 in-flight 条目（不影响 SWR 缓存） */
+/**
+ * 释放 in-flight 请求的引用计数
+ * @param key 缓存 key
+ * @description 计数递减，归零时 abort 请求并删除条目（SWR 缓存不受影响）
+ */
 function releaseInflight(key: string): void {
   const entry = inflight.get(key);
   if (!entry) return;
@@ -54,7 +63,12 @@ function releaseInflight(key: string): void {
   }
 }
 
-/** 执行单次请求（含 in-flight 去重） */
+/**
+ * 执行单次请求（含 in-flight 去重与自动重试）
+ * @param key 缓存 key（去重与 SWR 缓存共用）
+ * @param fetcherRef 请求函数 ref（读取最新引用，避免闭包过期）
+ * @returns 请求结果；复用他人请求失败时返回 undefined（不向上抛错）
+ */
 async function performFetch(
   key: string,
   fetcherRef: React.MutableRefObject<(signal: AbortSignal) => Promise<unknown>>,
@@ -109,13 +123,21 @@ export interface FetchState<T> {
 }
 
 /**
- * 通用数据获取 hook
- * @param fetcher 请求函数（接收 AbortSignal，可透传给底层 fetch 以真正中断网络请求）
- * @param deps 重新获取的依赖数组（如 [postId]）——调用方负责粒度，语义同 useEffect 依赖
- * @param enabled 是否启用请求（false 时不发请求、loading 立即为 false）
- * @param cacheKey 显式缓存键（推荐传入，如 'comments:postId'），未传时回退到 deps.join('::')
- *                 生产构建 minify 后 fetcher.toString() 可能碰撞，显式 key 可避免此问题
+ * 通用数据获取 Hook
+ * @param fetcher 请求函数（接收 AbortSignal，可透传给底层 fetch 真正中断网络请求）
+ * @param deps 重新获取的依赖数组（如 [postId]），语义同 useEffect 依赖，粒度由调用方负责
+ * @param enabled 是否启用请求，默认 true；false 时不发请求且 loading 立即为 false
+ * @param cacheKey 显式缓存 key（推荐传入，如 'comments:postId'），未传时回退 deps.join('::')
  * @returns {@link FetchState} data / loading / error / refetch
+ * @warning 生产构建 minify 后依赖拼接 key 可能碰撞，跨页面的同 key 请求会互相去重/共享缓存
+ *
+ * @example
+ * const { data, loading } = useFetch(
+ *   (signal) => commentApi.list(postId, { signal }),
+ *   [postId],
+ *   !!postId,
+ *   `comments:${postId}`,
+ * );
  */
 export function useFetch<T>(
   fetcher: (signal: AbortSignal) => Promise<T>,
@@ -126,12 +148,12 @@ export function useFetch<T>(
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(enabled);
   const [error, setError] = useState<Error | null>(null);
-  /** refetch 自增计数，触发 effect 重新执行 */
+  /** refetch 自增计数，触发下方 effect 重新执行 */
   const [tick, setTick] = useState(0);
-  /** 保持 fetcher 最新引用而不触发重新请求 */
+  /** 持有最新 fetcher 引用而不触发重新请求 */
   const fetcherRef = useRef(fetcher);
 
-  /** 同步最新 fetcher（effect 内写入，避免渲染期访问 ref；先于请求 effect 声明） */
+  /** 同步最新 fetcher（先于请求 effect 声明，供其读取） */
   useEffect(() => {
     fetcherRef.current = fetcher;
   });
@@ -146,7 +168,7 @@ export function useFetch<T>(
     let cancelled = false;
     const key = makeKey(cacheKey, deps);
 
-    /** SWR 命中：短时间窗口内返回缓存数据，后台静默刷新 */
+    // SWR 命中：窗口内先返回缓存数据，同时后台静默刷新
     const cached = swrCache.get(key);
     if (cached && Date.now() - cached.timestamp < SWR_WINDOW) {
       setData(cached.data as T);
@@ -159,14 +181,14 @@ export function useFetch<T>(
       }).catch(() => {
         // 后台刷新失败静默忽略（缓存数据仍可用）
       });
-      // SWR 路径也需要清理：performFetch 已注册 refCount=1，cleanup 需释放
+      // SWR 路径同样注册了 refCount=1，cleanup 需释放
       return () => {
         cancelled = true;
         releaseInflight(key);
       };
     }
 
-    /** 执行请求（含去重检查） */
+    // 常规请求路径（含 in-flight 去重检查）
     setLoading(true);
     setError(null);
     performFetch(key, fetcherRef)
@@ -190,7 +212,7 @@ export function useFetch<T>(
     // eslint-disable-next-line react-hooks/exhaustive-deps -- deps 由调用方显式传入，控制重取时机
   }, [enabled, tick, cacheKey, ...deps]);
 
-  /** 手动重新获取（自增 tick 触发 effect） */
+  /** 手动重新获取：自增 tick 触发 effect 重跑 */
   const refetch = useCallback(() => {
     if (enabled) setTick((t) => t + 1);
   }, [enabled]);

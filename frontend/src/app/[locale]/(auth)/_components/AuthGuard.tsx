@@ -1,6 +1,7 @@
 /**
  * @file AuthGuard.tsx
- * @description (auth) 路由组客户端鉴权守卫，未登录用户访问登录/注册页时客户端重定向首页；layout 不再调用 cookies()，可被 ISR/Full Route Cache 缓存
+ * @description (auth) 路由组客户端鉴权守卫：已登录用户访问登录/注册页时延迟重定向回来源页，
+ *              加载中显示骨架、未登录才渲染子页面；layout 不调用 cookies()，可被 ISR 缓存。
  */
 'use client';
 
@@ -16,7 +17,9 @@ import { safeRedirect } from '@/lib/navigation';
  * @param props.children 受保护的登录/注册页面内容
  */
 export function AuthGuard({ children }: { children: React.ReactNode }) {
+  /** 全局登录态与加载状态 */
   const { user, loading } = useAuth();
+  /** 国际化路由实例 */
   const router = useRouter();
 
   /**
@@ -34,6 +37,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(timer);
   }, [user, router]);
 
+  // 鉴权加载中：显示旋转骨架，避免表单闪现后被重定向
   if (loading) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center">
@@ -43,7 +47,9 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     );
   }
 
+  // 已登录：渲染空（等待延迟重定向生效）
   if (user) return null;
 
+  /* 未登录：渲染登录/注册页面内容 */
   return <>{children}</>;
 }

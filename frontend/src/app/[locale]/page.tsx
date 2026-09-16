@@ -1,6 +1,7 @@
 /**
  * @file page.tsx
- * @description 首页 Hero 区，展示品牌标语、CTA 入口与代码窗口装饰
+ * @description 首页：Hero 品牌宣传区（标语、CTA、Mac 代码窗口装饰）+ 最新文章列表区，
+ *              纯静态 ISR 渲染（不触碰 cookies/headers），列表数据走 Data Cache。
  */
 import { Search } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
@@ -15,28 +16,29 @@ import { notFound } from 'next/navigation';
 import { listPostsServer } from '@/services/blog/server';
 import { routing } from '@/i18n/routing';
 
-/** ISR：构建时预渲染 + 60s 重验证，写操作 revalidateTag('posts') 即时失效 */
+/** ISR 重新验证间隔（秒）：构建时预渲染 + 60s 重验证，写操作 revalidateTag('posts') 即时失效 */
 export const revalidate = 60;
 
 /**
- * HomePage 首页，展示 Hero 宣传区、品牌标语与 CTA 入口，
- * 纯静态化 ISR（不触碰 cookies/headers），"开始写作" CTA 一律指向 /register，
- * 登录态由 AuthProvider 客户端接管后可通过 useAuth 个性化跳转，
- * 数据新鲜度：listPosts 走 Data Cache（60s + posts 标签）
+ * HomePage 首页组件
+ * Hero 宣传区 + 最新文章区；"开始写作" CTA 指向注册页，登录态个性化跳转由客户端 AuthProvider 接管
+ * @param params.params 路由动态参数，含 locale
  */
 export default async function HomePage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  /** 解析并校验 locale，写入请求级存储以启用静态渲染 */
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
+  /** 首页文案与通用文案翻译函数 */
   const t = await getTranslations('home');
   const tCommon = await getTranslations('common');
 
-  /** 最新文章列表（接口失败时为 null，区块不渲染） */
+  /** 最新文章数据（首页展示前 6 篇；接口失败时为 null 以区分错误态） */
   const postsData = await listPostsServer({ page: 1, limit: 6 }).catch(() => null);
   /** 首页展示的文章数组 */
   const latestPosts = postsData?.posts ?? [];
@@ -47,11 +49,14 @@ export default async function HomePage({
 
   return (
     <>
+      {/* Hero 品牌宣传区 */}
       <section className="hero-section" aria-label={t('brandSection')}>
         <Container>
           <div className="grid grid-cols-1 items-center gap-(--space-10) max-lg:gap-10 lg:grid-cols-[1fr_480px]">
             {/* 左文案 */}
+            {/* 左侧文案列 */}
             <div className="max-w-130 max-lg:max-w-none">
+              {/* 品牌徽章（呼吸圆点 + 文案） */}
               <div className="animate-fade-in row-sm m-0 mb-8 flex">
                 <span
                   className="hero-dot animate-breathing inline-block h-1.5 w-1.5 shrink-0 rounded-full"
@@ -75,6 +80,7 @@ export default async function HomePage({
                 {t('heroLead')}
               </p>
 
+              {/* CTA 按钮组：浏览文章 + 开始写作 */}
               <div className="animate-fade-in flex flex-wrap items-center gap-5">
                 <Button href="/posts" size="lg">
                   {t('browsePosts')}
@@ -138,7 +144,8 @@ export default async function HomePage({
         </Container>
       </section>
 
-      {/* 最新文章区 — 接口失败或无文章时不渲染 */}
+      {/* 最新文章区：三态渲染 — 加载失败错误态 / 有数据卡片列表 / 无数据不渲染 */}
+      {/* 加载失败：展示错误提示与刷新入口 */}
       {postsLoadError ? (
         <section className="page-section animate-fade-in" aria-label={t('latestSection')}>
           <Container>
@@ -156,6 +163,7 @@ export default async function HomePage({
           </Container>
         </section>
       ) : (
+        /* 有文章时渲染卡片网格 */
         latestPosts.length > 0 && (
           <section className="page-section animate-fade-in" aria-label={t('latestSection')}>
             <Container>
@@ -172,6 +180,7 @@ export default async function HomePage({
                     : t('viewAll')}
                 </Button>
               </div>
+              {/* 文章卡片网格，置顶文章追加 PinnedBadge */}
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {latestPosts.map((p, i) => (
                   <ArticleCard

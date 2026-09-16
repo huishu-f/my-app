@@ -30,8 +30,10 @@ export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations('nav');
 
+  /** 当前是否暗色主题（仅在客户端判定，SSR 恒为亮色，避免 hydration 不匹配） */
   const isDark = isBrowser && resolvedTheme === 'dark';
 
+  /** 切换明暗主题 */
   const toggle = () => setTheme(isDark ? 'light' : 'dark');
 
   return (

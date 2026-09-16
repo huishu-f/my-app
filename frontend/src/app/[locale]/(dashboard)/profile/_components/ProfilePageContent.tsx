@@ -1,6 +1,7 @@
 /**
  * @file ProfilePageContent.tsx
- * @description 个人中心页客户端内容：从 useAuth() 获取用户，从 blogApi 获取文章/收藏
+ * @description 个人中心页客户端内容：左侧资料卡（头像/简介/元信息/社交链接/统计）
+ *              + 右侧文章/收藏 Tab；用户来自 useAuth()，文章与收藏从 blogApi 拉取。
  */
 'use client';
 
@@ -47,16 +48,19 @@ function LinkedinIcon() {
 }
 
 /** 元信息图标通用样式类名 */
-const META_ICON = 'size-[13px] text-faint';
+const META_ICON = 'size-[13px] text-faint'; // 元信息图标通用样式类名
 
 /**
- * ProfilePageContent 个人中心页客户端内容
- * 从 useAuth() 获取用户，从 blogApi 获取文章/收藏
+ * ProfilePageContent 个人中心页客户端内容组件
  */
 export function ProfilePageContent() {
+  /** 登录态与加载标记 */
   const { user, loading } = useAuth();
+  /** 个人中心文案翻译函数 */
   const t = useTranslations('profile');
+  /** 通用文案翻译函数 */
   const tCommon = useTranslations('common');
+  /** 当前 locale，用于加入日期格式化 */
   const locale = useLocale() as Locale;
   /** 已发布文章列表 */
   const [published, setPublished] = useState<Post[]>([]);
@@ -66,8 +70,8 @@ export function ProfilePageContent() {
   const [dataLoading, setDataLoading] = useState(true);
 
   /**
-   * 登录后并行拉取文章与收藏数据
-   * 卸载时将 cancelled 置 true，避免卸载后 setState
+   * 登录后并行拉取文章与收藏数据：
+   * 文章按 authorId 过滤出本人作品；卸载时 cancelled 置 true 防止卸载后 setState
    */
   useEffect(() => {
     if (!user) return;
@@ -86,6 +90,7 @@ export function ProfilePageContent() {
     };
   }, [user]);
 
+  // 鉴权加载中或未取得用户：展示加载空态
   if (loading || !user) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center">
@@ -100,28 +105,31 @@ export function ProfilePageContent() {
 
   /** 用户头像首字母缩写 */
   const userInitials = getInitials(user.firstName, user.lastName);
-  /** 用户统计 */
+  /** 统计网格数据（文章数/获赞/浏览量） */
   const stats = [
     { label: t('statsArticles'), value: formatCount(user.stats?.articles ?? 0) },
     { label: t('statsLikes'), value: formatCount(user.stats?.likes ?? 0) },
     { label: t('statsViews'), value: formatCount(user.stats?.views ?? 0) },
   ];
-  /** 社交链接（补充协议前缀） */
+  /** Twitter 链接（无协议时补全为完整 URL） */
   const socialTwitter = user.social?.twitter
     ? user.social.twitter.startsWith('http')
       ? user.social.twitter
       : `https://twitter.com/${user.social.twitter.replace('@', '')}`
     : undefined;
+  /** GitHub 链接（无协议时补全为完整 URL） */
   const socialGithub = user.social?.github
     ? user.social.github.startsWith('http')
       ? user.social.github
       : `https://github.com/${user.social.github}`
     : undefined;
+  /** LinkedIn 链接（无协议时补全为完整 URL） */
   const socialLinkedin = user.social?.linkedin
     ? user.social.linkedin.startsWith('http')
       ? user.social.linkedin
       : `https://linkedin.com/in/${user.social.linkedin}`
     : undefined;
+  /** 是否有任一社交链接（控制区块渲染） */
   const hasSocial = !!(socialTwitter || socialGithub || socialLinkedin);
 
   return (
@@ -272,7 +280,7 @@ export function ProfilePageContent() {
         </div>
       </aside>
 
-      {/* 右侧：Tab 内容 */}
+      {/* 右侧：我的文章/我的收藏 Tab 内容 */}
       <ProfileTabs published={published} favorites={favorites} />
     </div>
   );
