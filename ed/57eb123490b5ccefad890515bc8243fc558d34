@@ -1,0 +1,61 @@
+frontend/src/app/[locale]/(auth)/_components/AuthGuard.tsx
+  s_19df802562df94::t_9d3df175d35305 32
+  s_19df802562df94::t_6435ddff05dd83 10
+frontend/src/lib/navigation.ts
+  s_19df802562df94::t_94566f4eb5430a 19-49
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_19df802562df94::t_e17dc2a11811de 232
+  s_19df802562df94::t_ab893cb86cf662 21
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_19df802562df94::t_7b92bcc3c56445 25
+  s_19df802562df94::t_efeab9143f3149 47-48
+  s_19df802562df94::t_d4de2e844217b6 79
+frontend/src/components/layout/MobileMenu.tsx
+  s_19df802562df94::t_b434340e1924f7 13-14
+  s_19df802562df94::t_53d63a21dcd9ce 28,34-36
+frontend/src/hooks/useRequireAuth.ts
+  s_19df802562df94::t_0b3c36b0818c8e 31
+  s_19df802562df94::t_492ca6c090cd66 11
+frontend/src/hooks/useDismissable.ts
+  s_19df802562df94::t_48803f5dbc0918 1-61
+frontend/src/app/[locale]/posts/_components/PostSidebar.tsx
+  s_19df802562df94::t_730c165d02b439 83
+  s_19df802562df94::t_202b806a5541b5 13
+frontend/src/components/layout/NavLinks.tsx
+  s_19df802562df94::t_3461ee49a0f1cf 19
+  s_19df802562df94::t_b376713998a4ea 10
+frontend/src/components/LoginRequired.tsx
+  s_19df802562df94::t_39ef0268a9ca91 41
+  s_19df802562df94::t_205da4290f28b3 15
+frontend/src/components/layout/UserMenu.tsx
+  s_19df802562df94::t_d1558f2e25615d 73
+  s_19df802562df94::t_735b57133d4111 26
+  s_19df802562df94::t_8974ddd86cfafa 7
+frontend/src/lib/category.ts
+  s_19df802562df94::t_9cbdd7e6ea0be4 38,43,45
+  s_19df802562df94::t_7f8bb8166e1f0f 34-37,39-42,44,46
+frontend/src/components/BackToTop.tsx
+  s_19df802562df94::t_d1f3bb7f2f6888 22
+  s_19df802562df94::t_9d4e43a6e3f8d1 9,12
+frontend/src/app/[locale]/posts/[id]/_components/PostToc.tsx
+  s_19df802562df94::t_7092c3841c84cf 63-65
+  s_19df802562df94::t_8a78edb887fc22 10
+frontend/src/hooks/useRafScroll.ts
+  s_19df802562df94::t_eb47b13201e2ad 1-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "ed57eb123490b5ccefad890515bc8243fc558d34",
+  "prompts": {},
+  "sessions": {
+    "s_19df802562df94": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3a084876-611a-44d1-9062-84ceb888e063",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
