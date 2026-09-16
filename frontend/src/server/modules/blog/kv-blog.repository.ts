@@ -10,9 +10,9 @@ import type { BlogDB, SiteConfig, BlogRepository } from '@my-app/shared';
 
 /** 默认站点配置，写入兜底与规范化时复用 */
 const DEFAULT_SITE_CONFIG: SiteConfig = {
-  blogName: '我的博客',
-  // 默认维护者：与页脚展示（"由 Alex Chen 维护"）保持一致，避免配置与页面文案两处数据源打架
-  author: 'Alex Chen',
+  blogName: '工程笔记',
+  // 默认维护者：与页脚展示（"由 Hui Shu 维护"）保持一致，避免配置与页面文案两处数据源打架
+  author: 'Hui Shu',
 };
 
 /** 默认博客数据库结构：空文章、空分类，站点配置取默认值 */

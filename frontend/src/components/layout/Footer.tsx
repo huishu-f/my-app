@@ -17,7 +17,7 @@ export function Footer() {
       <Container className="text-muted flex flex-wrap items-center justify-between gap-4 text-(length:--type-sm) leading-normal max-md:flex-col max-md:gap-3 max-md:text-center">
         {/* 版权信息 */}
         <span className="inline-flex items-center font-medium tracking-[0.01em]">
-          {t('copyright', { site: tNav('brand'), author: 'Alex Chen' })}
+          {t('copyright', { site: tNav('brand'), author: 'Hui Shu' })}
         </span>
         {/* 站点标语 */}
         <span className="display-serif text-muted text-(length:--type-md) tracking-wide">

@@ -75,11 +75,9 @@ export function parseTags(input: string | string[] | undefined): string[] {
   if (input === undefined || input === null) return [];
 
   const rawArray = Array.isArray(input) ? input : input.split(',');
-  const tags = [...new Set(
-    rawArray
-      .map((t) => t.trim().toLowerCase())
-      .filter((t) => t.length > 0),
-  )].slice(0, 20);
+  const tags = [
+    ...new Set(rawArray.map((t) => t.trim().toLowerCase()).filter((t) => t.length > 0)),
+  ].slice(0, 20);
 
   return tags;
 }
@@ -741,7 +739,7 @@ export function createBlogService(deps: {
     return deps.repo.updateWithRetry<SiteConfig>((db) => {
       const blogName = dto.blogName?.trim() || '我的博客';
       // 兜底值与 KV 仓库默认站点配置、页脚展示保持一致（避免“匿名”与页脚文案不一致）
-      const author = dto.author?.trim() || 'Alex Chen';
+      const author = dto.author?.trim() || 'Hui Shu';
       db.siteConfig = { blogName, author };
       return db.siteConfig;
     });

@@ -203,7 +203,7 @@ export default function RegisterPage() {
               id="lastName"
               name="lastName"
               type="text"
-              placeholder="Chen"
+              placeholder="Shu"
               maxLength={50}
               autoComplete="family-name"
               value={fields.lastName.value}
@@ -227,7 +227,7 @@ export default function RegisterPage() {
             id="username"
             name="username"
             type="text"
-            placeholder="alexchen"
+            placeholder="Hui"
             maxLength={30}
             autoComplete="username"
             value={fields.username.value}
