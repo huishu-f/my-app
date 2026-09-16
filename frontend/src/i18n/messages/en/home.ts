@@ -4,20 +4,20 @@
 import type { Messages } from '../zh/home';
 
 const home: Messages = {
-  brandSection: 'Brand intro',
-  heroBadge: 'Multi-author technical writing',
+  brandSection: 'About',
+  heroBadge: 'Technical writing · Engineering notes',
   codeComment: '// authGuard: verify cookie + inject user',
-  heroTitleLine1: 'Serious makers',
+  heroTitleLine1: 'Devoted makers',
   heroTitlePrefix: 'keep ',
   heroTitleEm: 'deep notes',
-  heroLead: 'Focused on architecture and engineering practice — thoughts worth reading twice.',
+  heroLead: 'Capturing engineering thoughts worth revisiting.',
   browsePosts: 'Browse posts',
   startWriting: 'Start writing',
   latestSection: 'Latest posts',
   latestTitle: 'Latest posts',
-  latestSubtitle: 'Fresh technical articles and engineering practice',
+  latestSubtitle: 'Latest engineering thoughts & practice',
   viewAll: 'View all',
-  viewAllCount: 'View all {count}',
+  viewAllCount: 'View all {count} posts',
   loadErrorTitle: 'Failed to load posts',
   loadErrorDesc: 'Network error or the service is down. Refresh and try again.',
 };

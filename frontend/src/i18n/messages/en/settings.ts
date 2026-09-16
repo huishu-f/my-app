@@ -5,13 +5,13 @@ import type { Messages } from '../zh/settings';
 
 const settings: Messages = {
   title: 'Account settings',
-  subtitle: 'Manage your profile, password and security.',
+  subtitle: 'Manage profile, password & security.',
   tabProfile: 'Profile',
   tabPassword: 'Password',
   firstName: 'First name',
   lastName: 'Last name',
   avatarUrl: 'Avatar URL',
-  avatarHint: 'Image URL — square 256×256 works best',
+  avatarHint: 'Square 256×256 recommended',
   bio: 'Bio',
   bioHint: 'Up to 280 characters',
   location: 'Location',

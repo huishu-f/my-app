@@ -5,10 +5,10 @@ import type { Messages } from '../zh/auth';
 
 const auth: Messages = {
   loginTitle: 'Welcome back',
-  loginSubtitle: 'Sign in to your account',
+  loginSubtitle: 'Sign in to write, comment & engage.',
   registerTitle: 'Create an account',
-  registerSubtitle: 'Sign up to start writing',
-  redirectNotice: 'Sign in to continue',
+  registerSubtitle: 'Sign up to start writing.',
+  redirectNotice: 'Sign in to continue.',
   firstName: 'First name',
   lastName: 'Last name',
   username: 'Username',
@@ -19,7 +19,7 @@ const auth: Messages = {
   pwdPlaceholderMin: 'Min 6 characters',
   loginSubmit: 'Sign in',
   registerSubmit: 'Sign up',
-  forgotPwd: 'Forgot password? Contact an admin',
+  forgotPwd: 'Forgot password? Contact admin',
   rateLimit: '5 attempts per 5 minutes',
   noAccount: 'No account?',
   registerNow: 'Sign up →',

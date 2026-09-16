@@ -4,11 +4,11 @@
 import type { Messages } from '../zh/nav';
 
 const nav: Messages = {
-  brand: 'My Blog',
+  brand: 'Engineering Notes',
   home: 'Home',
   posts: 'Posts',
   login: 'Sign in',
-  userMenu: 'User menu',
+  userMenu: 'Account',
   profile: 'Profile',
   write: 'Write',
   settings: 'Settings',

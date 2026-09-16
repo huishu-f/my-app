@@ -4,9 +4,9 @@
 import type { Messages } from '../zh/meta';
 
 const meta: Messages = {
-  siteTitle: 'My Blog',
-  siteDescription: 'Personal technical writing · Minimalist · Monochrome',
-  ogImageAlt: 'My Blog',
+  siteTitle: 'Engineering Notes',
+  siteDescription: 'Engineering notes · Deep thinking · Minimalist',
+  ogImageAlt: 'Engineering Notes',
 };
 
 export default meta;
