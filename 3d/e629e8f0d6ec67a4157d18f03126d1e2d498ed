@@ -1,0 +1,383 @@
+shared/types/backend/comment.ts
+  s_145c0b03fd14af::t_199607fc650ca0 12,16,18,22,24,31,33,39,41-46,51,54,57,59,63,65,69,71,75,77,82,84,88,90,94,96,103,105,108
+  s_145c0b03fd14af::t_3967720385cbda 2-3,10,13-15,19-21,25-30,34-38,52,55-56,60-62,66-68,72-74,78-81,85-87,91-93,97-102,106-107
+frontend/src/app/[locale]/posts/[id]/loading.tsx
+  s_145c0b03fd14af::t_cef47c315f52d4 3-5,10,15,17
+frontend/src/app/api/auth/change-password/route.ts
+  s_145c0b03fd14af::t_62b262b95614da 14
+  s_145c0b03fd14af::t_b46ec3a4003491 2-5,15-16,18-19
+frontend/src/app/[locale]/(dashboard)/profile/_components/RemoveFavoriteButton.tsx
+  s_145c0b03fd14af::t_c1a6a9b2f45dc1 3-4,24-26,29,31
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_145c0b03fd14af::t_c370d593ec8593 3-4,10-11
+frontend/src/server/infrastructure/kv-mock.ts
+  s_145c0b03fd14af::t_d37a755ed8ef33 278
+  s_145c0b03fd14af::t_fe3fef2c917c9a 2-5,9-11,14,18,20,22,24,26,28,30,32,34,40-41,46,54,60-61,66,68,72,74-76,100,102,125,128,139,141,152,155,169-170,185-186,204-205,220,228-230,269-270,273,279-280,288,297-298,334,338-339,352-353,368,371-373,395,408,421,433,440-442,487-490,492-493
+frontend/src/app/api/favorites/route.ts
+  s_145c0b03fd14af::t_f6b680179e3c34 12
+  s_145c0b03fd14af::t_a5544487722f2b 2-4,13-16
+frontend/src/server/modules/comment/services/comment.service.ts
+  s_145c0b03fd14af::t_d3668cf1446204 44,63,117,152
+  s_145c0b03fd14af::t_9670059f63380e 3-5,21-22,33-36,45-50,64-66,68-69,118,122-123,153,157
+frontend/src/app/[locale]/(dashboard)/layout.tsx
+  s_145c0b03fd14af::t_c370d593ec8593 3-4,9-10
+frontend/src/app/api/posts/[id]/like/route.ts
+  s_145c0b03fd14af::t_21418221f646aa 12
+  s_145c0b03fd14af::t_6ae48d7ffe175d 2-5,13-18
+frontend/src/app/api/posts/[id]/route.ts
+  s_145c0b03fd14af::t_13db3dfc2350aa 37,59
+  s_145c0b03fd14af::t_2637eb4ead990c 2-5,13-17,19-20,38-44,60-65
+shared/types/backend/infra/store.ts
+  s_145c0b03fd14af::t_22599362e09980 7
+  s_145c0b03fd14af::t_0d4d7d4d09a86a 2-3,8
+frontend/src/app/api/auth/refresh/route.ts
+  s_145c0b03fd14af::t_6d0d0674aa18e7 14
+  s_145c0b03fd14af::t_73c6701f5e2f2e 2-5,15-17,19-20
+shared/types/ui.ts
+  s_145c0b03fd14af::t_ea4710a97bc9cc 16,99,340,345,369,378,382
+  s_145c0b03fd14af::t_d30b9578efd60c 2-3,17,27-28,34,39,41,43,51,56,58,60,64,66,68,72,78,84,88,92,100,106,115,118,124,132,137,139,141,151,158,160,162,168,170,174,182,185,191,193,201,204,206,212,222,228,230,232,234,241-242,244,250,252,257-258,260,262,264,266,268,270,276,278,284,286,288,290,296,298,304,309,315,317,319,321,327,334,341,346,350,352,354,360,362,364,370,372,374,376,379-381,384
+frontend/src/app/api/auth/profile/route.ts
+  s_145c0b03fd14af::t_dff78db9234926 14
+  s_145c0b03fd14af::t_8cf235de888d23 2-5,15-16,18-19
+frontend/src/app/api/auth/login/route.ts
+  s_145c0b03fd14af::t_77ec3111aebbf0 20
+  s_145c0b03fd14af::t_ba729e7bc120c5 2-5,14,16,21-25
+frontend/src/server/modules/blog/blog.validators.ts
+  s_145c0b03fd14af::t_eb97bc37ef6594 45,48
+  s_145c0b03fd14af::t_437df891bc7400 3-4,15-17,20,22,24,26,28,34,36,38,46-47,50,52,58,61,66,68,70,72,80,92-93,103-104,114-115,125-127
+frontend/src/app/[locale]/(dashboard)/settings/page.tsx
+  s_145c0b03fd14af::t_c370d593ec8593 3-4,15-16,23,28
+frontend/src/server/infrastructure/kv-repository.ts
+  s_145c0b03fd14af::t_dfea5bb4b06baf 68,86,127
+  s_145c0b03fd14af::t_f56335bf008157 2-5,13-16,32-33,51,60,69,71-72,87,89-91,112-113,128,130
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_145c0b03fd14af::t_cef47c315f52d4 3-5,135-139,141,143,145,147,153,201,205,208,238,242,244,254
+frontend/src/app/global-error.tsx
+  s_145c0b03fd14af::t_11ca30a5ca29a7 37-38
+  s_145c0b03fd14af::t_19985dcd754611 3-5,12-14,31-32,54,126
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_145c0b03fd14af::t_4459c1388a7ea1 25,34,71-72,75,77
+frontend/src/app/sitemap.ts
+  s_145c0b03fd14af::t_121aeade510b62 20
+  s_145c0b03fd14af::t_fa9c7b783c14a8 3-4,16,21-25
+frontend/src/app/[locale]/posts/[id]/_components/BackLink.tsx
+  s_145c0b03fd14af::t_a7e01c74746e96 3-5,15,18,20,36
+frontend/src/server/modules/comment/kv-comment.repository.ts
+  s_145c0b03fd14af::t_7cf22cb69ecd25 55
+  s_145c0b03fd14af::t_374422146fcee0 3-5,17-19,22-25,31-35,56-58,75-77,80,105-108,117-119
+frontend/src/services/auth/server.ts
+  s_145c0b03fd14af::t_4e91f2cfa2f5b2 40
+  s_145c0b03fd14af::t_25d00f08a7c483 2-3,5,7,17-19,41-47,64-66
+frontend/src/app/api/posts/[id]/view/route.ts
+  s_145c0b03fd14af::t_86d9df79f3d08d 13
+  s_145c0b03fd14af::t_5171ad13bdb70e 2-3,6,14-20
+frontend/src/server/modules/blog/services/blog.service.ts
+  s_145c0b03fd14af::t_bb9f3d6883d0c6 78,191,268,514,590,625,646,736,797
+  s_145c0b03fd14af::t_9cce559e7c09bb 3-5,8-10,46-47,49-51,65-68,79-81,83-84,99-100,102,134-135,137,152,168,182-183,192-195,248-249,251,269-271,274-275,302-305,347-349,351,413-416,418-419,421,515-516,518-519,591-592,595-596,626-630,647-655,705,707,728,737-738,760,769-770,774,798-799,801
+frontend/src/app/[locale]/(dashboard)/write/_components/WriteEditor.tsx
+  s_145c0b03fd14af::t_c1a6a9b2f45dc1 3-5,111,114,116,118,120,122,125,127,130,133,135,137,140,255,260,316,325-328,345,356,371
+frontend/src/services/comment/api.ts
+  s_145c0b03fd14af::t_7e2958db16e6a7 14,20,24,30,34,40,44,49
+  s_145c0b03fd14af::t_6ea868a9a54634 2-4,11,15-19,25-29,35-39,45-48
+frontend/src/server/utils/route-handler.ts
+  s_145c0b03fd14af::t_770e9d271f1414 6,18,21,33-36,38,41,43,45,47,49,51,53,59
+  s_145c0b03fd14af::t_809686840a393a 2-5,19-20,23,25,27,29,39-40,44,60-64,82,92,104,115,117-121
+frontend/src/server/utils/logger.ts
+  s_145c0b03fd14af::t_8bbf015b363e08 84
+  s_145c0b03fd14af::t_2d1133d619399b 2-4,12,15,17,19,21,25,30-33,40-41,48-50,53,65,71,85,88,90,92,94
+frontend/src/server/utils/zod.ts
+  s_145c0b03fd14af::t_178b48ebad9aef 44
+  s_145c0b03fd14af::t_0ffabb861b4aa2 2-4,12-15,26-32,45-50
+frontend/src/server/utils/rate-limit.ts
+  s_145c0b03fd14af::t_59ba5d2c8eed08 20
+  s_145c0b03fd14af::t_852373fa7a69da 2-5,11-14,16,21,24,28,32,35-36,43,46,58,61-64,72-76
+frontend/src/services/auth/hooks.ts
+  s_145c0b03fd14af::t_804beb0aeef14b 15
+  s_145c0b03fd14af::t_6cf0d491d36d19 2-5,16-21,41-43,51-54
+frontend/src/services/blog/api.ts
+  s_145c0b03fd14af::t_5a3cd76e98c763 56,67,94,99,102,108,111,116,119,124,127,132,135,139,142,146,154,158,166,170,178,183
+  s_145c0b03fd14af::t_b8faf92125044e 2-3,6-7,27,38,42-46,57-61,68-72,82-85,95-98,103-107,112-115,120-123,128-131,136-138,143-145,155-157,167-169,179-182,188-192
+frontend/src/app/api/auth/register/route.ts
+  s_145c0b03fd14af::t_ae33b2118e6abc 20
+  s_145c0b03fd14af::t_7152b4cf1d2d0b 2-5,14,16,21-25
+frontend/src/services/blog/hooks.ts
+  s_145c0b03fd14af::t_06b096e09d0b68 42,86,100
+  s_145c0b03fd14af::t_5996f23a87a8d4 2-4,23-24,26-29,43-47,56-57,68-70,87-89,101-103,114,118-121
+frontend/src/app/api/auth/me/route.ts
+  s_145c0b03fd14af::t_3c883d7ca74ef1 12
+  s_145c0b03fd14af::t_01b925710b7e16 2-4,13-14,16-17
+frontend/src/app/api/posts/[id]/favorite/route.ts
+  s_145c0b03fd14af::t_f5893a4330214a 12
+  s_145c0b03fd14af::t_78769d9c2ca78e 2-5,13-18
+frontend/src/app/[locale]/posts/[id]/_components/PostHeadStats.tsx
+  s_145c0b03fd14af::t_425fa4f4c6b90e 3-4,13-18,21
+frontend/src/app/[locale]/posts/page.tsx
+  s_145c0b03fd14af::t_8c62fa5cab3c22 31,34
+  s_145c0b03fd14af::t_00f4696f8fdb91 3-4,32-33,48-50,60,65,70,72,74,76,79,87,100,102,104,106,108,111,126,128,130,132,134,136,139,141,143,145,147,157,166,222
+frontend/src/server/infrastructure/kv-store.ts
+  s_145c0b03fd14af::t_8ddc5028960816 49,71
+  s_145c0b03fd14af::t_2d4c613bec7bb4 2-4,11-14,19,34-35,50,52,64-68,70,72-74,77-78,89
+frontend/src/proxy.ts
+  s_145c0b03fd14af::t_0a72e77735c2db 17,21,30,34
+  s_145c0b03fd14af::t_674796cd9097d2 2-5,14,18-20,31-33,42,44,68
+shared/types/blog.ts
+  s_145c0b03fd14af::t_eefa829c31568d 64,106
+  s_145c0b03fd14af::t_34bba07bc8628e 2,9,16,18,34,38,40,54,59,65,68,74,76,84,91,95,97,107,112-113,116,123-124,127,129,131,140-141,149-150,160-161,170-171,179-180,183,188-189,192,197-198,205-206,209,211,217,220,222,230,241,244,250,252,256
+frontend/src/app/[locale]/posts/[id]/_components/PostToc.tsx
+  s_145c0b03fd14af::t_9652705750e271 3-5,19,21,154,156
+frontend/src/app/[locale]/posts/[id]/_components/DeletePostButton.tsx
+  s_145c0b03fd14af::t_a7e01c74746e96 3-4,31-32,41,43,45,53
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_145c0b03fd14af::t_4459c1388a7ea1 35,41-43,45,47,49,51,54,56,61,171-172
+frontend/src/app/api/posts/[id]/comments/route.ts
+  s_145c0b03fd14af::t_477a97772a125a 13,34
+  s_145c0b03fd14af::t_d12376ac20c726 2-5,14-16,18-19,35-41
+frontend/src/app/[locale]/posts/[id]/_components/LazyIslands.tsx
+  s_145c0b03fd14af::t_425fa4f4c6b90e 3-4,11,17
+frontend/src/app/[locale]/posts/[id]/error.tsx
+  s_145c0b03fd14af::t_cef47c315f52d4 3,14-15,18
+frontend/src/app/[locale]/(dashboard)/profile/_components/ProfilePageContent.tsx
+  s_145c0b03fd14af::t_c1a6a9b2f45dc1 3-4,51,54,57,59,61,63,73-74,93,108,114,120,126,132,283
+frontend/src/server/modules/auth/auth-cookie.helper.ts
+  s_145c0b03fd14af::t_d6ae7653d8db30 34,38,40,43
+  s_145c0b03fd14af::t_83c7b4e5431f68 3-5,17-18,35-37,41-42,49-53,63,65
+frontend/next.config.ts
+  s_145c0b03fd14af::t_b908df6f3d3a67 83
+  s_145c0b03fd14af::t_37e55343adbdad 2-5,11,14,31,33,35,38,42,44-47,55,58-61,67-82,93
+shared/types/user.ts
+  s_145c0b03fd14af::t_ff475a8792e89c 175
+  s_145c0b03fd14af::t_e908e49f5fcdad 2-3,8,13,15,17,19,21,33,37,47,49,53,55,58,60,70,83,86,88,90,96,99,101,103,105,107,113,116,118,124,135,138,140,142,153-154,162-163,168,170,176
+frontend/src/server/modules/auth/services/token.service.ts
+  s_145c0b03fd14af::t_7c6b2b36229b71 26,30,35,40,52,57
+  s_145c0b03fd14af::t_141b381d6a4520 3-5,18-22,27-29,36-39,53-56
+frontend/src/app/api/config/route.ts
+  s_145c0b03fd14af::t_b1929d265b2329 32
+  s_145c0b03fd14af::t_dd9fc7b8d1a93e 2-5,15-18,33-36
+frontend/src/app/api/posts/route.ts
+  s_145c0b03fd14af::t_bd79e033e9ac8c 20,49
+  s_145c0b03fd14af::t_c7151ead656329 2-5,21-25,50-54
+shared/types/backend/blog.ts
+  s_145c0b03fd14af::t_fe767d75edb21c 21,25,27,34,36,40,42,46,48,55,57,62,64,69,71,76,81,85,87,90,92,95,97,100,102,108,110,114,119,122,125,127,130,132,137,139,142,144,148
+  s_145c0b03fd14af::t_31b11986f1b759 2-3,19,22-24,28-33,37-39,43-45,49-54,58-61,65-68,72-75,82-84,88-89,93-94,98-99,103-107,111-113,120,123-124,128-129,133-136,140-141,145-147
+frontend/src/app/[locale]/(dashboard)/profile/_components/ProfileTabs.tsx
+  s_145c0b03fd14af::t_c1a6a9b2f45dc1 3-4,18,37,39
+frontend/src/app/api/posts/[id]/neighbors/route.ts
+  s_145c0b03fd14af::t_02e12b82469aa4 10
+  s_145c0b03fd14af::t_59c8e67d15ea26 2-4,11-16
+frontend/src/server/utils/cache.ts
+  s_145c0b03fd14af::t_6b2c640709527c 10,13,15,20,36,39
+  s_145c0b03fd14af::t_f7344ee084fd0c 2-5,11-12,21-25,37-38
+shared/types/frontend/request.ts
+  s_145c0b03fd14af::t_d2850b8a288105 9,41,44,49-52
+  s_145c0b03fd14af::t_27ec953abce06d 2-3,10-18,23,26,31,42-43
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_145c0b03fd14af::t_c370d593ec8593 3-4,10
+frontend/src/app/[locale]/posts/[id]/_components/ViewReporter.tsx
+  s_145c0b03fd14af::t_425fa4f4c6b90e 12,14,18,23-24
+frontend/src/app/[locale]/(dashboard)/settings/_components/SettingsForm.tsx
+  s_145c0b03fd14af::t_c1a6a9b2f45dc1 3-5,28-31,34,37,39,41,43,75,87-90,119-122,153
+frontend/src/app/[locale]/posts/[id]/_components/CommentsSection.tsx
+  s_145c0b03fd14af::t_425fa4f4c6b90e 3-4,27,31-34,37,39,41,43,112-113,121,207,209,211,214,292-293,303
+frontend/src/server/modules/blog/kv-blog.repository.ts
+  s_145c0b03fd14af::t_b201401a730123 13,16,18,24,27,91
+  s_145c0b03fd14af::t_cf985460dfcac6 3-5,14-15,25-26,29,31,33,38-42,60-61,66-69,76,84,92-94,102,113-114,116
+frontend/src/lib/api/request.ts
+  s_145c0b03fd14af::t_ae773c77b409f5 9,41,53-56,141,278,282,289,294,296,319,325,328,334,337,342
+  s_145c0b03fd14af::t_0cf0b0e130dd4d 2-6,10,18,23,42-44,62-64,80-83,99-106,132,134,137,142-144,175-178,180-181,279,283-288,320-324,329-333,338-341
+frontend/src/app/api/comments/[id]/route.ts
+  s_145c0b03fd14af::t_c7dec4679e7c88 13,34
+  s_145c0b03fd14af::t_5f5a2e7951ad2c 2-5,14-20,35-40
+frontend/src/lib/use-async-action.ts
+  s_145c0b03fd14af::t_057f8ac0081e10 14,16,32,54,60
+  s_145c0b03fd14af::t_6d96f5c63f0a4b 2-5,7-8,15,20,26,28,33-36,52,55-59,67-71
+frontend/src/app/api/auth/logout/route.ts
+  s_145c0b03fd14af::t_3a55cd8b6a5c90 13
+  s_145c0b03fd14af::t_ca4509b2867405 2-5,14-15,17-18
+frontend/src/server/modules/auth/auth.validators.ts
+  s_145c0b03fd14af::t_4c2898d1fc1b2c 64
+  s_145c0b03fd14af::t_2e601018919c94 3-5,13,19-20,23,25,27,32,37,50,53,58,65,69,71,81-82,85,87,89,95,97,99,107,130,149-150,160,162
+frontend/src/app/[locale]/posts/[id]/_components/PostActions.tsx
+  s_145c0b03fd14af::t_425fa4f4c6b90e 3-4,34-35,38-39,46,48,51,53,55,94
+frontend/src/app/[locale]/posts/[id]/_components/AuthorActions.tsx
+  s_145c0b03fd14af::t_a7e01c74746e96 3-5,13-14,17,31,34
+frontend/scripts/dev.mjs
+  s_145c0b03fd14af::t_c43bea7aaf2c8b 37,43
+  s_145c0b03fd14af::t_f0279a9a96d7c0 3-8,38-42,99
+frontend/src/app/[locale]/(auth)/_components/AuthGuard.tsx
+  s_145c0b03fd14af::t_4459c1388a7ea1 3-4,20,22,40,50,53
+frontend/src/app/[locale]/layout.tsx
+  s_145c0b03fd14af::t_91143da190d262 21,23,31,34
+  s_145c0b03fd14af::t_ecc7f9cbed9a83 2-6,22,25,27,32-33,40-41,79,86-89,108,111,118,120,124
+frontend/src/services/comment/hooks.ts
+  s_145c0b03fd14af::t_dc27fe11656392 40,59,81
+  s_145c0b03fd14af::t_d68854b9346378 2-4,21-27,41-47,60-63,74,82-84
+frontend/src/app/[locale]/(auth)/layout.tsx
+  s_145c0b03fd14af::t_4459c1388a7ea1 3-4,10-11
+frontend/src/lib/use-fetch.ts
+  s_145c0b03fd14af::t_308b42d61241f9 41,46,51,55,66,71
+  s_145c0b03fd14af::t_f1d9c81b31bc17 2-3,5-11,17,20,22,25,27,29,31,35,38,42-45,52-54,67-70,126-130,132-140,151,153,156,171,184,191,215
+frontend/src/services/auth/api.ts
+  s_145c0b03fd14af::t_32b3d280fa7d53 20,24,27,32,35,40,43,47,50,55,58,63
+  s_145c0b03fd14af::t_d1be7a2847ef80 2-4,17,21-23,28-31,36-39,44-46,51-54,59-62
+frontend/src/server/errors/AppError.ts
+  s_145c0b03fd14af::t_60ca58c8e30d00 31,34,45,48,58,61,71,74,84,87,97,100,110,113,124,127,129-132,138,141
+  s_145c0b03fd14af::t_e723a67e80c037 2-4,9-10,16-18,32-33,37,46-47,51,59-60,64,72-73,77,85-86,90,98-99,103,111-112,116-117,125-126,139-140,143-145
+frontend/src/server/utils/api-response.ts
+  s_145c0b03fd14af::t_de22cf83112aad 32
+  s_145c0b03fd14af::t_24fe703d29f0f7 2-5,14,17-20,33-39,47,50,58-65,68-70,80
+frontend/src/app/[locale]/posts/[id]/_components/PostStateProvider.tsx
+  s_145c0b03fd14af::t_425fa4f4c6b90e 3-4,26,28
+frontend/src/server/modules/comment/comment.validators.ts
+  s_145c0b03fd14af::t_288c73a677bbf0 13,16
+  s_145c0b03fd14af::t_b4567c4c60a658 3-4,14-15,18,24-25
+frontend/src/lib/auth-status.ts
+  s_145c0b03fd14af::t_d59860028247f1 13-16,21-25,33-37
+  s_145c0b03fd14af::t_d37838276523dd 2-6,10
+shared/types/frontend/forms.ts
+  s_145c0b03fd14af::t_762d52bcf05fcd 7
+  s_145c0b03fd14af::t_7be0c5d684853a 2-3,8,14,20
+shared/types/backend/auth.ts
+  s_145c0b03fd14af::t_256f7910f0223c 16,24,27,31,33,37,39,44,52-57,59,64,66,71,73,77,79,84,86,91,93,99,104,107,111,113-118,123,126,129,131,135,137,141,143,148,150,154,156,161,163,167,169,172
+  s_145c0b03fd14af::t_a82ae84d65015d 2-3,17,25,28-30,34-36,40-43,50,60-63,67-70,74-76,80-83,87-90,94-98,105,108-110,124,127-128,132-134,138-140,144-147,151-153,157-160,164-166,170-171
+frontend/src/app/not-found.tsx
+  s_145c0b03fd14af::t_1602eedf9a7401 3,5-6,10-12,14,16,18,20,22,25,27,29,31,33,38-41,43,48,54,88
+  s_145c0b03fd14af::t_bae2b9ac6af995 2
+  s_145c0b03fd14af::t_4882ae62402628 102
+  s_145c0b03fd14af::t_6c3d4b053a6dd8 4
+frontend/src/app/[locale]/error.tsx
+  s_145c0b03fd14af::t_e56791e13edcd0 3-4,15-17,20,22,26,33,36,49,57
+frontend/src/app/[locale]/not-found.tsx
+  s_145c0b03fd14af::t_c16467a3bef7f1 3,10-11,14,18,26
+frontend/src/app/[locale]/page.tsx
+  s_145c0b03fd14af::t_588142f2a2de2d 3-4,19,23-25,32,37,41,52,57,59,83,147-148,166,183
+frontend/src/app/[locale]/posts/_components/PostSidebar.tsx
+  s_145c0b03fd14af::t_b70c3aa8091c21 3-4,31,35,39,41,66,68,101,105
+frontend/src/app/[locale]/posts/_components/PostsSearchInput.tsx
+  s_145c0b03fd14af::t_f23b4677989f77 3-4,23,25,27,46-47
+frontend/src/app/[locale]/posts/_lib/buildPostsUrl.ts
+  s_145c0b03fd14af::t_ca32dbee778bc2 3-4,8-9,11-12,18,28,33,35
+frontend/src/app/[locale]/posts/error.tsx
+  s_145c0b03fd14af::t_c1f89025701e68 3-4,15-16,19
+frontend/src/app/[locale]/posts/loading.tsx
+  s_145c0b03fd14af::t_e7fd746b4e04dd 3-4,9,14,20
+frontend/src/app/api/categories/route.ts
+  s_145c0b03fd14af::t_b99080828aab44 2-4,11-14
+frontend/src/app/api/health/route.ts
+  s_145c0b03fd14af::t_c753aabd6cf582 2-4,11-14
+frontend/src/app/api/tags/route.ts
+  s_145c0b03fd14af::t_d79c82706adb84 2-4,11-14
+frontend/src/app/layout.tsx
+  s_145c0b03fd14af::t_8a11c94597d0dd 2-11
+frontend/src/app/robots.ts
+  s_145c0b03fd14af::t_5f8dc5aad3c04d 3-4,11-13
+frontend/src/components/MarkdownToolbar.tsx
+  s_145c0b03fd14af::t_c4b4a5c2dda232 8-10,16-18,32,50-53
+frontend/src/components/ThemeToggle.tsx
+  s_145c0b03fd14af::t_3ffaeda955130f 33,36
+frontend/src/components/auth-provider.tsx
+  s_145c0b03fd14af::t_bb599f1cc87ac5 35,39,41,59-61,95
+frontend/src/components/layout/MobileMenu.tsx
+  s_145c0b03fd14af::t_cd1c02030f6bfb 22,24,26,31-34,37
+frontend/src/components/layout/NavLinks.tsx
+  s_145c0b03fd14af::t_6158ce02beb6aa 19-22
+frontend/src/components/layout/UserMenu.tsx
+  s_145c0b03fd14af::t_4b33594eccab1f 41,46,53,58-60
+frontend/src/config/site.ts
+  s_145c0b03fd14af::t_dfaf73b99afcd8 2-4,7,12,16,19,22
+frontend/src/hooks/useCurrentUser.ts
+  s_145c0b03fd14af::t_56172ebccef3fa 2-5,13-17
+frontend/src/hooks/useDismissable.ts
+  s_145c0b03fd14af::t_9098b77f61bbbb 2-4,12,17-23
+frontend/src/hooks/usePostPageAuth.ts
+  s_145c0b03fd14af::t_bfadb58262c200 2-6,17,19,24-25,27-29
+frontend/src/hooks/useRafScroll.ts
+  s_145c0b03fd14af::t_a780f08e53c7ce 2-5,12-17
+frontend/src/hooks/useRequireAuth.ts
+  s_145c0b03fd14af::t_ddf8159f8a4ab1 2-4,15,17-21,27-29
+frontend/src/i18n/config.ts
+  s_145c0b03fd14af::t_a83fec6346a6d8 2-5,9,14,23-24
+frontend/src/i18n/i18n.d.ts
+  s_145c0b03fd14af::t_d3ea7cd68fd1e3 2-5,12,14
+frontend/src/i18n/navigation.ts
+  s_145c0b03fd14af::t_ebcfc24f3bd016 2-5,10
+frontend/src/i18n/request.ts
+  s_145c0b03fd14af::t_05e5c8d2ef08d2 2-6,12-18
+frontend/src/i18n/routing.ts
+  s_145c0b03fd14af::t_097c6c233cad5d 2-5,9,11,13,15
+frontend/src/lib/auth-constants.ts
+  s_145c0b03fd14af::t_2bba4dd85bab22 2-4,7,10
+frontend/src/lib/category.ts
+  s_145c0b03fd14af::t_2b1fa3f11dc557 2-5,8,14,17,28,30-31,38,40-41
+frontend/src/lib/error-toast.ts
+  s_145c0b03fd14af::t_e9e114f188310f 2-6,12,14-17,28,30
+frontend/src/lib/format.ts
+  s_145c0b03fd14af::t_49b7b4ea632b5d 2-4,8,12,15-17,24-28,38,40,47-48,50,64,66-70
+frontend/src/lib/markdown-highlight.ts
+  s_145c0b03fd14af::t_a281f44dbdbe88 2-5,26,30-31,33-36,52
+frontend/src/lib/markdown.ts
+  s_145c0b03fd14af::t_a1199f0634c222 2-5,9-13,23-28,34,36,38,40,42,44,55,65-68,73,76
+frontend/src/lib/navigation.ts
+  s_145c0b03fd14af::t_1fcc5e849ebd21 2-4,8-15,24,26-28,37,40,48-50
+frontend/src/lib/sanitize.ts
+  s_145c0b03fd14af::t_47161b4eedef19 2-5,9-10,67,71,99-103
+frontend/src/lib/toast.ts
+  s_145c0b03fd14af::t_a8a279a64353c8 2-4
+frontend/src/lib/validators.ts
+  s_145c0b03fd14af::t_da6e69caa26ac5 2-4,10,14-16,23-25,32,34,41-42,47,49-51
+frontend/src/server/config/env.ts
+  s_145c0b03fd14af::t_99b539c6747abf 2-5,11,13-17,29,31-32,34-35,45,50-51,56,61-62,65,73,75,77
+frontend/src/server/container.ts
+  s_145c0b03fd14af::t_c358749363736c 2-5,19-20,23,25,27,29,31,33,35,37,39,43-45,49-51,53-54
+frontend/src/server/errors/index.ts
+  s_145c0b03fd14af::t_8ca9a4fd4f5806 2-4,7,9,11,13,15,17,19,21,23,25
+frontend/src/server/modules/auth/auth.guard.ts
+  s_145c0b03fd14af::t_153b77d2e8b1cb 3-6,22,27,31-34,69,72
+frontend/src/server/modules/auth/kv-user.repository.ts
+  s_145c0b03fd14af::t_fcdfbb1a7950fa 3-5,17-19,22-25,32-35,45-48,57-60,70-71,73-74,87-88
+frontend/src/server/modules/auth/services/auth.service.ts
+  s_145c0b03fd14af::t_fa9ed44f7cf585 3-5,33-34,36-38,50-52,63-64,105,133-134,147,165-167,234-237
+frontend/src/server/modules/auth/services/password.service.ts
+  s_145c0b03fd14af::t_0f10b0ddd811f4 3-4,16-21
+frontend/src/server/modules/blog/services/markdown.service.ts
+  s_145c0b03fd14af::t_fe33eaa441f8c8 3-5,8-9,31-35,37,39,41,43,45,47,49,51,53,55,57,59,61,63,66,78-80,91-95,134-139
+frontend/src/server/modules/blog/services/summary.service.ts
+  s_145c0b03fd14af::t_690ce32f487075 3-4,7-9,15,22-23
+frontend/src/server/utils/common.ts
+  s_145c0b03fd14af::t_13a3a90481c688 2-3,10-12
+frontend/src/services/blog/server.ts
+  s_145c0b03fd14af::t_54c2a01b87a4a1 2-5,22-26,39-42,54,56-57,67,69-71,82,90-91,99,109,118
+shared/eslint.config.mjs
+  s_145c0b03fd14af::t_c14fb17395d865 1-4,11,15,18,21,25,28,30
+shared/index.ts
+  s_145c0b03fd14af::t_370583c1dc5a44 2-3
+shared/types/backend/index.ts
+  s_145c0b03fd14af::t_656a18b26a0962 2-3
+shared/types/comment.ts
+  s_145c0b03fd14af::t_3d07048fa8f4b1 2,9,20,31-32,39-40,42,47-48,56,61,66-67,70
+shared/types/common.ts
+  s_145c0b03fd14af::t_84b72e2de046f7 2-3,8-9,12,14,16
+shared/types/frontend/index.ts
+  s_145c0b03fd14af::t_2c40c4ace2a5e1 2-3
+shared/types/frontend/pages.ts
+  s_145c0b03fd14af::t_62363ead54f392 2-3,10,19,22,24
+shared/types/frontend/toc.ts
+  s_145c0b03fd14af::t_67d7e72d472642 2-3,8,11,15
+shared/types/index.ts
+  s_145c0b03fd14af::t_b9db3b2d235a81 2-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "3de629e8f0d6ec67a4157d18f03126d1e2d498ed",
+  "prompts": {},
+  "sessions": {
+    "s_145c0b03fd14af": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e8ec0b3c-553b-4ba7-bbf1-82978d1bd342",
+        "model": "glm-5.3"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
