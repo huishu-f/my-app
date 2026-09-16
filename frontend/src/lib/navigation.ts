@@ -16,3 +16,34 @@ export function hasInAppHistory(): boolean {
   const idx = (window.history.state as { idx?: number } | null)?.idx;
   return typeof idx === 'number' ? idx > 0 : window.history.length > 1;
 }
+
+/**
+ * 开放重定向安全校验 — 只允许站内绝对路径（非 // 协议相对、非 /login /register）
+ * @param raw 待校验的原始 redirect 值
+ * @returns 安全的站内路径，不合法时回退 '/'
+ */
+export function safeRedirect(raw: string): string {
+  return raw.startsWith('/') && !raw.startsWith('//') && !['/login', '/register'].includes(raw)
+    ? raw
+    : '/';
+}
+
+/**
+ * 路由高亮判定 — 首页精确匹配，其余前缀匹配
+ * @param pathname 当前浏览器路径（来自 usePathname）
+ * @param href 链接目标路径
+ * @returns 是否高亮
+ */
+export function isRouteActive(pathname: string, href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+}
+
+/**
+ * 构建 /login?redirect= 登录跳转 URL — 统一 encodeURIComponent
+ * @param redirectPath 登录后回跳路径
+ * @returns 编码后的完整 URL 字符串
+ */
+export function buildLoginRedirect(redirectPath: string): string {
+  return `/login?redirect=${encodeURIComponent(redirectPath)}`;
+}

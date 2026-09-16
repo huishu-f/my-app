@@ -6,9 +6,10 @@
  */
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useRafScroll } from '@/hooks/useRafScroll';
 
 /**
  * BackToTop 返回顶部按钮
@@ -18,20 +19,7 @@ export function BackToTop() {
   /** 是否可见 */
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        setVisible(window.scrollY > 400);
-        ticking = false;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  useRafScroll((scrollY) => setVisible(scrollY > 400));
 
   return (
     /** 定位与显隐过渡由外层容器承担，按钮自身仅保留 hover 状态反馈（150ms 档） */

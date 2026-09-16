@@ -7,6 +7,7 @@
 import { useEffect } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { useAuth } from '@/components/auth-provider';
+import { safeRedirect } from '@/lib/navigation';
 
 /**
  * AuthGuard 客户端鉴权守卫（认证路由组）
@@ -28,10 +29,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     // 本组件随 (auth) 布局卸载并清除定时器，避免双导航竞争互相抵消；
     // 若 push 被表单提交的 transition 吞掉，则由这里的延迟跳转兜底
     const raw = new URLSearchParams(window.location.search).get('redirect') || '/';
-    const safe =
-      raw.startsWith('/') && !raw.startsWith('//') && !['/login', '/register'].includes(raw)
-        ? raw
-        : '/';
+    const safe = safeRedirect(raw);
     const timer = setTimeout(() => router.replace(safe), 500);
     return () => clearTimeout(timer);
   }, [user, router]);

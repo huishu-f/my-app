@@ -10,7 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { tagClassFor, tagVariantFor } from '@/components/ui/Tag';
 import { Button } from '@/components/ui/Button';
-import { CATEGORY_LABEL_KEYS, isKnownCategory, ALL_CATEGORY } from '@/lib/category';
+import { getCategoryLabel, ALL_CATEGORY } from '@/lib/category';
 import type { PostSidebarProps } from '@my-app/shared';
 import { buildPostsUrl } from '../_lib/buildPostsUrl';
 
@@ -80,9 +80,7 @@ export function PostSidebar({
                         <span>
                           {name === ALL_CATEGORY
                             ? t('allCategories')
-                            : isKnownCategory(name)
-                              ? tCommon(CATEGORY_LABEL_KEYS[name])
-                              : name}
+                            : getCategoryLabel(name, tCommon as (k: string) => string)}
                         </span>
                       </Link>
                     </li>

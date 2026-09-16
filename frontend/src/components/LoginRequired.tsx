@@ -12,6 +12,7 @@ import { useTranslations } from 'next-intl';
 import { Container } from './ui/Container';
 import { EmptyState } from './ui/EmptyState';
 import { Button } from './ui/Button';
+import { buildLoginRedirect } from '@/lib/navigation';
 
 /**
  * LoginRequired 组件入参
@@ -37,7 +38,7 @@ export function LoginRequired({ icon, description }: LoginRequiredProps) {
         title={t('loginRequired')}
         description={description}
         action={
-          <Button href={`/login?redirect=${pathname}`}>
+          <Button href={buildLoginRedirect(pathname)}>
             {t('goLogin')}
           </Button>
         }

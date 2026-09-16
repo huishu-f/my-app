@@ -18,7 +18,7 @@ import {
 import { Container } from '@/components/ui/Container';
 import { Avatar } from '@/components/ui/Avatar';
 import { formatDate, getInitials, splitName } from '@/lib/format';
-import { CATEGORY_LABEL_KEYS, isKnownCategory } from '@/lib/category';
+import { getCategoryLabel } from '@/lib/category';
 import type { Locale } from '@/i18n/config';
 import { estimateReadingTime, stripHtml, stripMarkdown } from '@/lib/markdown';
 import { isSafeImageUrl } from '@/lib/validators';
@@ -229,9 +229,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ loc
   const { firstName, lastName } = splitName(post.authorName || '');
   const authorInitials = post.authorName ? getInitials(firstName, lastName) : '';
   /** 分类展示名（数据值保持中文原值，仅展示层翻译；未知值原样显示） */
-  const categoryLabel = isKnownCategory(post.category)
-    ? tCommon(CATEGORY_LABEL_KEYS[post.category])
-    : post.category;
+  const categoryLabel = getCategoryLabel(post.category, tCommon as (k: string) => string);
 
   return (
     <PostStateProvider initialPost={post}>

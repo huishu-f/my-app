@@ -7,6 +7,7 @@
 import { Link, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { NAV_LINKS } from '@/config/site';
+import { isRouteActive } from '@/lib/navigation';
 
 /**
  * NavLinks 桌面端导航链接，高亮当前路由
@@ -15,10 +16,7 @@ export function NavLinks() {
   const pathname = usePathname();
   const t = useTranslations('nav');
 
-  const isActive = (href: string) => {
-    if (href === '/') return pathname === '/';
-    return pathname.startsWith(href);
-  };
+  const isActive = (href: string) => isRouteActive(pathname, href);
 
   return (
     <div className="flex items-center gap-1.5 max-md:hidden">

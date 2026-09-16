@@ -8,6 +8,7 @@ import { useCallback } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import toast from '@/lib/toast';
+import { buildLoginRedirect } from '@/lib/navigation';
 import type { User } from '@my-app/shared';
 
 /**
@@ -27,7 +28,7 @@ export function useRequireAuth(user: User | null, redirectPath: string) {
     (action: () => void) => {
       if (!user) {
         toast.info(t('loginRequired'));
-        router.push(`/login?redirect=${encodeURIComponent(redirectPath)}`);
+        router.push(buildLoginRedirect(redirectPath));
         return;
       }
       action();

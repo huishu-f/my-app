@@ -10,6 +10,8 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { NAV_LINKS } from '@/config/site';
+import { isRouteActive } from '@/lib/navigation';
+import { useDismissable } from '@/hooks/useDismissable';
 
 /**
  * MobileMenu 移动端折叠菜单
@@ -23,45 +25,15 @@ export function MobileMenu() {
   /** 切换按钮 Ref — 用于外部点击判定时排除按钮自身 */
   const toggleRef = useRef<HTMLButtonElement>(null);
 
-  const isActive = (href: string) => {
-    if (href === '/') return pathname === '/';
-    return pathname.startsWith(href);
-  };
+  const isActive = (href: string) => isRouteActive(pathname, href);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!mobileOpen) return;
-
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileOpen(false);
-    };
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as Node;
-      // 点击面板或切换按钮（X）内部时不在此处关闭：
-      // 若不排除按钮，mousedown 先触发"外部点击关闭"、随后按钮 click 再翻转打开，
-      // 一关一开相互抵消，表现为"点 X 关不掉菜单"（开关统一由按钮 onClick 处理）
-      const insideMenu = mobileMenuRef.current?.contains(target);
-      const insideToggle = toggleRef.current?.contains(target);
-      if (!insideMenu && !insideToggle) {
-        setMobileOpen(false);
-      }
-    };
-
-    // 菜单打开期间锁定 body 滚动，防止触摸遮罩时"滚动穿透"
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    document.addEventListener('keydown', handleKey);
-    document.addEventListener('mousedown', handleClick);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      document.removeEventListener('keydown', handleKey);
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, [mobileOpen]);
+  useDismissable(mobileOpen, () => setMobileOpen(false), [mobileMenuRef, toggleRef], {
+    lockScroll: true,
+  });
 
   return (
     <>

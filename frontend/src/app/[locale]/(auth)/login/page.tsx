@@ -22,6 +22,7 @@ import { isValidEmail } from '@/lib/validators';
 import { useAuth } from '@/components/auth-provider';
 import { authApi } from '@/services/auth/api';
 import { ApiRequestError } from '@/lib/api/request';
+import { safeRedirect } from '@/lib/navigation';
 
 /** 登录表单状态（useActionState 返回值） */
 interface LoginState {
@@ -43,13 +44,8 @@ function LoginContent() {
   const searchParams = useSearchParams();
   const { refreshMe } = useAuth();
 
-  const redirect = searchParams.get('redirect') || '/';
-  const safeRedirect =
-    redirect.startsWith('/') &&
-    !redirect.startsWith('//') &&
-    !['/login', '/register'].includes(redirect)
-      ? redirect
-      : '/';
+  const redirectRaw = searchParams.get('redirect') || '/';
+  const safeR = safeRedirect(redirectRaw);
 
   /** 是否显示明文密码 */
   const [showPassword, setShowPassword] = useState(false);
@@ -80,7 +76,7 @@ function LoginContent() {
         // 登录成功后使用硬导航跳转：未登录时对 /write 的 RSC 导航会被 proxy 307 到 /login，
         // 该响应会污染客户端 Router Cache（/write 键下缓存了登录页 payload），
         // 导致登录后 push('/write') 命中污染缓存而落回登录页。硬导航绕开客户端缓存，确保可靠跳转
-        window.location.replace(safeRedirect);
+        window.location.replace(safeR);
         return { emailError: null, pwdError: null };
       } catch (err) {
         if (err instanceof ApiRequestError) {

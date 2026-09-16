@@ -7,6 +7,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import type { PostTocProps, TocItem } from '@my-app/shared';
+import { useRafScroll } from '@/hooks/useRafScroll';
 
 /**
  * PostToc 文章目录侧边栏
@@ -59,22 +60,9 @@ export function PostToc({ articleId }: PostTocProps) {
   /**
    * 滚动进度计算 — 独立于标题，无标题时也正常工作
    */
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0);
-        ticking = false;
-      });
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  useRafScroll((_scrollY, docHeight) => {
+    setProgress(docHeight > 0 ? Math.min(_scrollY / docHeight, 1) : 0);
+  });
 
   /**
    * 监听标题可见性变化高亮当前章节

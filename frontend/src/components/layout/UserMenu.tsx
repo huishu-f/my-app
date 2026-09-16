@@ -4,7 +4,7 @@
  */
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useRouter } from '@/i18n/navigation';
 import {
   LogOut,
@@ -23,6 +23,7 @@ import { Avatar } from '../ui/Avatar';
 import { useAuth } from '@/components/auth-provider';
 import { useLogout } from '@/services/auth/hooks';
 import { getInitials } from '@/lib/format';
+import { useDismissable } from '@/hooks/useDismissable';
 
 /** 用户下拉菜单项配置（label 键指向 nav 命名空间） */
 const userMenuItems = [
@@ -69,25 +70,7 @@ export function UserMenu() {
     });
   };
 
-  useEffect(() => {
-    if (!userMenuOpen) return;
-
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setUserMenuOpen(false);
-    };
-    const handleClick = (e: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setUserMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('keydown', handleKey);
-    document.addEventListener('mousedown', handleClick);
-    return () => {
-      document.removeEventListener('keydown', handleKey);
-      document.removeEventListener('mousedown', handleClick);
-    };
-  }, [userMenuOpen]);
+  useDismissable(userMenuOpen, () => setUserMenuOpen(false), [userMenuRef]);
 
   if (!isLoggedIn) {
     return (

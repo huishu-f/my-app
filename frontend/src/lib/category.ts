@@ -31,3 +31,16 @@ export const CATEGORY_LABEL_KEYS: Record<CategoryValue, `categoryNames.${Categor
 export function isKnownCategory(value: string): value is CategoryValue {
   return (CATEGORY_VALUES as readonly string[]).includes(value);
 }
+
+/**
+ * 分类数据值 → 展示文案 — 已知分类经 i18n 翻译，未知值原样显示
+ * @param value 分类数据值
+ * @param t next-intl common 命名空间翻译函数
+ * @returns 展示文案
+ */
+export function getCategoryLabel(
+  value: string,
+  t: (key: string) => string,
+): string {
+  return isKnownCategory(value) ? t(CATEGORY_LABEL_KEYS[value]) : value;
+}
