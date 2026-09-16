@@ -1,0 +1,19 @@
+frontend/src/proxy.ts
+  s_4d62dec72a0a98::t_fabde974157be6 62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "dfd96e9c2e8233499e3abd0f6861d054b33e88a0",
+  "prompts": {},
+  "sessions": {
+    "s_4d62dec72a0a98": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "258f434f-0e9c-4d58-adad-f0dcc05c6984",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
