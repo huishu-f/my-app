@@ -1,0 +1,65 @@
+frontend/src/i18n/messages/en/write.ts
+  s_e9155e875d1f0e::t_6ed09cae2a4711 8,10,16,31,34-35
+frontend/src/i18n/messages/en/post.ts
+  s_e9155e875d1f0e::t_150cef72663295 10,22,27,30,36
+frontend/src/i18n/messages/en/posts.ts
+  s_e9155e875d1f0e::t_5988c3cc7f6165 14,19,22
+frontend/src/i18n/messages/en/meta.ts
+  s_e9155e875d1f0e::t_da04cf7a479f83 7-9
+frontend/src/i18n/messages/zh/write.ts
+  s_e9155e875d1f0e::t_453e73c7b7eed0 6,8-9,13-14,25,29,32-35,37-38
+frontend/src/i18n/messages/zh/post.ts
+  s_e9155e875d1f0e::t_2ae572cc163932 6,28,32,38-39
+frontend/src/i18n/messages/zh/meta.ts
+  s_e9155e875d1f0e::t_98fb550e8a9762 5-7
+frontend/src/i18n/messages/zh/profile.ts
+  s_e9155e875d1f0e::t_f02d899fcc5c61 9-10,12-13,15,17,20
+frontend/src/i18n/messages/en/home.ts
+  s_e9155e875d1f0e::t_e96a32fa9375a8 7-8,10,13,18,20
+frontend/src/i18n/messages/en/errors.ts
+  s_e9155e875d1f0e::t_3032a5e4e15721 8,14,17,19,21
+frontend/src/i18n/messages/en/profile.ts
+  s_e9155e875d1f0e::t_a7a0631209ba54 14-15,19,22
+frontend/src/i18n/messages/zh/footer.ts
+  s_e9155e875d1f0e::t_9fbe9dd73ce792 6
+frontend/src/i18n/messages/zh/nav.ts
+  s_e9155e875d1f0e::t_e8054df6e2a5d0 5-6,9-13,20
+frontend/src/i18n/messages/en/footer.ts
+  s_e9155e875d1f0e::t_9ccb07803d112d 8
+frontend/src/i18n/messages/en/auth.ts
+  s_e9155e875d1f0e::t_dcea020aab4626 8,10-11,22
+frontend/src/i18n/messages/zh/errors.ts
+  s_e9155e875d1f0e::t_f68edc2761a176 6,12,15,17,19
+frontend/src/i18n/messages/en/common.ts
+  s_e9155e875d1f0e::t_7039c05d3304d1 10-13,24-25,39
+frontend/src/i18n/messages/en/nav.ts
+  s_e9155e875d1f0e::t_e5e4f5bc27d41f 7,11
+frontend/src/i18n/messages/zh/common.ts
+  s_e9155e875d1f0e::t_375720e7882edd 6,8-11,13,22
+frontend/src/i18n/messages/zh/auth.ts
+  s_e9155e875d1f0e::t_d9a949860596d6 6,8-9,13,20-21,28,36
+frontend/src/i18n/messages/zh/settings.ts
+  s_e9155e875d1f0e::t_3347a3e9cb1345 6,11-12,14
+frontend/src/i18n/messages/zh/home.ts
+  s_e9155e875d1f0e::t_b7d572110dc0f1 5-6,8,11,16
+frontend/src/i18n/messages/zh/posts.ts
+  s_e9155e875d1f0e::t_5a4b720408faf7 6,12,17,20
+frontend/src/i18n/messages/en/settings.ts
+  s_e9155e875d1f0e::t_4027d1e54f8bd2 8,14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5f7794264f49dae748dee9ca5b0f149a9f1b8ca4",
+  "prompts": {},
+  "sessions": {
+    "s_e9155e875d1f0e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "777968b3-5465-4c63-b204-8a82098ebb52",
+        "model": "telechat-3"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
