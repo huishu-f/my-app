@@ -12,12 +12,13 @@
 
 :root {
   /* 中性灰阶（Light）：从白到黑，50 最亮、900 最暗
-   * 拉开灰阶间距确保层次分明：卡片底色与页面白、输入框边框与白底对比度达标 */
+   * 拉开灰阶间距确保层次分明：卡片底色与页面白、输入框边框与白底对比度达标
+   * --color-400 从 #9ca3af 加深至 #646978，保证 faint 在白底/卡片底均 ≥4.5:1 (WCAG AA) */
   --color-50: #ffffff;
   --color-100: #f3f4f6;
   --color-200: #e5e7eb;
   --color-300: #b8bdc7;
-  --color-400: #9ca3af;
+  --color-400: #646978;
   --color-500: #71717a;
   --color-600: #52525b;
   --color-700: #3f3f46;
@@ -25,15 +26,15 @@
   --color-900: #09090b;
 
   /* 语义点缀色（仅用于状态/标签，保持极简主色调）
-   * 饱和度统一在 38–53% 区间，四色明度对齐在 L≈45–47% */
+   * 饱和度统一在 38–53% 区间，base 色明度对齐在 L≈35–40% 以保证 AA 对比度 */
   --color-ink-tint: #90a1ba;
-  --color-ink-base: #4a6fa5;
+  --color-ink-base: #3d5d8a;
   --color-ember-tint: #d7aa7e;
-  --color-ember-base: #b07238;
+  --color-ember-base: #8f5a26;
   --color-crimson-tint: #ce8888;
-  --color-crimson-base: #b84238;
+  --color-crimson-base: #a33930;
   --color-slate-tint: #789385;
-  --color-slate-base: #437d61;
+  --color-slate-base: #356549;
 
   /* 阴影透明度（Light 偏淡） */
   --shadow-opacity-sm: 0.05;

@@ -8,7 +8,7 @@
 import { Toaster as RHTToaster } from 'react-hot-toast';
 
 /**
- * Toaster 全局消息提示，样式由 components.css 中的 .rht-toast 选择器驱动，遵循低饱和极简设计系统，通过左侧色条 + 柔和状态底色区分语义
+ * Toaster 全局消息提示，样式由 components.css 中的 .rht-toast 选择器驱动，遵循低饱和极简设计系统，通过语义边框 + 柔和状态底色区分语义
  */
 export function Toaster() {
   return (

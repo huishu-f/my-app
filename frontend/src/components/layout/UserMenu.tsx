@@ -153,6 +153,8 @@ export function UserMenu() {
         className={`absolute top-full right-0 z-50 pt-2 ${userMenuOpen ? '' : 'pointer-events-none'}`}
       >
         <div
+          role="menu"
+          aria-label={t('userMenu')}
           className={`border-card-border bg-page ease-smooth w-56 origin-top-right overflow-hidden rounded-xl border shadow-lg transition-[opacity,transform,visibility] duration-200 max-md:w-52 ${
             userMenuOpen ? 'visible scale-100 opacity-100' : 'invisible scale-[0.98] opacity-0'
           }`}
@@ -185,6 +187,7 @@ export function UserMenu() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  role="menuitem"
                   onClick={() => setUserMenuOpen(false)}
                   className="row-sm text-body hover:bg-surface hover:text-heading group rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:gap-2.5 max-md:px-3 max-md:text-(length:--type-md)"
                 >
@@ -205,6 +208,7 @@ export function UserMenu() {
           <div className="p-1.5">
             <button
               onClick={handleLogout}
+              role="menuitem"
               className="row-sm text-faint hover:bg-state-error-bg hover:text-state-error w-full rounded-lg px-2.5 py-1.5 text-(length:--type-sm) leading-normal font-medium transition-[background-color,color] duration-150 ease-out max-md:min-h-11 max-md:gap-2.5 max-md:px-3 max-md:text-(length:--type-md)"
             >
               <LogOut

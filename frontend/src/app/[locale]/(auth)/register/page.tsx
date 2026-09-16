@@ -170,7 +170,7 @@ export default function RegisterPage() {
       )}
 
       {/* 注册表单 */}
-      <form action={formAction} noValidate className="form-stack">
+      <form action={formAction} noValidate className="auth-form-stack">
         {/* 名 + 姓 */}
         <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
           <FormField

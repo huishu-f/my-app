@@ -45,12 +45,14 @@ export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
       <div className="segmented animate-fade-in">
         <button
           onClick={() => setTab('articles')}
+          aria-pressed={tab === 'articles'}
           className={`segmented-item ${tab === 'articles' ? 'segmented-item-on' : ''}`}
         >
           {t('articlesTab', { count: published.length })}
         </button>
         <button
           onClick={() => setTab('favorites')}
+          aria-pressed={tab === 'favorites'}
           className={`segmented-item ${tab === 'favorites' ? 'segmented-item-on' : ''}`}
         >
           {t('favoritesTab', { count: favoriteList.length })}
