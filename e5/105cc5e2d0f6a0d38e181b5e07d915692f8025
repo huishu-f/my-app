@@ -1,0 +1,20 @@
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  h_7a7e6c68a7d90b 206,230
+frontend/src/server/modules/blog/kv-blog.repository.ts
+  h_7a7e6c68a7d90b 13-15
+frontend/src/components/layout/Footer.tsx
+  h_7a7e6c68a7d90b 20
+frontend/src/server/modules/blog/services/blog.service.ts
+  h_7a7e6c68a7d90b 79,742
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "e5105cc5e2d0f6a0d38e181b5e07d915692f8025",
+  "prompts": {},
+  "humans": {
+    "h_7a7e6c68a7d90b": {
+      "author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
