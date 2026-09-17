@@ -1,0 +1,1293 @@
+/**
+ * @file components.css
+ * @description 组件层样式集合：布局/hero/表单控件/标签徽标/按钮/导航/auth 页/分页与 react-hot-toast 覆写；@utility 工具类为主，尺寸一律取 tokens，状态规则注明触发条件
+ */
+
+/* ===== 页面布局工具 ===== */
+
+/** 页面区块纵向节奏：上下 56px（py-14，rem 档），md 以下压缩为 40px（max-md:py-10） */
+@utility page-section {
+  @apply py-14 max-md:py-10;
+}
+
+/** 页头留白：底部 32px（mb-8），移动端 24px（max-md:mb-6） */
+@utility page-header {
+  @apply mb-8 max-md:mb-6;
+}
+
+/** 页头操作行：两端对齐、可换行，间距 16px（gap-4） */
+@utility page-actions {
+  @apply flex flex-wrap items-center justify-between gap-4;
+}
+
+/** 卡片列表：纵向堆叠，行距 24px（gap-6） */
+@utility card-list {
+  @apply flex flex-col gap-6;
+}
+
+/** 表单字段堆叠：兄弟间隔 24px（space-y-6） */
+@utility form-stack {
+  @apply space-y-6;
+}
+
+/** 内容堆叠三档：24 / 16 / 32px（space-y-6/4/8）兄弟间隔变体 */
+@utility content-stack {
+  @apply space-y-6;
+}
+@utility content-stack-sm {
+  @apply space-y-4;
+}
+@utility content-stack-lg {
+  @apply space-y-8;
+}
+
+/** 行布局五档：flex 垂直居中 + 4→20px（gap-1..5，rem 档）横向间距 */
+@utility row-xs {
+  @apply flex items-center gap-1;
+}
+@utility row-sm {
+  @apply flex items-center gap-2;
+}
+@utility row-md {
+  @apply flex items-center gap-3;
+}
+@utility row-lg {
+  @apply flex items-center gap-4;
+}
+@utility row-xl {
+  @apply flex items-center gap-5;
+}
+
+/** 吸顶侧栏：滚动时吸附在导航栏下沿之外 --space-4 处（top = --nav-h + 16px）；
+    原先四处写成 sticky top-20（80px）硬编码，导航改高就会错位，故收敛到此工具类 */
+@utility sticky-below-nav {
+  position: sticky;
+  top: calc(var(--nav-h) + var(--space-4));
+}
+
+/* ===== Hero 区 ===== */
+
+/** hero 首屏上下留白 64px（--space-10）；移动端用 !important 压过基础值（max-md:!pt-12/pb-8 ≈ 48/32px） */
+@utility hero-section {
+  padding-top: var(--space-10);
+  padding-bottom: var(--space-10);
+  @apply max-md:!pt-12 max-md:!pb-8;
+}
+
+/** hero 眉题：小号无衬线、弱色、左侧 2px 强调线，营造杂志版眉层级 */
+@utility hero-kicker {
+  display: block;
+  width: fit-content;
+  font-family: var(--font-sans);
+  font-size: var(--type-2xs);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: var(--leading-none);
+  color: var(--color-muted);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--color-accent);
+  margin-bottom: var(--space-4);
+}
+
+/** hero 主标题：衬线大展示体，杂志封面级层级；7vw 在桌面端克制、移动端饱满 */
+@utility hero-headline {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 7vw, 64px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+/** hero 导语：衬线字体；字号随视口 1.5vw，介于 16px 与 18px 之间 */
+@utility hero-lead {
+  font-size: clamp(16px, 1.5vw, 18px);
+  line-height: var(--leading-loose);
+  letter-spacing: -0.005em;
+  font-family: var(--font-serif);
+}
+
+/** 三列数据网格：surface 底 + 竖分隔线（divide-x）+ xl 圆角 */
+@utility stats-grid {
+  @apply divide-stroke border-stroke bg-surface grid grid-cols-3 divide-x rounded-xl border py-3 max-md:px-4;
+}
+
+@utility stat-item {
+  @apply flex flex-col items-center gap-1 px-5;
+}
+
+/** 数据值：24px 档加粗；tabular-nums 等宽数字，数值变化时不抖列宽 */
+@utility stat-value {
+  @apply text-heading text-(length:--type-lg) font-bold tabular-nums;
+}
+
+@utility stat-label {
+  @apply text-muted text-(length:--type-2xs);
+}
+
+/* ===== 展示文字工具 ===== */
+
+/** 衬线展示字体：-0.02em（em）负字距，供页面大标题组合使用 */
+@utility display-serif {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
+/** 页面主标题：衬线 30px（--type-xl）档 + 紧行高 */
+@utility page-title {
+  @apply display-serif text-heading font-bold tracking-[-0.02em];
+  font-size: var(--type-xl);
+  line-height: var(--leading-tight);
+}
+/** 移动端页面主标题：降至 24px 档 */
+@utility page-title-mobile {
+  font-size: var(--type-lg);
+}
+
+/** 页面副标题：muted 色 16px，顶部 6px（mt-1.5）贴合主标题 */
+@utility page-subtitle {
+  @apply text-muted mt-1.5;
+  font-size: var(--type-sm);
+  line-height: var(--leading-loose);
+}
+
+/** 小节标题：20px（--type-md）档半粗 */
+@utility section-title {
+  @apply text-heading font-semibold;
+  font-size: var(--type-md);
+  line-height: var(--leading-snug);
+}
+
+/** 元信息行：12px（--type-2xs）faint 最弱档 */
+@utility meta-text {
+  @apply text-faint;
+  font-size: var(--type-2xs);
+  line-height: var(--leading-normal);
+}
+
+/* ===== Hero 仿 mac 代码窗 ===== */
+
+/** 窗体标题栏：顶部掺 70% surface 提亮、向下过渡回卡片底色，模拟玻璃质感 */
+@utility hero-titlebar {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-card-bg) 70%, var(--color-surface)),
+    var(--color-card-bg)
+  );
+}
+
+/** 红绿灯三点底色：关闭（绯红）/ 最小化（琥珀）/ 最大化（黛绿），色值绑定 mac-* 令牌 */
+@utility hero-dot-close {
+  background: var(--color-mac-close);
+}
+@utility hero-dot-minimize {
+  background: var(--color-mac-minimize);
+}
+@utility hero-dot-maximize {
+  background: var(--color-mac-maximize);
+}
+
+/* 装饰性代码窗（首页 hero，aria-hidden）：1400px（px，透视距离）透视下 -8°/2°（deg）3D 倾斜摆放；
+   @variant max-lg 在视口 < 1024px 时整体取消 3D（含 hover 态），防止窄屏溢出穿帮 */
+.hero-code-window {
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-2xl);
+  transform: perspective(1400px) rotateY(-8deg) rotateX(2deg) translateZ(-12px);
+  transition:
+    transform 300ms var(--ease-smooth),
+    box-shadow 300ms ease-out;
+
+  @variant max-lg {
+    &,
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+/* 触发条件：悬停窗体——3D 倾角回正至 -2°/0°，浮起 md 阴影（transform/box-shadow 各 300ms 过渡） */
+.hero-code-window:hover {
+  transform: perspective(1400px) rotateY(-2deg) rotateX(0) translateZ(0);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== 卡片 ===== */
+
+/** 标准卡片：card-bg 底 + card-border 描边，xl 圆角 */
+@utility card {
+  @apply border-card-border bg-card-bg rounded-xl border;
+}
+
+/** 可交互卡片附加态（配合 card 使用）。触发条件：hover——描边转强、浮起 shadow-sm，150ms（ms）交互档 */
+@utility card-hover {
+  @apply hover:border-stroke-strong transition-[border-color,box-shadow] duration-150 ease-out hover:shadow-(--shadow-sm);
+}
+
+/* ===== 表单控件 ===== */
+
+/** 标准输入框：固定高 36px（h-9）、card-bg 底、muted 占位符 */
+@utility input-field {
+  @apply border-stroke-strong bg-card-bg text-body placeholder:text-muted h-9 w-full rounded-md border px-3;
+  font-size: var(--type-sm);
+  line-height: var(--leading-normal);
+}
+
+/** 多行输入框：最小高 96px（min-h-24），仅允许纵向拖拽调整（resize-y） */
+@utility textarea-field {
+  @apply border-stroke-strong bg-card-bg text-body placeholder:text-muted min-h-24 w-full resize-y rounded-md border px-3 py-3;
+  font-size: var(--type-sm);
+  line-height: var(--leading-normal);
+}
+
+/* 焦点反馈基础类（与 input-field/textarea-field 等组合挂载）：边框/底色 150ms（ms）交互档过渡 */
+.input-focus {
+  transition:
+    border-color 150ms ease-out,
+    background-color 150ms ease-out;
+}
+/* 触发条件：:focus——accent 描边 + 2px（px）20% 半透明 focus ring，替代被 base.css 抑制的全局 outline */
+.input-focus:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+/* 容器级焦点反馈：触发条件 :focus-within（任意后代聚焦），用于写作编辑器等组合输入区 */
+.input-focus-within {
+  transition:
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+.input-focus-within:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+/* 校验错误态（Input/WriteEditor 按结果切换挂类）：!important 压过 .input-focus:focus 的 accent 描边，聚焦也不变回主色 */
+.input-error {
+  border-color: var(--color-state-error) !important;
+}
+.input-error.input-focus:focus {
+  border-color: var(--color-state-error) !important;
+}
+
+/* 校验通过态：同理由组件挂类，success 色压过聚焦描边 */
+.input-success {
+  border-color: var(--color-state-success) !important;
+}
+.input-success.input-focus:focus {
+  border-color: var(--color-state-success) !important;
+}
+
+/** 带图标输入容器：提供绝对定位锚 */
+@utility input-icon-wrap {
+  @apply relative;
+}
+
+/* 前缀图标：左侧 0.75rem（rem，相对根字号 ≈12px）垂直居中；pointer-events: none 让点击穿透到下层输入框 */
+.input-icon-wrap > .input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-faint);
+  pointer-events: none;
+  transition: color 150ms ease-out;
+}
+/* 触发条件：容器内后代聚焦（:focus-within）时图标提亮为 muted */
+.input-icon-wrap:focus-within > .input-icon {
+  color: var(--color-muted);
+}
+
+/** 图标输入框：左侧预留 40px（pl-10）避开图标 */
+@utility input-with-icon {
+  @apply pl-10;
+}
+
+/* 未自定义的原生勾选控件兜底：选中着色统一为 accent，手型光标提示可点 */
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/** 自定义复选框：appearance 清零后自绘 16px（px）方盒；::before 画对勾；三属性 150ms（ms）过渡 */
+@utility checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: var(--radius-xs);
+  border: 1.5px solid var(--color-stroke-strong);
+  background: var(--color-page);
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+/* 触发条件：hover——描边提亮 */
+.checkbox:hover {
+  border-color: var(--color-muted);
+}
+/* 触发条件：键盘聚焦（focus-visible）——去默认轮廓，改 2px（px）半透明 focus ring */
+.checkbox:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+/* 触发条件：:checked——accent 实底填充 */
+.checkbox:checked {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+/* 选中对勾：8px（px）页面底色，由 clip-path 多边形（坐标百分比）裁出勾形 */
+.checkbox:checked::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--color-page);
+  clip-path: polygon(14% 44%, 0 60%, 50% 100%, 100% 16%, 86% 0, 43% 62%);
+}
+/* 触发条件：:disabled——半透明 + 禁入光标 */
+.checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* 禁用且已选中：填充转 muted，与可用选中态区分 */
+.checkbox:disabled:checked {
+  background: var(--color-muted);
+  border-color: var(--color-muted);
+}
+
+/** 自定义单选框：与 checkbox 同思路，16px（px）正圆，选中填 accent 描边 */
+@utility radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-stroke-strong);
+  background: var(--color-page);
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+/* 触发条件：hover——描边提亮 */
+.radio:hover {
+  border-color: var(--color-muted);
+}
+/* 触发条件：键盘聚焦——2px（px）半透明 focus ring 替代轮廓 */
+.radio:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+/* 触发条件：:checked——描边转 accent */
+.radio:checked {
+  border-color: var(--color-accent);
+}
+/* 选中标记：::before 画 8px（px）accent 实心圆点 */
+.radio:checked::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+}
+/* 触发条件：:disabled——半透明 + 禁入光标 */
+.radio:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 开关：checkbox 的变体（同元素挂 .switch），36x20px（px）胶囊轨道，未选中为强描边灰底 */
+input[type='checkbox'].switch {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--color-stroke-strong);
+  cursor: pointer;
+  position: relative;
+  transition:
+    background-color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+/* 滑块：16px（px）页面色圆钮，2px 内衬；transform 过渡 200ms（ms） */
+input[type='checkbox'].switch::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: var(--color-page);
+  box-shadow: var(--shadow-xs);
+  transition: transform 200ms var(--ease-smooth);
+}
+/* 触发条件：hover——轨道底提亮为 muted */
+input[type='checkbox'].switch:hover {
+  background: var(--color-muted);
+}
+/* 触发条件：键盘聚焦——2px（px）半透明 focus ring */
+input[type='checkbox'].switch:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+/* 触发条件：:checked——轨道转 accent */
+input[type='checkbox'].switch:checked {
+  background: var(--color-accent);
+}
+/* 选中后滑块右移 16px（px = 轨道 36 − 圆钮 16 − 两侧内衬 2×2） */
+input[type='checkbox'].switch:checked::before {
+  transform: translateX(16px);
+}
+/* 触发条件：:disabled——半透明 + 禁入光标 */
+input[type='checkbox'].switch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* select 光标状态提示：可点 / 禁用（:disabled 触发） */
+select {
+  cursor: pointer;
+}
+select:disabled {
+  cursor: not-allowed;
+}
+
+/* ===== 标签 chip 与徽标 badge ===== */
+
+/** 筛选 chip：胶囊形；heading 10% 半透明底 + inset 1px（px）描边——用 box-shadow 而非 border 以贴合圆角 */
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.75rem;
+  font-size: var(--type-2xs);
+  line-height: var(--leading-tight);
+  font-weight: 500;
+  color: var(--color-heading);
+  background: var(--color-chip-bg);
+  box-shadow: inset 0 0 0 1px var(--color-stroke);
+}
+
+/** chip 紧凑版：纵向内边距减半（0.125rem ≈ 2px） */
+@utility chip-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: var(--radius-full);
+  padding: 0.125rem 0.5rem;
+  font-size: var(--type-2xs);
+  line-height: var(--leading-tight);
+  font-weight: 500;
+  color: var(--color-heading);
+  background: var(--color-chip-bg);
+  box-shadow: inset 0 0 0 1px var(--color-stroke);
+}
+
+/** 描边版 chip：surface 纯色底 + 文字降为 body，150ms（ms）过渡供交互筛选 */
+@utility chip-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.75rem;
+  font-size: var(--type-2xs);
+  line-height: var(--leading-tight);
+  font-weight: 500;
+  color: var(--color-body);
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px var(--color-stroke);
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out;
+}
+/* 触发条件：hover——文字升 heading、底色掺 --overlay-soft 加深 */
+.chip-outline:hover {
+  color: var(--color-heading);
+  background: color-mix(in srgb, var(--color-heading) var(--overlay-soft), var(--color-surface));
+}
+/* 触发条件：键盘聚焦（chip-outline 被用作筛选按钮时）——与 segmented-item 同一套 2px（px）半透明 focus ring */
+.chip-outline:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 1px var(--color-stroke-strong),
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+/** 徽标/计数胶囊：紧凑静态版，无交互反馈 */
+@utility badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-full);
+  padding: 0.125rem 0.5rem;
+  font-size: var(--type-2xs);
+  line-height: var(--leading-tight);
+  font-weight: 500;
+  color: var(--color-body);
+  background: var(--color-chip-bg);
+  box-shadow: inset 0 0 0 1px var(--color-stroke);
+}
+
+/** 大号可交互徽标：内边距更宽并带 hover 反馈 */
+@utility badge-lg {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.75rem;
+  font-size: var(--type-2xs);
+  line-height: var(--leading-tight);
+  font-weight: 500;
+  color: var(--color-heading);
+  background: var(--color-chip-bg);
+  box-shadow: inset 0 0 0 1px var(--color-stroke);
+  transition:
+    background-color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+/* 触发条件：hover——底色叠加升至 --overlay-press，描边转强 */
+.badge-lg:hover {
+  background: color-mix(in srgb, var(--color-heading) var(--overlay-press), var(--color-surface));
+  box-shadow: inset 0 0 0 1px var(--color-stroke-strong);
+}
+
+/* ===== 分段切换（Segmented Control） ===== */
+
+/** 容器：4px（px）内衬与间隙的胶囊轨道，inset 1px 描边 */
+@utility segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-xl);
+  padding: 4px;
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px var(--color-stroke);
+}
+
+/** 分段项：150ms（ms）三属性过渡，状态由 hover/active/键盘聚焦驱动 */
+@utility segmented-item {
+  @apply text-muted cursor-pointer rounded-md px-3 py-1;
+  font-size: var(--type-xs);
+  line-height: var(--leading-normal);
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+/* 触发条件：hover——仅文字升 heading，不加底色：分段控件已有明确选中态（bg-page + 阴影），
+   再叠 hover 底色会与选中态语义混淆；深浅两套主题统一只用文字色表达，故无 dark 覆写 */
+.segmented-item:hover {
+  color: var(--color-heading);
+}
+/* 触发条件：键盘聚焦——2px（px）半透明 focus ring */
+.segmented-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+/* 触发条件：按下瞬间（:active）提前点亮 */
+.segmented-item:active {
+  color: var(--color-heading);
+}
+
+/** 选中段：白底 + shadow-xs 浮起；由组件按当前 tab / 预览模式切换挂类（如 WriteEditor、SettingsForm） */
+@utility segmented-item-on {
+  background: var(--color-page);
+  font-weight: 600;
+  color: var(--color-heading);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ===== 图标按钮 ===== */
+
+/** 36px（px）方形图标按钮：surface 底 + inset 1px 描边 */
+@utility icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px var(--color-stroke);
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+
+/** ghost 变体：无底无描边，密度更高的工具条场景 */
+@utility icon-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+  background: transparent;
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out,
+    opacity 150ms ease-out;
+}
+/** 导航条带文案控件（如未登录的「登录」入口）：与 icon-btn-ghost 同高、同圆角、同悬停与焦点反馈，
+    仅宽度随内容伸缩——一排控件里图标按钮和文字按钮必须共用同一套交互语言 */
+@utility bar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* 图标与文案间距：--space-1（4px）偏挤、--space-2（8px）偏散，取中间档 */
+  height: 36px;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+  background: transparent;
+  font-size: var(--type-xs);
+  line-height: var(--leading-normal);
+  font-weight: 500;
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out,
+    opacity 150ms ease-out;
+}
+/* 触发条件：hover: hover——仅精确指针设备（鼠标/触控板）应用 hover 反馈，触屏不残留悬停态；
+   叠加比例取 --overlay-hover（深浅两套强度由 tokens 决定，此处不写 dark 覆写） */
+@media (hover: hover) {
+  .icon-btn:hover {
+    background: color-mix(in srgb, var(--color-heading) var(--overlay-hover), var(--color-surface));
+    color: var(--color-heading);
+    box-shadow: inset 0 0 0 1px var(--color-stroke-strong);
+  }
+  /* ghost 系无实心底，悬停叠加必须用「半透明叠加令牌」而非实心 surface：
+     导航条这类半透明底上，实心 surface 与相邻按钮的叠加底色不是同一个灰，一排控件悬停会花；
+     且 surface 在暗色下比导航底更暗，悬停会反向变暗。 */
+  .icon-btn-ghost:hover,
+  .bar-btn:hover {
+    background: var(--color-btn-hover-bg);
+    color: var(--color-heading);
+  }
+}
+/* 触发条件：:active 按下——实心底按钮掺 surface 至 --overlay-press；ghost 系沿用同一套叠加令牌 */
+.icon-btn:active {
+  background: color-mix(in srgb, var(--color-heading) var(--overlay-press), var(--color-surface));
+}
+.icon-btn-ghost:active,
+.bar-btn:active {
+  background: var(--color-btn-active-bg);
+}
+/* 触发条件：键盘聚焦——有描边的实心按钮强化描边 + 外圈 2px（px）focus ring 双层反馈 */
+.icon-btn:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 1px var(--color-stroke-strong),
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+/* 无描边的 ghost 系：只给外圈光晕，不凭空补一圈边框（与 nav-item / sheet-item 同一套焦点样式） */
+.icon-btn-ghost:focus-visible,
+.bar-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+/* ===== 导航 ===== */
+
+/** 吸顶导航毛玻璃面：半透明 page 底 + 背景模糊；由 Navbar 挂在 <nav> 上。
+    模糊必须走 Tailwind 的 backdrop-blur-* 工具类，不要手写 backdrop-filter：
+    手写时若同时给出 -webkit- 与标准属性，Lightning CSS 会按「同属性后者胜出」折叠成只留 -webkit- 一条，
+    而现代 Chromium 已不再识别 -webkit-backdrop-filter（实测 CSS.supports('-webkit-backdrop-filter') === false），
+    结果是毛玻璃静默失效、只剩半透明底，下层内容会清晰地透出来。
+    Tailwind 生成的顺序是 -webkit- 在前、标准在后，两条都能保住。 */
+@utility nav-surface {
+  @apply backdrop-blur-(--nav-blur);
+  background: var(--color-nav-surface);
+}
+
+/** 导航底部分隔线：1px（px）高渐变——顶部全透至底部实心 stroke，营造发丝线渐隐效果。
+    绝对定位贴住 <nav> 下沿，使导航总高严格等于 --nav-h：若留在文档流里会多占 1px，
+    而移动端抽屉/遮罩按 top-(--nav-h) 定位，就会在导航与浮层之间漏出 1px 缝隙。 */
+@utility nav-bar-separator {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-stroke) 50%, transparent) 40%,
+    color-mix(in srgb, var(--color-stroke) 80%, transparent) 70%,
+    var(--color-stroke) 100%
+  );
+}
+
+/** 桌面导航项：36px（px）高方形热区，尺寸与 icon-btn 对齐，使导航条整排控件同高。
+    下划线由 ::after 画在「导航条下沿」而非文字下沿：item 在 --nav-h 的条内垂直居中，
+    故距导航底边 (--nav-h - 36px) / 2，负值让线正好压在 nav-bar-separator 发丝线上，
+    形成「标签悬在分隔线上」的排版感，而不是漂在文字底下的一小截 */
+@utility nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-md);
+  font-size: var(--type-xs);
+  line-height: var(--leading-normal);
+  font-weight: 500;
+  color: var(--color-muted);
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out;
+}
+/* 触发条件：hover: hover 设备——文字升 heading + 轻叠加底（与同排图标按钮共用同一叠加令牌） */
+@media (hover: hover) {
+  .nav-item:hover {
+    background: var(--color-btn-hover-bg);
+    color: var(--color-heading);
+  }
+}
+/* 触发条件：:active 按下——叠加加深一档 */
+.nav-item:active {
+  background: var(--color-btn-active-bg);
+}
+/* 触发条件：键盘聚焦——与 icon-btn 同一套 2px（px）accent 光晕 */
+.nav-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+/* 预留下划线：35% 半透明 accent，默认收起；左右各让出 padding-inline，使线宽与文字同宽 */
+.nav-item::after {
+  content: '';
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  bottom: calc(-1 * (var(--nav-h) - 36px) / 2);
+  height: 2px;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  transform: scaleX(0);
+  transition: transform 300ms var(--ease-smooth);
+}
+/* 触发条件：hover: hover 且悬停——下划线由中心向两侧展开，作为激活态的「预览」 */
+@media (hover: hover) {
+  .nav-item:hover::after {
+    transform: scaleX(1);
+  }
+}
+/** 当前路由项：heading 色加粗 + accent 实线下划线常驻（区别于 hover 的半透明预览线） */
+@utility nav-item-on {
+  color: var(--color-heading);
+  font-weight: 600;
+}
+.nav-item-on::after {
+  background: var(--color-accent);
+  transform: scaleX(1);
+}
+
+/* ===== 移动端抽屉（MobileMenu） ===== */
+
+/** 抽屉面板：吊在导航条下方 --space-2 处、右缘与汉堡按钮对齐的浮起卡片。
+    定宽 240px 靠右（不是整幅铺满）——读起来才像「从汉堡按钮展开的一层菜单」，
+    而不是把页面拦腰切了一刀；窄屏时用 min() 收窄，保证左侧永远留出可点的遮罩区。
+    右缘对齐 --space-4 正好等于导航内容区的左右内边距，面板与汉堡按钮右边齐平。
+    用 card 底 + 描边 + 浮层阴影与页面底拉开层级——若与页面同色，暗色下几乎看不出这是块面板。 */
+@utility mobile-sheet {
+  position: fixed;
+  top: calc(var(--nav-h) + var(--space-2));
+  right: var(--space-4);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  width: min(240px, calc(100vw - var(--space-7)));
+  max-height: calc(100dvh - var(--nav-h) - var(--space-6));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-2);
+  border: 1px solid var(--color-stroke);
+  border-radius: var(--radius-xl);
+  background: var(--color-card-bg);
+  box-shadow: var(--shadow-lg);
+}
+
+/** 抽屉分组：竖向间距只分两档，且两档必须看得出差别。
+    组内行距 --space-1（4px）——同一组是「一张列表」，行与行挨着；40/48px 的行本身已含大量上下留白，
+    再垫 8px 会让相邻两项的间距逼近行高的三分之一，列表读起来是散的、不成一组（此前组内 8px 的实测问题）。
+    跨组空档则由 margin-top + 1px 分隔线 + padding-top 合成 4px + 1px + 4px = 9px，分隔线正落在空档中央；
+    组内 4px 与跨组 9px 相差 2.25 倍，层级因此由「间距」本身表达，不必只靠那条线。 */
+@utility sheet-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--color-stroke);
+}
+/* 首个分组不画分隔线、也不留线上间距：否则面板顶部会多出一条悬空的线（未登录态下首个分组正是主导航） */
+.mobile-sheet > .sheet-group:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/** 抽屉主级行：站内导航条目。44px（px）高热区 + 正文色，是抽屉里视觉最重的一层，
+    一眼就能看出「这个菜单主要用来去哪」。
+    44px 而非 48px：面板里只有 14px 字与 18px 图标，48px 会让行高/字号达到 3.4 倍，
+    整列读起来是「每项都飘着」；44px 既是 WCAG 2.5.5 的触控下限，比例也回落到桌面段的量级
+    （桌面 nav-item 36px / 同一套 14px 字），两端密度不再一个松一个紧 */
+@utility sheet-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-md);
+  font-size: var(--type-xs);
+  line-height: var(--leading-normal);
+  font-weight: 500;
+  color: var(--color-body);
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out;
+}
+
+/** 抽屉次级行：账户与偏好（登录/注册、资料/写作/设置、主题/语言、退出）。
+    36px（px）热区 + muted 色，比主级行矮一档、弱一档——层级只由行高与颜色表达，字号与主级行一致。
+    36px 与桌面下拉的 min-h-9 取齐，同一批条目在两端是同一行高，
+    移动端只保留「整行可点」的触控余量（行宽 224px），不再额外垫高。
+    整块面板只允许存在一个字号：同容器内叠两档以上字号（此前是 16/14/12）时，各档仅差 2px、
+    比例不足 15%，人眼读到的不会是「层级」而是「没对齐」，面板整体因此发虚。
+    图标尺寸与主级行保持 18px 不缩：图标缩了文字缩，两者的左边缘就会错开，整列标签不再对齐 */
+@utility sheet-item-sub {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 36px;
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-md);
+  font-size: var(--type-xs);
+  line-height: var(--leading-normal);
+  font-weight: 500;
+  color: var(--color-muted);
+  transition:
+    background-color 150ms ease-out,
+    color 150ms ease-out;
+}
+/* 两档行共用一套交互反馈：同处一张面板，悬停/按下/聚焦的观感必须一致 */
+/* 触发条件：hover: hover 设备——与全站按钮共用叠加令牌 */
+@media (hover: hover) {
+  .sheet-item:hover,
+  .sheet-item-sub:hover {
+    background: var(--color-btn-hover-bg);
+    color: var(--color-heading);
+  }
+}
+/* 触发条件：:active 按下——触屏无 hover，按下是唯一反馈，需给足强度 */
+.sheet-item:active,
+.sheet-item-sub:active {
+  background: var(--color-btn-active-bg);
+}
+/* 触发条件：键盘聚焦——与 nav-item / icon-btn 同一套焦点环 */
+.sheet-item:focus-visible,
+.sheet-item-sub:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+/** 抽屉内当前路由项：加粗升高一档（不铺底色——底色留给 hover，否则两者撞成同一个样子）。
+    标记放在行尾槽位，与「主题 亮色 / 语言 中文」的档位文字同处一列，
+    读起来是个有归属的状态点，而不是飘在空白里的一粒脏点 */
+@utility sheet-item-on {
+  color: var(--color-heading);
+  font-weight: 600;
+}
+.sheet-item-on::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-inline-start: auto;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+}
+
+/** 抽屉行尾取值（主题/语言的当前档位）：推到行尾，只靠 faint 色 + 常规字重弱化。
+    字号与面板其余文字取同一档：同一行里左右两段文字再差一档字号，整行就像两种排版拼起来的 */
+@utility sheet-value {
+  margin-inline-start: auto;
+  color: var(--color-faint);
+  font-size: var(--type-xs);
+  font-weight: 400;
+}
+
+/** 抽屉内退出登录行：常态随次级行 muted，hover/按下走错误色，与桌面下拉的退出项语义一致。
+    写在本区块最后，靠源码顺序压过 .sheet-item-sub 的 hover 配色（两者特指度相同） */
+@utility sheet-item-danger {
+  color: var(--color-muted);
+}
+@media (hover: hover) {
+  .sheet-item-danger:hover {
+    background: var(--color-state-error-bg);
+    color: var(--color-state-error);
+  }
+}
+.sheet-item-danger:active {
+  background: var(--color-state-error-bg);
+  color: var(--color-state-error);
+}
+
+/** 抽屉身份块：头像 + 姓名/@用户名，整块可点进个人主页。
+    上下内边距取 2px：40px 头像 + 2px×2 = 整块 44px，与主级行同高、吸在同一条横向网格上，
+    而块底到下方分隔线正好是 4px + 1px + 4px 的另一半——身份块于是并入全panel 唯一的那个间距节奏，
+    不在面板顶部单独开一档；若沿用 --space-1（整块 48px），顶部会比主级行松出一档，一眼可辨 */
+@utility sheet-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-md);
+  transition: background-color 150ms ease-out;
+}
+@media (hover: hover) {
+  .sheet-identity:hover {
+    background: var(--color-btn-hover-bg);
+  }
+}
+
+/* ===== Auth 认证页 ===== */
+
+/** 顶部氛围光晕：50vh 高的径向渐变体，纯装饰（容器挂 aria-hidden），pointer-events: none 不挡交互 */
+@utility auth-halo {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-decor);
+  pointer-events: none;
+  height: 50vh;
+  background: radial-gradient(ellipse 50% 60% at 50% 20%, var(--color-body) 0%, transparent 70%);
+  opacity: 0.06;
+}
+/* 触发条件：html.dark——深底需提亮光晕（0.06 → 0.09）才可见 */
+.dark .auth-halo {
+  opacity: 0.09;
+}
+
+/** auth 卡片：440px（max-w-110）定宽 + lg 浮层阴影 + 淡入入场；视口 < 480px（max-[480px] 任意断点）收紧内边距 */
+@utility auth-card {
+  @apply animate-fade-in mx-auto w-full max-w-110 rounded-2xl px-12 py-14 max-[480px]:px-7 max-[480px]:py-10;
+  border: 1px solid var(--color-card-border);
+  background: var(--color-card-bg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== 按钮 ===== */
+
+/** 主按钮：accent 底 + page 反色文字，150ms（ms）过渡 */
+@utility btn-primary {
+  @apply bg-accent text-page shadow-(--shadow-xs);
+  transition-property: background-color, box-shadow, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+/* 触发条件：非 :disabled 且非 aria-disabled='true' 时 hover——底色掺 10% page 色提亮 */
+.btn-primary:not(:disabled):not([aria-disabled='true']):hover {
+  background: color-mix(in srgb, var(--color-accent) 90%, var(--color-page));
+}
+/* 触发条件：同上且 :active 按下——掺 20% 加深一档 */
+.btn-primary:not(:disabled):not([aria-disabled='true']):active {
+  background: color-mix(in srgb, var(--color-accent) 80%, var(--color-page));
+}
+
+/** 幽灵按钮：无底色，hover/active 用 btn-*-bg 叠加令牌反馈 */
+@utility btn-ghost {
+  @apply text-body;
+  transition-property: background-color, color, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+/* 触发条件：可用态 hover——8% 叠加底 + 文字升 heading */
+.btn-ghost:not(:disabled):not([aria-disabled='true']):hover {
+  background: var(--color-btn-hover-bg);
+  color: var(--color-heading);
+}
+/* 触发条件：可用态 :active——叠加加深至 14% */
+.btn-ghost:not(:disabled):not([aria-disabled='true']):active {
+  background: var(--color-btn-active-bg);
+}
+
+/** 描边按钮：page 底 + 强描边，hover/active 同 ghost 叠加 */
+@utility btn-outline {
+  @apply border-stroke-strong bg-page text-heading border shadow-(--shadow-xs);
+  transition-property: background-color, color, border-color, box-shadow, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+/* 触发条件：可用态 hover / :active（:not 双排除 disabled 与 aria-disabled） */
+.btn-outline:not(:disabled):not([aria-disabled='true']):hover {
+  background: var(--color-btn-hover-bg);
+}
+.btn-outline:not(:disabled):not([aria-disabled='true']):active {
+  background: var(--color-btn-active-bg);
+}
+
+/** 危险操作按钮：state-error 底；hover 掺 10%、active 掺 18%（page 色比例）提亮/加深 */
+@utility btn-danger {
+  @apply bg-state-error text-page shadow-(--shadow-xs);
+  transition-property: background-color, box-shadow, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+/* 触发条件：可用态 hover / :active（同 btn-primary 的 :not 双排除） */
+.btn-danger:not(:disabled):not([aria-disabled='true']):hover {
+  background: color-mix(in srgb, var(--color-state-error) 90%, var(--color-page));
+}
+.btn-danger:not(:disabled):not([aria-disabled='true']):active {
+  background: color-mix(in srgb, var(--color-state-error) 82%, var(--color-page));
+}
+
+/* 标签四色 utility（Tag 组件按色名选用）：bg/text 成对消费 tokens 的 tag-* 令牌 */
+@utility tag-ink {
+  @apply bg-tag-ink-bg text-tag-ink rounded-full px-2.5 py-0.5 text-(length:--type-2xs) font-medium;
+}
+@utility tag-ember {
+  @apply bg-tag-ember-bg text-tag-ember rounded-full px-2.5 py-0.5 text-(length:--type-2xs) font-medium;
+}
+@utility tag-crimson {
+  @apply bg-tag-crimson-bg text-tag-crimson rounded-full px-2.5 py-0.5 text-(length:--type-2xs) font-medium;
+}
+@utility tag-slate {
+  @apply bg-tag-slate-bg text-tag-slate rounded-full px-2.5 py-0.5 text-(length:--type-2xs) font-medium;
+}
+
+/* alert 四态（Alert 组件按 variant 选用）：背景 + 文字 + --alert-ring 局部变量（30% 半透明主色），供组件 inset 描边 shadow-[inset_0_0_0_1px_var(--alert-ring)] 消费 */
+@utility alert-info {
+  background: var(--color-state-info-bg);
+  color: var(--color-state-info);
+  --alert-ring: color-mix(in srgb, var(--color-state-info) 30%, transparent);
+}
+@utility alert-success {
+  background: var(--color-state-success-bg);
+  color: var(--color-state-success);
+  --alert-ring: color-mix(in srgb, var(--color-state-success) 30%, transparent);
+}
+@utility alert-warning {
+  background: var(--color-state-warning-bg);
+  color: var(--color-state-warning);
+  --alert-ring: color-mix(in srgb, var(--color-state-warning) 30%, transparent);
+}
+@utility alert-error {
+  background: var(--color-state-error-bg);
+  color: var(--color-state-error);
+  --alert-ring: color-mix(in srgb, var(--color-state-error) 30%, transparent);
+}
+
+/* ===== 品牌 ===== */
+
+/** 品牌 logo 微放大工具类。触发条件：hover——放大 1.08 倍并上移 0.5px（px），300ms（ms）缓动 */
+@utility brand-logo-hover {
+  transition: transform 300ms var(--ease-smooth);
+}
+.brand-logo-hover:hover {
+  transform: scale(1.08) translateY(-0.5px);
+}
+
+/* ===== 装饰与通用视觉 ===== */
+
+/** 默认头像底：accent 深色基 + 左上角径向石墨高光（body/accent 混色提亮后淡出），破除纯黑圆盘的闷感；文字落点仍为深色底，白字清晰 */
+@utility avatar-gradient {
+  background-color: var(--color-accent);
+  background-image: radial-gradient(
+    120% 120% at 18% 15%,
+    color-mix(in srgb, var(--color-body) 55%, var(--color-accent)),
+    transparent 60%
+  );
+  @apply text-page;
+}
+
+/** 个人主页头图色带：surface → 强描边的 135° 对角渐变，纯装饰底衬（原先写在 ProfilePageContent 内联样式里） */
+@utility profile-cover-band {
+  background: linear-gradient(135deg, var(--color-surface), var(--color-stroke-strong));
+}
+
+/** 无封面占位（CoverFallback 组件）：16px（px）点阵网格 + 对角渐变双层背景拼出纹理 */
+@utility cover-fallback {
+  background:
+    radial-gradient(
+        circle at 1px 1px,
+        color-mix(in srgb, var(--color-faint) 40%, transparent) 1px,
+        transparent 0
+      )
+      0 0 / 16px 16px,
+    linear-gradient(135deg, var(--color-stroke), var(--color-stroke-strong));
+}
+
+/** 发光圆点：同色 10px/20px（px）两级模糊叠加形成光晕，可配 animate-breathing */
+@utility hero-dot {
+  background: var(--color-body);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--color-body) 60%, transparent),
+    0 0 20px color-mix(in srgb, var(--color-body) 30%, transparent);
+}
+
+/** 弹窗遮罩：accent 40% 半透明底 + 4px（px）背景模糊；
+    模糊同样必须走 backdrop-blur-* 工具类，理由见 nav-surface 上方注释（手写双前缀会被折叠成废弃的 -webkit- 一条） */
+@utility modal-overlay {
+  @apply backdrop-blur-xs;
+  background: color-mix(in srgb, var(--color-accent) 40%, transparent);
+}
+
+/** 密码显隐按钮（PasswordToggle 组件）：hover 提亮，150ms（ms）颜色过渡 */
+@utility pwd-toggle {
+  @apply text-faint hover:text-body cursor-pointer p-1 transition-colors duration-150 ease-out;
+}
+
+/** meta 信息行间的小圆点分隔符：4x4px（h-1 w-1，16px 基准 ≈ 4px） */
+@utility meta-dot {
+  @apply bg-faint inline-block h-1 w-1 shrink-0 rounded-full;
+}
+
+/** auth 页主体：垂直居中；min-height 为视口减去导航高度（--nav-h，与 Navbar 同源，不再写死 64px）；
+    z 层级抬到 --z-content 以盖过装饰性的 auth-halo */
+@utility auth-main {
+  @apply relative flex items-center justify-center px-6 py-8;
+  z-index: var(--z-content);
+  min-height: calc(100vh - var(--nav-h));
+}
+
+/** auth 页大标题：衬线 24px 档 */
+@utility auth-title {
+  @apply text-heading display-serif m-0 mb-2 font-bold;
+  font-size: var(--type-lg);
+  line-height: var(--leading-tight);
+}
+
+/** auth 页副标题：18px muted */
+@utility auth-subtitle {
+  @apply text-muted m-0;
+  font-size: var(--type-base);
+  line-height: var(--leading-normal);
+}
+
+/** auth 表单字段堆叠：20px（space-y-5）间隔，较 form-stack 紧凑 */
+@utility auth-form-stack {
+  @apply space-y-5;
+}
+/** 登录限频提示行：居中 12px muted */
+@utility auth-rate-hint {
+  @apply row-xs text-muted mt-6 justify-center;
+  font-size: var(--type-2xs);
+  line-height: var(--leading-normal);
+}
+
+/** 登录/注册互切区文字行 */
+@utility auth-switch {
+  @apply text-muted mt-8 text-center;
+  font-size: var(--type-sm);
+  line-height: var(--leading-normal);
+}
+
+/** 互切链接：触发条件 hover——出下划线并降 20% 透明度，150ms（ms）过渡 */
+@utility auth-switch-link {
+  @apply text-link-hover font-medium transition-opacity duration-150 ease-out hover:underline hover:opacity-80;
+}
+
+/** 筛选分组小标题：全大写 + 0.06em（em）正字距拉开，弱化为 caption */
+@utility filter-heading {
+  @apply text-faint text-(length:--type-2xs) font-semibold tracking-[0.06em] uppercase;
+}
+
+/* ===== 分页 ===== */
+
+/** 页码按钮：36px（h-9）方块，hover 换 btn-hover-bg */
+@utility page-btn {
+  @apply border-stroke-strong bg-card-bg text-body hover:bg-btn-hover-bg hover:text-heading inline-flex h-9 items-center justify-center rounded-md border transition-[background-color,color] duration-150;
+}
+
+/* 当前页码（posts 页按 n === currentPage 挂类）：accent 实底反白；组合 :hover 防止 page-btn 的 hover 覆写底色 */
+.page-btn-active,
+.page-btn-active:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-page);
+  font-weight: 600;
+}
+
+/* ===== dark 覆写 ===== */
+
+/* 说明：hover / active 的底色叠加已全部改由 --overlay-soft|hover|press 令牌承担——
+   这三个令牌在 .dark 内整体上调（见 tokens.css），组件层因此只需写一次表达式，
+   不再逐组件维护「深底叠加要加重」的覆写清单（旧清单易与新组件脱节）。
+   以下仅保留无法用叠加比例表达的深底专属补偿。 */
+
+/* 触发条件：html.dark 且悬停 hero 代码窗——单靠阴影在近黑底上轮廓不足，追加 1px（px）强描边圈 */
+.dark .hero-code-window:hover {
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px var(--color-stroke-strong);
+}
+
+/* ===== Toast（react-hot-toast 覆写） ===== */
+
+/* 触发方式：Toaster 的 containerClassName / toastOptions.classNames 挂类（见 components/ui/toaster.tsx、lib/toast.ts）；!important 用于压过库注入的默认样式 */
+.rht-toaster {
+  /* toast 之间 8px（px）间隙 */
+  gap: 8px;
+}
+
+.rht-toast {
+  /* 统一卡片化外观：xl 圆角 + 强描边 + card-bg 底；内边距 12px 16px（px），状态属性 150ms（ms）过渡 */
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--color-stroke-strong) !important;
+
+  background: var(--color-card-bg) !important;
+  color: var(--color-heading) !important;
+  box-shadow: var(--shadow-md) !important;
+  padding: 12px 16px !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--type-xs) !important;
+  line-height: var(--leading-normal) !important;
+  gap: 12px !important;
+  align-items: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition:
+    border-color 150ms ease-out,
+    background-color 150ms ease-out,
+    box-shadow 150ms ease-out !important;
+}
+
+/* 类型变体底色：surface 中混 6% 对应 state 色、描边混 45%，语义弱着色不抢文字 */
+.rht-success {
+  border-color: color-mix(in srgb, var(--color-state-success) 45%, transparent) !important;
+  background: color-mix(in srgb, var(--color-state-success) 6%, var(--color-surface)) !important;
+}
+
+/* error / info 变体：同 success 的弱着色策略，仅换 state 色 */
+.rht-error {
+  border-color: color-mix(in srgb, var(--color-state-error) 45%, transparent) !important;
+  background: color-mix(in srgb, var(--color-state-error) 6%, var(--color-surface)) !important;
+}
+
+.rht-info {
+  border-color: color-mix(in srgb, var(--color-state-info) 45%, transparent) !important;
+  background: color-mix(in srgb, var(--color-state-info) 6%, var(--color-surface)) !important;
+}
+
+/* 触发条件：html.dark——追加 1px（px）4% 白色外圈描边，防深底上 toast 边界糊化 */
+.dark .rht-toast {
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 1px rgb(255 255 255 / 0.04) !important;
+}

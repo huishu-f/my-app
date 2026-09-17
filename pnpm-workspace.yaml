@@ -1,0 +1,11 @@
+packages:
+  - "frontend"
+  - "shared"
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  pnpm: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - lucide-react@1.46.0
+  - zod@4.6.5

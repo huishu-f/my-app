@@ -1,0 +1,60 @@
+/**
+ * @file write.ts
+ * @description 写作 / 编辑页（编辑器、分类标签、Markdown 工具栏）的英文 UI 文案
+ */
+import type { Messages } from '../zh/write';
+
+const write: Messages = {
+  editTitle: 'Edit post',
+  createTitle: 'New post',
+  loadErrorTitle: 'Failed to load post',
+  loadErrorDesc: 'Post not found. Go back and retry.',
+  backToMyPosts: 'My posts',
+  viewEdit: 'Edit only',
+  viewSplit: 'Split view',
+  viewPreview: 'Preview only',
+  titlePlaceholder: 'Post title',
+  contentPlaceholder: 'Start writing…',
+  noContent: 'Nothing yet',
+  titleRequired: 'Please enter a title',
+  contentRequired: 'Please enter some content',
+  draftUpdated: 'Draft updated',
+  draftSaved: 'Draft saved',
+  postUpdated: 'Post updated',
+  postPublished: 'Post published',
+  loginRequired: 'Please sign in first',
+  categoryLabel: 'Category',
+  tagLabel: 'Tags',
+  tagHint: 'Enter to add · up to 5',
+  tagPlaceholder: 'Add a tag',
+  removeTag: 'Remove tag',
+  coverLabel: 'Cover image URL',
+  coverHint: 'Paste an image URL',
+  coverPreview: 'Cover preview',
+
+  coverInvalid: 'Only https links from supported hosts: {hosts}',
+  summaryLabel: 'Summary',
+  summaryHint: 'Auto-excerpted if blank',
+  summaryPlaceholder: 'Summary for lists & sharing…',
+  charCount: '{count} chars · {minutes} min read',
+  updateDraft: 'Save',
+  saveDraft: 'Save',
+  publishPost: 'Publish',
+  updatePost: 'Update',
+  toolbarBold: 'Bold (⌘B)',
+  toolbarItalic: 'Italic (⌘I)',
+  toolbarHeading: 'Heading',
+  toolbarLink: 'Link (⌘K)',
+  toolbarInlineCode: 'Inline code',
+  toolbarCodeBlock: 'Code block',
+  toolbarList: 'List',
+  toolbarQuote: 'Quote',
+  phBold: 'Bold text',
+  phItalic: 'Italic text',
+  phHeading: 'Heading',
+  phLink: 'Link text',
+  phList: 'List item',
+  phQuote: 'Quote',
+};
+
+export default write;

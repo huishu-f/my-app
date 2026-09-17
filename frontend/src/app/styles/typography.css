@@ -1,0 +1,244 @@
+/**
+ * @file typography.css
+ * @description 文章正文排版工具类 article-content（文章详情 Markdown 渲染与编辑器预览共用）及代码高亮 token 配色；全部规则收敛在工具类作用域内，不影响其他容器
+ */
+
+/* ===== 文章正文排版 ===== */
+
+/** 排版 utility（@utility）：挂到 Markdown 渲染容器 / 编辑器预览区；子元素样式全部经 & 嵌套、仅作用于其内部 */
+@utility article-content {
+  color: var(--color-body);
+  font-size: var(--type-base);
+  line-height: var(--leading-loose);
+  font-family: var(--font-sans);
+
+  /** 块级元素相邻兄弟间距 --space-5（20px）；* + * 写法使首个子元素不产生顶部空隙 */
+  & > * + * {
+    margin-top: var(--space-5);
+  }
+
+  /** 标题公共规则：-0.02em（相对字号）负字距收紧大字；margin-top 预留 --space-8 大隔距；scroll-margin-top 6rem（96px）为目录锚点跳转时顶部固定栏让位；text-wrap balance 抑制孤行 */
+  & h2,
+  & h3,
+  & h4 {
+    color: var(--color-heading);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: var(--leading-snug);
+    margin-top: var(--space-8);
+    scroll-margin-top: 6rem;
+    text-wrap: balance;
+  }
+
+  /** h2：30px 档；底部 1px 分隔线做正文一级分区 */
+  & h2 {
+    font-size: var(--type-xl);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-stroke);
+  }
+
+  /** h3：24px 档 */
+  & h3 {
+    font-size: var(--type-lg);
+  }
+  /** h4：20px 档 */
+  & h4 {
+    font-size: var(--type-md);
+  }
+
+  & p {
+    color: var(--color-body);
+  }
+
+  /** 文内链接：--color-link 着色；hover 变色带 150ms（毫秒）过渡 */
+  & a {
+    color: var(--color-link);
+    text-decoration: none;
+    position: relative;
+    transition: color 150ms ease-out;
+  }
+
+  /** 装饰性伪下划线（常态）：文字下方 2px（px）处 1px 高横线，初始仅 30% 宽左对齐（scaleX(0.3)）、40% 透明度 */
+  & a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0.3);
+    transform-origin: left;
+    opacity: 0.4;
+    transition:
+      transform 200ms ease-out,
+      opacity 200ms ease-out;
+  }
+
+  /** 触发条件：悬停链接——文字转 accent；下划线展满宽、透明度升至 0.8（200ms 过渡） */
+  & a:hover {
+    color: var(--color-accent);
+  }
+  & a:hover::after {
+    transform: scaleX(1);
+    opacity: 0.8;
+  }
+
+  /** 强调词升格为标题色以拉开层次；斜体强调同理 */
+  & strong,
+  & b {
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  & em,
+  & i {
+    font-style: italic;
+    color: var(--color-heading);
+  }
+
+  /** 列表：缩进 1.5rem（相对根字号），符号着 muted 色弱于正文 */
+  & ul,
+  & ol {
+    padding-left: 1.5rem;
+    color: var(--color-body);
+  }
+
+  & ul {
+    list-style-type: disc;
+  }
+  & ol {
+    list-style-type: decimal;
+  }
+
+  /** 相邻列表项间距 0.55rem（≈9px，相对根字号），小于块级段距以保持成组感 */
+  & li + li {
+    margin-top: 0.55rem;
+  }
+
+  & li::marker {
+    color: var(--color-muted);
+  }
+
+  /** 引用块：左侧 1px 竖线 + surface 底、右侧圆角裁切，斜体呈现；左内边距取 --space-6 档 */
+  & blockquote {
+    border-left: 1px solid var(--color-stroke-strong);
+    padding: var(--space-4) 0 var(--space-4) var(--space-6);
+    color: var(--color-body);
+    font-style: italic;
+    font-size: var(--type-base);
+    background: var(--color-surface);
+    border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  }
+
+  & blockquote p {
+    color: var(--color-body);
+  }
+
+  /** 行内代码：em 基准内边距（纵向 0.18em / 横向 0.45em）随行文字号缩放，最小圆角档 + link 色突出 */
+  & code {
+    background: var(--color-surface);
+    color: var(--color-link);
+    padding: 0.18em 0.45em;
+    border-radius: var(--radius-xs);
+    font-size: var(--type-sm);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    border: 1px solid var(--color-stroke);
+  }
+
+  /** 代码块：超宽横向滚动 + iOS 惯性滑动；scrollbar-* 为 Firefox 侧细滚动条方案（WebKit 全局样式见 base.css） */
+  & pre {
+    background: var(--color-surface);
+    border: 1px solid var(--color-stroke);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-stroke) transparent;
+  }
+
+  /** 块内代码复位行内样式：去底色/边框/加粗，仅保留等宽与字号 */
+  & pre code {
+    background: transparent;
+    padding: 0;
+    color: var(--color-body);
+    font-size: var(--type-sm);
+    line-height: var(--leading-loose);
+    border: none;
+    font-weight: 400;
+  }
+
+  /** 文内图片：块级容器圆角 + md 阴影，水平居中 */
+  & img {
+    border-radius: var(--radius-xl);
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    box-shadow: var(--shadow-md);
+  }
+
+  /** 分隔线：清掉原边框，仅留 1px 顶线（px），上下取 --space-8 大隔距 */
+  & hr {
+    border: 0;
+    border-top: 1px solid var(--color-stroke);
+    margin: var(--space-8) 0;
+  }
+
+  /** 表格：separate + overflow hidden 实现整表圆角裁切（collapse 模式下 border-radius 失效） */
+  & table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: var(--type-sm);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--color-stroke);
+  }
+
+  /** 单元格：12px/16px 档内边距 + 行底分隔线 */
+  & th,
+  & td {
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-stroke);
+  }
+
+  /** 表头：surface 底 + 标题色区分数据行 */
+  & th {
+    background: var(--color-surface);
+    color: var(--color-heading);
+    font-weight: 600;
+  }
+
+  /** 末行去底线，避免与表格外框叠成双线 */
+  & tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+/* ===== 代码高亮 token（.tok-*） ===== */
+
+/* 色彩统一引用 syntax-* 设计令牌，随亮/dark 主题自动切换；用于首页手写代码示例及与文章代码块一致的视觉语言 */
+.tok-comment {
+  color: var(--color-syntax-comment);
+  font-style: italic;
+}
+/** 关键字：最强档并加粗 */
+.tok-key {
+  color: var(--color-syntax-keyword);
+  font-weight: 600;
+}
+/** 函数名 / 标识符 */
+.tok-fn {
+  color: var(--color-syntax-fn);
+}
+/** 类型名 */
+.tok-type {
+  color: var(--color-syntax-type);
+}
+/** 标点符号 */
+.tok-punct {
+  color: var(--color-syntax-punct);
+}

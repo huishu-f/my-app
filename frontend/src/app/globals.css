@@ -1,0 +1,25 @@
+/**
+ * @file globals.css
+ * @description 全站唯一样式总入口：装载 Tailwind v4 与分包样式；仅应由根布局引入一次，业务组件不得重复引入
+ */
+
+/* Tailwind v4 统一入口：内置 theme、preflight 重置与全部工具类 */
+@import 'tailwindcss';
+
+/* 重定义 dark: 变体：不看系统 prefers-color-scheme，仅当元素带 .dark 类或其祖先带 .dark 时生效（next-themes 的 class 切换模式） */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 以下按「令牌 → 基础 → 动效 → 排版 → 组件」顺序分包导入，后者可覆盖前者 */
+@import './styles/tokens.css';
+
+/* 基础层：标签默认样式、焦点环、滚动条、减动效降级 */
+@import './styles/base.css';
+
+/* 动效层：@keyframes 定义与 shake 工具类 */
+@import './styles/animations.css';
+
+/* 排版层：文章正文（Markdown 渲染）排版与代码高亮 token 色 */
+@import './styles/typography.css';
+
+/* 组件层：组件级 @utility、状态样式（hover/focus/dark 覆盖）与第三方组件覆写 */
+@import './styles/components.css';
