@@ -26,6 +26,9 @@ interface DeletePostButtonProps extends PostIdProps {
 
   /** 按钮形态：full 含编辑+删除并排，compact 仅删除按钮，默认 'full' */
   variant?: 'full' | 'compact';
+
+  /** 删除成功后的回调（在跳转/关窗前触发），供列表场景本地移除该项 */
+  onRemoved?: () => void;
 }
 
 /**
@@ -37,6 +40,7 @@ export function DeletePostButton({
   description,
   redirectTo,
   variant = 'full',
+  onRemoved,
 }: DeletePostButtonProps) {
   const router = useRouter();
 
@@ -51,11 +55,12 @@ export function DeletePostButton({
   const deleteMutation = useDeletePost();
 
   /**
-   * 确认删除：成功后有 redirectTo 则跳转，否则仅关闭弹窗；失败弹错误提示
+   * 确认删除：成功后先通知 onRemoved（列表本地移除），再看是否有 redirectTo 跳转，否则仅关闭弹窗；失败弹错误提示
    */
   const confirmDelete = () => {
     deleteMutation.mutate(postId, {
       onSuccess: () => {
+        onRemoved?.();
         if (redirectTo) router.replace(redirectTo);
         else setShowDelete(false);
       },

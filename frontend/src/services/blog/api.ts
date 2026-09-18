@@ -35,6 +35,13 @@ export const blogApi = {
     }),
 
   /**
+   * 获取当前用户的草稿列表（需登录，浏览器端带 Cookie）
+   * @returns PostsListData；无草稿或未登录时 posts 为空数组
+   * @throws 网络或后端异常时抛 ApiRequestError
+   */
+  listDrafts: () => api.get<PostsListData>('/posts', { draft: 'true' }),
+
+  /**
    * 获取单篇文章详情，不做缓存以便登录态下取到实时数据（如点赞/收藏状态）
    * @param id 文章 ID
    * @param opts.signal 外部取消信号，组件卸载或切换时可中断请求

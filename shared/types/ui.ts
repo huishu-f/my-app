@@ -55,6 +55,8 @@ export interface ArticleCardProps {
   post: Post;
   /** 卡片整体跳转链接，传入时卡片可点击（默认不跳转） */
   href?: string;
+  /** 链接引导文案，覆盖默认的「阅读全文」（如草稿卡片用「继续编辑」） */
+  readMoreLabel?: string;
   /** 交错动画索引，用于列表入场 stagger 动画 */
   index?: number;
   /** 分类上方额外标签（如置顶、草稿标记） */

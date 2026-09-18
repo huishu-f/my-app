@@ -20,6 +20,7 @@ import { Tag, tagVariantFor } from '@/components/ui/Tag';
 import { MarkdownToolbar } from '@/components/MarkdownToolbar';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { LoadingSkeleton } from '@/components/ui/LoadingSkeleton';
+import { Modal } from '@/components/ui/Modal';
 import { useCreatePost, useUpdatePost, usePostData } from '@/services/blog/hooks';
 import { ApiRequestError } from '@/lib/api/request';
 import { estimateReadingTime } from '@/lib/markdown';
@@ -109,6 +110,29 @@ function getMarkdownRenderer(): Promise<(content: string) => Promise<string>> {
 }
 
 /**
+ * 表单快照的字段集合：脏检查只关心会入库的字段（tagInput 是过渡态，
+ * 失焦即并入 tags，点击返回按钮前必先失焦，无需参与对比）
+ */
+type FormSnapshot = {
+  title: string;
+  category: string;
+  tags: string[];
+  content: string;
+  coverImage: string;
+  summary: string;
+};
+
+/** 空表单快照：新建模式与表单重置后的脏检查基线 */
+const EMPTY_SNAPSHOT: FormSnapshot = {
+  title: '',
+  category: CATEGORY_VALUES[0],
+  tags: [],
+  content: '',
+  coverImage: '',
+  summary: '',
+};
+
+/**
  * 写作编辑器主体
  * URL 无 id 为新建，带 ?id= 进入编辑模式并回填该文章
  */
@@ -170,6 +194,15 @@ export function WriteEditor() {
   /** 保存校验失败的错误文案（标题/正文必填），展示在标题输入框下方 */
   const [formError, setFormError] = useState('');
 
+  /** 是否展示「未保存更改」确认弹窗 */
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
+
+  /**
+   * 脏检查基线：回填/重置那一刻的表单快照。返回时与当前表单逐字段对比，
+   * 只有真正改过内容才弹确认框，没动过直接走（零打扰）
+   */
+  const [baseline, setBaseline] = useState<FormSnapshot>(EMPTY_SNAPSHOT);
+
   /**
    * 编辑区视图模式：split=桌面左编辑右预览双栏；edit/preview=窄屏单栏互斥切换。
    * 惰性初始化：SSR 无 window 时取 split，窄于 1024px（lg 断点，单位 px）默认纯编辑
@@ -217,6 +250,7 @@ export function WriteEditor() {
     setCoverImage('');
     setSummary('');
     setFormError('');
+    setBaseline(EMPTY_SNAPSHOT); // 脏检查基线同步归零，避免旧文的快照误判新表单为「未改动」
   }, [editId]);
 
   /** 监听 isEditMode/editingPost：编辑数据首次到达时回填表单，hasPrefilled 锁定后不再覆盖手改内容 */
@@ -233,6 +267,15 @@ export function WriteEditor() {
       setCoverImage(editingPost.coverImage || '');
       setSummary(editingPost.summary || '');
       hasPrefilled.current = true;
+      // 脏检查基线锁定为回填内容：此后与当前表单对比，改过任何字段才算「有未保存更改」
+      setBaseline({
+        title: editingPost.title,
+        category: editingPost.category,
+        tags: editingPost.tags || [],
+        content: editingPost.contentRaw ?? editingPost.content,
+        coverImage: editingPost.coverImage || '',
+        summary: editingPost.summary || '',
+      });
     }
   }, [isEditMode, editingPost, editId]);
 
@@ -438,13 +481,38 @@ export function WriteEditor() {
     }
   };
 
-  /** 返回：有站内历史（hasInAppHistory）才 back；直接打开 /write 无历史，改跳个人中心避免 history.back 退出站点 */
-  const handleBack = () => {
+  /**
+   * 脏检查：当前表单与基线快照逐字段对比。
+   * tags 用联结串对比规避数组引用不等；category/封面/摘要一并纳入——
+   * 只改了封面没改正文也是未保存更改，漏判会让用户静默丢改动
+   */
+  const isDirty =
+    title !== baseline.title ||
+    category !== baseline.category ||
+    content !== baseline.content ||
+    coverImage !== baseline.coverImage ||
+    summary !== baseline.summary ||
+    tags.join('\u0000') !== baseline.tags.join('\u0000');
+
+  /** 实际离开页面：有站内历史（hasInAppHistory）才 back；直接打开 /write 无历史，改跳个人中心避免 history.back 退出站点 */
+  const navigateBack = () => {
     if (hasInAppHistory()) {
       router.back();
     } else {
       router.push('/profile');
     }
+  };
+
+  /**
+   * 返回入口：有未保存更改先弹确认框（继续编辑 / 放弃更改），没改动直接走零打扰。
+   * 注意按钮必须 type="button"——在 form 内默认 type=submit，会把返回变成一次误发布
+   */
+  const handleBack = () => {
+    if (isDirty) {
+      setShowLeaveConfirm(true);
+      return;
+    }
+    navigateBack();
   };
 
   /** 正文为空时预览区展示的占位 HTML */
@@ -689,7 +757,7 @@ export function WriteEditor() {
                 : ''}
             </span>
             <div className="row-sm max-md:ml-auto">
-              <Button variant="ghost" size="md" onClick={handleBack}>
+              <Button variant="ghost" size="md" type="button" onClick={handleBack}>
                 {tCommon('back')}
               </Button>
               {/* 存草稿仅对新建或草稿文章开放：编辑已发布文章时隐藏，避免保存把 isDraft 置回 true 使文章退回草稿态 */}
@@ -729,6 +797,23 @@ export function WriteEditor() {
           </div>
         </div>
       </form>
+
+      {/* 未保存更改确认弹窗：仅在脏检查命中后由返回入口唤起；放弃更改=离开页面不落库，与删除确认弹窗同款布局 */}
+      <Modal
+        open={showLeaveConfirm}
+        onClose={() => setShowLeaveConfirm(false)}
+        title={t('leaveConfirmTitle')}
+      >
+        <p className="text-body text-(length:--type-sm) leading-normal">{t('leaveConfirmDesc')}</p>
+        <div className="mt-8 flex justify-end gap-2">
+          <Button variant="ghost" type="button" onClick={() => setShowLeaveConfirm(false)}>
+            {t('keepEditing')}
+          </Button>
+          <Button variant="danger" type="button" onClick={navigateBack}>
+            {t('discardChanges')}
+          </Button>
+        </div>
+      </Modal>
     </Container>
   );
 }

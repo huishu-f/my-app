@@ -523,17 +523,30 @@ return 1`;
    * 单往返读取 hash 字段+版本：pipeline 合并 HGET 与版本键 GET 为一次 REST 往返，
    * 同一 pipeline 内命令按序执行、一次性返回，其间不会被其他请求交错写坏配对——
    * 这是与两次独立 REST 请求（旧实现）的关键区别
+   * @description 线上事故修复（2026-09-18）：@upstash/redis 的 pipeline().exec() 返回
+   *   扁平数组 [hgetResult, getResult]（每命令一个元素），而非「每命令一元组」的嵌套形状。
+   *   旧解构 [[, value], [, versionRaw]] 在扁平形状下：hget 的 JSON 字符串被当可迭代对象
+   *   解构出单个字符（垃圾值）；版本键首次写入前 Upstash 返回 null，对 null 做数组解构
+   *   直接抛 TypeError: null is not iterable（且在 hUpdateCAS 的 try/catch 之外，无人接）
+   *   → users 集合所有 CAS 写（登出/改资料/点赞/收藏）全线 500。
+   *   本地 MockKV 不走 pipeline 路径，故仅在 Upstash 生产环境暴露。现兼容两种返回形状。
    */
   async getHWithVersion(
     key: string,
     field: string,
   ): Promise<{ value: string | null; version: number }> {
     const vkey = `__v:${key}:${field}`;
-    const [[, value], [, versionRaw]] = await this.client
+    const results = await this.client
       .pipeline()
       .hget(key, field)
       .get(vkey)
-      .exec<[string | null, string | null][]>();
+      .exec<unknown[]>();
+    // 兼容扁平（Upstash 实际）与嵌套（防御性）两种返回形状
+    const [first, second] = results as unknown[];
+    const value = Array.isArray(first) ? (first[1] as string | null) : (first as string | null);
+    const versionRaw = Array.isArray(second)
+      ? (second[1] as string | null)
+      : (second as string | null);
     const version =
       versionRaw === null || versionRaw === undefined || Number.isNaN(Number(versionRaw))
         ? 0

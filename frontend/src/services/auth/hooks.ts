@@ -57,14 +57,20 @@ export function useRegister() {
  * @example
  * const { mutate } = useLogout();
  * await mutate();
+ * @description 本地清态放在 finally：即使 logout 请求因网络异常/服务端 5xx 失败，
+ *   也先把本地用户与 auth_status 清掉——「退出失败但界面退不掉」的死局比
+ *   「退出了但服务端 token 没作废」（token 7 天后自然过期）对用户伤害更大。
  */
 export function useLogout() {
   const { setMe } = useAuth();
   const action = useCallback(async () => {
-    await authApi.logout();
-    // 服务端已清 Cookie，这里同步清除本地 auth_status 并广播登出信号，再把全局用户置空
-    clearAuthStatus();
-    setMe(null);
+    try {
+      await authApi.logout();
+    } finally {
+      // 服务端已清 Cookie（或请求失败时本地兜底）：清除 auth_status 并广播登出信号，再把全局用户置空
+      clearAuthStatus();
+      setMe(null);
+    }
     return null;
   }, [setMe]);
   return useAsyncAction<void, null>(action);

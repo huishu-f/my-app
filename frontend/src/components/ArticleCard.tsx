@@ -25,6 +25,7 @@ import type { ArticleCardProps } from '@my-app/shared';
 export const ArticleCard = memo(function ArticleCard({
   post,
   href,
+  readMoreLabel,
   badge,
   tags,
   actions,
@@ -156,7 +157,7 @@ export const ArticleCard = memo(function ArticleCard({
 
         {href && (
           <span className="text-muted group-hover:text-accent mt-2 inline-flex items-center gap-1 text-(length:--type-2xs) font-semibold transition-colors duration-150">
-            {t('readMore')}
+            {readMoreLabel ?? t('readMore')}
             <svg
               width="12"
               height="12"

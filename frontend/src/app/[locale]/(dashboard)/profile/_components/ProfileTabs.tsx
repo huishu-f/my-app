@@ -1,20 +1,21 @@
 /**
  * @file ProfileTabs.tsx
- * @description 个人中心「我的文章 / 收藏」标签页：切换两种文章列表视图，收藏支持取消后本地移除单项（不重新拉取）
+ * @description 个人中心「我的文章 / 草稿 / 收藏」标签页：切换三种文章列表视图；收藏与草稿支持操作后本地移除单项（不重新拉取）
  */
 'use client';
 
 import { useState } from 'react';
-import { MessageCircle, PenLine, FileText, Bookmark } from 'lucide-react';
+import { MessageCircle, PenLine, FileText, Bookmark, NotebookPen } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ArticleCard } from '@/components/ArticleCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
 import { RemoveFavoriteButton } from './RemoveFavoriteButton';
+import { DeletePostButton } from '@/app/[locale]/posts/[id]/_components/DeletePostButton';
 import type { Post } from '@my-app/shared';
 
-/** 标签页标识：articles=我的文章 / favorites=我的收藏 */
-type Tab = 'articles' | 'favorites';
+/** 标签页标识：articles=我的文章 / drafts=草稿 / favorites=我的收藏 */
+type Tab = 'articles' | 'drafts' | 'favorites';
 
 /**
  * ProfileTabs 组件入参（列表元素类型 {@link Post} 已在 shared 注释，不重复展开）
@@ -25,13 +26,16 @@ interface ProfileTabsProps {
 
   /** 初始收藏列表（作为内部状态的初始值） */
   favorites: Post[];
+
+  /** 我的草稿列表 */
+  drafts: Post[];
 }
 
 /**
- * 个人中心右侧标签页：我的文章 / 收藏两个列表的切换
+ * 个人中心右侧标签页：我的文章 / 草稿 / 收藏三个列表的切换
  * @param props {@link ProfileTabsProps}
  */
-export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
+export function ProfileTabs({ published, favorites, drafts }: ProfileTabsProps) {
   const t = useTranslations('profile');
 
   /** 当前激活的标签页，默认「我的文章」 */
@@ -45,8 +49,14 @@ export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
    */
   const [removedIds, setRemovedIds] = useState<string[]>([]);
 
+  /** 本次已删除的草稿 id：与收藏同一套派生模式，删除成功后本地移除、不重新拉取 */
+  const [removedDraftIds, setRemovedDraftIds] = useState<string[]>([]);
+
   /** 收藏列表：随 props 更新，仅剔除本次已取消的项（避免重新拉取整份收藏） */
   const favoriteList = favorites.filter((p) => !removedIds.includes(p.id));
+
+  /** 草稿列表：随 props 更新，仅剔除本次已删除的项 */
+  const draftList = drafts.filter((p) => !removedDraftIds.includes(p.id));
 
   return (
     <div className="min-w-0">
@@ -58,6 +68,14 @@ export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
           className={`segmented-item ${tab === 'articles' ? 'segmented-item-on' : ''}`}
         >
           {t('articlesTab', { count: published.length })}
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab('drafts')}
+          aria-pressed={tab === 'drafts'}
+          className={`segmented-item ${tab === 'drafts' ? 'segmented-item-on' : ''}`}
+        >
+          {t('draftsTab', { count: draftList.length })}
         </button>
         <button
           type="button"
@@ -97,6 +115,51 @@ export function ProfileTabs({ published, favorites }: ProfileTabsProps) {
                       value: post.commentsCount || 0,
                     },
                   ]}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {tab === 'drafts' && (
+        <div className="mt-10">
+          {draftList.length === 0 ? (
+            <EmptyState
+              icon={<NotebookPen size={20} strokeWidth={2.5} />}
+              title={t('noDraftsTitle')}
+              description={t('noDraftsDesc')}
+              action={
+                <Button href="/write">
+                  <PenLine size={16} strokeWidth={2.5} />
+                  {t('writeArticle')}
+                </Button>
+              }
+            />
+          ) : (
+            <div className="card-list">
+              {draftList.map((post, i) => (
+                <ArticleCard
+                  key={post.id}
+                  post={post}
+                  // 草稿卡整卡点击进编辑器续写，而非文章详情（草稿无详情页）
+                  href={`/write?id=${post.id}`}
+                  index={i}
+                  badge={
+                    <span className="chip-sm">
+                      <NotebookPen size={10} strokeWidth={2.5} />
+                      {t('draftBadge')}
+                    </span>
+                  }
+                  readMoreLabel={t('continueEditing')}
+                  actions={
+                    <DeletePostButton
+                      postId={post.id}
+                      variant="compact"
+                      // 删除成功回调：登记该篇 id，派生列表与计数随之更新
+                      onRemoved={() => setRemovedDraftIds((ids) => [...ids, post.id])}
+                    />
+                  }
                 />
               ))}
             </div>

@@ -69,11 +69,14 @@ export function ProfilePageContent() {
   /** 我的收藏文章列表 */
   const [favorites, setFavorites] = useState<Post[]>([]);
 
+  /** 我的草稿列表（draft 模式接口仅返回本人草稿，无需本地过滤） */
+  const [drafts, setDrafts] = useState<Post[]>([]);
+
   /** 个人列表数据是否仍在加载 */
   const [dataLoading, setDataLoading] = useState(true);
 
   /**
-   * 监听 user：登录态确定后才拉取「我的文章 + 收藏」
+   * 监听 user：登录态确定后才拉取「我的文章 + 收藏 + 草稿」
    * 文章列表接口无「仅本人」参数，取前 100 条（单位: 条）后按 authorId 本地过滤；
    * 单个接口失败以空列表兜底，互不影响；cancelled 标记防止组件卸载后 setState
    */
@@ -83,10 +86,12 @@ export function ProfilePageContent() {
     Promise.all([
       blogApi.listPosts({ limit: 100 }).catch(() => ({ posts: [] as Post[] })),
       blogApi.listFavorites().catch(() => ({ posts: [] as Post[] })),
-    ]).then(([pubData, favData]) => {
+      blogApi.listDrafts().catch(() => ({ posts: [] as Post[] })),
+    ]).then(([pubData, favData, draftData]) => {
       if (cancelled) return;
       setPublished((pubData.posts ?? []).filter((p) => p.authorId === user.id));
       setFavorites(favData.posts ?? []);
+      setDrafts(draftData.posts ?? []);
       setDataLoading(false);
     });
     return () => {
@@ -275,7 +280,7 @@ export function ProfilePageContent() {
         </div>
       </aside>
 
-      <ProfileTabs published={published} favorites={favorites} />
+      <ProfileTabs published={published} favorites={favorites} drafts={drafts} />
     </div>
   );
 }
