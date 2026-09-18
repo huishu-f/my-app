@@ -467,15 +467,25 @@ return 1`;
 
   /**
    * 单往返读取文档+版本：MGET 一次请求同快照取回两键，杜绝【旧数据+新版本】撕裂快照
+   * @description 与 getHWithVersion 同源的形状防御：SDK 的 automaticDeserialization 会把
+   *   文档 JSON 串解析成对象（value 为对象时序列化回字符串维持本方法契约），
+   *   版本键值解析成 number（Number() 兼容 string | number 两种）
    */
   async readWithVersion(key: string): Promise<{ value: string | null; version: number }> {
     const vkey = `__v:${key}`;
-    const [value, versionRaw] = await this.client.mget<[string | null, string | null]>(key, vkey);
+    const [value, versionRaw] = await this.client.mget<[string | object | number | null, string | number | null]>(
+      key,
+      vkey,
+    );
+    const normalizedValue =
+      typeof value === 'string' || value === null || value === undefined
+        ? (value as string | null)
+        : JSON.stringify(value);
     const version =
       versionRaw === null || versionRaw === undefined || Number.isNaN(Number(versionRaw))
         ? 0
         : Number(versionRaw);
-    return { value: value ?? null, version };
+    return { value: normalizedValue ?? null, version };
   }
 
   /** 原子限流：Lua INCR + 首计过期，多实例共享计数 */
@@ -541,17 +551,37 @@ return 1`;
       .hget(key, field)
       .get(vkey)
       .exec<unknown[]>();
-    // 兼容扁平（Upstash 实际）与嵌套（防御性）两种返回形状
-    const [first, second] = results as unknown[];
-    const value = Array.isArray(first) ? (first[1] as string | null) : (first as string | null);
-    const versionRaw = Array.isArray(second)
-      ? (second[1] as string | null)
-      : (second as string | null);
+    // 提取单命令结果：兼容三种形状——
+    //   1) 值本身（@upstash/redis SDK 的 pipeline().exec() 会把 {error,result} 展开并 deserialize，
+    //      且 automaticDeserialization 会把 JSON 字符串解析成对象/数组）
+    //   2) [error, result] 二元组（防御性）
+    //   3) { result } 对象（REST 原始形状，防御性）
+    // 2026-09-18 线上事故复盘：原嵌套解构在 null 版本键上抛 TypeError（500）；
+    // 二次修复时漏算 SDK 的 automaticDeserialization——hget 的 JSON 串已被解析成对象，
+    // 调用方 JSON.parse(对象) 必然 SyntaxError → hUpdateCAS 静默返回 false → 改资料 404/发布 500。
+    const extract = (entry: unknown): unknown => {
+      if (Array.isArray(entry) && entry.length === 2 && entry[0] === null) return entry[1];
+      if (Array.isArray(entry)) return entry;
+      if (entry && typeof entry === 'object' && 'result' in (entry as Record<string, unknown>)) {
+        return (entry as { result: unknown }).result;
+      }
+      return entry;
+    };
+    const [first, second] = results;
+    const valueRaw = extract(first);
+    const versionRaw = extract(second);
+    const value =
+      typeof valueRaw === 'string'
+        ? valueRaw
+        : valueRaw === null || valueRaw === undefined
+          ? null
+          : // 对象/数组：SDK 已反序列化，直接序列化回 JSON 串以维持本方法「返回 JSON 字符串」的契约
+            JSON.stringify(valueRaw);
     const version =
       versionRaw === null || versionRaw === undefined || Number.isNaN(Number(versionRaw))
         ? 0
         : Number(versionRaw);
-    return { value: value ?? null, version };
+    return { value, version };
   }
 
   /** 透传到 Upstash 原生管道；部分命令因客户端类型不全通过 as 断言补齐 */
