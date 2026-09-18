@@ -6,6 +6,13 @@
  * KV 存储适配器契约：抽象出 string/hash/set 与 pipeline 操作，屏蔽底层 Upstash 与内存实现差异
  */
 export interface KVAdapter {
+  /**
+   * 适配器稳定标识：'upstash' | 'memory'。
+   * 供健康检查等可观测性场景读取——不可依赖 constructor.name，
+   * 生产构建压缩后类名会被改写为无意义短串（如 "nt"），失去判读价值。
+   */
+  readonly adapterName: 'upstash' | 'memory';
+
   /** 读取字符串键的值，自动尝试 JSON 解析；键不存在返回 null */
   get<T>(key: string): Promise<T | null>;
 
@@ -116,6 +123,9 @@ export interface KVPipeline {
  * 数据结构对齐 Redis 的 string/hash/set 三类语义。
  */
 class MockKV implements KVAdapter {
+  /** 内存实现标识 */
+  readonly adapterName = 'memory' as const;
+
   /** 字符串键值存储 */
   private store = new Map<string, string>();
 
@@ -340,6 +350,9 @@ const mockKV = (globalForKV.__mockKV ??= new MockKV());
  * 读取方法会将对象/数组等非字符串结果统一序列化为 JSON 字符串，保持与内存实现一致的返回形态。
  */
 class UpstashKVAdapter implements KVAdapter {
+  /** Upstash Redis 实现标识 */
+  readonly adapterName = 'upstash' as const;
+
   /** 底层 Upstash Redis REST 客户端 */
   private client: Redis;
 

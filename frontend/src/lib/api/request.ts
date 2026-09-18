@@ -18,6 +18,25 @@ const DEFAULT_TIMEOUT = 15_000;
 /** 浏览器端请求的 API 路径前缀（相对当前站点）；服务端会另拼绝对地址 */
 const BASE_URL = '/api';
 
+/** 瞬时网络/超时错误自动重试前的退避时长（ms）——仅对幂等安全方法生效 */
+const NET_RETRY_DELAY_MS = 400;
+
+/**
+ * 可安全自动重试的幂等 HTTP 方法集合。
+ * Netlify 冷启动/边缘偶发连接重置会让首屏读请求失败（fetch 抛网络错误、无 HTTP 响应），
+ * 对 GET/HEAD/OPTIONS 退避后重试一次即可自愈；写方法不重试以免重复提交。
+ */
+const SAFE_RETRY_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+
+/**
+ * 延时工具
+ * @param ms 毫秒数
+ * @returns ms 后 resolve 的 Promise
+ */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 /** 请求层错误的中英文文案表，按当前 locale 选取；requestFailed 为携带状态码的模板函数 */
 const ERROR_MESSAGES = {
   zh: {
@@ -162,6 +181,7 @@ async function tryRefreshToken(): Promise<boolean> {
  * @param path 以 / 开头的接口路径（相对 BASE_URL）
  * @param options 请求选项，含 body/query/headers/skipAuth/skipAuthRedirect/signal 等
  * @param _retryDepth 内部递归重试深度（401 刷新成功后重放一次），外部勿传，超过 1 不再自动重试
+ * @param _netRetried 内部标记：本次是否已因瞬时网络/超时错误重试过一次，仅对幂等安全方法生效，外部勿传
  * @returns 响应体中的 data（业务 code 为 0 时）
  * @throws ApiRequestError：网络/超时（status/code 均为 0）、响应体非法 JSON（用 HTTP status）、或业务 code 非 0/HTTP 非 2xx（携带 status、业务 code、message 与可选校验详情）
  */
@@ -169,8 +189,12 @@ export async function request<T>(
   path: string,
   options: RequestOptions = {},
   _retryDepth = 0,
+  _netRetried = false,
 ): Promise<T> {
   const { body, query, headers, skipAuthRedirect, skipAuth, signal, ...rest } = options;
+
+  // 有效 HTTP 方法（大写，缺省 GET），供瞬时错误的幂等重试判定
+  const method = (rest.method ?? 'GET').toUpperCase();
 
   // 同构：服务端拼绝对 URL（SSR 内部 fetch 需完整地址），浏览器端用相对 URL
   const isServer = typeof window === 'undefined';
@@ -199,9 +223,22 @@ export async function request<T>(
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch (err) {
-    if (err instanceof DOMException && err.name === 'AbortError') {
+    const isAbort = err instanceof DOMException && err.name === 'AbortError';
+    // 调用方主动取消（signal.aborted）不属瞬时错误，绝不重试
+    const isCallerAbort = isAbort && !!signal?.aborted;
+    // 非调用方取消的 AbortError（内部超时）与其它 fetch 抛错（网络层失败）均视为可自愈的瞬时错误
+    const isTransient = !isCallerAbort;
+
+    // 幂等安全方法遇瞬时错误（Netlify 冷启动/边缘偶发连接重置）退避后自动重试一次；
+    // 写方法与非幂等场景不重试，避免重复提交
+    if (isTransient && !_netRetried && SAFE_RETRY_METHODS.has(method)) {
+      await sleep(NET_RETRY_DELAY_MS);
+      return request<T>(path, options, _retryDepth, true);
+    }
+
+    if (isAbort) {
       // AbortError 需区分：调用方主动取消(signal.aborted) 抛"aborted"，否则视为内部超时
-      if (signal?.aborted) {
+      if (isCallerAbort) {
         throw new ApiRequestError(0, 0, 'Request aborted');
       }
       throw new ApiRequestError(0, 0, errorMessages().timeout);

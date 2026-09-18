@@ -461,7 +461,12 @@ export function WriteEditor() {
       } else {
         toast.success(isEditMode ? t('postUpdated') : t('postPublished'));
 
-        router.replace(data?.post?.id ? `/posts/${data.post.id}` : '/posts');
+        const target = data?.post?.id ? `/posts/${data.post.id}` : '/posts';
+        router.replace(target);
+        // 编辑/发布后强制向服务端重取当前路由：绕开浏览器 Router Cache 里该详情页的旧 RSC 快照。
+        // 服务端 invalidateBlogCache 的 revalidateTag 只清 Data/Full Route Cache，触达不到客户端路由缓存，
+        // 否则「详情页 → 编辑 → 存回详情页」会命中旧缓存，内容看着没变。
+        router.refresh();
       }
     };
 

@@ -196,7 +196,7 @@ AIGC:
 
 ### POST `/api/auth/logout` — 登出
 
-**认证**: 必须登录
+**认证**: 可选登录（`tryAuth`）——无 Token / Token 过期 / 验签失败也返回 200，仅清 Cookie
 
 **请求参数**: 无
 
@@ -210,7 +210,7 @@ AIGC:
 }
 ```
 
-清除 Cookie 并递增 `tokenVersion`，使所有已签发 Token 失效。
+始终清除鉴权 Cookie；当携带有效 Token 时额外递增 `tokenVersion`，使该用户所有已签发 Token 失效。
 
 ---
 
@@ -912,7 +912,7 @@ GET /api/posts?category=技术&page=1&limit=9
     "status": "ok",
     "timestamp": "2026-09-10T12:00:00.000Z",
     "kv": {
-      "adapterType": "mock"  // 或 "upstash"
+      "adapterType": "upstash"  // "upstash"=持久化 Redis | "memory"=内存实现(数据不跨实例且重启即丢)
     }
   },
   "message": "OK"
@@ -961,7 +961,7 @@ GET /api/posts?category=技术&page=1&limit=9
 |---|------|------|------|------|------|
 | 1 | POST | `/api/auth/register` | 无 | 5次/5min | 用户注册 |
 | 2 | POST | `/api/auth/login` | 无 | 5次/5min | 用户登录 |
-| 3 | POST | `/api/auth/logout` | 必须登录 | 无 | 登出 |
+| 3 | POST | `/api/auth/logout` | 可选登录 | 无 | 登出 |
 | 4 | POST | `/api/auth/refresh` | Cookie（宽限期内的过期 Token 亦可） | 30次/min | 刷新 Token |
 | 5 | GET | `/api/auth/me` | 必须登录 | 无 | 获取当前用户 |
 | 6 | PUT | `/api/auth/profile` | 必须登录 | 无 | 更新个人资料 |
