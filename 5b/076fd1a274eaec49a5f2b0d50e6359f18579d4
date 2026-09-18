@@ -1,0 +1,101 @@
+frontend/src/lib/use-fetch.ts
+  s_7385bfac2602cf::t_f1046752cd7125 216
+frontend/src/services/blog/server.ts
+  s_3298edf17d6bd7::t_585d6ba69c259c 97-103,107-109,114-126
+  s_3298edf17d6bd7::t_0d6296c3fff6ab 104-106,110-113
+frontend/src/server/infrastructure/kv-store.ts
+  s_3298edf17d6bd7::t_7c95c25fd51257 48,51-72,74-76,82-84,99-102,104-109
+frontend/next-env.d.ts
+  s_7aa2e0c81f6778::t_6017707c181d27 3-4
+frontend/src/app/sitemap.ts
+  s_3298edf17d6bd7::t_c6b8f56626f75f 90-91,104
+  s_3298edf17d6bd7::t_3ff3d37a2e0d01 47,49-52,56,62,75-76
+  s_3298edf17d6bd7::t_05bf032c17c1d0 31-32
+  s_3298edf17d6bd7::t_e0420141db17c1 33-44
+frontend/src/server/modules/auth/kv-user.repository.ts
+  s_3298edf17d6bd7::t_d191dccb10e417 156-159,162,166
+frontend/src/server/utils/rate-limit.ts
+  s_3298edf17d6bd7::t_2ab7d9abd52721 3,6,8-9,12-13,16,18,22-31
+frontend/src/lib/api/request.ts
+  s_3298edf17d6bd7::t_dfad716989fb0e 253-256
+frontend/src/server/infrastructure/kv-mock.ts
+  s_3298edf17d6bd7::t_a5524c7f69ff58 284-295
+  s_3298edf17d6bd7::t_e2e136d4cc294e 235-236,254-256,258-271
+  s_3298edf17d6bd7::t_4d58e52eeba639 468-486,491,500,504,522-542
+  s_3298edf17d6bd7::t_68db54ac0116f3 64,71-88
+  s_3298edf17d6bd7::t_dbcaf6814d4879 54-57,59
+  s_3298edf17d6bd7::t_d49568915d0e05 543
+frontend/src/server/utils/route-handler.ts
+  s_3298edf17d6bd7::t_959f81c034815c 90
+frontend/src/server/infrastructure/kv-repository.ts
+  s_3298edf17d6bd7::t_09ab7fbcbd346f 101-115
+  s_3298edf17d6bd7::t_6469226cedbe88 100
+frontend/scripts/self-check.mjs
+  s_3298edf17d6bd7::t_e078476cc44e56 90-94,96-102,104-170
+  s_3298edf17d6bd7::t_53fdc8161bdcab 171,322-350
+  s_3298edf17d6bd7::t_f1f2249eca1867 30
+  s_3298edf17d6bd7::t_d8a062e2b12e3c 29,31-32,57-58,65-67,95,103,188
+  s_3298edf17d6bd7::t_d8603b27ee0ccb 28
+  s_3298edf17d6bd7::t_344c44cf7e8821 172
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_3298edf17d6bd7::t_ec002f94c53cc5 101-102,106-112
+frontend/src/lib/navigation.ts
+  s_3298edf17d6bd7::t_0a5ca72410cb3e 17-34,36,45
+  s_3298edf17d6bd7::t_64324d5c836fb9 35,37-40,42,46-48
+frontend/src/app/[locale]/posts/[id]/_components/ViewReporter.tsx
+  s_3298edf17d6bd7::t_b78ab38c81a7c7 13,23-25,30,33-34
+  s_3298edf17d6bd7::t_14bc5d09394968 31-32
+frontend/src/server/utils/cache.ts
+  s_3298edf17d6bd7::t_286b4cb1d46728 16-19
+frontend/src/app/[locale]/posts/_components/PostSidebar.tsx
+  s_7aa2e0c81f6778::t_a7e6d8e692077d 87
+  s_7aa2e0c81f6778::t_bd50b1018e6dd0 124
+frontend/src/app/[locale]/(auth)/_components/AuthGuard.tsx
+  s_3298edf17d6bd7::t_a4d46f8dcab258 12
+  s_3298edf17d6bd7::t_f6575826a1b40d 28-30,36
+frontend/src/app/styles/base.css
+  s_7aa2e0c81f6778::t_7bc527ab145fd1 16-17
+frontend/src/app/api/posts/[id]/view/route.ts
+  s_3298edf17d6bd7::t_e85c7ec7919d0f 19
+frontend/next.config.ts
+  s_7385bfac2602cf::t_4fe67aa76fc236 8
+  s_7385bfac2602cf::t_40f08b810e911c 13,16,18-19
+frontend/src/components/layout/MobileMenu.tsx
+  s_7aa2e0c81f6778::t_9376d1b871dccc 110,112-113
+frontend/src/app/[locale]/layout.tsx
+  s_3298edf17d6bd7::t_5e2bc258839c06 48-58
+frontend/src/server/utils/api-response.ts
+  s_3298edf17d6bd7::t_fa804a99cc4c41 52-56,69-72,78-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5b076fd1a274eaec49a5f2b0d50e6359f18579d4",
+  "prompts": {},
+  "sessions": {
+    "s_3298edf17d6bd7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "82226f4c-0fce-4db6-8d13-9db17f4b7c8b",
+        "model": "glm-5.3"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_7385bfac2602cf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4f365724-5339-4e1f-b559-5665173c83b2",
+        "model": "glm-5.3"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_7aa2e0c81f6778": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "645d5079-2e2b-4aab-8e1e-8a9abdfa3479",
+        "model": "glm-5.3"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
