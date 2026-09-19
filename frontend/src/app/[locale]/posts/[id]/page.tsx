@@ -15,18 +15,11 @@ import { Container } from '@/components/ui/Container';
 import { Avatar } from '@/components/ui/Avatar';
 import { formatDate, getInitials, splitName } from '@/lib/format';
 import { getCategoryLabel } from '@/lib/category';
-import type { Locale } from '@/i18n/config';
 import { estimateReadingTime, stripHtml, stripMarkdown } from '@/lib/markdown';
 import { isSafeImageUrl } from '@/lib/validators';
 import { tagClassFor, tagVariantFor } from '@/components/ui/Tag';
-import {
-  getPublicPostServer,
-  getPostServer,
-  getNeighborPostsServer,
-  listPostsServer,
-} from '@/services/blog/server';
-import { getCurrentUser } from '@/services/auth/server';
-import { NotFoundError } from '@server/errors';
+import { getPublicPostServer, getNeighborPostsServer, listPostsServer } from '@/services/blog/server';
+import { isAppErrorWithStatus } from '@server/errors';
 import { SITE_URL } from '@/config/site';
 import { routing } from '@/i18n/routing';
 import type { Post, User } from '@my-app/shared';
@@ -77,6 +70,29 @@ function decodeId(rawId: string): string {
 }
 
 /**
+ * 解析「当前访问者可见的」文章，即公开可见（已发布）的文章。
+ *
+ * 本函数**只走公开接口**，绝不触碰 cookies()/headers() 这类动态 API，原因：
+ * 本页是静态生成（generateStaticParams + revalidate），未预渲染的 id 会在运行期按需渲染。
+ * 静态渲染期间调用 cookies() 会被 Next 判定为「静态页在运行期变为动态」
+ * （Page changed from static to dynamic, reason: headers）并直接 500——
+ * 本地的 dev 全动态不会暴露，只在生产构建出现，于是「不存在的文章」返回 500 而非 404。
+ *
+ * 原实现的「公开 → 鉴权」两级降级（作者读自己的未发布草稿）已移除：草稿在应用内
+ * 一律通过 /write?id= 进入编辑器（见 ProfileTabs 草稿 tab），不存在指向 /posts/{id}
+ * 的草稿入口，该分支在生产环境唯一的效果就是让 404 变成 500。
+ * 若将来要支持草稿预览，应另开一个动态路由承载，而不是让本页读 Cookie。
+ *
+ * @param id 已解码的文章 id
+ * @returns post 为公开可见的文章；user 恒为 null（RSC 侧不解析登录态，权限展示由客户端 hook 决定）
+ * @throws 文章不可见（404）或其它真异常原样上抛，由调用方决定转 notFound 还是降级
+ */
+async function resolveVisiblePost(id: string): Promise<{ post: Post; user: User | null }> {
+  const data = await getPublicPostServer(id);
+  return { post: data.post, user: null };
+}
+
+/**
  * 详情页 SEO 元数据
  * @param props params 含 locale 与文章 id
  * @returns 含 OpenGraph/Twitter 卡片的元数据；文章不可见时返回"未找到"标题兜底
@@ -91,10 +107,8 @@ export async function generateMetadata({
   setRequestLocale(locale);
   const id = decodeId(rawId);
   const tMeta = await getTranslations('meta');
-  const tPost = await getTranslations('post');
   try {
-    const data = await getPublicPostServer(id);
-    const post = data.post;
+    const { post } = await resolveVisiblePost(id);
     const cleanTitle = stripMarkdown(post.title);
     // 取摘要否则正文，去 HTML 后截断到 160 字符作为 meta description
     const description = stripHtml(post.summary || post.content).slice(0, 160);
@@ -124,8 +138,12 @@ export async function generateMetadata({
         ...(post.coverImage && { images: [post.coverImage] }),
       },
     };
-  } catch {
-    return { title: `${tPost('notFoundTitle')} · ${tMeta('siteTitle')}` };
+  } catch (err) {
+    // 文章不可见时抛 notFound()，与正文保持同一判定口径，此处抛出的 404 会真正写进 HTTP 状态码。
+    // 前提是本段不再有 loading.tsx（段级 loading 会先提交外壳，之后的 notFound 改不动状态码）。
+    if (isAppErrorWithStatus(err, 404)) notFound();
+    // 其余异常（网络/500）继续上抛，交给 error.tsx 展示可重试错误，而不是误导成「文章不存在」
+    throw err;
   }
 }
 
@@ -200,42 +218,19 @@ export default async function PostDetailPage({
 
   const id = decodeId(rawId);
 
-  // 用可空局部变量承接取数结果，try/catch 各分支赋值；后续访问均以"已成功取到"为前提
-  let post: Post | null = null;
-
-  // 当前登录用户，仅在鉴权分支填充；向下传递给操作/评论组件用于权限判断
-  let user: User | null = null;
-
+  // 取数降级：公开 → 鉴权，与 generateMetadata 共用 resolveVisiblePost，保证两处结论一致
+  let resolved: { post: Post; user: User | null };
   try {
-    // 取数降级：先走公开接口；若抛 NotFoundError（未发布/受限），再尝试鉴权接口让作者读到自己的私有文章
-    const publicData = await getPublicPostServer(id);
-    post = publicData.post;
+    resolved = await resolveVisiblePost(id);
   } catch (err) {
-    if (err instanceof NotFoundError) {
-      // 公开取不到时的 404 候选：可能是作者本人的未发布文章，取当前用户以尝试鉴权访问
-      user = await getCurrentUser();
-      if (user) {
-        try {
-          // 鉴权版接口：作者可读自己的未发布文章，成功后 user 会被带到下游组件
-          const authData = await getPostServer(id);
-          post = authData.post;
-        } catch (authErr) {
-          // 非 404 的真异常（网络/服务端错误）继续上抛，避免误判为"文章不存在"
-          if (!(authErr instanceof NotFoundError)) throw authErr;
-        }
-      }
-      // 公开与鉴权两条路都没取到 → 确认不存在
-      if (!post) {
-        notFound();
-      }
-    }
-    // 非 NotFoundError（网络/500 等）不吞：直接上抛给路由 error.tsx 展示可重试错误，
+    // 两条路都 404 → 文章确实不存在，转 404 语义（由 [locale]/not-found.tsx 呈现，保留布局与语言）
+    if (isAppErrorWithStatus(err, 404)) notFound();
+    // 其余异常（网络/500 等）不吞：上抛给本段的 error.tsx 展示可重试错误，
     // 而不是误导用户的"文章不存在"
+    throw err;
   }
-  // 收尾校验：确保 TS 收窄 post 非空（notFound 返回 never，上方分支已保证；此处兜底）
-  if (!post) {
-    notFound();
-  }
+  const post = resolved.post;
+  const user = resolved.user;
 
   const t = await getTranslations('post');
   const tNav = await getTranslations('nav');

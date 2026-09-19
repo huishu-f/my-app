@@ -4,7 +4,7 @@
  */
 import 'server-only';
 import { getKV } from './kv-mock';
-import { InternalServerError } from '@server/errors';
+import { InternalServerError, isAppErrorWithStatus } from '@server/errors';
 import { logger } from '@server/utils/logger';
 
 /**
@@ -53,7 +53,7 @@ export abstract class KVRepository<T extends { id: string }> {
       return JSON.parse(json) as T;
     } catch (err) {
       // 已由内层包装的 InternalServerError 直接透传，避免重复包装与重复日志
-      if (err instanceof InternalServerError) throw err;
+      if (isAppErrorWithStatus(err, 500)) throw err;
       logger.error('读取数据失败', { collection: this.collectionKey, id, error: String(err) });
       throw new InternalServerError('读取数据失败');
     }
@@ -91,7 +91,7 @@ export abstract class KVRepository<T extends { id: string }> {
       return updated;
     } catch (err) {
       // 已是 InternalServerError 时直接透传，避免重复包装
-      if (err instanceof InternalServerError) throw err;
+      if (isAppErrorWithStatus(err, 500)) throw err;
       logger.error('更新数据失败', { id, error: String(err) });
       throw new InternalServerError('更新数据失败');
     }

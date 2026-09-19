@@ -27,8 +27,6 @@ interface RemoveFavoriteButtonProps extends PostIdProps {
 export function RemoveFavoriteButton({ postId, onRemoved }: RemoveFavoriteButtonProps) {
   const t = useTranslations('profile');
 
-  const tCommon = useTranslations('common');
-
   /** 收藏 toggle 变更请求，isPending 用作按钮 loading 态 */
   const toggleFavoriteMutation = useToggleFavorite();
 

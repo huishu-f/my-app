@@ -22,7 +22,7 @@ import java from 'highlight.js/lib/languages/java';
 import yaml from 'highlight.js/lib/languages/yaml';
 import markdown from 'highlight.js/lib/languages/markdown';
 import shell from 'highlight.js/lib/languages/shell';
-import { HIGHLIGHT_ALIASES, MARKED_OPTIONS, highlightCode } from '@/lib/markdown-highlight';
+import { MARKED_OPTIONS, highlightCode, registerHighlightLanguages } from '@/lib/markdown-highlight';
 
 /** 语言标识 → highlight.js 语言模块映射，用于按需注册高亮语言（仅注册这些，避免打包全量语言） */
 const LANGUAGE_MODULES: Record<string, Parameters<typeof hljs.registerLanguage>[1]> = {
@@ -55,13 +55,7 @@ const LANGUAGE_MODULES: Record<string, Parameters<typeof hljs.registerLanguage>[
   shell,
 };
 
-for (const [lang, aliases] of Object.entries(HIGHLIGHT_ALIASES)) {
-  const mod = LANGUAGE_MODULES[lang];
-  if (mod) {
-    hljs.registerLanguage(lang, mod);
-    for (const alias of aliases) hljs.registerLanguage(alias, mod);
-  }
-}
+registerHighlightLanguages(hljs, LANGUAGE_MODULES);
 import sanitizeHtml from 'sanitize-html';
 import { ALLOWED_TAGS } from '@/lib/sanitize';
 

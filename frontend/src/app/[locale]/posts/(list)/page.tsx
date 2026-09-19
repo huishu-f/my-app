@@ -1,6 +1,10 @@
 /**
  * @file page.tsx
  * @description 文章列表页（/posts RSC）：按分类/标签/关键词与分页拉取文章，渲染筛选侧栏、空态/加载失败态与页码导航；对越界页码做重定向纠正
+ *
+ * 放在 (list) 路由组里：路由组不进 URL，但它是路由树上的独立段，同级 loading.tsx 的流式边界
+ * 只包住组内路由。若把 loading.tsx 留在 posts/ 下，posts/[id] 也会被这个边界包住——外壳先送出，
+ * 详情页随后的 notFound() 便改不动状态码，不存在的文章只能以 HTTP 200 返回（实测过）。
  */
 import type { Metadata } from 'next';
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -19,15 +23,26 @@ import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { Link, redirect } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
-import { PostSidebar } from './_components/PostSidebar';
-import { PostsSearchInput } from './_components/PostsSearchInput';
-import { buildPostsUrl } from './_lib/buildPostsUrl';
+import { PostSidebar } from '../_components/PostSidebar';
+import { PostsSearchInput } from '../_components/PostsSearchInput';
+import { buildPostsUrl } from '../_lib/buildPostsUrl';
 
 /**
  * 列表页 SEO 元数据
+ * @param props params.locale 决定元数据语言；必须先于任何 next-intl API 固定
  * @returns 拼接站点标题的 title 与取副标的 description
  */
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  // 同 layout.generateMetadata：不先固定请求语言，getTranslations 会退回读 headers()，
+  // 使本页在运行期按需渲染时被判为「静态变动态」而 500（本地 dev 全动态不暴露）。
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+
   const t = await getTranslations('posts');
   const tMeta = await getTranslations('meta');
   return {

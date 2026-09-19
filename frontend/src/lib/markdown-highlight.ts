@@ -52,3 +52,26 @@ export function highlightCode(
     return code;
   }
 }
+
+/**
+ * 按 HIGHLIGHT_ALIASES 把语言与其别名一并注册到传入的 hljs 实例。
+ *
+ * 服务端渲染与编辑器预览各有独立的 hljs 实例（客户端还刻意只动态加载部分语言以控制首屏体积），
+ * 所以「注册哪些语言」交由调用方通过 modules 决定；但「怎么注册」只应有这一处实现，
+ * 否则两侧各维护一份循环、改一边漏一边，就会出现「编辑器能高亮、文章页不能」的静默不一致。
+ *
+ * @param hljs highlight.js 实例（按结构最小化声明所需方法）
+ * @param modules 语言标识 → 语言模块 的映射；未提供的语言会被跳过
+ * @template M 语言模块类型（highlight.js 的 LanguageFn），由调用方推断
+ */
+export function registerHighlightLanguages<M>(
+  hljs: { registerLanguage(name: string, module: M): unknown },
+  modules: Record<string, M>,
+): void {
+  for (const [lang, aliases] of Object.entries(HIGHLIGHT_ALIASES)) {
+    const mod = modules[lang];
+    if (!mod) continue;
+    hljs.registerLanguage(lang, mod);
+    for (const alias of aliases) hljs.registerLanguage(alias, mod);
+  }
+}

@@ -95,7 +95,7 @@ export function useAsyncAction<TVars, TData>(
   // 用 ref 做同一次动作的并发锁：避免在状态更新前重复触发（不触发重渲染）
   const mutatingRef = useRef(false);
 
-  // 把 defaults 存入 ref 并在每次渲染同步，使 mutate 依赖仅需 [action] 而不会因回调身份变化被重建
+  // 把 defaults 存入 ref 并在每次渲染同步，使 mutate 依赖仅需 [action, retry] 而不会因回调身份变化被重建
   const defaultsRef = useRef(defaults);
   useEffect(() => {
     defaultsRef.current = defaults;
@@ -137,7 +137,7 @@ export function useAsyncAction<TVars, TData>(
         callbacks?.onSettled?.();
       }
     },
-    [action],
+    [action, retry],
   );
 
   return { mutate, isPending };

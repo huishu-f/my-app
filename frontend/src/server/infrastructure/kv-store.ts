@@ -4,7 +4,7 @@
  */
 import 'server-only';
 import { getKV } from './kv-mock';
-import { AppError, InternalServerError } from '@server/errors';
+import { isAppError, InternalServerError } from '@server/errors';
 
 /**
  * 单文档 KV 存储：整个集合以一条 string 键保存，读取时反序列化为对象。
@@ -38,8 +38,13 @@ export class KVDocumentStore<T> {
       const data = await kv.get<T>(this.key);
       if (data === null) return this.defaultValue;
       return data;
-    } catch {
-      throw new InternalServerError(`读取数据失败: ${this.key}`);
+    } catch (err) {
+      // 必须带上底层原因：这里原先是裸 catch，把 Upstash 连接/鉴权/序列化错误的真实原因整个丢掉，
+      // 线上只留下一句「读取数据失败」，故障无从定位（面向客户端的仍是通用文案，见 sendError）。
+      // 5xx 的 message 不会透给客户端，因此可以放心携带内部细节。
+      throw new InternalServerError(
+        `读取数据失败: ${this.key} — ${err instanceof Error ? err.message : String(err)}`,
+      );
     }
   }
 
@@ -65,7 +70,10 @@ export class KVDocumentStore<T> {
         throw new InternalServerError(`并发冲突: ${this.key}`);
       } catch (err) {
         lastError = err;
-        if (err instanceof AppError && !(err instanceof InternalServerError)) throw err;
+        // 业务错误（403/404/409…）立刻透传，重试只会得到相同结果。
+        // 用 isAppError 而非裸 instanceof：错误类被 Turbopack 分包后 instanceof 跨 chunk 恒为 false，
+        // 会让业务错误被误判成可重试错误（多跑 2 轮 + 150ms 无谓退避）
+        if (isAppError(err) && err.statusCode !== 500) throw err;
         if (attempt < MAX_RETRIES - 1) {
           await new Promise((resolve) => setTimeout(resolve, 50 * (attempt + 1)));
         }
@@ -116,7 +124,7 @@ export class KVDocumentStore<T> {
         lastError = err;
 
         // 业务错误（NotFound/Forbidden/Validation...）立刻透传，重试只会得到相同结果
-        if (err instanceof AppError && !(err instanceof InternalServerError)) {
+        if (isAppError(err) && err.statusCode !== 500) {
           throw err;
         }
 

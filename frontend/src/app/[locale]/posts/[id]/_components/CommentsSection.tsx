@@ -143,6 +143,9 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
         {user ? (
           <>
             <textarea
+              id="comment-content"
+              name="comment"
+              aria-label={t('commentPlaceholder')}
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               onKeyDown={(e) => {
@@ -231,6 +234,9 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                 {editingId === c.id ? (
                   <div className="mt-2">
                     <textarea
+                      id={`comment-edit-${c.id}`}
+                      name="comment"
+                      aria-label={`${tCommon('edit')} ${t('commentsTitle')}`}
                       value={editText}
                       onChange={(e) => setEditText(e.target.value)}
                       rows={3}

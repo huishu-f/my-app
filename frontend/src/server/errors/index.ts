@@ -12,4 +12,6 @@ export {
   ValidationError,
   UnprocessableEntityError,
   RateLimitError,
+  isAppError,
+  isAppErrorWithStatus,
 } from './AppError';

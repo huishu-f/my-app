@@ -6,6 +6,18 @@
  * 应用错误基类：封装 HTTP 状态码、业务错误码与可选校验明细。
  * 路由层通过 sendError 读取 statusCode/code/details 统一转成 JSON 响应。
  */
+/**
+ * 跨 chunk 稳定的错误品牌标记。
+ *
+ * Turbopack 会把本模块分别打进每一个路由 chunk（实测同一个 class 同时存在于 14 个 server chunk 中），
+ * 于是「service 层 new 出来的实例」与「路由层 import 到的构造函数」不是同一个引用，跨 chunk 的
+ * `instanceof AppError` 恒为 false——表现为所有服务层抛出的 AppError（404/409/403/422）被静默降级成 500。
+ *
+ * `Symbol.for` 走全局符号注册表，重复定义仍返回同一个符号，因此可作为跨 chunk 的品牌判定依据，
+ * 同时保留 instanceof 的严格性（鸭子类型不成立，属性名不可被偶然撞上）。
+ */
+const APP_ERROR_BRAND = Symbol.for('my-app/AppError');
+
 export class AppError extends Error {
   /**
    * 构造应用错误
@@ -22,7 +34,30 @@ export class AppError extends Error {
   ) {
     super(message);
     this.name = this.constructor.name;
+    // 写入品牌：不可枚举，不会进入 JSON 序列化与日志展开
+    Object.defineProperty(this, APP_ERROR_BRAND, { value: true });
   }
+}
+
+/**
+ * 判定任意异常是否为 AppError，跨 chunk 安全（instanceof 在 Turbopack 分包下会失效）
+ * @param err 待判定值
+ * @returns 是 AppError（含其子类，无论来自哪个 chunk）时为 true
+ */
+export function isAppError(err: unknown): err is AppError {
+  if (err instanceof AppError) return true;
+  if (typeof err !== 'object' || err === null) return false;
+  return (err as unknown as Record<symbol, unknown>)[APP_ERROR_BRAND] === true;
+}
+
+/**
+ * 判定异常是否为指定 HTTP 状态码的 AppError，用于跨 chunk 场景下替代子类 instanceof 判定
+ * @param err 待判定异常
+ * @param statusCode 期望的 HTTP 状态码，如 404
+ * @returns 是 AppError 且状态码匹配时为 true
+ */
+export function isAppErrorWithStatus(err: unknown, statusCode: number): err is AppError {
+  return isAppError(err) && err.statusCode === statusCode;
 }
 
 /** 未授权/未登录（HTTP 401，code 'Unauthorized'） */

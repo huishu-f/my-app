@@ -41,8 +41,6 @@ const initialState: LoginState = { emailError: null, pwdError: null };
 function LoginContent() {
   const t = useTranslations('auth');
 
-  const tCommon = useTranslations('common');
-
   const searchParams = useSearchParams();
 
   const { refreshMe } = useAuth();

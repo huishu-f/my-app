@@ -7,7 +7,7 @@ import { randomUUID } from 'node:crypto';
 import 'server-only';
 import { after } from 'next/server';
 
-import type { Post, User, SiteConfig, BlogService } from '@my-app/shared';
+import type { Post, SiteConfig, BlogService } from '@my-app/shared';
 import {
   NotFoundError,
   UnprocessableEntityError,

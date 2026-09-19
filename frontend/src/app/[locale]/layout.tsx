@@ -34,9 +34,23 @@ export function generateStaticParams() {
 
 /**
  * 生成全站默认元数据（子页面可覆盖），文案取自 i18n 的 meta 命名空间并按当前请求语言解析
+ * @param props params.locale 决定元数据语言；必须先于任何 next-intl API 固定
  * @returns Metadata：title/description + openGraph（含 og:locale 与分享图）+ twitter 卡片 + robots 索引许可
  */
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  // 这几行不能省。未固定请求语言时，下面的 getTranslations/getLocale 会退回读 headers() 做语言协商，
+  // 而 headers() 在「静态页的运行期按需渲染」上下文中会被 Next 判定为
+  // 「Page changed from static to dynamic, reason: headers」并整页 500——
+  // 未预渲染的文章 id（如 /zh/posts/不存在的-id）正是走这条路径，于是本该 404 的请求变成 500。
+  // 布局组件体内虽已调用 setRequestLocale，但元数据生成可能先于组件渲染执行，因此这里必须独立再设一次。
+  const { locale: rawLocale } = await params;
+  if (!hasLocale(routing.locales, rawLocale)) notFound();
+  setRequestLocale(rawLocale);
+
   const t = await getTranslations('meta');
   const locale = (await getLocale()) as Locale;
 

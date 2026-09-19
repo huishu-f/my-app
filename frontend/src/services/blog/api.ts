@@ -1,11 +1,13 @@
 /**
  * @file api.ts
- * @description 博客领域客户端接口集合：文章增删改查、点赞收藏；读写接口均依赖登录态（浏览器端调用），业务失败抛 ApiRequestError
+ * @description 博客领域客户端读接口集合：文章列表/详情、草稿与收藏、点赞收藏切换、站点配置；失败统一抛 ApiRequestError
+ *
+ * 文章的增、改、删不在此处：它们由 Server Action 承担（见 services/blog/actions.ts），
+ * 因为只有 Action 内的重验证才能清掉浏览器 Client Cache，避免作者改完返回页面看到旧内容。
  */
 import { api } from '@/lib/api/request';
 import type {
   ConfigData,
-  CreatePostDto,
   FavoriteToggleData,
   FavoritesData,
   LikeData,
@@ -13,13 +15,12 @@ import type {
   PostListParams,
   PostsListData,
   SiteConfig,
-  UpdatePostDto,
 } from '@my-app/shared';
 
 /** ISR 缓存标签：文章列表相关（浏览器端 fetch 实际不消费，仅保留给服务端调用方透传） */
 const POSTS_TAG = 'posts';
 
-/** 博客领域接口集合；get* / list* 为公开读接口配 ISR 缓存，create/update/delete/like/favorite/config 写接口依赖登录态 */
+/** 博客领域读接口集合；get* / list* 为公开读接口配 ISR 缓存，like/favorite/config 等写接口依赖登录态 */
 export const blogApi = {
   /**
    * 分页查询文章列表（公开）
@@ -50,31 +51,6 @@ export const blogApi = {
    */
   getPost: (id: string, opts?: { signal?: AbortSignal }) =>
     api.get<PostData>(`/posts/${id}`, undefined, opts),
-
-  /**
-   * 新建文章（需登录）
-   * @param dto 文章创建数据
-   * @returns 创建后的 PostData
-   * @throws 校验失败或未登录时抛 ApiRequestError
-   */
-  createPost: (dto: CreatePostDto) => api.post<PostData>('/posts', dto),
-
-  /**
-   * 更新文章（需登录且有权限）
-   * @param id 文章 ID
-   * @param dto 待更新的字段
-   * @returns 更新后的 PostData
-   * @throws 无权限、校验失败或网络异常时抛 ApiRequestError
-   */
-  updatePost: (id: string, dto: UpdatePostDto) => api.put<PostData>(`/posts/${id}`, dto),
-
-  /**
-   * 删除文章（需登录且有权限）
-   * @param id 文章 ID
-   * @returns 成功无返回体（null）
-   * @throws 无权限或网络异常时抛 ApiRequestError
-   */
-  deletePost: (id: string) => api.delete<null>(`/posts/${id}`),
 
   /**
    * 切换当前用户对某文章的点赞状态（需登录）

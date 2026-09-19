@@ -76,7 +76,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     window.addEventListener('storage', syncLogout);
     return () => window.removeEventListener('storage', syncLogout);
-  }, []);
+    // refreshMe 由 useCallback([]) 定义，身份恒定，加入依赖不改变「仅挂载时执行一次」的语义
+  }, [refreshMe]);
 
   /** 直接以给定用户覆盖登录态，供登录/登出流程调用 */
   const setMe = useCallback((next: User | null) => {

@@ -11,6 +11,7 @@ import { useAuth } from '@/components/auth-provider';
 import type { CreatePostDto, PostData, UpdatePostMutationVars } from '@my-app/shared';
 import type { User } from '@my-app/shared';
 import { blogApi } from './api';
+import { postActions } from './actions';
 
 /**
  * 文章详情读取 Hook，基于 useFetch 带 SWR 缓存与请求去重
@@ -33,32 +34,32 @@ export function usePostData(id: string) {
 }
 
 /**
- * 新建文章 Hook
+ * 新建文章 Hook（走 Server Action：变更与缓存失效在同一次往返完成，发布后可立即看到新数据）
  * @returns
  * - `mutate`    执行创建，入参 CreatePostDto；成功返回 PostData，失败返回 undefined
  * - `isPending` 是否有进行中的创建
  */
 export function useCreatePost() {
-  const action = useCallback((dto: CreatePostDto) => blogApi.createPost(dto), []);
+  const action = useCallback((dto: CreatePostDto) => postActions.create(dto), []);
   return useAsyncAction<CreatePostDto, PostData>(action);
 }
 
 /**
- * 更新文章 Hook
+ * 更新文章 Hook（走 Server Action，同 useCreatePost）
  * @returns
  * - `mutate`    执行更新，入参 UpdatePostMutationVars（{ id, dto }）；成功返回 PostData，失败返回 undefined
  * - `isPending` 是否有进行中的更新
  */
 export function useUpdatePost() {
   const action = useCallback(
-    ({ id, dto }: UpdatePostMutationVars) => blogApi.updatePost(id, dto),
+    ({ id, dto }: UpdatePostMutationVars) => postActions.update(id, dto),
     [],
   );
   return useAsyncAction<UpdatePostMutationVars, PostData>(action);
 }
 
 /**
- * 删除文章 Hook，成功后弹出"已删除"提示
+ * 删除文章 Hook，成功后弹出"已删除"提示（走 Server Action：删除的同时失效列表/首页缓存）
  * @returns
  * - `mutate`    执行删除，入参文章 ID；成功返回 null，失败返回 undefined
  * - `isPending` 是否有进行中的删除
@@ -67,7 +68,7 @@ export function useDeletePost() {
   const t = useTranslations('post');
   const action = useCallback(
     async (id: string) => {
-      await blogApi.deletePost(id);
+      await postActions.remove(id);
       toast.success(t('postDeleted'));
       return null;
     },

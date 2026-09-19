@@ -40,9 +40,10 @@ export async function isRateLimited(
  * 2. `x-forwarded-for` 的**最后一个**值：XFF 链是「客户端伪造部分 + 各代理逐跳 append」，
  *    最右侧的值由离本服务最近的受信代理写入，取左值（现行做法）可被客户端随意伪造刷爆/绕过限流
  * 3. `x-real-ip`：单层反代的常用约定
+ * @param request 请求对象；只用到 headers，故放宽为最小结构，使 Server Action 可传 `{ headers: await headers() }` 复用
  * @returns 解析出的 IP；均缺失时返回 'unknown'
  */
-export function getClientIp(request: Request): string {
+export function getClientIp(request: { headers: Pick<Headers, 'get'> }): string {
   const nfIp = request.headers.get('x-nf-client-connection-ip');
   if (nfIp) return nfIp;
 

@@ -63,8 +63,15 @@ export function proxy(request: NextRequest) {
   return intlResponse;
 }
 
-/** 中间件生效范围：除下列静态资源与 api 前缀外的全部路径都进入 proxy */
+/** 中间件生效范围：除静态资源与 api 前缀外的全部路径都进入 proxy */
 export const config = {
-  // 负向预查 (?!...) 跳过 _next 静态/图片、favicon、图标与 /api 路由
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon.svg|api).*)'],
+  /**
+   * 负向预查 (?!...) 跳过 _next 静态/图片、/api 路由，以及「带已知静态扩展名的文件」。
+   * 按扩展名排除而非逐个列举文件名：sitemap.xml、robots.txt 与 public/ 下的图片字体等
+   * 若进入 next-intl，会被加上语言前缀重定向到 /zh/<file> 并 404（曾导致 SEO 元数据路由
+   * 与全部 public 静态资源不可访问）。文章动态路由的 id 由 slug() 生成、不含点号，不受影响。
+   */
+  matcher: [
+    '/((?!_next/static|_next/image|api|.*\\.(?:svg|png|jpe?g|gif|webp|avif|ico|txt|xml|json|webmanifest|woff2?|ttf|otf|css|js|map)$).*)',
+  ],
 };

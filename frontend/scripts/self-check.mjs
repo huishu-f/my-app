@@ -213,7 +213,7 @@ class DocStore {
   let mutateCalls = 0;
   await assert.rejects(
     () =>
-      store.updateWithRetry((db) => {
+      store.updateWithRetry(() => {
         mutateCalls++;
         throw new BusinessError('文章不存在'); // 模拟业务校验失败（如 findIndex===-1）
       }),

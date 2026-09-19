@@ -4,7 +4,7 @@
  */
 import 'server-only';
 import { NextResponse } from 'next/server';
-import { AppError, InternalServerError } from '@server/errors';
+import { isAppError, InternalServerError } from '@server/errors';
 import { logger } from '@server/utils/logger';
 
 /**
@@ -49,11 +49,11 @@ export function sendCreated<T>(data: T, message = '创建成功'): NextResponse 
  * @returns 形如 { code, data: null, message, details? } 的 JSON 响应，status 取错误 statusCode
  */
 export function sendError(err: unknown): NextResponse {
-  // instanceof 判定（同步模块加载，不存在鸭子类型被异常对象伪装绕过的面）
-  const appError =
-    err instanceof AppError
-      ? err
-      : new InternalServerError(err instanceof Error ? err.message : 'Internal server error');
+  // 用 isAppError 而非裸 instanceof：错误类被 Turbopack 分别打进各路由 chunk 后，
+  // 跨 chunk 的 instanceof 恒为 false，会把 service 层抛出的 4xx 业务错误整体降级成 500
+  const appError = isAppError(err)
+    ? err
+    : new InternalServerError(err instanceof Error ? err.message : 'Internal server error');
 
   // 5xx 视为服务端故障按 error 记录并附堆栈；4xx 属预期客户端错误按 warn 记录
   if (appError.statusCode >= 500) {

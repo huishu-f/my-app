@@ -58,7 +58,8 @@ export function PostToc({ articleId }: PostTocProps) {
     const observer = new MutationObserver(() => extractHeadings());
     observer.observe(article, { childList: true, subtree: true, characterData: true });
     return () => observer.disconnect();
-  }, [articleId]);
+    // extractHeadings 已用 useCallback 按 [articleId] 记忆化，此处显式列出使依赖完整且不改变触发时机
+  }, [articleId, extractHeadings]);
 
   /** 滚动时按 rAF 节流计算阅读进度：已滚动距离 / 可滚动总高度，封顶 1 */
   useRafScroll((_scrollY, docHeight) => {

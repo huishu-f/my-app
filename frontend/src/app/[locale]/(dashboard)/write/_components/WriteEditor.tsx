@@ -25,7 +25,7 @@ import { useCreatePost, useUpdatePost, usePostData } from '@/services/blog/hooks
 import { ApiRequestError } from '@/lib/api/request';
 import { estimateReadingTime } from '@/lib/markdown';
 import { sanitizeArticleContent } from '@/lib/sanitize';
-import { HIGHLIGHT_ALIASES, MARKED_OPTIONS, highlightCode } from '@/lib/markdown-highlight';
+import { MARKED_OPTIONS, highlightCode, registerHighlightLanguages } from '@/lib/markdown-highlight';
 import { CATEGORY_LABEL_KEYS, CATEGORY_VALUES } from '@/lib/category';
 import { hasInAppHistory } from '@/lib/navigation';
 import { ALLOWED_IMAGE_HOSTS, isSafeImageUrl } from '@/lib/validators';
@@ -77,14 +77,9 @@ function getMarkdownRenderer(): Promise<(content: string) => Promise<string>> {
       python,
       sql,
     };
-    // 按 HIGHLIGHT_ALIASES 把语言与其别名一并注册（如文章里写 ```ts 也能命中 typescript）
-    for (const [lang, aliases] of Object.entries(HIGHLIGHT_ALIASES)) {
-      const mod = LANGUAGE_MODULES[lang];
-      if (mod) {
-        hljs.registerLanguage(lang, mod);
-        for (const alias of aliases) hljs.registerLanguage(alias, mod);
-      }
-    }
+    // 按 HIGHLIGHT_ALIASES 把语言与其别名一并注册（如文章里写 ```ts 也能命中 typescript）；
+    // 注册循环与文章页共用 registerHighlightLanguages，两侧只各自决定「注册哪些语言」
+    registerHighlightLanguages(hljs, LANGUAGE_MODULES);
 
     const renderer = new marked.Renderer();
     // 自定义代码块渲染：高亮失败时降级输出原始代码，不让预览整块报错
@@ -462,11 +457,9 @@ export function WriteEditor() {
         toast.success(isEditMode ? t('postUpdated') : t('postPublished'));
 
         const target = data?.post?.id ? `/posts/${data.post.id}` : '/posts';
+        // 无需 router.refresh()：保存走 Server Action，其内部的 revalidatePath 已把 Client Cache 里
+        // 详情页/列表页的旧 RSC 快照一并清掉，这里 replace 过去拿到的就是新内容
         router.replace(target);
-        // 编辑/发布后强制向服务端重取当前路由：绕开浏览器 Router Cache 里该详情页的旧 RSC 快照。
-        // 服务端 invalidateBlogCache 的 revalidateTag 只清 Data/Full Route Cache，触达不到客户端路由缓存，
-        // 否则「详情页 → 编辑 → 存回详情页」会命中旧缓存，内容看着没变。
-        router.refresh();
       }
     };
 

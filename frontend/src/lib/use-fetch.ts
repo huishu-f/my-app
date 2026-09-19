@@ -214,6 +214,8 @@ export function useFetch<T>(
     };
 
     // 反直觉写法：deps 为动态长度数组，只能在 effect 依赖里展开，否则无法逐项响应变化
+    // 展开项本身就等于 deps 的内容，静态分析无法校验，故关闭本行校验（错误依赖会直接表现为该 hook 不重取）
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enabled, tick, cacheKey, ...deps]);
 
   // 通过自增 tick 触发主 effect 重跑，实现手动刷新；enabled 为 false 时不响应
