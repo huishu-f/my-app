@@ -1,0 +1,16 @@
+packages:
+  - "frontend"
+  - "shared"
+  - "backend"
+# 本机（Windows）创建的「目录符号链接」不可读（type:'dir' 会退化成空目录），
+# 而 pnpm 默认的 isolated 布局大量依赖目录链接 → node_modules 里出现一堆空目录，
+# 依赖互相解析失败、tsc 报 Cannot find module。hoisted 布局不产生符号链接，规避该问题。
+nodeLinker: hoisted
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  pnpm: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - lucide-react@1.46.0
+  - zod@4.6.5

@@ -1,0 +1,87 @@
+/**
+ * @file animations.css
+ * @description 全站 @keyframes 定义与 shake 工具类；时长/缓动在 tokens.css 的 @theme 中注册为 animate-* utility，本文件不含时长配置
+ */
+
+/* ===== 关键帧（由 tokens.css 注册的 animate-* utility 或下方 shake 类触发，触发方决定 duration） ===== */
+
+/** 渐入：透明度 0 → 1 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/** 弹入：淡入同时从 98% 微缩放回到原尺寸（幅度仅 2%，避免浮夸张） */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/** 弹出退场：与 pop-in 成对，淡出并缩至 98% */
+@keyframes pop-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+/** 抖动：25% / 75% 关键帧处左右各平移 6px（位移量，px），首尾归位 */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+/** 旋转：仅 to 关键帧（360deg），配合 linear infinite 做加载指示 */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/** 呼吸灯：端点 0.3 透明度 / 0.8 缩放 ↔ 中点全亮全尺寸，循环呈明暗脉动（装饰用） */
+@keyframes breathing {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/** 骨架屏脉动：仅透明度在半程降到 0.5 再回满，不缩放——占位块保持稳定尺寸，避免加载期布局抖动；
+    命名与 Tailwind 内置 pulse 区分，确保本项目的时长与缓动完全由 --animate-pulse 掌控 */
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/** shake 工具类（@utility）：挂类即播一轮 0.35s 水平抖动；用于设置页保存失败的 error Alert 反馈 */
+@utility shake {
+  animation: shake 0.35s ease-in-out;
+}

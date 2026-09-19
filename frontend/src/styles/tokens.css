@@ -1,0 +1,396 @@
+/**
+ * @file tokens.css
+ * @description 全站设计令牌唯一来源：中性色阶 / 四组色相 / 阴影透明度（亮暗两套）+ @theme 语义绑定与间距、字号、行高、圆角、阴影、字体、动效刻度；组件禁止绕过本文件写裸值
+ */
+
+:root {
+  /* ===== 亮色模式：中性色阶（数值越大越深，小数值做背景、大数值做文字） ===== */
+
+  /** 纯白底色：卡片背景 --color-card-bg 来源；dark 下被覆盖为深灰 */
+  --color-0: #ffffff;
+  /** 页面背景：绑定 --color-page */
+  --color-50: #fafafa;
+  /** 面板底色：绑定 --color-surface，用于输入框、代码块、chip 等底 */
+  --color-100: #efeff1;
+  /** 默认描边：绑定 --color-stroke，全站边框与分割线 */
+  --color-200: #e4e4e7;
+  /** 强描边：绑定 --color-stroke-strong，hover 边框、滚动条滑块 */
+  --color-300: #bcbcc4;
+  /** 最弱文字：绑定 --color-faint，占位符与 meta 信息；
+      #6b6b74 是在最深的浅底 surface(#efeff1) 上仍满足 WCAG AA 4.5 的最浅取值（实测 4.59，page 5.05 / card 5.28） */
+  --color-400: #6b6b74;
+  /** 弱化文字：绑定 --color-muted，次要说明 */
+  --color-500: #5e5e68;
+  /** 正文文字：绑定 --color-body */
+  --color-600: #4b4b54;
+  /** 链接文字：绑定 --color-link */
+  --color-700: #3f3f46;
+  /** 标题文字：绑定 --color-heading */
+  --color-800: #1f1f23;
+  /** 最深色：绑定 --color-accent，主按钮/焦点环/选中态的强调色（dark 下反转为近白） */
+  --color-900: #09090b;
+
+  /* ===== 四组色相：tint = 浅色调（color-mix 掺入背景用），base = 深色调（做文字色） ===== */
+
+  /** 墨蓝浅调：info 状态与 ink 标签的掺色背景 */
+  --color-ink-tint: #90a1ba;
+  /** 墨蓝深调：info 状态与 ink 标签的文字色 */
+  --color-ink-base: #3d5d8a;
+  /** 琥珀浅调：warning 状态与 ember 标签的掺色背景 */
+  --color-ember-tint: #d7aa7e;
+  /** 琥珀深调：warning 状态与 ember 标签的文字色 */
+  --color-ember-base: #8f5a26;
+  /** 绯红浅调：error 状态与 crimson 标签的掺色背景 */
+  --color-crimson-tint: #ce8888;
+  /** 绯红深调：error 状态与 crimson 标签的文字色 */
+  --color-crimson-base: #a33930;
+  /** 黛绿浅调：success 状态与 slate 标签的掺色背景 */
+  --color-slate-tint: #789385;
+  /** 黛绿深调：success 状态与 slate 标签的文字色 */
+  --color-slate-base: #356549;
+
+  /* ===== 阴影透明度：供 --shadow-* 组合引用的黑色 alpha 档位 ===== */
+
+  /** 轻档：xs / sm 阴影及 md 阴影下层 */
+  --shadow-opacity-sm: 0.05;
+  /** 中档：md 阴影上层、lg 阴影下层 */
+  --shadow-opacity-md: 0.07;
+  /** 重档：lg 阴影上层（auth 卡片等大浮层） */
+  --shadow-opacity-lg: 0.09;
+
+  /** 浮层轮廓补偿色：亮色下不需要（深色阴影在浅底上本就有边界），故为透明；dark 内改为微亮白圈 */
+  --color-ring-contrast: transparent;
+
+  /* ===== 交互叠加比例：hover / active 时按比例把标题色掺入底色，比例随主题自动切换 ===== */
+  /* 组件层只写一次颜色叠加表达式（取下面的语义档位），深浅两套强度由 .dark 覆盖本组令牌完成，因此不再需要逐组件写 dark 覆写 */
+
+  /** 大面积容器 hover 底色：移动导航条目、描边 chip 这类宽热区，过重会显脏故取最轻档 */
+  --overlay-soft: 6%;
+  /** 标准交互元素 hover 底色：按钮、图标按钮、分段项 */
+  --overlay-hover: 8%;
+  /** 按下态与需要更实反馈的 hover：按钮 active、大号徽标 hover */
+  --overlay-press: 14%;
+
+  /** 声明页面为亮色配色：浏览器原生控件（滚动条、表单控件）按亮色渲染 */
+  color-scheme: light;
+}
+
+/* ===== dark 模式覆盖：触发条件为 html 挂 .dark 类（next-themes class 模式，非系统 prefers-color-scheme） ===== */
+.dark {
+  /* 中性色阶整体反转：小数值变为深色背景层，大数值变为浅色文字 */
+  /** 卡片底色：深灰，比页面背景略亮以拉开层级 */
+  --color-0: #17171c;
+  /** 页面背景：近黑 */
+  --color-50: #0a0a0b;
+  /** 面板底色：介于页面背景与卡片之间 */
+  --color-100: #141417;
+
+  /** 默认描边（dark） */
+  --color-200: #26262c;
+  /** 强描边（dark） */
+  --color-300: #3a3a46;
+  /** 最弱文字（dark）：深底上需整体提亮才达标（实测 surface 5.37 / card 5.22） */
+  --color-400: #8a8a93;
+  /** 弱化文字（dark）：与 400 保持一档层级差 */
+  --color-500: #9a9aa3;
+  /** 正文文字：提亮保证深底可读 */
+  --color-600: #a1a1aa;
+  /** 链接文字（dark） */
+  --color-700: #d4d4d8;
+  /** 标题文字：近白 */
+  --color-800: #ececef;
+  /** 强调色：反转为近白（bg-accent 变白底，配套 text-page 用深色） */
+  --color-900: #fafafa;
+
+  /* 四组色相：dark 下提亮以保持深底对比度，角色与亮色同名令牌一一对应 */
+  /** 墨蓝浅调（dark） */
+  --color-ink-tint: #6984a4;
+  /** 墨蓝深调 → 提亮为浅蓝文字 */
+  --color-ink-base: #7ba8d8;
+  /** 琥珀浅调（dark） */
+  --color-ember-tint: #b0855c;
+  /** 琥珀深调 → 提亮为浅琥珀文字 */
+  --color-ember-base: #dfa068;
+  /** 绯红浅调（dark） */
+  --color-crimson-tint: #a66868;
+  /** 绯红深调 → 提亮为浅红文字 */
+  --color-crimson-base: #e07878;
+  /** 黛绿浅调（dark） */
+  --color-slate-tint: #5a8670;
+  /** 黛绿深调 → 提亮为浅绿文字 */
+  --color-slate-base: #67b090;
+
+  /* 阴影透明度：深底色下黑色阴影几乎不可见，dark 整体上调补偿 */
+  /** 轻档（dark）：0.05 → 0.36 */
+  --shadow-opacity-sm: 0.36;
+  /** 中档（dark）：0.07 → 0.42 */
+  --shadow-opacity-md: 0.42;
+  /** 重档（dark）：0.09 → 0.52 */
+  --shadow-opacity-lg: 0.52;
+
+  /** 浮层轮廓补偿色（dark）：4% 白圈把浮层边界从近黑底上「切」出来，否则阴影与背景糊成一片 */
+  --color-ring-contrast: rgb(255 255 255 / 0.04);
+
+  /* 交互叠加比例：深底上「同色低透明叠加」对比不足，三档整体上调，组件层因此无需再写 dark 覆写 */
+  /** 大面积容器 hover（6% → 12%） */
+  --overlay-soft: 12%;
+  /** 标准交互元素 hover（8% → 14%） */
+  --overlay-hover: 14%;
+  /** 按下态 / 强调 hover（14% → 20%） */
+  --overlay-press: 20%;
+
+  /** 声明页面为暗色配色：浏览器原生控件按暗色渲染 */
+  color-scheme: dark;
+}
+
+/* ===== @theme：Tailwind v4 主题注册 =====
+   把上方原始令牌绑定为语义命名，生成 bg-page / text-heading / border-stroke / animate-* 等 utility，也可经 var() 引用；
+   组件样式层只应使用这一层的名字 */
+@theme {
+  /* ===== 语义色：组件统一引用本组，不直接使用数字色阶 ===== */
+  /** 页面背景（utility bg-page）← 中性 50 */
+  --color-page: var(--color-50);
+  /** 面板/输入底色（bg-surface）← 100 */
+  --color-surface: var(--color-100);
+  /** 默认描边（border-stroke）← 200 */
+  --color-stroke: var(--color-200);
+  /** 强描边（border-stroke-strong）← 300 */
+  --color-stroke-strong: var(--color-300);
+  /** 标题文字（text-heading）← 800 */
+  --color-heading: var(--color-800);
+  /** 正文文字（text-body）← 600 */
+  --color-body: var(--color-600);
+  /** 弱化文字（text-muted）← 500 */
+  --color-muted: var(--color-500);
+  /** 最弱文字（text-faint）← 400 */
+  --color-faint: var(--color-400);
+  /** 全站强调色（bg-accent / text-accent）← 900：主按钮、焦点环、选中态 */
+  --color-accent: var(--color-900);
+
+  /* 按钮状态叠加底：transparent 上叠 heading 色，比例取 --overlay-*（dark 下自动加重），得到随主题变化的半透明反馈 */
+  /** hover 叠加底 */
+  --color-btn-hover-bg: color-mix(in srgb, var(--color-heading) var(--overlay-hover), transparent);
+  /** active 按下叠加底 */
+  --color-btn-active-bg: color-mix(in srgb, var(--color-heading) var(--overlay-press), transparent);
+
+  /** 文内链接色（text-link）← 700 */
+  --color-link: var(--color-700);
+  /** 链接 hover 色 ← 800 */
+  --color-link-hover: var(--color-800);
+
+  /** 卡片背景（bg-card-bg）← 0：亮色纯白 / dark 深灰 */
+  --color-card-bg: var(--color-0);
+  /** 卡片描边（border-card-border）← 200 */
+  --color-card-border: var(--color-200);
+
+  /** 吸顶导航底色：page 色 90% 半透明，供 nav-surface 工具类消费；
+      配合 --nav-blur 的模糊，滚动内容只在下方形成柔和色块，不会透出可辨认的文字轮廓 */
+  --color-nav-surface: color-mix(in srgb, var(--color-page) 90%, transparent);
+
+  /** chip / badge 静置底色：标题色 10% 掺入面板色，四个 chip/badge 变体共用同一表达式，避免各处写 10% 裸值 */
+  --color-chip-bg: color-mix(in srgb, var(--color-heading) 10%, var(--color-surface));
+
+  /* 代码高亮 syntax 色：typography.css 的 .tok-* 与各 code 场景引用，随 dark 自动切换 */
+  /** 注释：最弱灰 + 斜体 */
+  --color-syntax-comment: var(--color-400);
+  /** 标点符号 */
+  --color-syntax-punct: var(--color-600);
+  /** 关键字：最强档 */
+  --color-syntax-keyword: var(--color-800);
+  /** 函数名 / 标识符 */
+  --color-syntax-fn: var(--color-700);
+  /** 类型名 */
+  --color-syntax-type: var(--color-500);
+
+  /* 状态反馈色（alert、toast、表单校验共用）：-bg = tint 掺 14% 入 surface 100，主色 = 对应 base */
+  /** info 背景（墨蓝调） */
+  --color-state-info-bg: color-mix(in srgb, var(--color-ink-tint) 14%, var(--color-100));
+  /** info 文字/图标（墨蓝深调） */
+  --color-state-info: var(--color-ink-base);
+  /** success 背景（黛绿调） */
+  --color-state-success-bg: color-mix(in srgb, var(--color-slate-tint) 14%, var(--color-100));
+  /** success 文字/图标 */
+  --color-state-success: var(--color-slate-base);
+  /** warning 背景（琥珀调） */
+  --color-state-warning-bg: color-mix(in srgb, var(--color-ember-tint) 14%, var(--color-100));
+  /** warning 文字/图标 */
+  --color-state-warning: var(--color-ember-base);
+  /** error 背景（绯红调） */
+  --color-state-error-bg: color-mix(in srgb, var(--color-crimson-tint) 14%, var(--color-100));
+  /** error 文字/图标，也用于输入框错误态描边 */
+  --color-state-error: var(--color-crimson-base);
+
+  /* hero 视觉仿 mac 窗口红绿灯（components.css 的 hero-dot-* 引用） */
+  /** 关闭点：绯红 */
+  --color-mac-close: var(--color-crimson-base);
+  /** 最小化点：琥珀 */
+  --color-mac-minimize: var(--color-ember-base);
+  /** 最大化点：黛绿 */
+  --color-mac-maximize: var(--color-slate-base);
+
+  /* 标签四色（Tag 组件 tag-* 工具类引用）：-bg = tint 掺 18% 入 surface，文字 = 对应 base */
+  /** 墨蓝标签背景 */
+  --color-tag-ink-bg: color-mix(in srgb, var(--color-ink-tint) 18%, var(--color-100));
+  /** 墨蓝标签文字 */
+  --color-tag-ink: var(--color-ink-base);
+  /** 琥珀标签背景 */
+  --color-tag-ember-bg: color-mix(in srgb, var(--color-ember-tint) 18%, var(--color-100));
+  /** 琥珀标签文字 */
+  --color-tag-ember: var(--color-ember-base);
+  /** 绯红标签背景 */
+  --color-tag-crimson-bg: color-mix(in srgb, var(--color-crimson-tint) 18%, var(--color-100));
+  /** 绯红标签文字 */
+  --color-tag-crimson: var(--color-crimson-base);
+  /** 黛绿标签背景 */
+  --color-tag-slate-bg: color-mix(in srgb, var(--color-slate-tint) 18%, var(--color-100));
+  /** 黛绿标签文字 */
+  --color-tag-slate: var(--color-slate-base);
+
+  /* ===== 间距刻度（单位 px）：经 var(--space-N) 引用，组件禁止写裸值 ===== */
+  /** 0px：归零档 */
+  --space-0: 0px;
+  /** 4px：图标与文字等微隙 */
+  --space-1: 4px;
+  /** 8px：组件内部组间距 */
+  --space-2: 8px;
+  /** 12px：表格单元格等中档内边距 */
+  --space-3: 12px;
+  /** 16px：常用块内边距 */
+  --space-4: 16px;
+  /** 20px：文章块级兄弟间距、代码块内边距 */
+  --space-5: 20px;
+  /** 24px：blockquote 左缩进等较大内边距 */
+  --space-6: 24px;
+  /** 32px：较大块间距档 */
+  --space-7: 32px;
+  /** 40px：文章 h2 顶部与 hr 的大隔距 */
+  --space-8: 40px;
+  /** 48px：大区块间距档 */
+  --space-9: 48px;
+  /** 64px：hero 区块上下留白 */
+  --space-10: 64px;
+  /** 80px：特大间距档 */
+  --space-11: 80px;
+  /** 96px：最大间距档 */
+  --space-12: 96px;
+
+  /* ===== 字号刻度（单位 px）：经 var(--type-N) 或 text-(length:--type-N) 引用 ===== */
+  /** 10px：微徽章与头像首字母专用——承载单字母字形而非连续正文，故作为刻度下限单独列出 */
+  --type-3xs: 10px;
+  /** 12px：标签、meta 信息、表单提示 */
+  --type-2xs: 12px;
+  /** 14px：toast、分段控件等紧凑交互文字 */
+  --type-xs: 14px;
+  /** 16px：正文基准与表单控件字号（body 即用它） */
+  --type-sm: 16px;
+  /** 18px：文章正文、auth 页副标题 */
+  --type-base: 18px;
+  /** 20px：小节标题 section-title */
+  --type-md: 20px;
+  /** 24px：文章 h3、auth 标题、统计数字 */
+  --type-lg: 24px;
+  /** 30px：页面标题 page-title、文章 h2 */
+  --type-xl: 30px;
+  /** 38px：展示级大字档 */
+  --type-2xl: 38px;
+  /** 48px：最大展示级字档 */
+  --type-3xl: 48px;
+
+  /* ===== 行高刻度（无单位倍数，随字号缩放） ===== */
+  /** 1：无行距档 */
+  --leading-none: 1;
+  /** 1.25：紧凑，标题类 */
+  --leading-tight: 1.25;
+  /** 1.35：略紧，小节标题 */
+  --leading-snug: 1.35;
+  /** 1.5：常规，表单控件与辅助文字 */
+  --leading-normal: 1.5;
+  /** 1.6：宽松，body 基准即为此值 */
+  --leading-relaxed: 1.6;
+  /** 1.7：最松，文章正文与长段落 */
+  --leading-loose: 1.7;
+
+  /* ===== 圆角刻度（单位 px） ===== */
+  /** 4px：行内 code 等最小圆角 */
+  --radius-xs: 4px;
+  /** 6px：小控件档 */
+  --radius-sm: 6px;
+  /** 8px：中控件档 */
+  --radius-md: 8px;
+  /** 10px：较大控件档 */
+  --radius-lg: 10px;
+  /** 12px：卡片、代码块、文内图片等块级容器 */
+  --radius-xl: 12px;
+  /** 16px：auth 卡片、hero 代码窗等大容器 */
+  --radius-2xl: 16px;
+  /** 1000px：任意尺寸下的胶囊/正圆（远大于常见组件半径的一半） */
+  --radius-full: 1000px;
+
+  /* ===== 阴影：1~2 层黑色叠加，透明度取 --shadow-opacity-*（dark 下自动加重） ===== */
+  /** 最轻：单层贴地投影，按钮/徽标/分段选中项浮起 */
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / var(--shadow-opacity-sm));
+  /** 轻：双层，卡片 hover 等小浮层 */
+  --shadow-sm:
+    0 1px 4px rgb(0 0 0 / var(--shadow-opacity-sm)), 0 1px 2px rgb(0 0 0 / var(--shadow-opacity-sm));
+  /** 中：双层，文内图片、hero 代码窗 hover、toast */
+  --shadow-md:
+    0 4px 12px rgb(0 0 0 / var(--shadow-opacity-md)),
+    0 2px 4px rgb(0 0 0 / var(--shadow-opacity-sm));
+  /** 重：双层大扩散，auth 卡片等页面级浮层 */
+  --shadow-lg:
+    0 12px 32px rgb(0 0 0 / var(--shadow-opacity-lg)),
+    0 4px 12px rgb(0 0 0 / var(--shadow-opacity-md));
+  /** 面板：Modal 这类居中浮层专用——在 lg 之上叠 1px 轮廓补偿圈（亮色透明 / dark 4% 白），
+      使深色主题下面板边界不糊；组建时改这里，组件层用 shadow-(--shadow-panel) 消费 */
+  --shadow-panel: var(--shadow-lg), 0 0 0 1px var(--color-ring-contrast);
+
+  /* ===== 字体栈：中文回退按 mac/Win/Linux 常见顺序排列 ===== */
+  /** 衬线：hero 导语、display-serif 展示标题 */
+  --font-serif: Georgia, 'Songti SC', 'Noto Serif SC', ui-serif, serif;
+  /** 无衬线：body 全站基准 */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Noto Sans SC', sans-serif;
+  /** 等宽：代码块与行内 code */
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* ===== 缓动与动画注册：--animate-* 生成 animate-* utility（时长单位 s），keyframes 定义见 animations.css ===== */
+  /** 平滑缓动：起步快、尾段缓停，配 pop/tilt/导航下划线等微交互 */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  /** 渐入：透明度 0→1 共 0.3s；both 保持动画前后关键帧状态 */
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  /** 弹入：0.2s 透明度 + 0.98→1 微缩放 */
+  --animate-pop-in: pop-in 0.2s var(--ease-smooth) both;
+  /** 弹出：与 pop-in 成对的退场（1→0.98 并淡出） */
+  --animate-pop-out: pop-out 0.2s var(--ease-smooth) both;
+  /** 旋转：0.6s 匀速无限循环，加载指示用 */
+  --animate-spin: spin 0.6s linear infinite;
+  /** 呼吸：4.5s 明暗 + 缩放的循环装饰效果 */
+  --animate-breathing: breathing 4.5s ease-in-out infinite;
+  /** 脉动：骨架屏占位块明暗循环；周期 2s，缓动改用全站统一曲线；keyframes 见 animations.css */
+  --animate-pulse: skeleton-pulse 2s var(--ease-smooth) infinite;
+
+  /* ===== 布局尺寸与层级 ===== */
+  /* 经 var(--nav-h) / z-(--z-modal) 引用；层级只允许取本组语义名，禁止在组件里写裸 z-数字 */
+
+  /** 顶部导航栏高度：Navbar 的 h-*、MobileMenu 的 top-*、主内容区的 100vh 补差共用同一来源 */
+  --nav-h: 64px;
+  /** 吸顶导航背景模糊半径：配合 --color-nav-surface 的半透明底形成毛玻璃 */
+  --nav-blur: 12px;
+  /** 装饰层（氛围光晕、背景纹理）：显式归零，使内容层抬升有明确参照 */
+  --z-decor: 0;
+  /** 内容层：页面主体、卡片内容、整卡跳转覆盖层（auth 主体靠它盖过装饰光晕） */
+  --z-content: 10;
+  /** 抬升内容：需盖过同容器内覆盖层的可交互元素（卡片内的标签区、操作按钮） */
+  --z-raised: 20;
+  /** 页内悬浮标记：阅读进度条等贴边指示 */
+  --z-toc: 30;
+  /** 吸顶元素：顶部导航、回到顶部按钮 */
+  --z-sticky: 40;
+  /** 浮层遮罩（移动抽屉遮罩、弹窗遮罩），必须低于其面板 */
+  --z-overlay: 60;
+  /** 浮层面板（Modal、移动抽屉、用户下拉菜单） */
+  --z-modal: 70;
+  /** 全局提示：任何情况下都盖在所有浮层之上 */
+  --z-toast: 80;
+  /** 跳过导航链接：仅键盘聚焦时出现，需盖过一切 */
+  --z-skip: 90;
+}

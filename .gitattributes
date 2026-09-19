@@ -1,0 +1,8 @@
+# 全仓统一 LF 行尾，与 .prettierrc.mjs 的 endOfLine: 'lf' 对齐。
+# 背景：此前没有该文件且 core.autocrlf=true，工作区被检出为 CRLF，导致
+# prettier --check 全仓 178 个文件报错、pnpm check 整体变红。
+* text=auto eol=lf
+
+# 二进制资源不参与换行归一化
+*.png binary
+*.ico binary

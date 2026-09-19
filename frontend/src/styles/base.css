@@ -1,0 +1,175 @@
+/**
+ * @file base.css
+ * @description 基础层：全局重置与元素级默认样式（焦点环、选区、滚动条、表单控件）；只放元素选择器，组件类样式在 components.css
+ */
+
+/* ===== 全局重置 ===== */
+
+/* 默认描边兜底：任何只写边框宽度未写颜色的元素，统一取主题描边色 */
+* {
+  border-color: var(--color-stroke);
+}
+
+/** 全站锚点跳转平滑滚动；用户开启减动效时被下方媒体查询降级为 auto */
+html {
+  scroll-behavior: smooth;
+  /* 常驻滚动条槽位：锁滚动（抽屉/弹窗置 body overflow:hidden）时滚动条消失不再引起内容位移 */
+  scrollbar-gutter: stable;
+}
+
+/** body 基准：页面底色/正文色/无衬线字体/字号 --type-sm；line-height 1.6 为无单位倍数（≈ --leading-relaxed 档），双端字体平滑渲染 */
+body {
+  margin: 0;
+  background: var(--color-page);
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  font-size: var(--type-sm);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== 焦点与选区 ===== */
+
+/** 键盘导航焦点环：仅 focus-visible（键盘/辅助技术聚焦）触发，鼠标点击不显示；2px accent 实线（px）+ 2px 外偏移 */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/** 表单控件不走全局 outline：聚焦时改由边框/盒阴影反馈（.input-focus 类在 components.css 定义，触发条件 = 挂该类且 :focus） */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.input-focus:focus {
+  outline: none;
+}
+
+/** 输入框占位文字：muted 色；opacity: 1 抵消部分浏览器对 placeholder 的默认降透明 */
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
+}
+
+/** 用户划选文本时的反色：accent 以 22% 透明叠加作底 */
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  color: var(--color-heading);
+}
+
+/** 减动效降级：触发条件 = 用户系统开启「减弱动态效果」（prefers-reduced-motion: reduce）；所有动画/过渡压到 0.01ms、禁循环与平滑滚动，!important 强制覆盖全站动效 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== 滚动条（仅 WebKit 内核生效） ===== */
+
+/** 细滚动条：宽高各 6px（px），纵横通用 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/** 轨道完全透明，只留滑块 */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/** 滑块：强描边色 + 胶囊圆角 */
+::-webkit-scrollbar-thumb {
+  background: var(--color-stroke-strong);
+  border-radius: var(--radius-full);
+}
+
+/** 触发条件：指针悬停滑块时提亮为 muted */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/** 链接全局去下划线：文内链接的视觉由 article-content 工具类自行补足（typography.css） */
+a {
+  text-decoration: none;
+}
+
+/** 图片防溢出：最大宽随容器收缩；block 消除行内基线留白 */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/** Tailwind @layer base：注册进 base 层（优先级最低，可被 utility 覆盖）；以下为表单控件默认重置 */
+@layer base {
+  /** button 重置：继承字体、手型光标，清掉 UA 默认边框/底色/文字色 */
+  button {
+    font: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: inherit;
+  }
+
+  /** 控件默认不继承字体：统一继承页面字体与文字色 */
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  /** 文本类控件清空 UA 原生外观（iOS 圆角壳、number 步进器等），字号固定 --type-sm（16px，低于该值 iOS 聚焦会放大页面） */
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='url'],
+  input[type='search'],
+  input[type='tel'],
+  input[type='number'],
+  input[type='date'],
+  textarea,
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    border-style: solid;
+    font-size: var(--type-sm);
+    line-height: 1.5;
+  }
+
+  /** 触发条件：:disabled 属性生效时；降透明度 + 禁入光标，并覆盖 iOS 对禁用输入框强制的灰字 */
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  /** textarea 在部分内核默认等宽字体：改为继承页面字体 */
+  textarea {
+    font-family: inherit;
+  }
+
+  /** select 已清 appearance 无原生底色：补铺页面背景色 */
+  select {
+    background-color: var(--color-page);
+  }
+}
+
+@layer base {
+  /** 图标 SVG 按字号渲染：1em 随上下文字号缩放；-0.125em（em，相对字号）基线校正值使其与文字视觉对齐 */
+  svg {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    vertical-align: -0.125em;
+  }
+}

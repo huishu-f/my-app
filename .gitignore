@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Testing
+coverage/
+
+# Production
+build/
+dist/
+
+# Misc
+.DS_Store
+*.pem
+.temp/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js
+.next/
+frontend/.next/
+
+# TypeScript
+*.tsbuildinfo
+
+# Next.js 自动生成（内容随 dev/build 在 .next/types 与 .next/dev/types 间翻转，
+# 入库只会带来噪音；next dev/build 会自动重新生成，tsc 不依赖它）
+next-env.d.ts
+
+# IDE
+.idea/
+.vscode/settings.local.json
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.env*
+
+# Local scratch (agent 调试截图 / 一次性测试数据 / 迁移脚本，勿入库)
+.shots/
+.workbuddy/tmp/

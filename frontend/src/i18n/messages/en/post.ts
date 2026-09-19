@@ -1,0 +1,52 @@
+/**
+ * @file post.ts
+ * @description 文章详情页（目录、点赞收藏、评论、上一篇下一篇）的英文 UI 文案
+ */
+import type { Messages } from '@/i18n/messages/zh/post';
+
+const post: Messages = {
+  back: 'Back',
+  readingTime: '{minutes} min read',
+  notFoundTitle: 'Post not found',
+  tocLabel: 'Contents',
+  tocNav: 'In-article navigation',
+  readingProgress: 'Reading progress',
+  toc: 'Contents',
+  like: 'Like',
+  liked: 'Liked',
+  favorite: 'Favorite',
+  favorited: 'Favorited',
+  loginToLike: 'Sign in to like',
+  loginToFavorite: 'Sign in to favorite',
+  commentsCount: '{count} comments',
+  likeSuccess: 'Liked',
+  unlikeSuccess: 'Unliked',
+  favoriteSuccess: 'Favorited',
+  unfavoriteSuccess: 'Unfavorited',
+  editPost: 'Edit',
+  deletePost: 'Delete',
+  deletePostDesc: 'Cannot be undone. The post and all comments will be deleted.',
+  postDeleted: 'Post deleted',
+  commentsTitle: 'Comments',
+  commentPlaceholder: 'Share your thoughts… (⌘/Ctrl+Enter to send)',
+  submitComment: 'Comment',
+  commentLoginBefore: 'Sign in',
+  commentLoginAfter: ' to join the conversation',
+  commentLoadError: 'Failed to load comments',
+  noCommentsTitle: 'No comments yet',
+  noCommentsDesc: 'Be the first to jump in',
+  loadMoreComments: 'Load more ({count} left)',
+  deleteCommentTitle: 'Delete',
+  deleteCommentDesc: 'This cannot be undone.',
+  confirmDeleteBtn: 'Delete',
+  commentCreated: 'Comment posted',
+  commentCreateFailed: 'Failed to post comment',
+  commentUpdated: 'Comment updated',
+  commentUpdateFailed: 'Failed to update comment',
+  commentDeleted: 'Comment deleted',
+  commentDeleteFailed: 'Failed to delete comment',
+  prevPost: 'Previous post',
+  nextPost: 'Next post',
+};
+
+export default post;

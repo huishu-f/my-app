@@ -1,0 +1,13 @@
+/**
+ * @file hljs-theme.css
+ * @description highlight.js 代码块配色入口：默认装载 github 亮色主题，dark 下叠加 github-dark；仅做配色切换，token 自定义色见 typography.css
+ */
+
+/* 亮色（默认）代码块配色：highlight.js 内置 github 主题，提供 hljs-* 类与 CSS 变量 */
+@import 'highlight.js/styles/github.css';
+
+/* 触发条件：html 挂 .dark 类（class 模式切换，见 globals.css 的 @custom-variant）；在 dark 作用域内引入 github-dark，覆盖同名主题变量 */
+.dark {
+  /* 暗色代码块配色：与上方 github 成对的暗色版本 */
+  @import 'highlight.js/styles/github-dark.css';
+}
