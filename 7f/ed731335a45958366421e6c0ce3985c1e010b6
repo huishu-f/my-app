@@ -1,0 +1,84 @@
+frontend/src/app/[locale]/page.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 15
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 21
+frontend/src/server/actions/posts.ts
+  s_65b9d82bf90f30::t_16cee34675fd8a 20
+  s_65b9d82bf90f30::t_fda15fa1542570 19
+frontend/src/lib/apiRequest.ts
+  s_65b9d82bf90f30::t_3c83b0b7a7977e 2
+frontend/src/components/blog/DeletePostButton.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 14
+frontend/src/server/utils/routeHandler.ts
+  s_65b9d82bf90f30::t_16cee34675fd8a 10
+frontend/src/components/blog/PostActions.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 11
+frontend/src/components/dashboard/RemoveFavoriteButton.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 11
+frontend/src/server/container.ts
+  s_65b9d82bf90f30::t_16cee34675fd8a 6-14
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 11,16
+frontend/src/server/actions/auth.ts
+  s_65b9d82bf90f30::t_fda15fa1542570 14
+  s_65b9d82bf90f30::t_16cee34675fd8a 20
+frontend/src/server/actions/comments.ts
+  s_65b9d82bf90f30::t_16cee34675fd8a 13
+  s_65b9d82bf90f30::t_fda15fa1542570 12
+frontend/src/server/actions/interactions.ts
+  s_65b9d82bf90f30::t_fda15fa1542570 11
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 23
+frontend/src/app/sitemap.ts
+  s_65b9d82bf90f30::t_fda15fa1542570 7
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 17
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 11
+frontend/src/hooks/useLogoutRedirect.ts
+  s_65b9d82bf90f30::t_fda15fa1542570 10
+frontend/src/components/blog/CommentsSection.tsx
+  s_65b9d82bf90f30::t_fda15fa1542570 20
+frontend/src/server/auth/authCookieHelper.ts
+  s_65b9d82bf90f30::t_71ba044b284ed3 10
+frontend/src/server/auth/authGuard.ts
+  s_65b9d82bf90f30::t_5f82b6f48e4271 9
+frontend/src/server/auth/authServer.ts
+  s_65b9d82bf90f30::t_420723d7ffe44e 2
+frontend/src/server/auth/authService.ts
+  s_65b9d82bf90f30::t_a06c6fc050a415 19-21
+frontend/src/server/auth/authValidators.ts
+  s_65b9d82bf90f30::t_9c7b7eca0bd151 2
+frontend/src/server/auth/passwordService.ts
+  s_65b9d82bf90f30::t_495208b6e74387 2
+frontend/src/server/auth/tokenService.ts
+  s_65b9d82bf90f30::t_5ad71f41956d6b 2
+frontend/src/server/blog/blogServer.ts
+  s_65b9d82bf90f30::t_7dddf0ffbe102b 2,15
+frontend/src/server/blog/blogService.ts
+  s_65b9d82bf90f30::t_eac142d34c4700 18-20
+frontend/src/server/blog/blogValidators.ts
+  s_65b9d82bf90f30::t_6023ed63c247e0 2
+frontend/src/server/blog/summaryService.ts
+  s_65b9d82bf90f30::t_4a55e13690c147 2
+frontend/src/server/comment/commentService.ts
+  s_65b9d82bf90f30::t_2739b3c8811ce4 13-15
+frontend/src/server/comment/commentValidators.ts
+  s_65b9d82bf90f30::t_f5514804313b42 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "7fed731335a45958366421e6c0ce3985c1e010b6",
+  "prompts": {},
+  "sessions": {
+    "s_65b9d82bf90f30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "50c8d85f-08b0-4a19-a85f-62f6f44bccab",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
