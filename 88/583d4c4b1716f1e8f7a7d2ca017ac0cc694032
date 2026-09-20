@@ -1,0 +1,76 @@
+frontend/src/app/errorPageShell.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 1-69
+frontend/src/lib/authConstants.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 1-10
+frontend/src/server/infrastructure/kvStore.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-142
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+frontend/src/server/modules/auth/authGuard.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 2,8-9
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-7,10-77
+frontend/src/server/infrastructure/kvRepository.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-152
+frontend/src/lib/markdownHighlight.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 1-77
+frontend/src/lib/apiRequest.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 1-379
+frontend/src/lib/authStatus.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-37
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+frontend/src/server/utils/rateLimit.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-60
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+frontend/src/server/modules/comment/kvComment.repository.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-118
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+frontend/src/server/modules/blog/services/blogService.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 1-768
+frontend/src/lib/errorToast.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-30
+frontend/src/server/infrastructure/kvMock.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 1-670
+frontend/src/components/authProvider.tsx
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-115
+frontend/src/server/utils/routeHandler.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+  s_65b9d82bf90f30::t_ad1721fac8149c 10
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-9,11-137
+frontend/src/server/utils/apiResponse.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 1-83
+frontend/src/server/modules/auth/kvUser.repository.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-193
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+frontend/src/server/modules/blog/kvBlog.repository.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-107
+frontend/src/server/modules/auth/authCookie.helper.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+  s_65b9d82bf90f30::t_ad1721fac8149c 10
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-9,11-77
+frontend/src/server/modules/comment/services/commentService.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 1-186
+frontend/src/server/modules/auth/services/authService.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 1-275
+frontend/src/server/modules/blog/services/markdownService.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 1,3-120
+  s_65b9d82bf90f30::t_ad1721fac8149c 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "88583d4c4b1716f1e8f7a7d2ca017ac0cc694032",
+  "prompts": {},
+  "sessions": {
+    "s_65b9d82bf90f30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "50c8d85f-08b0-4a19-a85f-62f6f44bccab",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
