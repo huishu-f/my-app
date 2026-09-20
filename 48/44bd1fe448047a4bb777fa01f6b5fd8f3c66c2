@@ -1,0 +1,162 @@
+frontend/src/app/[locale]/not-found.tsx
+  s_65b9d82bf90f30::t_d82f4b1f05443c 28-32
+  s_65b9d82bf90f30::t_3ae6a0454102a1 7
+frontend/src/components/layouts/UserMenu.tsx
+  s_65b9d82bf90f30::t_587917f697f507 4,12-19,48-49,56,67,69-102,104-116,118-149
+frontend/src/lib/errorToast.ts
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 6
+frontend/src/server/actions/auth.ts
+  s_65b9d82bf90f30::t_92bae095ece0c6 38
+  s_65b9d82bf90f30::t_3fc94b1bbc0dce 62
+  s_65b9d82bf90f30::t_228c0583f88afa 103
+  s_65b9d82bf90f30::t_03f1f203681e5d 40
+  s_65b9d82bf90f30::t_2594d4d7597541 64
+  s_65b9d82bf90f30::t_0c96d1be62fa9b 81
+  s_65b9d82bf90f30::t_35228ee614170c 147
+  s_65b9d82bf90f30::t_733f7fb1b1e3c4 129
+  s_65b9d82bf90f30::t_d9158d9573cdf6 51,73,92,118,139,156
+  s_65b9d82bf90f30::t_75f4d236aaebf0 12,21-23
+frontend/src/components/blog/CommentsSection.tsx
+  s_65b9d82bf90f30::t_2bbf28b35c2f5d 307,309,311-320,322-343
+  s_65b9d82bf90f30::t_9c4d93c7b1385d 321
+  s_65b9d82bf90f30::t_7e326a22171892 13
+frontend/src/server/actions/actionHelpers.ts
+  s_65b9d82bf90f30::t_6fe1faae217f39 2-3,5-10,12-57
+frontend/src/components/LoadingSkeleton.tsx
+  s_65b9d82bf90f30::t_a6c39b935dc0df 6,17,20-22,27,34,40,42,51,53,64,69,71,80-81,84,86-87,93-94,98-99,103,105-106
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 17
+frontend/src/server/actions/comments.ts
+  s_65b9d82bf90f30::t_c03fd76ad3d71a 36,68
+  s_65b9d82bf90f30::t_ceb2a91f81a152 38
+  s_65b9d82bf90f30::t_f8412dce88fba8 15-18
+  s_65b9d82bf90f30::t_56bf971301ed10 92
+  s_65b9d82bf90f30::t_d9158d9573cdf6 55,81,106
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_65b9d82bf90f30::t_a2296df3e99a5a 210-211
+  s_65b9d82bf90f30::t_183961160b3337 196-197
+frontend/src/app/[locale]/error.tsx
+  s_65b9d82bf90f30::t_9237fd05b24ea6 61-62
+  s_65b9d82bf90f30::t_3db48f0213027d 11
+frontend/src/lib/apiRequest.ts
+  s_65b9d82bf90f30::t_7060604b6e0d89 79,81
+frontend/src/lib/blog/hooks.ts
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 6
+frontend/src/components/SubmitButton.tsx
+  s_65b9d82bf90f30::t_566bbd68eefc49 9-10,12,20-21,23-24,38-39
+frontend/src/app/[locale]/posts/[id]/error.tsx
+  s_65b9d82bf90f30::t_d03bb44162b88c 12
+  s_65b9d82bf90f30::t_29a2692fe9ae11 24-25
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 17
+frontend/src/components/blog/DeletePostButton.tsx
+  s_65b9d82bf90f30::t_43da1a3b7b455c 93,95,97-107,109-114
+  s_65b9d82bf90f30::t_56f0559f01b505 13
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 11
+  s_65b9d82bf90f30::t_fddb9ce3603ef7 108
+  s_65b9d82bf90f30::t_c6e2bcb48bda4f 75-79,81
+  s_65b9d82bf90f30::t_e648d9c5471394 8
+  s_65b9d82bf90f30::t_7a9780170106c6 87
+frontend/src/app/[locale]/posts/error.tsx
+  s_65b9d82bf90f30::t_f3f4acb005f1e3 24-25
+  s_65b9d82bf90f30::t_882b7afb86e180 12
+frontend/src/proxy.ts
+  s_65b9d82bf90f30::t_aae63cfcb5363f 55
+  s_65b9d82bf90f30::t_dbd0d6547d8eab 9
+frontend/src/components/blog/WriteCta.tsx
+  s_65b9d82bf90f30::t_4da1754542bc70 7,16-17
+frontend/src/components/layouts/MobileMenu.tsx
+  s_65b9d82bf90f30::t_c0716d2070d0da 78
+  s_65b9d82bf90f30::t_b105b05c62e7a5 3,6-7,11,19-25,48,69-77,79-86,88-113,116-131,133-157,159-166,168-169,171-200,202-203
+frontend/src/components/dashboard/ProfilePageContent.tsx
+  s_65b9d82bf90f30::t_53d9e0e3320f8f 223-227,230,232,235-237
+  s_65b9d82bf90f30::t_1b46f72c0be694 10
+frontend/src/app/[locale]/page.tsx
+  s_65b9d82bf90f30::t_3c2a394e61a5eb 10,12
+  s_65b9d82bf90f30::t_41640852f97dee 171-174
+  s_65b9d82bf90f30::t_dfcdaed0546eab 11
+  s_65b9d82bf90f30::t_2f500fa3cd1c32 77-78
+  s_65b9d82bf90f30::t_b9500bdbaeb780 185
+  s_65b9d82bf90f30::t_0e42ee8403d0fa 147,152-156
+frontend/src/lib/comment/hooks.ts
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 6
+frontend/src/components/Tag.tsx
+  s_65b9d82bf90f30::t_b979e183ef3272 3,6-7,9,24-27,34-39
+frontend/src/components/dashboard/RemoveFavoriteButton.tsx
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 9
+frontend/src/lib/toast.ts
+  s_65b9d82bf90f30::t_b80d63d6e3c6f6 3,6
+frontend/src/components/dashboard/ProfileTabs.tsx
+  s_65b9d82bf90f30::t_1709b4cd51cd8c 10
+  s_65b9d82bf90f30::t_20399a4f75aa9c 14-15,65-71,73-74,76-77,79-80,82-88,94-115,117-123,129-160,162-189
+  s_65b9d82bf90f30::t_f666ca090f998d 89-90,93,124-125,128
+frontend/src/components/blog/PostActions.tsx
+  s_65b9d82bf90f30::t_3f8065bdde3c61 138
+  s_65b9d82bf90f30::t_714d8413b07bb3 139
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 10
+  s_65b9d82bf90f30::t_cb435fd1334c3d 119
+  s_65b9d82bf90f30::t_4afce536d614f1 120
+frontend/src/hooks/useRequireAuth.ts
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 9
+frontend/src/server/actions/posts.ts
+  s_65b9d82bf90f30::t_90b9257f896831 21-23,25-26
+  s_65b9d82bf90f30::t_cdc22af073c1ce 72
+  s_65b9d82bf90f30::t_d9158d9573cdf6 59
+frontend/src/hooks/useLogoutRedirect.ts
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 8
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_65b9d82bf90f30::t_dfb4c8d9aa663f 768
+  s_65b9d82bf90f30::t_f26a8bdde175a9 22
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 12
+  s_65b9d82bf90f30::t_421b66d2a29d06 815
+  s_65b9d82bf90f30::t_1c732e243691fd 781
+  s_65b9d82bf90f30::t_9181b963a4f87a 369-372
+  s_65b9d82bf90f30::t_f9bbe2cf9215b4 8
+  s_65b9d82bf90f30::t_23e89ab1e0d1e1 802,804,806-814,816-820
+  s_65b9d82bf90f30::t_22a0c24274395c 760
+frontend/src/server/actions/interactions.ts
+  s_65b9d82bf90f30::t_9de69b2192de44 32,48,61
+  s_65b9d82bf90f30::t_8f89baf4a63193 77
+  s_65b9d82bf90f30::t_dffd7164e7c2f8 13-16
+  s_65b9d82bf90f30::t_e74af39153b6fe 30
+  s_65b9d82bf90f30::t_bf98457aee0804 59
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_65b9d82bf90f30::t_6ace9c2ee305f6 12
+frontend/src/components/auth/AuthGuard.tsx
+  s_65b9d82bf90f30::t_a7765e550f696f 52
+  s_65b9d82bf90f30::t_03f6a60e6a2280 11
+frontend/src/components/providers.tsx
+  s_65b9d82bf90f30::t_23dbf6a91581ce 13
+frontend/src/server/auth/authServer.ts
+  s_65b9d82bf90f30::t_ee64dd162df595 18
+  s_65b9d82bf90f30::t_b645861b8d3a34 9
+frontend/src/components/auth/LoginRequired.tsx
+  s_65b9d82bf90f30::t_453e4bc717d81f 8
+  s_65b9d82bf90f30::t_457242f98444fc 39-43
+frontend/src/hooks/use-mobile.ts
+  s_37a2f5fdda5ab9::t_a6f89830afc593 3-6,8-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "4844bd1fe448047a4bb777fa01f6b5fd8f3c66c2",
+  "prompts": {},
+  "sessions": {
+    "s_37a2f5fdda5ab9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8999cb33-aef8-4ded-b1cb-cc968985e15c",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_65b9d82bf90f30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "50c8d85f-08b0-4a19-a85f-62f6f44bccab",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
