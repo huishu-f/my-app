@@ -1,0 +1,14 @@
+.prettierrc.mjs
+  h_7a7e6c68a7d90b 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "cc423f2e980c9d42623ecbeb21faf3c02028bb4c",
+  "prompts": {},
+  "humans": {
+    "h_7a7e6c68a7d90b": {
+      "author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
