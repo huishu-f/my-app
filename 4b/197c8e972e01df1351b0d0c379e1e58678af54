@@ -1,0 +1,25 @@
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_3efb5d7a6bfd67::t_1d1e8c32ceeb8d 104
+  s_3efb5d7a6bfd67::t_978faa10804892 186
+  s_3efb5d7a6bfd67::t_b6572925143e52 15
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_3efb5d7a6bfd67::t_557d3cd305766b 335
+  s_3efb5d7a6bfd67::t_aff7a441e0e96f 14
+  s_3efb5d7a6bfd67::t_7826e9402050fd 176
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "4b197c8e972e01df1351b0d0c379e1e58678af54",
+  "prompts": {},
+  "sessions": {
+    "s_3efb5d7a6bfd67": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6cb3ff85-0548-4f84-99a6-f6f7cd843f70",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
