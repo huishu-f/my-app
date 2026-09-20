@@ -1,0 +1,35 @@
+frontend/src/server/modules/auth/services/authService.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 19-21,152
+frontend/src/server/container.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 6-8,14
+frontend/src/server/modules/comment/services/commentService.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 13-15
+frontend/src/server/modules/auth/authGuard.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 8
+frontend/src/server/modules/blog/services/blogService.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 18-20
+frontend/src/server/modules/auth/authCookieHelper.ts
+  s_65b9d82bf90f30::t_331d657f53ffb2 2
+frontend/src/server/modules/auth/kvUserRepository.ts
+  s_65b9d82bf90f30::t_8803226abd5130 2
+frontend/src/server/modules/blog/kvBlogRepository.ts
+  s_65b9d82bf90f30::t_f4639e5ee32c9f 2
+frontend/src/server/modules/comment/kvCommentRepository.ts
+  s_65b9d82bf90f30::t_92229ff2ec5715 2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "f9ecc2a0e2b7c79991afd8e0ac9e6e260ad827e9",
+  "prompts": {},
+  "sessions": {
+    "s_65b9d82bf90f30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "50c8d85f-08b0-4a19-a85f-62f6f44bccab",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
