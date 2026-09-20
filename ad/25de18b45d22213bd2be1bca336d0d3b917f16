@@ -1,0 +1,24 @@
+frontend/src/proxy.ts
+  s_74fd147b0e68d9::t_2a12c50757999e 72
+frontend/src/server/blog/blogService.ts
+  s_74fd147b0e68d9::t_8a0560adf002f5 315
+  s_74fd147b0e68d9::t_c5d233d2f052ba 36,38-39
+frontend/src/app/sitemap.ts
+  s_74fd147b0e68d9::t_57d751834d117c 75-76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "ad25de18b45d22213bd2be1bca336d0d3b917f16",
+  "prompts": {},
+  "sessions": {
+    "s_74fd147b0e68d9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0ccb1687-10b8-44cd-bca3-1eb15f2a57c5",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
