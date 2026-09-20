@@ -1,0 +1,310 @@
+frontend/src/components/layouts/MobileMenu.tsx
+  s_0d75aded99f741::t_8ecb90e79034f0 22
+  s_0d75aded99f741::t_bda04df50ca896 1-18,20-21,23-262
+  s_0d75aded99f741::t_7f847af016bbd6 19
+frontend/src/components/blog/BackToTop.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-41
+frontend/src/components/layouts/PageHeader.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-29
+frontend/src/app/styles/typography.css
+  s_0d75aded99f741::t_1f7ce6173eef84 3-4,8-10,14,20,23-24,30-32,36,38,40,44,48,71,73,81,88,94,100,110,114-116,118-120,124,128-129,131-132,135,139-142,146,152-154,160,168-169,176-177,179,184,186,190-191,200,202,206,210,213,216
+frontend/src/services/auth/hooks.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 9,13
+  s_0d75aded99f741::t_d2bb93cb846ee8 4-6,12,17,19,26-30,34,44,50-56,70
+frontend/src/server/actions/auth.ts
+  s_0d75aded99f741::t_4326b5a6dd8a60 1-200,202-205
+  s_0d75aded99f741::t_5f8f89c4197375 201
+frontend/src/app/[locale]/(dashboard)/settings/page.tsx
+  s_0d75aded99f741::t_a4eb55d173fe3f 32
+  s_0d75aded99f741::t_5eb411476d5dd1 9
+  s_0d75aded99f741::t_500fdcb22dde58 5
+  s_0d75aded99f741::t_a91b91b6b4aa4c 11
+frontend/src/components/ui/Input.tsx
+  s_0d75aded99f741::t_1707b35bc35885 4-6,9,11-14,18-19
+  s_0d75aded99f741::t_d9cd0ace931e43 2
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_0d75aded99f741::t_e4211eb8ccdd7e 165,178-179,184,190,203,218
+  s_0d75aded99f741::t_a91b91b6b4aa4c 26-28
+  s_0d75aded99f741::t_500fdcb22dde58 11,13,15
+  s_0d75aded99f741::t_788e3667ca1fd1 14
+  s_0d75aded99f741::t_5eb411476d5dd1 12,16
+  s_0d75aded99f741::t_48b3f355f9809a 239,247,259-260,268,278
+frontend/src/components/ui/card.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-91
+frontend/src/components/blog/ViewReporter.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 1-39
+frontend/src/components/ui/tabs.tsx
+  s_0d75aded99f741::t_d0605847f4e7b8 1-90
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_0d75aded99f741::t_447b6e5df1014b 54
+  s_0d75aded99f741::t_99e26586e7aa0f 3,6-17,21-22,24-52,55-60,62
+  s_0d75aded99f741::t_500fdcb22dde58 5
+  s_0d75aded99f741::t_5c5a82b5eca78e 61
+  s_0d75aded99f741::t_a91b91b6b4aa4c 18
+frontend/src/components/ui/Alert.tsx
+  s_0d75aded99f741::t_f4e4b5cf384cc8 2,4-5,9-10,12-15,17-19
+  s_0d75aded99f741::t_00bb61d1506373 6,20
+frontend/src/services/blog/actions.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 9
+frontend/src/components/ui/avatar.tsx
+  s_0d75aded99f741::t_50e368de9e2ff9 1-21
+frontend/src/app/[locale]/not-found.tsx
+  s_0d75aded99f741::t_788e3667ca1fd1 6
+  s_0d75aded99f741::t_500fdcb22dde58 7
+  s_0d75aded99f741::t_b0a10a8385639e 16,18-19,22
+frontend/src/components/blog/CommentsSection.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 11-14,135,137,160,174-175,183,196-200,220,227-228,231,244,246,269,273,277,285,312
+frontend/src/components/dashboard/RemoveFavoriteButton.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 10
+frontend/src/components/ui/skeleton.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-13
+frontend/src/services/blog/api.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 8
+  s_0d75aded99f741::t_62d950aaaec441 3,5-6,21,41-42,59-60,68-69
+frontend/src/components/ui/label.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-23
+frontend/src/hooks/useFetch.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 1-227
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 14-24,131-133,135-143,146,149-152,363,517,525,528,534,538,546,556,572,577,587-588,600,603,605,615,631,645,656,691,708,717,720,746,751-752,757,805
+frontend/src/app/[locale]/posts/[id]/error.tsx
+  s_0d75aded99f741::t_788e3667ca1fd1 11
+  s_0d75aded99f741::t_9c063feba1d1d3 16-17
+  s_0d75aded99f741::t_500fdcb22dde58 9-10
+frontend/src/components/LoadingSkeleton.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-111
+frontend/src/app/[locale]/layout.tsx
+  s_0d75aded99f741::t_5eb411476d5dd1 11-12,14
+frontend/src/app/[locale]/posts/(list)/loading.tsx
+  s_0d75aded99f741::t_500fdcb22dde58 5
+  s_0d75aded99f741::t_5129bd266a55a4 9-12,17,19,22,27,30,38-40,43,45,47,49-52,54-55,58-62
+frontend/src/app/layout.tsx
+  s_0d75aded99f741::t_d460ae1ef52c65 3
+frontend/components.json
+  s_0d75aded99f741::t_7afb2060bdd07f 1-21
+frontend/src/app/[locale]/(dashboard)/layout.tsx
+  s_0d75aded99f741::t_5eb411476d5dd1 5
+frontend/src/components/blog/PostSidebar.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 12-13,16,73-75,89,91-92,107-108,126,128
+frontend/src/components/dashboard/ProfileTabs.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 10-12,14,63,68,76,84,105,140,149,179
+frontend/src/hooks/useAsyncAction.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 1-144
+frontend/src/app/api/posts/[id]/comments/route.ts
+  s_0d75aded99f741::t_70adadb2775b45 3-5,7-8
+frontend/src/components/auth/AuthGate.tsx
+  s_0d75aded99f741::t_5eb411476d5dd1 8-9
+  s_0d75aded99f741::t_bda04df50ca896 1-7,10-50
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 13
+  s_0d75aded99f741::t_3aa1957d5c7aa5 3,6-12,16-18,20-54
+frontend/src/components/Container.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-13
+frontend/src/components/auth/LoginRequired.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-9,13-43
+  s_0d75aded99f741::t_8ecb90e79034f0 10-12
+frontend/src/components/layouts/Navbar.tsx
+  s_0d75aded99f741::t_8ecb90e79034f0 9
+  s_0d75aded99f741::t_bda04df50ca896 1-8,10-58
+frontend/src/app/globals.css
+  s_0d75aded99f741::t_9ad1743dd2e044 7,38,45
+  s_0d75aded99f741::t_186de66e6fa4bc 1,4,8-37,39-41,46-72,76-102,105-117,119,121-122
+  s_0d75aded99f741::t_7afb2060bdd07f 2,6,42,44,73,75,103
+frontend/src/components/layouts/UserMenu.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-11,13-194
+  s_0d75aded99f741::t_8ecb90e79034f0 12
+frontend/src/components/blog/PostToc.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 122,124,128,130,138,141,144,158,167
+frontend/src/lib/buildPostsUrl.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 1-36
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_0d75aded99f741::t_788e3667ca1fd1 15
+  s_0d75aded99f741::t_500fdcb22dde58 14,20
+  s_0d75aded99f741::t_1f573b4ea4d9e2 172,174,178,188,190,194
+  s_0d75aded99f741::t_a91b91b6b4aa4c 26-33
+  s_0d75aded99f741::t_daa89c472af8f8 249,254-256,259,263,267,271,274,296,300,305,310,326
+frontend/src/services/blog/server.ts
+  s_0d75aded99f741::t_667d0c27ee26ff 183-200,202
+  s_0d75aded99f741::t_725f2f192bc430 201
+frontend/src/server/modules/auth/auth-cookie.helper.ts
+  s_0d75aded99f741::t_d94e3b0ef87ae9 72
+  s_0d75aded99f741::t_d83e65a5096a94 63
+  s_0d75aded99f741::t_27e93d60121afd 3,28,31,34,36-37,39-40,64-71,73-75
+  s_0d75aded99f741::t_0f99aa952487dc 7
+  s_0d75aded99f741::t_1a4a3912b8939a 38,41
+frontend/src/app/[locale]/posts/error.tsx
+  s_0d75aded99f741::t_500fdcb22dde58 9-10
+  s_0d75aded99f741::t_788e3667ca1fd1 11
+  s_0d75aded99f741::t_a59a8098a0a70a 16-17
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_0d75aded99f741::t_f8eaf1d27d0d03 20
+  s_0d75aded99f741::t_b985e1c054884d 153,155
+  s_0d75aded99f741::t_f4793df7517907 160,162-163,172
+  s_0d75aded99f741::t_788e3667ca1fd1 12,15
+  s_0d75aded99f741::t_500fdcb22dde58 13-14
+  s_0d75aded99f741::t_a883f6dbae88b1 127-132
+  s_0d75aded99f741::t_f00764d242680c 285,290,292
+  s_0d75aded99f741::t_5eb411476d5dd1 11,16
+frontend/src/app/[locale]/page.tsx
+  s_0d75aded99f741::t_500fdcb22dde58 6,9-10
+  s_0d75aded99f741::t_2bbff87ff4f130 140,142-143,156,158,160-161
+  s_0d75aded99f741::t_7b011281341121 49,51,53,55,58,63-69,72,74,83-84,86-90,96
+  s_0d75aded99f741::t_788e3667ca1fd1 7
+  s_0d75aded99f741::t_5eb411476d5dd1 8,11
+frontend/src/components/layouts/Footer.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-5,7-30
+  s_0d75aded99f741::t_8ecb90e79034f0 6
+frontend/src/services/auth/server.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 9
+frontend/src/components/auth/AuthGuard.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 11
+frontend/src/proxy.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 9
+frontend/src/components/EmptyState.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-2,4,7-10,18,27-28
+  s_0d75aded99f741::t_011fe903ae3391 3,5-6,11-17,19-26
+frontend/package.json
+  s_0d75aded99f741::t_7afb2060bdd07f 21,25-26,42,44
+  s_0d75aded99f741::t_83b842d5be1ce7 43
+  s_0d75aded99f741::t_237c828bf00e94 36
+frontend/src/components/blog/BackLink.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 35
+frontend/src/hooks/usePostPageAuth.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 11
+frontend/src/components/ui/sonner.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-40
+frontend/src/lib/utils.ts
+  s_0d75aded99f741::t_7afb2060bdd07f 1
+frontend/src/components/ui/Modal.tsx
+  s_0d75aded99f741::t_abba4445f76460 5-6,9,11-13,15
+  s_0d75aded99f741::t_352962f576c88a 2,16,19
+frontend/src/lib/error-toast.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 7
+frontend/src/components/PinnedBadge.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-21
+frontend/src/components/blog/MarkdownToolbar.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-95
+frontend/src/components/blog/ArticleCard.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-9,13-195
+  s_0d75aded99f741::t_8ecb90e79034f0 10-12
+frontend/src/components/blog/AuthorActions.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 1-36
+frontend/src/lib/api-request.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 1-379
+frontend/src/components/StatsGrid.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-31
+frontend/src/components/ui/badge.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-47
+frontend/src/components/blog/WriteCta.tsx
+  s_0d75aded99f741::t_8ecb90e79034f0 6
+  s_0d75aded99f741::t_bda04df50ca896 1-5,7-19
+frontend/src/components/blog/DeletePostButton.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 12-13,74,96
+frontend/src/components/layouts/RouteTransition.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-21
+frontend/src/components/SubmitButton.tsx
+  s_0d75aded99f741::t_68f47a1105a89a 8
+  s_0d75aded99f741::t_bda04df50ca896 1-7,9-56
+frontend/src/components/ui/textarea.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-17
+frontend/src/components/CoverFallback.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-24
+frontend/src/services/blog/hooks.ts
+  s_0d75aded99f741::t_a91b91b6b4aa4c 8-9,11
+  s_0d75aded99f741::t_7cfab2badd838a 12
+  s_0d75aded99f741::t_382dd64ff92bdb 83,87-97,101,105-115
+frontend/src/components/auth/PasswordToggle.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-35
+frontend/src/components/Tag.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-47
+frontend/src/components/auth/PasswordStrength.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-64
+frontend/src/components/FormField.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-2,4-5,8-39,42,45-46,48-49,53-56
+  s_0d75aded99f741::t_cba8b30efdb380 3,6-7,40-41,43-44,47,50-52
+frontend/src/components/blog/PostStateProvider.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 1-81
+frontend/src/components/auth-provider.tsx
+  s_0d75aded99f741::t_33f977c8c7b277 9
+  s_0d75aded99f741::t_c6126ec40799ed 51-57
+frontend/src/components/Spinner.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-29
+frontend/src/components/blog/PostsSearchInput.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 95,103,110
+frontend/src/services/comment/hooks.ts
+  s_0d75aded99f741::t_c3cdf25fd02761 17
+  s_0d75aded99f741::t_87fd1a2215b8d7 25-28
+  s_0d75aded99f741::t_ad701d9987be6e 85,89
+  s_0d75aded99f741::t_35aaf9e7ab2e76 3,10-14,24,29-32,61-63,65-67,83-84,86,105-108
+  s_0d75aded99f741::t_a91b91b6b4aa4c 8-9,15
+  s_0d75aded99f741::t_6742169c927484 64,68
+frontend/src/components/blog/PostActions.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 15,117,157
+frontend/src/components/layouts/LanguageToggle.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-111
+frontend/src/components/ui/separator.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-27
+frontend/src/components/dashboard/ProfilePageContent.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 3,6-8,10-11,42,45-50,52-68,79,103-106,113,118-119,127,133,136,143-146,153,155,161,167,172,174,180,187,198,209,217,221
+frontend/src/components/ui/dialog.tsx
+  s_0d75aded99f741::t_83b842d5be1ce7 1-158
+frontend/src/server/actions/interactions.ts
+  s_0d75aded99f741::t_db053bdf492b56 1-123
+frontend/src/components/layouts/ThemeToggle.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-79
+frontend/src/components/layouts/NavLinks.tsx
+  s_0d75aded99f741::t_bda04df50ca896 1-40
+frontend/src/components/ui/Button.tsx
+  s_0d75aded99f741::t_d1153654a9ceab 2,6,8-9,12-15,20-24,26-27,29-35,37-38
+  s_0d75aded99f741::t_6aa9894ae0ff65 5,7,19,40
+  s_0d75aded99f741::t_b5008f172c4720 4,18
+frontend/src/components/blog/PostHeadStats.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 19-20,24-25,29-30
+frontend/src/server/actions/comments.ts
+  s_0d75aded99f741::t_eaabb796ecc7b0 85
+  s_0d75aded99f741::t_3d161a5778f119 1-24,26-79,81-84,86-101,103-111,113-116,118-127,129-157
+  s_0d75aded99f741::t_93c929830351db 102,112,117,128
+  s_0d75aded99f741::t_66abe5a9d84971 80
+  s_0d75aded99f741::t_45181fc0e4318b 25
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 11,14-19,22,106-111,143-148,176-177,182,190,197,262,264,302,304
+frontend/src/app/[locale]/(auth)/layout.tsx
+  s_0d75aded99f741::t_6282a2aab0add2 14-20
+  s_0d75aded99f741::t_a91b91b6b4aa4c 5
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_0d75aded99f741::t_500fdcb22dde58 14-15
+  s_0d75aded99f741::t_1d76c90e103067 137,143,148,150
+  s_0d75aded99f741::t_03d1e482d0f5b1 20
+  s_0d75aded99f741::t_a91b91b6b4aa4c 21
+  s_0d75aded99f741::t_788e3667ca1fd1 13,16
+  s_0d75aded99f741::t_8e152e5026e276 73-79
+  s_0d75aded99f741::t_0e51d53815bdf4 96,98-99,108
+  s_0d75aded99f741::t_5eb411476d5dd1 12
+frontend/src/app/[locale]/error.tsx
+  s_0d75aded99f741::t_788e3667ca1fd1 10
+  s_0d75aded99f741::t_08617a6b34d7b7 49-51,54
+  s_0d75aded99f741::t_500fdcb22dde58 9
+frontend/src/components/blog/LazyIslands.tsx
+  s_0d75aded99f741::t_a91b91b6b4aa4c 13,17
+frontend/src/services/comment/api.ts
+  s_0d75aded99f741::t_9001d9806b3d0e 3,6,8
+  s_0d75aded99f741::t_a91b91b6b4aa4c 5
+pnpm-lock.yaml
+  s_0d75aded99f741::t_db4a6440e80041 178-180,190-195,223-225,241-249,310,313,322,346-349,354-359,364-367,378-395,417-450,463-489,494-500,564-578,591-596,795-804,978-979,981-982,984-995,997-1008,1010-1021,1023-1034,1036-1047,1049-1060,1062-1073,1075-1086,1088-1099,1101-1108,1110-1121,1123-1124,1126-1127,1129,1132-1143,1145-1152,1154-1165,1167-1178,1180-1187,1189-1790,1885-1887,1927-1929,2112-2115,2130-2145,2149-2163,2171-2174,2214-2217,2222-2225,2257-2260,2280-2287,2311-2325,2329-2345,2353-2360,2368-2379,2387-2407,2412-2416,2438-2441,2462-2469,2477-2484,2489-2496,2501-2504,2509-2515,2552-2559,2570-2572,2576-2578,2582-2585,2590-2593,2606-2612,2653-2655,2771-2775,2792-2821,2829-2832,2839-2841,2854-2857,2866-2873,2889-2900,2911-2913,2922-2925,2930-2937,2942-2949,3034-3037,3048-3063,3083-3085,3093-3100,3105-3107,3139-3148,3169-3181,3198-3209,3214-3216,3221-3224,3233-3240,3253-3260,3273-3280,3287-3290,3302-3304,3320-3322,3326-3334,3347-3349,3367-3374,3463-3469,3501-3504,3538-3548,3557-3576,3662-3669,3682-3685,3706-3728,3737-3740,3745-3748,3753-3756,3761-3764,3772-3779,3783-3793,3802-3805,3813-3815,3827-3834,3842-3845,3850-3857,3922-3929,3933-3936,3941-3944,3948-3968,3984-4013,4018-4021,4030-4036,4049-4052,4062-4069,4088-4090,4112-4119,4135-4142,4176-4182,4187-4207,4212-4215,4219-4226,4231-4234,4258-4269,4274-4281,4307-4312,4320-4322,4331-4334,4345-4347,4351-4354,4358-4360,4365-4368,4407-4422,4435-4444,4450-4475,4502-4506,4511-4513,4526-4529,4537-4549,4556-4558,4602-4605,4614-4626,4629-4635,4652-4673,4689-4730,4754-4776,4779-4799,4880-4896,4909-4912,5036-5259,5261-5271,5273,5275-5302,5304-5314,5316-5320,5322,5324-5333,5335,5337-5339,5341-5362,5364,5366-5368,5370-5381,5383,5385-5396,5398-5402,5404-5413,5415-5444,5446-5451,5453-5603,5605-5613,5615-5622,5624-5631,5633,5635-5724,5726-5752,5754,5756-5759,5761-5809,5811-5824,5826-5835,5837-5871,5873-5877,5879-5886,5888-5893,5895-5900,5902-5906,5908-5912,5914-5918,5920-5925,5927-5932,5934,5936-5938,5940-5941,5943,5949-5952,6100-6105,6147,6314-6318,6329-6336,6344-6356,6363-6366,6438-6441,6444-6445,6464-6477,6501-6506,6533-6544,6547-6554,6561-6564,6569-6585,6590-6607,6614-6615,6640-6643,6658-6659,6664-6670,6677-6680,6687-6688,6691-6694,6739-6744,6757-6758,6761-6762,6765-6766,6772-6776,6783-6788,6902-6903,7103-7104,7117-7192,7203-7210,7215-7216,7225-7228,7237-7251,7268-7277,7294-7295,7300-7301,7315-7318,7324-7330,7406-7407,7424-7439,7455-7456,7468-7471,7478-7479,7518-7521,7544-7551,7563-7568,7571-7572,7580-7581,7588-7591,7607-7610,7622-7629,7634-7635,7650-7651,7662-7663,7666-7671,7680-7685,7721-7724,7789-7795,7819-7823,7850-7855,7863-7874,7961-7969,7976-7977,8014-8044,8056-8067,8075-8078,8083-8086,8091-8092,8099-8107,8110-8115,8120-8121,8129-8130,8137-8142,8147-8151,8158-8161,8172-8180,8187-8191,8194-8198,8201-8272,8287-8313,8316-8323,8344-8347,8361-8365,8373-8384,8410-8411,8428-8453,8479-8521,8590-8593,8600-8615,8618-8619,8622-8625,8631-8636,8688-8701,8704-8707,8723-8724,8729-8730,8740-8741,8748-8752,8760-8765,8768-8769,8774-8779,8837-8844,8882-8888,8897-8914,8979-8982,8985-8986,8989-8993,8998-9007,9012-9013
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "22e0a14733dd6ed5a12bdee154f28f1f91455b60",
+  "prompts": {},
+  "sessions": {
+    "s_0d75aded99f741": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bc7b12ed-1ebb-45f3-837b-cf72cd56cf78",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
