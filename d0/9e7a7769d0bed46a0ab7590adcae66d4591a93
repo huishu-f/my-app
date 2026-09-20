@@ -1,0 +1,25 @@
+frontend/src/server/modules/blog/kvBlogRepository.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 1-107
+frontend/src/server/modules/comment/kvCommentRepository.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 1-118
+frontend/src/server/modules/auth/authCookieHelper.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 1-77
+frontend/src/server/modules/auth/kvUserRepository.ts
+  s_65b9d82bf90f30::t_ee5cad84da59a6 1-193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "d09e7a7769d0bed46a0ab7590adcae66d4591a93",
+  "prompts": {},
+  "sessions": {
+    "s_65b9d82bf90f30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "50c8d85f-08b0-4a19-a85f-62f6f44bccab",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
