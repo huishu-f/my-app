@@ -1,0 +1,175 @@
+frontend/src/components/ui/button.tsx
+  s_0d75aded99f741::t_b96d70a1d06538 5-42,64
+  s_65b9d82bf90f30::t_864df91ff12869 43-61,65
+  s_0d75aded99f741::t_8834f00e5c0b53 2-4
+  s_65b9d82bf90f30::t_43adc82a212d84 66
+frontend/src/components/ui/alert.tsx
+  s_0d75aded99f741::t_f908e498507c05 5-63
+  s_0d75aded99f741::t_f2e9f3f2343782 2-4
+  s_0d75aded99f741::t_3ee6b2f9efadf4 64-66
+  s_91cf03ebb3a977::t_4ebf3fda461d94 1,67-75
+frontend/src/components/ui/sheet.tsx
+  s_65b9d82bf90f30::t_6bd458d5b0394c 1-142
+  s_65b9d82bf90f30::t_fed25696c99683 143-145
+  s_91cf03ebb3a977::t_0ad9ab68109fb9 146-147
+frontend/src/components/ui/dropdown-menu.tsx
+  s_65b9d82bf90f30::t_6bd458d5b0394c 1-256
+  s_65b9d82bf90f30::t_b489ae85d5babc 257-259
+  s_91cf03ebb3a977::t_4f5f7e2a7dfe23 260-268
+frontend/src/components/ui/input.tsx
+  s_65b9d82bf90f30::t_5d29afbdec62d1 8-13
+  s_0d75aded99f741::t_faac7876dde595 3-5,18
+  s_0d75aded99f741::t_49d42edfd5caac 1-2
+  s_91cf03ebb3a977::t_fcfeb9ed3c75d5 6-7,14-17
+frontend/src/components/ui/sonner.tsx
+  s_65b9d82bf90f30::t_28b8edab9b2876 2-31
+  s_65b9d82bf90f30::t_d9180edf1ba1ca 1
+  s_65b9d82bf90f30::t_cd67da7abd8964 32-34
+  s_91cf03ebb3a977::t_4f11985b1fc402 35-49
+frontend/package.json
+  s_91cf03ebb3a977::t_2656bfa57d530c 21,23,26-29,31,33,41,43,45-46,49-52
+frontend/src/components/ui/accordion.tsx
+  s_91cf03ebb3a977::t_961720d96698f7 1-80
+frontend/src/components/ui/alert-dialog.tsx
+  s_91cf03ebb3a977::t_4fc8a2b755af0f 1-199
+frontend/src/components/ui/aspect-ratio.tsx
+  s_91cf03ebb3a977::t_d2ad341b0ad6a7 1-11
+frontend/src/components/ui/attachment.tsx
+  s_91cf03ebb3a977::t_a92d04d81202ff 1-204
+frontend/src/components/ui/avatar.tsx
+  s_91cf03ebb3a977::t_f152a29b172524 1-111
+frontend/src/components/ui/badge.tsx
+  s_91cf03ebb3a977::t_2a77dfa5538848 1-48
+frontend/src/components/ui/breadcrumb.tsx
+  s_91cf03ebb3a977::t_38e981124b911a 1-121
+frontend/src/components/ui/bubble.tsx
+  s_91cf03ebb3a977::t_d2c5e0e6dc1c81 1-124
+frontend/src/components/ui/button-group.tsx
+  s_91cf03ebb3a977::t_49cc68bfa95084 1-83
+frontend/src/components/ui/calendar.tsx
+  s_91cf03ebb3a977::t_3ef50186044985 1-222
+frontend/src/components/ui/card.tsx
+  s_91cf03ebb3a977::t_d036b87cced8f2 1-102
+frontend/src/components/ui/carousel.tsx
+  s_91cf03ebb3a977::t_bb638c2b26d600 1-242
+frontend/src/components/ui/chart.tsx
+  s_91cf03ebb3a977::t_ff27c788934eac 1-372
+frontend/src/components/ui/checkbox.tsx
+  s_91cf03ebb3a977::t_51077c47dd3163 1-32
+frontend/src/components/ui/collapsible.tsx
+  s_91cf03ebb3a977::t_abe3c40da04cfb 1-33
+frontend/src/components/ui/combobox.tsx
+  s_91cf03ebb3a977::t_094de606344582 1-299
+frontend/src/components/ui/command.tsx
+  s_91cf03ebb3a977::t_c8a52d90b00659 1-195
+frontend/src/components/ui/context-menu.tsx
+  s_91cf03ebb3a977::t_36438842e25a68 1-262
+frontend/src/components/ui/dialog.tsx
+  s_91cf03ebb3a977::t_199cd04951cdd3 1-168
+frontend/src/components/ui/direction.tsx
+  s_91cf03ebb3a977::t_61caa43cc223df 1-22
+frontend/src/components/ui/drawer.tsx
+  s_91cf03ebb3a977::t_c4d37768c89c51 1-133
+frontend/src/components/ui/empty.tsx
+  s_91cf03ebb3a977::t_d128862099d3ad 1-103
+frontend/src/components/ui/field.tsx
+  s_91cf03ebb3a977::t_c5bf27961dbd53 1-238
+frontend/src/components/ui/hover-card.tsx
+  s_91cf03ebb3a977::t_3386858277fcfe 1-43
+frontend/src/components/ui/input-group.tsx
+  s_91cf03ebb3a977::t_0dff2441ce18c3 1-156
+frontend/src/components/ui/input-otp.tsx
+  s_91cf03ebb3a977::t_235ef5857b27a4 1-86
+frontend/src/components/ui/item.tsx
+  s_91cf03ebb3a977::t_a728f1a43e0fb9 1-196
+frontend/src/components/ui/kbd.tsx
+  s_91cf03ebb3a977::t_f5c90fdd6274c8 1-26
+frontend/src/components/ui/label.tsx
+  s_91cf03ebb3a977::t_152a01e894152c 1-23
+frontend/src/components/ui/marker.tsx
+  s_91cf03ebb3a977::t_3d18459c344cc9 1-68
+frontend/src/components/ui/menubar.tsx
+  s_91cf03ebb3a977::t_5f753ac6c6eba8 1-279
+frontend/src/components/ui/message-scroller.tsx
+  s_91cf03ebb3a977::t_2e830b22ca3a84 1-131
+frontend/src/components/ui/message.tsx
+  s_91cf03ebb3a977::t_4e9e24f07c1f4e 1-91
+frontend/src/components/ui/native-select.tsx
+  s_91cf03ebb3a977::t_9252c9a8000a41 1-60
+frontend/src/components/ui/navigation-menu.tsx
+  s_91cf03ebb3a977::t_46ecd5ad694a58 1-163
+frontend/src/components/ui/pagination.tsx
+  s_91cf03ebb3a977::t_fcd3a2b1efac4b 1-129
+frontend/src/components/ui/popover.tsx
+  s_91cf03ebb3a977::t_ee258fbb78201e 1-88
+frontend/src/components/ui/progress.tsx
+  s_91cf03ebb3a977::t_5aed3ec7eeb681 1-30
+frontend/src/components/ui/questionnaire.tsx
+  s_91cf03ebb3a977::t_cf30d2c688791a 1-324
+frontend/src/components/ui/radio-group.tsx
+  s_91cf03ebb3a977::t_e3a2393cd04021 1-43
+frontend/src/components/ui/resizable.tsx
+  s_91cf03ebb3a977::t_a260bd3e6a3ec4 1-49
+frontend/src/components/ui/scroll-area.tsx
+  s_91cf03ebb3a977::t_52e8b43fc111fb 1-54
+frontend/src/components/ui/select.tsx
+  s_91cf03ebb3a977::t_bdecd54fe1f0d0 1-191
+frontend/src/components/ui/separator.tsx
+  s_91cf03ebb3a977::t_74a0e32098aefc 1-27
+frontend/src/components/ui/sidebar.tsx
+  s_91cf03ebb3a977::t_e180da434c5081 1-702
+frontend/src/components/ui/skeleton.tsx
+  s_91cf03ebb3a977::t_bf9073a88ab261 1-13
+frontend/src/components/ui/slider.tsx
+  s_91cf03ebb3a977::t_8667ccb6b8cfcb 1-58
+frontend/src/components/ui/spinner.tsx
+  s_91cf03ebb3a977::t_5e0bed63b0a68f 1-10
+frontend/src/components/ui/switch.tsx
+  s_91cf03ebb3a977::t_1156171e8fdf41 1-32
+frontend/src/components/ui/table.tsx
+  s_91cf03ebb3a977::t_958cef7672381f 1-115
+frontend/src/components/ui/tabs.tsx
+  s_91cf03ebb3a977::t_050b26282211cc 1-89
+frontend/src/components/ui/textarea.tsx
+  s_91cf03ebb3a977::t_da8fcda85247ac 1-17
+frontend/src/components/ui/toggle-group.tsx
+  s_91cf03ebb3a977::t_37148399e66ab9 1-89
+frontend/src/components/ui/toggle.tsx
+  s_91cf03ebb3a977::t_b7e4c9ab0f8bc3 1-46
+frontend/src/components/ui/tooltip.tsx
+  s_91cf03ebb3a977::t_9fefb32e9226a4 1-56
+pnpm-lock.yaml
+  s_91cf03ebb3a977::t_b927557097df90 6176
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "65b06614655a112a9fe4ff8bea87ca7f00b13aa7",
+  "prompts": {},
+  "sessions": {
+    "s_0d75aded99f741": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bc7b12ed-1ebb-45f3-837b-cf72cd56cf78",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_65b9d82bf90f30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "50c8d85f-08b0-4a19-a85f-62f6f44bccab",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_91cf03ebb3a977": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b9a29ea4-e0d3-4c09-9ef3-579e39b09e69",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
