@@ -1,0 +1,131 @@
+frontend/src/server/actions/interactions.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 13
+frontend/src/server/actions/posts.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 20
+  s_65b9d82bf90f30::t_b0b1b149620554 22
+frontend/src/server/container.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 6-14
+frontend/src/services/blog/actions.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 9
+frontend/src/app/not-found.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 14
+frontend/src/app/api/health/route.ts
+  s_65b9d82bf90f30::t_f9263de82ee48e 7
+  s_65b9d82bf90f30::t_b0b1b149620554 6
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 13,20-21
+frontend/src/server/actions/auth.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 20
+  s_65b9d82bf90f30::t_b0b1b149620554 21
+frontend/src/server/actions/comments.ts
+  s_65b9d82bf90f30::t_ad1721fac8149c 13
+  s_65b9d82bf90f30::t_b0b1b149620554 15
+frontend/src/components/auth/AuthGate.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 7
+frontend/src/hooks/useAsyncAction.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+frontend/src/services/comment/hooks.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 15
+frontend/src/services/blog/hooks.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 10-11
+frontend/src/app/api/auth/refresh/route.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 6,9
+frontend/src/app/global-error.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 14
+frontend/src/app/api/favorites/route.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 5-6
+frontend/src/services/comment/api.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 5
+frontend/src/hooks/useFetch.ts
+  s_65b9d82bf90f30::t_66bb8f2671200b 2
+frontend/src/app/api/posts/[id]/view/route.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 5-7
+frontend/src/services/blog/api.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 8
+frontend/src/services/auth/hooks.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 10-11,13
+frontend/src/components/providers.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 9
+frontend/src/proxy.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 9
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 18
+frontend/src/app/api/posts/[id]/comments/route.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 7-8
+frontend/src/components/layouts/MobileMenu.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 20
+frontend/src/hooks/useCurrentUser.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 7
+frontend/src/components/layouts/UserMenu.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 13
+frontend/src/components/auth/AuthGuard.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 10
+frontend/src/services/auth/server.ts
+  s_65b9d82bf90f30::t_b0b1b149620554 9
+frontend/src/components/blog/ViewReporter.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 8
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 19,21
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_65b9d82bf90f30::t_b0b1b149620554 13,24,27
+frontend/src/app/errorPageShell.ts
+  s_65b9d82bf90f30::t_fc12b35ba2b3a9 2
+frontend/src/components/authProvider.tsx
+  s_65b9d82bf90f30::t_3429df76470529 2,10
+frontend/src/lib/apiRequest.ts
+  s_65b9d82bf90f30::t_3f888a030effdc 9
+frontend/src/lib/authConstants.ts
+  s_65b9d82bf90f30::t_cf3827e5511473 2
+frontend/src/lib/authStatus.ts
+  s_65b9d82bf90f30::t_0ee8109e41ec5a 2,6
+frontend/src/lib/errorToast.ts
+  s_65b9d82bf90f30::t_a3c47f35669634 2,7
+frontend/src/lib/markdownHighlight.ts
+  s_65b9d82bf90f30::t_08e6977f7c31ef 2
+frontend/src/server/infrastructure/kvMock.ts
+  s_65b9d82bf90f30::t_0653f534cd32d4 2
+frontend/src/server/infrastructure/kvRepository.ts
+  s_65b9d82bf90f30::t_3f86449d85c184 2,6
+frontend/src/server/infrastructure/kvStore.ts
+  s_65b9d82bf90f30::t_75c169087b0bca 2,6
+frontend/src/server/modules/auth/authCookie.helper.ts
+  s_65b9d82bf90f30::t_0661cada5e34d2 2,10-11
+frontend/src/server/modules/auth/authGuard.ts
+  s_65b9d82bf90f30::t_c581dc0b9d336e 2,8-10
+frontend/src/server/modules/auth/kvUser.repository.ts
+  s_65b9d82bf90f30::t_aa0ffa1618bfdd 2,6,8
+frontend/src/server/modules/auth/services/authService.ts
+  s_65b9d82bf90f30::t_13393ce1fa987a 2,19-22,152
+frontend/src/server/modules/blog/kvBlog.repository.ts
+  s_65b9d82bf90f30::t_1fd946231f3f98 2,7
+frontend/src/server/modules/blog/services/blogService.ts
+  s_65b9d82bf90f30::t_ab3ef02e1d964f 2,18-20,29-30
+frontend/src/server/modules/blog/services/markdownService.ts
+  s_65b9d82bf90f30::t_3d516e976e45ed 2,25
+frontend/src/server/modules/comment/kvComment.repository.ts
+  s_65b9d82bf90f30::t_0f56d757449b81 2,7,9
+frontend/src/server/modules/comment/services/commentService.ts
+  s_65b9d82bf90f30::t_5a2ef41d2ca593 2,13-15
+frontend/src/server/utils/apiResponse.ts
+  s_65b9d82bf90f30::t_dcb66bc991880e 2
+frontend/src/server/utils/rateLimit.ts
+  s_65b9d82bf90f30::t_15688768d14d11 2,6
+frontend/src/server/utils/routeHandler.ts
+  s_65b9d82bf90f30::t_7cff1c7bf367dc 2,9-10,12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "7ad922b7330a9d92515b82825d110e73bc35f075",
+  "prompts": {},
+  "sessions": {
+    "s_65b9d82bf90f30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "50c8d85f-08b0-4a19-a85f-62f6f44bccab",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
