@@ -1,0 +1,78 @@
+frontend/src/lib/formFeedback.ts
+  s_207b12a7fe4848::t_56155c9542a7b6 4
+  s_207b12a7fe4848::t_d1c066b592c6a0 70
+  s_207b12a7fe4848::t_87152e4b29a546 3
+frontend/src/lib/comment/hooks.ts
+  s_207b12a7fe4848::t_87152e4b29a546 2
+  s_207b12a7fe4848::t_3cb51d0279e14d 29
+  s_207b12a7fe4848::t_d421dd8223179b 11
+frontend/src/components/blog/DeletePostButton.tsx
+  s_207b12a7fe4848::t_87152e4b29a546 7
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_207b12a7fe4848::t_87152e4b29a546 15
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_207b12a7fe4848::t_87152e4b29a546 7
+frontend/src/server/container.ts
+  s_207b12a7fe4848::t_8ce0b7c3415eaa 5-6
+frontend/src/components/dashboard/RemoveFavoriteButton.tsx
+  s_207b12a7fe4848::t_87152e4b29a546 5
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_207b12a7fe4848::t_87152e4b29a546 8
+frontend/src/i18n/messages/zh/feedback.ts
+  s_207b12a7fe4848::t_83ede0b5787d8a 1-14,16-98
+frontend/src/server/utils/routeHandler.ts
+  s_207b12a7fe4848::t_91bfd05999ff36 50,56
+  s_207b12a7fe4848::t_d09425e37d6bb5 10
+frontend/src/hooks/useLogoutRedirect.ts
+  s_207b12a7fe4848::t_87152e4b29a546 4
+frontend/src/lib/blog/hooks.ts
+  s_207b12a7fe4848::t_87152e4b29a546 2
+frontend/src/server/auth/tokenService.ts
+  s_207b12a7fe4848::t_7625b819abc937 9-20,22-26
+frontend/src/server/auth/authServer.ts
+  s_207b12a7fe4848::t_47e00d3e21b7c8 6,14
+frontend/src/i18n/messages/en/feedback.ts
+  s_207b12a7fe4848::t_5cfcba44d0b313 1,3-16,18-102
+frontend/src/server/blog/blogService.ts
+  s_207b12a7fe4848::t_9e030b5ec77963 24,27-32
+  s_207b12a7fe4848::t_5a6919968984af 33
+frontend/src/app/api/auth/refresh/route.ts
+  s_207b12a7fe4848::t_1e4fbbc6c85036 7,15,19
+frontend/src/lib/message.ts
+  s_207b12a7fe4848::t_a15b0cf5b413f6 24,51-52
+  s_207b12a7fe4848::t_127db569115eb1 2-3,11,13-15,18,20,22,55,65
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_207b12a7fe4848::t_87152e4b29a546 16
+frontend/src/server/auth/passwordService.ts
+  s_207b12a7fe4848::t_c60b613fe99ee8 8-11
+frontend/src/components/blog/PostActions.tsx
+  s_207b12a7fe4848::t_87152e4b29a546 6
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_207b12a7fe4848::t_c8d6580495c9ee 29
+frontend/src/components/RoutePending.tsx
+  s_207b12a7fe4848::t_5fd1c7b5e470d8 5
+frontend/src/components/layouts/MobileMenu.tsx
+  s_207b12a7fe4848::t_69a50f850ed024 21
+frontend/src/components/layouts/NavLinks.tsx
+  s_207b12a7fe4848::t_8977e01dc3fd93 8
+frontend/src/components/layouts/PageHeader.tsx
+  s_207b12a7fe4848::t_4793516ba518b9 2
+pnpm-lock.yaml
+  s_207b12a7fe4848::t_4cbc5b5685bd31 6648-6649
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "2f55e2804261d5d98556cae991ade74b9d607f16",
+  "prompts": {},
+  "sessions": {
+    "s_207b12a7fe4848": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "79c08748-ee04-4957-9d7c-89b6a6db9d40",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
