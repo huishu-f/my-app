@@ -1,0 +1,267 @@
+frontend/src/components/blog/PostToc.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 43,99,117
+frontend/src/server/auth/authGuard.ts
+  s_207b12a7fe4848::t_f2167b4283104a 9
+frontend/src/server/blog/markdownService.ts
+  s_207b12a7fe4848::t_f2167b4283104a 88,102,106,108,110
+frontend/src/server/config/env.ts
+  s_207b12a7fe4848::t_f2167b4283104a 29
+frontend/src/app/styles/typography.css
+  s_207b12a7fe4848::t_f2167b4283104a 113
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 133,144-145,147,151,155,159,165,170,239,262,276,318,326,350,410
+frontend/src/server/auth/passwordService.ts
+  s_207b12a7fe4848::t_f2167b4283104a 10
+frontend/src/components/dashboard/ProfilePageContent.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 52,56,106,159
+frontend/src/server/auth/authServer.ts
+  s_207b12a7fe4848::t_f2167b4283104a 19,21,23
+frontend/src/hooks/useAsyncAction.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6,38
+frontend/src/hooks/useRafScroll.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6,8
+frontend/src/components/blog/PostActions.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 17,94
+frontend/src/lib/format.ts
+  s_207b12a7fe4848::t_f2167b4283104a 41,44
+frontend/src/app/not-found.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 11,18,40,48,50,57
+frontend/src/components/dashboard/write/MarkdownPane.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 51,61,79,115,121,146
+frontend/src/server/blog/summaryService.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6,13
+frontend/src/components/layouts/NavLinks.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 20
+frontend/src/lib/message.ts
+  s_207b12a7fe4848::t_f2167b4283104a 10,263,285,287,307,330
+frontend/src/components/layouts/Navbar.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 14,18,24,31,35
+frontend/src/i18n/request.ts
+  s_207b12a7fe4848::t_f2167b4283104a 7
+frontend/src/server/infrastructure/kvRepository.ts
+  s_207b12a7fe4848::t_f2167b4283104a 7,33,61
+frontend/src/server/auth/authCookieHelper.ts
+  s_207b12a7fe4848::t_f2167b4283104a 20
+frontend/src/server/utils/cache.ts
+  s_207b12a7fe4848::t_f2167b4283104a 7
+frontend/src/hooks/useFetch.ts
+  s_207b12a7fe4848::t_f2167b4283104a 12,42,79,95,97,99
+frontend/src/server/actions/posts.ts
+  s_207b12a7fe4848::t_f2167b4283104a 40,49
+frontend/src/lib/writeDraft.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4,63,72
+frontend/src/components/auth/LoginRequired.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 18
+frontend/src/server/blog/kvBlogRepository.ts
+  s_207b12a7fe4848::t_f2167b4283104a 35,54,62
+frontend/src/server/auth/kvUserRepository.ts
+  s_207b12a7fe4848::t_f2167b4283104a 9,11,18,24,28,44,64,69,104,114,117
+frontend/src/server/auth/tokenService.ts
+  s_207b12a7fe4848::t_f2167b4283104a 7,12,14,24
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 37,59,85,112,158
+frontend/src/components/layouts/LanguageToggle.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 52
+frontend/src/components/blog/PostSidebar.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 60,79,106,121
+frontend/src/server/utils/logger.ts
+  s_207b12a7fe4848::t_f2167b4283104a 5,52
+frontend/src/i18n/routing.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4
+frontend/src/server/utils/routeHandler.ts
+  s_207b12a7fe4848::t_f2167b4283104a 12,23,27,78
+shared/validation/blog.ts
+  s_207b12a7fe4848::t_f2167b4283104a 13,18,20
+frontend/src/app/sitemap.ts
+  s_207b12a7fe4848::t_f2167b4283104a 11,15,47,58
+frontend/src/lib/formFeedback.ts
+  s_207b12a7fe4848::t_f2167b4283104a 10,17,24,49,58,64
+shared/eslint.config.mjs
+  s_207b12a7fe4848::t_f2167b4283104a 7,18,32,35,37
+shared/types/blog.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,45,47,52,54,56,58,60,62,67,69,71,73,75,77,79,81,88,90,95,97,99,101,103,108,113,115,120,122,127,132,137,142,147,149,154,156,158,163,165,170,172,174,176,178,180,182,184
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 132,185,222,236,263,265,395
+frontend/src/app/api/auth/refresh/route.ts
+  s_207b12a7fe4848::t_f2167b4283104a 39
+frontend/src/components/blog/PostStateProvider.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 15,27,29,32,36
+frontend/src/components/blog/WriteCta.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 10
+frontend/src/hooks/usePostPageAuth.ts
+  s_207b12a7fe4848::t_f2167b4283104a 10
+shared/validation/auth.ts
+  s_207b12a7fe4848::t_f2167b4283104a 7,33,43,59,73
+frontend/src/app/global-error.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 29,51,53,60
+shared/types/backend/auth.ts
+  s_207b12a7fe4848::t_f2167b4283104a 14,16,18,23,25,27,29,31,33,35,40,42,47,49,51,53,55,57,59,65,72
+frontend/src/server/container.ts
+  s_207b12a7fe4848::t_f2167b4283104a 13
+frontend/src/server/utils/rateLimit.ts
+  s_207b12a7fe4848::t_f2167b4283104a 18
+frontend/src/components/dashboard/write/CoverField.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 45,66,75,94
+frontend/src/lib/blog/actions.ts
+  s_207b12a7fe4848::t_f2167b4283104a 12
+frontend/src/components/blog/AuthorActions.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 11,13,15,18
+frontend/src/components/auth/PasswordToggle.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 6
+frontend/src/proxy.ts
+  s_207b12a7fe4848::t_f2167b4283104a 11,43
+frontend/src/components/auth/AuthGate.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 22
+frontend/src/components/AuthProvider.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 9,24,39,57
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 25
+frontend/src/server/infrastructure/kvMock.ts
+  s_207b12a7fe4848::t_f2167b4283104a 2,44,59,174,260,356,406,408,416,428,445,494,515
+frontend/src/app/robots.ts
+  s_207b12a7fe4848::t_f2167b4283104a 8,10,12,15
+frontend/src/components/blog/BackToTop.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 22
+frontend/src/server/infrastructure/kvStore.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6,23,31,43,56,63,69,85
+frontend/src/components/layouts/MobileMenu.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 51,53,64,72,83,99,158
+frontend/src/components/layouts/ThemeToggle.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 10,12,18,44
+frontend/scripts/strip-comments.mjs
+  s_207b12a7fe4848::t_69088051a4405d 1-3,5-6,9-10,16-25,27,29-38,43,47,72,75,86,110,114-115,145,171,176,179-180,184-187,189-190,195-196,199-200,203,205-210,212,215-219,231-235,239-247,249-253,255-258,266-268,270-275,277,280-302,304-310,312-320,322-327,330,332-344,346-353
+  s_207b12a7fe4848::t_061eb08cb5f623 15
+  s_207b12a7fe4848::t_978cedb854f7a5 11
+  s_207b12a7fe4848::t_36ca6a452f159e 236-238
+  s_207b12a7fe4848::t_5ebcd003154379 4,7-8,12-14,26,28,39-42,44-46,48-71,73-74,76-85,87-109,111-113,116-144,146-170,172-175,177-178,181-183,188,191-194,197-198,201-202,204,211,213-214,220-230,248,254,259-265,269,276,278-279,303,311,321,328-329,331,345
+frontend/src/components/blog/CommentsSection.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 115,161,205,261,317,411,423
+frontend/src/app/[locale]/layout.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 15,30,41,43,59,67,74,104,107,115
+frontend/src/lib/markdown.ts
+  s_207b12a7fe4848::t_f2167b4283104a 54
+shared/types/user.ts
+  s_207b12a7fe4848::t_f2167b4283104a 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,49,51,53,55,60,62,64,69,71,73,78,80,82,84,86,91,93,98,100,105,107,109,111,113,115,120,122,124,126,128
+frontend/src/components/blog/BackLink.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 23
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 27
+frontend/src/components/blog/MarkdownToolbar.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 7,12,56
+shared/types/frontend/pages.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4,9,11
+shared/types/ui.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6,8,10,12,14,16,18,20,22,24,26,31,33,35,37,42,47,52,57,59,61,63,65,67,72,77,79,81,86,91,93,95,97,99,104,106,108,112,114,116,118,120
+frontend/src/lib/markdownRenderer.ts
+  s_207b12a7fe4848::t_f2167b4283104a 15,50,54,66
+frontend/src/app/[locale]/not-found.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 6,10,18
+frontend/src/server/auth/authValidators.ts
+  s_207b12a7fe4848::t_f2167b4283104a 22,30,41
+frontend/src/app/[locale]/posts/[id]/loading.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 24
+frontend/src/hooks/useDismissable.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6,16,19
+frontend/src/lib/comment/api.ts
+  s_207b12a7fe4848::t_f2167b4283104a 5
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 40,42,50,79,81,87,94,105,107,110,175,177,180,199,253
+frontend/src/components/dashboard/write/useUnsavedGuard.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 34,160,174,246
+frontend/src/components/blog/DeletePostButton.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 25,98
+frontend/src/server/errors/appError.ts
+  s_207b12a7fe4848::t_f2167b4283104a 2,6,15,31,38,45,52,59,66,73,80
+shared/types/backend/comment.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4,6,8,10,12,17,19,21,23,25,27,29,31
+frontend/src/i18n/i18n.d.ts
+  s_207b12a7fe4848::t_f2167b4283104a 6
+frontend/src/lib/blog/hooks.ts
+  s_207b12a7fe4848::t_f2167b4283104a 55,77,86,105
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 31,96,104,122,131,146
+frontend/src/components/dashboard/RemoveFavoriteButton.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 12
+frontend/src/server/auth/authService.ts
+  s_207b12a7fe4848::t_f2167b4283104a 26,35,37,39,41,44,46,55,57,65,84,94,114,124,130,163
+frontend/src/server/blog/blogServer.ts
+  s_207b12a7fe4848::t_f2167b4283104a 23,39,49,163
+shared/types/frontend/request.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4,6,8,11
+frontend/src/server/utils/apiResponse.ts
+  s_207b12a7fe4848::t_f2167b4283104a 16
+frontend/src/app/globals.css
+  s_207b12a7fe4848::t_f2167b4283104a 7,46,60,67,72,75,80,97,100,104,106,109,112,134,152,156,158,161,181,283
+package.json
+  s_207b12a7fe4848::t_11ce290c29b62f 21-23
+frontend/src/app/api/posts/[id]/view/route.ts
+  s_207b12a7fe4848::t_f2167b4283104a 9,11
+frontend/src/components/blog/PostsSearchInput.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 64
+frontend/src/components/layouts/UserMenu.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 29,33,35,57,70,82,108
+shared/validation/primitives.ts
+  s_207b12a7fe4848::t_f2167b4283104a 8,12,47,54
+frontend/src/server/comment/commentService.ts
+  s_207b12a7fe4848::t_f2167b4283104a 14,20,22,24,27,31,36,62,93,104,127
+frontend/src/app/[locale]/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 28,85,145,162,172,200,211
+frontend/src/components/blog/PostHeadStats.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 8
+shared/validation/postId.ts
+  s_207b12a7fe4848::t_f2167b4283104a 17,42,45
+frontend/src/server/blog/blogService.ts
+  s_207b12a7fe4848::t_f2167b4283104a 31,39,41-42,81,90,92,94,97,107,116,119,134,142-143,147,155,160,163,174,182-183,192,207,234,247,341,346,419,474-475,480,503,543,549,551,560,570
+frontend/src/components/Providers.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 17
+frontend/src/components/dashboard/ProfileTabs.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 27,122,136,168
+frontend/src/server/comment/kvCommentRepository.ts
+  s_207b12a7fe4848::t_f2167b4283104a 9,22,35,57,62,69,77
+shared/types/frontend/forms.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4,6,8,10
+frontend/src/components/blog/ViewReporter.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 11
+frontend/src/components/auth/PasswordStrength.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 29,37
+shared/types/common.ts
+  s_207b12a7fe4848::t_f2167b4283104a 2,4,6
+shared/types/backend/blog.ts
+  s_207b12a7fe4848::t_f2167b4283104a 13,15,17,19,21,23,25,27,32,34,36,38,40,42,47,49,51,53
+frontend/src/app/[locale]/error.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 10,25,40
+shared/types/comment.ts
+  s_207b12a7fe4848::t_f2167b4283104a 4,6,8,10,12,14,16,18,23,28,33,38,40,45,47
+shared/types/frontend/toc.ts
+  s_207b12a7fe4848::t_f2167b4283104a 2,4,6
+frontend/src/components/layouts/Footer.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 4,6,12
+frontend/src/lib/apiRequest.ts
+  s_207b12a7fe4848::t_f2167b4283104a 60,73,124,135,137,146,164,180,204,209,224
+frontend/src/components/auth/AuthGuard.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 11,23,30
+frontend/src/components/blog/ArticleCard.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 178,181
+frontend/src/app/[locale]/(dashboard)/settings/page.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 11,14,17
+frontend/src/components/layouts/PageHeader.tsx
+  s_207b12a7fe4848::t_f2167b4283104a 6,10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "12eae4a6c10ee1a7d015ec263886ea22ef4b0de0",
+  "prompts": {},
+  "sessions": {
+    "s_207b12a7fe4848": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "79c08748-ee04-4957-9d7c-89b6a6db9d40",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
