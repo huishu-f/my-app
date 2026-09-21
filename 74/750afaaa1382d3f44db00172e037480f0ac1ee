@@ -1,0 +1,25 @@
+frontend/src/server/infrastructure/kvRepository.ts
+  s_bd57a70c1c794d::t_4bff7a5574e8c0 3
+frontend/src/lib/errorToast.ts
+  s_bd57a70c1c794d::t_aec3c62ae91894 3
+frontend/src/lib/blog/actions.ts
+  s_bd57a70c1c794d::t_99b43012e760ef 7
+  s_bd57a70c1c794d::t_99b9dc7074ba6d 26
+  s_bd57a70c1c794d::t_e8c791b3e61b1c 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "74750afaaa1382d3f44db00172e037480f0ac1ee",
+  "prompts": {},
+  "sessions": {
+    "s_bd57a70c1c794d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b4456ea-3703-4385-9e5d-08cc508cdebe",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
