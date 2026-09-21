@@ -1,0 +1,63 @@
+migration-plan-neon-prisma.md
+  s_bd57a70c1c794d::t_45e318425cca8f 1-323
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_ff26aefaf09dcf::t_9a553ee4e38a85 87-92,199-200,219-220
+frontend/src/app/globals.css
+  s_bd57a70c1c794d::t_c6af4bf8e7fa6c 42-44,124-131,402-407,409-412,416-429
+frontend/src/app/styles/typography.css
+  s_54c98536447434::t_6931844ce3411f 163-174
+frontend/src/components/AuthProvider.tsx
+  s_dea13deb738ca3::t_4d7942729a4859 22,47-50,57,62
+frontend/src/components/layouts/Navbar.tsx
+  s_54c98536447434::t_736efaa286dd2f 27-30
+frontend/src/server/blog/blogServer.ts
+  s_05f4379aeff1a3::t_4eecb265a9782e 36,40-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "604b9b3a332f8bd5b97d5d2ee3167411259b6b60",
+  "prompts": {},
+  "sessions": {
+    "s_05f4379aeff1a3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-a971adb234a0a4853",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_54c98536447434": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-a79ca5cdcd6b26a83",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_bd57a70c1c794d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b4456ea-3703-4385-9e5d-08cc508cdebe",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_dea13deb738ca3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-a35e5b7d14917dc02",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_ff26aefaf09dcf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-ad88748bd5a5e1db1",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
