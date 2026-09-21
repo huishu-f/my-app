@@ -1,0 +1,19 @@
+AGENTS.md
+  s_bd57a70c1c794d::t_d45ab45f16b0ed 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "fb36316a4be555812035db8c2fe2778daee8fd56",
+  "prompts": {},
+  "sessions": {
+    "s_bd57a70c1c794d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b4456ea-3703-4385-9e5d-08cc508cdebe",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
