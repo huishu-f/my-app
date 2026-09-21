@@ -1,0 +1,21 @@
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_bd57a70c1c794d::t_855e4bdd09874e 141-142
+  s_bd57a70c1c794d::t_0c338ab0368c31 8
+  s_bd57a70c1c794d::t_302fbd42aa23b5 76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "7747324ffe8b8190e4fcf60d667fea681d728594",
+  "prompts": {},
+  "sessions": {
+    "s_bd57a70c1c794d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b4456ea-3703-4385-9e5d-08cc508cdebe",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
