@@ -1,0 +1,272 @@
+frontend/src/server/comment/commentService.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 13-15
+  s_523137f942ade8::t_8896479d073071 1,3-12,16-186
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/components/blog/ViewReporter.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 8
+frontend/src/components/dashboard/write/MarkdownPane.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 15
+frontend/src/server/blog/blogValidators.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-31
+shared/scripts/tsHook.mjs
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-31
+frontend/src/app/global-error.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 17
+commentTemplate/README.md
+  s_523137f942ade8::t_541d4a7edb2242 1-63
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 29
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 11
+  s_523137f942ade8::t_a79dc0e27df133 5
+frontend/src/server/infrastructure/kvMock.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-662
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 28
+frontend/src/components/dashboard/write/useUnsavedGuard.ts
+  s_523137f942ade8::t_8896479d073071 1,3-39
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/server/actions/comments.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 12-13,15,17
+frontend/src/app/[locale]/page.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 23
+frontend/src/server/actions/actionHelpers.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-9,11-66
+  s_523137f942ade8::t_b207f2b4b2ca74 10
+frontend/src/components/Providers.tsx
+  s_523137f942ade8::t_df77794570d680 1-34
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_523137f942ade8::t_d20db006674e3b 12
+  s_523137f942ade8::t_b207f2b4b2ca74 26
+frontend/src/lib/formFeedback.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 34
+  s_523137f942ade8::t_8896479d073071 1,3-33,35-278
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/server/auth/kvUserRepository.ts
+  s_523137f942ade8::t_8896479d073071 1,3-5,7,9-193
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 6,8
+frontend/src/components/blog/PostSidebar.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 15
+frontend/src/i18n/messages/en/nav.ts
+  s_523137f942ade8::t_33cffcf6a15486 22
+frontend/src/lib/auth/hooks.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 11
+frontend/src/lib/buildPostsUrl.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-36
+frontend/src/server/utils/routeHandler.ts
+  s_523137f942ade8::t_8896479d073071 1,3-8,11,13-122
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 9-10,12
+frontend/src/server/infrastructure/kvStore.ts
+  s_523137f942ade8::t_8896479d073071 1,3-5,7-132
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 6
+frontend/src/server/auth/authCookieHelper.ts
+  s_523137f942ade8::t_8896479d073071 1,3-9,12-77
+  s_523137f942ade8::t_b207f2b4b2ca74 10-11
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/app/api/favorites/route.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 5-6
+frontend/src/server/blog/blogServer.ts
+  s_523137f942ade8::t_541d4a7edb2242 2,217
+  s_523137f942ade8::t_8896479d073071 1,3-14,16,18-216,218-230
+  s_523137f942ade8::t_b207f2b4b2ca74 15,17
+frontend/src/server/utils/apiResponse.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-63
+commentTemplate/ts.md
+  s_523137f942ade8::t_541d4a7edb2242 1-157
+frontend/src/app/styles/hljsTheme.css
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-99
+shared/validation/index.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 7
+frontend/src/components/AuthProvider.tsx
+  s_523137f942ade8::t_8896479d073071 1-9,11-115
+  s_523137f942ade8::t_58bb344b6e51d7 10
+frontend/src/app/globals.css
+  s_523137f942ade8::t_598641b959df96 67-75
+  s_523137f942ade8::t_f7ab57cc5ad4cc 407-411,417-418
+  s_523137f942ade8::t_0cfa70454f4560 419
+frontend/src/lib/writeDraft.ts
+  s_523137f942ade8::t_8896479d073071 1,3-48,50-118
+  s_523137f942ade8::t_541d4a7edb2242 2,49
+frontend/src/lib/errorToast.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-30
+frontend/src/server/utils/rateLimit.ts
+  s_523137f942ade8::t_8896479d073071 1,3-5,7-60
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 6
+frontend/src/server/comment/commentValidators.ts
+  s_523137f942ade8::t_8896479d073071 1,3-20
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/server/auth/authServer.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 9
+  s_523137f942ade8::t_8896479d073071 1,3-8,10-60
+frontend/src/lib/comment/api.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 5
+frontend/scripts/checkPostIdMigration.mjs
+  s_523137f942ade8::t_8896479d073071 1,3-7,9-15,17-243
+  s_523137f942ade8::t_541d4a7edb2242 2,8
+  s_523137f942ade8::t_b207f2b4b2ca74 16
+frontend/src/app/not-found.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 17
+frontend/src/app/api/auth/refresh/route.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 6,9
+frontend/src/server/infrastructure/kvRepository.ts
+  s_523137f942ade8::t_8896479d073071 1,3-5,7-152
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 6
+frontend/src/app/api/posts/[id]/comments/route.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 7-8
+frontend/src/server/actions/posts.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 18-19,21,23
+commentTemplate/tsx.md
+  s_523137f942ade8::t_541d4a7edb2242 1-234
+frontend/src/i18n/messages/zh/nav.ts
+  s_523137f942ade8::t_edff7347a03754 20
+frontend/src/app/errorPageShell.ts
+  s_523137f942ade8::t_8896479d073071 1,3-83
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/server/container.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 6-14
+frontend/src/server/comment/kvCommentRepository.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 7,9
+  s_523137f942ade8::t_8896479d073071 1,3-6,8,10-118
+commentTemplate/css.md
+  s_523137f942ade8::t_541d4a7edb2242 1-50
+frontend/src/app/api/posts/[id]/view/route.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 5-7
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 25,53,58
+frontend/src/server/auth/tokenService.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-51
+frontend/src/server/blog/kvBlogRepository.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 7
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-6,8-107
+frontend/src/server/auth/authService.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 19-22
+  s_523137f942ade8::t_8896479d073071 1,3-18,23-275
+frontend/src/server/blog/markdownService.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 29
+  s_523137f942ade8::t_8896479d073071 1,3-28,30-124
+shared/scripts/checkPostId.mjs
+  s_523137f942ade8::t_b207f2b4b2ca74 22
+  s_523137f942ade8::t_8896479d073071 1,3-5,7-21,23-120
+  s_523137f942ade8::t_541d4a7edb2242 2,6
+frontend/src/components/blog/CommentsSection.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 45
+frontend/src/server/errors/appError.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-144
+frontend/src/lib/blog/actions.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 9
+frontend/src/server/actions/auth.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 14,20-21,23
+frontend/src/server/blog/summaryService.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_8896479d073071 1,3-25
+frontend/scripts/selfCheck.mjs
+  s_523137f942ade8::t_8896479d073071 1,3-351
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/server/auth/passwordService.ts
+  s_523137f942ade8::t_8896479d073071 1,3-23
+  s_523137f942ade8::t_541d4a7edb2242 2
+shared/validation/postId.ts
+  s_523137f942ade8::t_8896479d073071 1,3-143
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/lib/markdownRenderer.ts
+  s_523137f942ade8::t_541d4a7edb2242 2,9,45-54
+  s_523137f942ade8::t_8896479d073071 1,3-8,10-15,17-44,55-99
+  s_523137f942ade8::t_b207f2b4b2ca74 16
+frontend/src/components/layouts/MobileMenu.tsx
+  s_523137f942ade8::t_859efbced630aa 107-110
+frontend/src/lib/apiRequest.ts
+  s_523137f942ade8::t_8896479d073071 1,3-8,10-47,49-91,93-353
+  s_523137f942ade8::t_541d4a7edb2242 2,48,92
+  s_523137f942ade8::t_b207f2b4b2ca74 9
+frontend/src/server/auth/authGuard.ts
+  s_523137f942ade8::t_8896479d073071 1,3-7,11-77
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 8-10
+frontend/src/server/auth/authValidators.ts
+  s_523137f942ade8::t_8896479d073071 1,3-77
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/app/sitemap.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 7
+frontend/src/lib/authConstants.ts
+  s_523137f942ade8::t_8896479d073071 1,3-10
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/proxy.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 9
+frontend/src/server/blog/blogService.ts
+  s_523137f942ade8::t_8896479d073071 1,3-17,21-28,31-750
+  s_523137f942ade8::t_b207f2b4b2ca74 18-20,29-30
+  s_523137f942ade8::t_541d4a7edb2242 2
+shared/scripts/checkImageUrl.mjs
+  s_523137f942ade8::t_541d4a7edb2242 2,13-15
+  s_523137f942ade8::t_8896479d073071 1,3-12,16-96
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 27,39
+frontend/src/lib/comment/hooks.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 16
+frontend/scripts/migratePostIds.mjs
+  s_523137f942ade8::t_b207f2b4b2ca74 31
+  s_523137f942ade8::t_541d4a7edb2242 2,170,254,290
+  s_523137f942ade8::t_8896479d073071 1,3-30,32-169,171-253,255-289,291-364
+frontend/src/lib/blog/api.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 8
+frontend/src/lib/blog/hooks.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 14
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 10,15
+frontend/scripts/checkFeedback.mjs
+  s_523137f942ade8::t_8896479d073071 1,3-6,9-224
+  s_523137f942ade8::t_541d4a7edb2242 2,7-8
+frontend/src/server/errors/index.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 17
+frontend/src/lib/markdownHighlight.ts
+  s_523137f942ade8::t_8896479d073071 1,3-77
+  s_523137f942ade8::t_541d4a7edb2242 2
+frontend/src/server/actions/interactions.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 11,13,15
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_523137f942ade8::t_b207f2b4b2ca74 25,36
+frontend/src/app/api/health/route.ts
+  s_523137f942ade8::t_b207f2b4b2ca74 6-7
+frontend/src/lib/authStatus.ts
+  s_523137f942ade8::t_541d4a7edb2242 2
+  s_523137f942ade8::t_b207f2b4b2ca74 6
+  s_523137f942ade8::t_8896479d073071 1,3-5,7-37
+README.md
+  s_523137f942ade8::t_429e9e2eabfa34 53,242
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "94ed892db661e73473df9c116c7e326b26e9d48f",
+  "prompts": {},
+  "sessions": {
+    "s_523137f942ade8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6f27ff15-0581-49fd-83f2-f3f4f5fccd04",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
