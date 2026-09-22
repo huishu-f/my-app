@@ -1,0 +1,50 @@
+frontend/src/app/sitemap.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 9
+frontend/src/app/[locale]/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 11
+frontend/src/server/comment/comment.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-26,29-39,41-56,58,60-61,63-69,71-72,75-85,88-91,93-98,101-107,109-119,121,124,129
+  s_1e17bea8f7cf00::t_19c088bcc79f6c 125-128
+frontend/src/hooks/useAuth.ts
+  s_1e17bea8f7cf00::t_5c3d901948584e 7
+frontend/src/server/blog/markdown.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-106
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 7-8
+frontend/src/app/api/auth/refresh/route.ts
+  s_1e17bea8f7cf00::t_003a6fb99cb795 3-4
+  s_1e17bea8f7cf00::t_bbd2a450f8a3af 2
+  s_1e17bea8f7cf00::t_3de60c9941e745 5
+frontend/src/server/auth/token.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3
+frontend/src/server/auth/password.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3
+frontend/src/server/blog/blog.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 8,27,34-36
+  s_1e17bea8f7cf00::t_371a409923320f 31-33
+  s_1e17bea8f7cf00::t_451920d99a14bd 37-39
+frontend/src/app/[locale]/(dashboard)/settings/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 7
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 7,12
+frontend/src/server/auth/auth.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "86bb39f98e16fe608598cc19fbe0a36d60054380",
+  "prompts": {},
+  "sessions": {
+    "s_1e17bea8f7cf00": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff5bc9b-0a5b-4b59-8503-54f26db2624b",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
