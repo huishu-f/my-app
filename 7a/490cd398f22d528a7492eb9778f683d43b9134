@@ -1,0 +1,19 @@
+frontend/src/components/Providers.tsx
+  s_d2c72c30e148a9::t_2e888ff3235d8f 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "7a490cd398f22d528a7492eb9778f683d43b9134",
+  "prompts": {},
+  "sessions": {
+    "s_d2c72c30e148a9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c5d24bbb-8fe3-4ecb-8c64-ffc897ed8c1a",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
