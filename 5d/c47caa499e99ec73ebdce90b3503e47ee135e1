@@ -1,0 +1,19 @@
+package.json
+  s_09165471e9fa48::t_190ffff44ebd5d 22-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5dc47caa499e99ec73ebdce90b3503e47ee135e1",
+  "prompts": {},
+  "sessions": {
+    "s_09165471e9fa48": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b49866c1-0490-4f91-a7ee-5b8ef7792340",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
