@@ -1,0 +1,44 @@
+frontend/src/server/blog/markdown.service.ts
+  s_42e65744d9dd1e::t_d93803f9412061 20
+  s_42e65744d9dd1e::t_689f1263bb734c 21
+frontend/src/server/common/logger.ts
+  s_42e65744d9dd1e::t_e669313a193fba 2-3
+frontend/src/components/dashboard/write/CoverField.tsx
+  s_42e65744d9dd1e::t_842a7e9babc67f 8
+  s_42e65744d9dd1e::t_92297593187f66 68
+shared/types/backend/auth.ts
+  s_42e65744d9dd1e::t_5796acb7ed8d24 1
+frontend/src/server/comment/comment.service.ts
+  s_42e65744d9dd1e::t_b4a1df4160461b 48
+  s_42e65744d9dd1e::t_33a8f41b730550 4
+  s_42e65744d9dd1e::t_067bc079e73f7c 9
+frontend/src/lib/markdown.ts
+  s_42e65744d9dd1e::t_31386e4ee029ec 229
+  s_42e65744d9dd1e::t_3dbba0ae82e7a6 1-57
+frontend/src/server/auth/auth.service.ts
+  s_42e65744d9dd1e::t_33989220176ac4 138
+  s_42e65744d9dd1e::t_831e2ec6c47a76 16
+  s_42e65744d9dd1e::t_a47c9adfec0033 33
+frontend/src/server/blog/blog.service.ts
+  s_42e65744d9dd1e::t_9148bb659aea8c 49
+frontend/src/hooks/useComments.ts
+  s_42e65744d9dd1e::t_a1334aa2000118 3,21-53
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_42e65744d9dd1e::t_af63bb274b493f 261
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "d29bcfc80b150d46f0305a63b7c8e764f74c53fb",
+  "prompts": {},
+  "sessions": {
+    "s_42e65744d9dd1e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d2ac0005-56f2-4661-919f-2d9c0b1e8295",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
