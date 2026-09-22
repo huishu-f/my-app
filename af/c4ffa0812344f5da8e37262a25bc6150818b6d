@@ -1,0 +1,38 @@
+frontend/src/components/blog/DeletePostButton.tsx
+  s_913494d84a5cd8::t_87525f1edd6fad 9
+frontend/src/hooks/usePosts.ts
+  s_913494d84a5cd8::t_4887c3143f5d00 15
+  s_913494d84a5cd8::t_731312bb98da40 1-14,16-92
+frontend/src/components/blog/CommentsSection.tsx
+  s_913494d84a5cd8::t_fdb318dd74fdab 16
+frontend/src/components/blog/PostActions.tsx
+  s_913494d84a5cd8::t_0741f460665bc7 6
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_913494d84a5cd8::t_ecffc5b46763aa 22
+frontend/src/hooks/useComments.ts
+  s_913494d84a5cd8::t_09b61d0e17b276 1-65
+frontend/src/hooks/useAuth.ts
+  s_913494d84a5cd8::t_90949e833d7f83 1-21
+frontend/src/components/dashboard/RemoveFavoriteButton.tsx
+  s_913494d84a5cd8::t_fe40b6294e2352 7
+frontend/src/lib/actionResult.ts
+  s_913494d84a5cd8::t_34e165041044ad 1-7
+frontend/src/hooks/useLogoutRedirect.ts
+  s_913494d84a5cd8::t_b13f7efdabe32a 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "afc4ffa0812344f5da8e37262a25bc6150818b6d",
+  "prompts": {},
+  "sessions": {
+    "s_913494d84a5cd8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ce079a4a-b65d-42b5-9218-d7063cebebee",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
