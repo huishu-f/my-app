@@ -1,0 +1,26 @@
+README.md
+  s_7a13fb5f45edba::t_5b78dba793b7af 151
+  s_7a13fb5f45edba::t_b715afdd220514 79
+  s_7a13fb5f45edba::t_2caa5e0ac0377c 17
+  s_7a13fb5f45edba::t_f197bdad8e9896 73
+  s_7a13fb5f45edba::t_d589c6244aeefa 211
+  s_7a13fb5f45edba::t_9ac03fd57f3c90 155-156
+frontend/package.json
+  s_7a13fb5f45edba::t_808a8b621011e1 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "1541a6dff19eced9f187c13abbbf89478f3984df",
+  "prompts": {},
+  "sessions": {
+    "s_7a13fb5f45edba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e2cf82b5-45b8-468d-b252-a8ce11810b5c",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
