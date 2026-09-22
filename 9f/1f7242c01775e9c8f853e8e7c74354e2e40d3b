@@ -1,0 +1,41 @@
+frontend/src/server/comment/commentService.ts
+  s_7a13fb5f45edba::t_174ecb525ae113 3,17
+  s_7a13fb5f45edba::t_c825a307a439a3 18-22,24-25,30,34,37,46,63,66,68,80,85,99,106-107,112,120,123,129-130
+frontend/src/server/blog/prismaBlogRepository.ts
+  s_7a13fb5f45edba::t_6eeae66454b7fd 2-3,62,67-70,72-89,91-94,97-116,120-123,125-145,155-161,169-175,177-181,184-228
+frontend/src/server/auth/authServer.ts
+  s_7a13fb5f45edba::t_29419185db80ba 8,16
+frontend/src/server/auth/authGuard.ts
+  s_7a13fb5f45edba::t_e1e01e34dffe02 5,20
+frontend/src/server/container.ts
+  s_7a13fb5f45edba::t_89eab847878413 10-13,22,24,26,28,40-43
+frontend/src/server/blog/blogService.ts
+  s_7a13fb5f45edba::t_0e42a2700bf01b 5-6
+  s_7a13fb5f45edba::t_82f136e256c751 100
+  s_7a13fb5f45edba::t_e372efbf04ff4d 86-98,101-105,107,111-121,123-124,126,141-146,162-163,173,180-181,190,200,211,217,251,254,260-265,267-271,273-275,277-278,280-285,287,289-300,302-304,306-308,310,312-314,316-318,325-330,332,335,344,354,369,379,383,387,398,402,411,417,421,431-435,437,439,448-451,454-455,464-470,474-475,479-480,483-484,487-488,491-492,501-504,506-507,510-511
+frontend/src/server/auth/authCookieHelper.ts
+  s_7a13fb5f45edba::t_32a353ae1b9543 9-10,12-20,22-30,32-35,37-45,47-50
+frontend/src/server/auth/verifyToken.ts
+  s_7a13fb5f45edba::t_b9974d67470030 1-24
+frontend/src/server/auth/authService.ts
+  s_7a13fb5f45edba::t_8da5e9b390a349 32-37,39-40,49,72,81-82,84,93-94,101-102,105,111-112,114,118-119,124-125,137,153,165,177-178
+  s_7a13fb5f45edba::t_4df570294a4a3d 10,21,31
+shared/types/backend/blog.ts
+  s_7a13fb5f45edba::t_c6952a3ffeec0a 46-53,55-59,61-71,75-76,78-81
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "9f1f7242c01775e9c8f853e8e7c74354e2e40d3b",
+  "prompts": {},
+  "sessions": {
+    "s_7a13fb5f45edba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e2cf82b5-45b8-468d-b252-a8ce11810b5c",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
