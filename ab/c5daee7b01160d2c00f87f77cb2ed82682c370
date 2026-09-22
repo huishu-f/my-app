@@ -1,0 +1,152 @@
+frontend/src/server/blog/blog.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 42-44,764,796,811,822,833
+frontend/src/server/blog/blog.validators.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-15
+frontend/src/hooks/useAuth.ts
+  s_1e17bea8f7cf00::t_5c3d901948584e 4,7,9-10,12-28,43-92
+  s_1e17bea8f7cf00::t_fa2577d1373263 8
+frontend/src/components/AuthProvider.tsx
+  s_1e17bea8f7cf00::t_fa2577d1373263 6
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_1e17bea8f7cf00::t_077ae4e0ff01ac 8
+  s_1e17bea8f7cf00::t_fa2577d1373263 24
+frontend/src/server/utils/logger.ts
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 1
+frontend/src/app/api/auth/refresh/route.ts
+  s_1e17bea8f7cf00::t_82b44871b8d9d9 7
+  s_1e17bea8f7cf00::t_fa2577d1373263 6
+  s_1e17bea8f7cf00::t_003a6fb99cb795 3-4
+frontend/src/server/auth/user.queries.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-313
+frontend/src/server/blog/markdown.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-106
+frontend/src/server/utils/routeHandler.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 4
+frontend/src/proxy.ts
+  s_1e17bea8f7cf00::t_fa2577d1373263 5
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 6
+frontend/src/server/actions/comments.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 4-6
+frontend/src/lib/navigation.ts
+  s_1e17bea8f7cf00::t_fa2577d1373263 32-56
+frontend/src/server/actions/posts.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 4-6
+frontend/src/components/dashboard/WriteEditor.tsx
+  s_1e17bea8f7cf00::t_3376de8e5159bb 8
+  s_1e17bea8f7cf00::t_fa2577d1373263 23
+frontend/src/app/[locale]/(dashboard)/settings/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 7
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_1e17bea8f7cf00::t_2848afe4df69b0 13
+frontend/src/lib/siteConfig.ts
+  s_1e17bea8f7cf00::t_54f21ea4c3a238 1-10
+frontend/src/app/sitemap.ts
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 4
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3
+frontend/src/components/layouts/MobileMenu.tsx
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 8,11
+frontend/src/components/blog/CommentsSection.tsx
+  s_1e17bea8f7cf00::t_fa2577d1373263 24
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 17
+frontend/src/hooks/usePosts.ts
+  s_1e17bea8f7cf00::t_3a5bc9e292e26a 6
+  s_1e17bea8f7cf00::t_fa2577d1373263 7
+shared/types/backend.ts
+  s_1e17bea8f7cf00::t_1185a995e22812 8-12,27-32
+frontend/src/server/actions/interactions.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 4-5
+frontend/src/server/auth/auth.validators.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-54
+frontend/src/server/auth/cookie.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-48
+frontend/src/lib/apiRequest.ts
+  s_1e17bea8f7cf00::t_fa2577d1373263 4-6,9-20
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 7
+  s_1e17bea8f7cf00::t_54878f7f6e78a3 8
+frontend/src/lib/writeDraft.ts
+  s_1e17bea8f7cf00::t_fa2577d1373263 1
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_1e17bea8f7cf00::t_6c1c68132821b8 13
+frontend/src/app/[locale]/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 11
+frontend/src/server/errors/index.ts
+  s_1e17bea8f7cf00::t_3db4b75bbefaa7 1-75
+frontend/src/components/dashboard/write/PostMetaFields.tsx
+  s_1e17bea8f7cf00::t_fa2577d1373263 8
+frontend/src/server/comment/comment.queries.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-123
+frontend/src/hooks/useComments.ts
+  s_1e17bea8f7cf00::t_fa2577d1373263 6-7
+frontend/src/lib/formFeedback.ts
+  s_1e17bea8f7cf00::t_85742be82182c5 3
+frontend/src/app/robots.ts
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 2
+frontend/src/components/layouts/UserMenu.tsx
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 11
+frontend/src/server/auth/auth.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3,34-40,43,46,91
+frontend/src/server/auth/password.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3
+frontend/src/server/comment/comment.validators.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-9
+frontend/src/server/auth/token.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 3
+frontend/src/components/blog/AuthorActions.tsx
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 3
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 7-8
+frontend/src/lib/feedback.ts
+  s_1e17bea8f7cf00::t_fc5c065447593b 1-192
+frontend/src/lib/format.ts
+  s_1e17bea8f7cf00::t_fa2577d1373263 3-6,58-84
+shared/types/frontend.ts
+  s_1e17bea8f7cf00::t_f60e16cb346c45 1-62
+frontend/src/components/layouts/NavLinks.tsx
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 5
+frontend/src/components/blog/PostActions.tsx
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 7
+frontend/src/components/blog/PostSidebar.tsx
+  s_1e17bea8f7cf00::t_fa2577d1373263 10,12
+frontend/src/server/utils/cache.ts
+  s_1e17bea8f7cf00::t_22d83235201cff 4-11
+  s_1e17bea8f7cf00::t_23c324db2efe19 18
+frontend/src/server/blog/blog.queries.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-227
+frontend/src/server/comment/comment.service.ts
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 1-171
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 7,12
+frontend/src/server/actions/auth.ts
+  s_1e17bea8f7cf00::t_ba5b602d88d289 14
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 13,17,23
+frontend/src/components/blog/ArticleCard.tsx
+  s_1e17bea8f7cf00::t_fa2577d1373263 11
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 10
+  s_1e17bea8f7cf00::t_fa2577d1373263 11,20
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 9
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_1e17bea8f7cf00::t_fa2577d1373263 13
+  s_1e17bea8f7cf00::t_44febcdf3ae4b4 21
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 23
+frontend/src/lib/auth.ts
+  s_1e17bea8f7cf00::t_8fc082924f5ecf 1-19
+frontend/src/server/utils/env.ts
+  s_1e17bea8f7cf00::t_a75fd55eb8e512 1-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "abc5daee7b01160d2c00f87f77cb2ed82682c370",
+  "prompts": {},
+  "sessions": {
+    "s_1e17bea8f7cf00": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2ff5bc9b-0a5b-4b59-8503-54f26db2624b",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
