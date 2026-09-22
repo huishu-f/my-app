@@ -1,0 +1,48 @@
+frontend/src/server/actions/comments.ts
+  s_3fab8a0565c3ea::t_254e091e633146 4
+frontend/src/server/auth/authService.ts
+  s_3fab8a0565c3ea::t_9d899a38e84579 3-7,18-23,27,35-36,40-178
+frontend/src/app/[locale]/(dashboard)/settings/page.tsx
+  s_3fab8a0565c3ea::t_b437eaef4f5954 7
+frontend/src/server/blog/markdownService.ts
+  s_3fab8a0565c3ea::t_ca11b3d446e321 20
+frontend/src/server/actions/auth.ts
+  s_3fab8a0565c3ea::t_8b1e631984eb36 45
+  s_3fab8a0565c3ea::t_408d61a8f8397c 78,94
+  s_3fab8a0565c3ea::t_781f83673da0db 12-14
+frontend/src/components/dashboard/write/MarkdownPane.tsx
+  s_3fab8a0565c3ea::t_595dd155e1e3e7 6
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_3fab8a0565c3ea::t_9b33989ab86906 7
+frontend/src/app/api/auth/refresh/route.ts
+  s_3fab8a0565c3ea::t_49ae8b53b9e1a4 36
+  s_3fab8a0565c3ea::t_f2707a9b67456b 3
+frontend/src/lib/markdown.ts
+  s_3fab8a0565c3ea::t_560e250d797985 1-6,9,62-190
+frontend/src/server/blog/blogService.ts
+  s_3fab8a0565c3ea::t_100a39f249aeef 43
+frontend/src/server/utils/routeHandler.ts
+  s_3fab8a0565c3ea::t_e26bbb3568e848 4
+frontend/src/server/actions/posts.ts
+  s_3fab8a0565c3ea::t_355c46969e201b 4
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_3fab8a0565c3ea::t_1ca04e08390608 7
+frontend/src/server/actions/interactions.ts
+  s_3fab8a0565c3ea::t_11553f541e91ff 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "5787fc441b29d82dd43c63bfa321307d66a7f994",
+  "prompts": {},
+  "sessions": {
+    "s_3fab8a0565c3ea": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "81a7c63b-8eec-4bb2-88e5-59fea41ac3e0",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
