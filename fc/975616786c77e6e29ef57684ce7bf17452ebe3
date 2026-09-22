@@ -1,0 +1,86 @@
+frontend/src/server/actions/auth.ts
+  s_1d2a7110a98e5e::t_df13f87194dafe 4-12,42,63,74,90,109,121
+  s_1d2a7110a98e5e::t_85e52570bd06f7 13
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_1d2a7110a98e5e::t_ab16a4893e4048 12
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_1d2a7110a98e5e::t_3a3bf915e3b9b4 9
+frontend/src/app/sitemap.ts
+  s_1d2a7110a98e5e::t_5c4a32c302ca84 3
+shared/types/backend/index.ts
+  s_1d2a7110a98e5e::t_ee6ada48c5fd72 2-3
+frontend/src/app/[locale]/page.tsx
+  s_1d2a7110a98e5e::t_56edf705b74889 11
+frontend/src/server/actions/posts.ts
+  s_1d2a7110a98e5e::t_84ddd4c0ebb559 71
+  s_1d2a7110a98e5e::t_602cb28cff1db6 46
+  s_1d2a7110a98e5e::t_a8ecb6a5ab9cc6 61
+  s_1d2a7110a98e5e::t_acbcfe1271a5cd 5
+frontend/src/server/auth/authService.ts
+  s_1d2a7110a98e5e::t_a5fec0f52e66e7 14,16-23,35-39,41-71,73,75,77-78,80-84,86-87,89-92,94-95,97-98,100-103,105,107-108,110-112,114-123,126-146,148-152,154-155,157-162,164-176,178-179,181-184,187-191,193
+frontend/src/server/auth/authServer.ts
+  s_1d2a7110a98e5e::t_202f7dc569a211 5,9,16,24
+frontend/src/app/api/auth/refresh/route.ts
+  s_1d2a7110a98e5e::t_f92c572250ac61 37
+  s_1d2a7110a98e5e::t_0f0ab66cf022be 3,11,32
+  s_1d2a7110a98e5e::t_ec0cd434b8d655 4
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_1d2a7110a98e5e::t_7d98526b9f9b55 8
+frontend/src/server/auth/verifyToken.ts
+  s_1d2a7110a98e5e::t_c2b6be235c968b 2,8,16
+frontend/src/server/actions/comments.ts
+  s_1d2a7110a98e5e::t_34f1e39ab572e0 38
+  s_1d2a7110a98e5e::t_3c1db0232ac8a0 5
+  s_1d2a7110a98e5e::t_cd4f4106600699 59
+  s_1d2a7110a98e5e::t_bbcae517bec50c 74
+frontend/src/server/auth/authCookieHelper.ts
+  s_1d2a7110a98e5e::t_05c953eacb736a 6
+  s_1d2a7110a98e5e::t_d1b7252b2eff67 52-53
+frontend/src/server/auth/authGuard.ts
+  s_1d2a7110a98e5e::t_9709f5a029b381 4,10,31
+frontend/src/server/blog/blogService.ts
+  s_1d2a7110a98e5e::t_dd3e869c238a54 43
+  s_1d2a7110a98e5e::t_2fb275ad842b8d 21-31
+  s_1d2a7110a98e5e::t_58a27630579ece 4-5
+  s_1d2a7110a98e5e::t_4751c226491306 740,742,744-745,747-756,758-765,767-771,773-783,785-809,811-878
+  s_1d2a7110a98e5e::t_3182b916c84806 35-42,44-45,116-165,167,169-175,177-180,182-213,215-225,228-232,234-236,238-244,246-248,250-271,273-293,295-301,303-307,311-322,324-327,329-337,339-390,392,394-395,399-401,403-411,414-441,443,445-447,449-450,452-461,463-467,469-470,473-474,476-481,483-500,502-504,506,508-510,512-514,516,518-519,521-528,530-537,540-556,558-563,565,567,569-570,574-575,577-583,585,587-588,592-594,596-646,649-650,652-653,655-663,665-673,675-678,680-682,684-686,688-693,695-701,704-705,708-724,726-733,736-739
+frontend/src/server/utils/routeHandler.ts
+  s_1d2a7110a98e5e::t_6b49df8ac3ac1a 8-9,41,44,65
+frontend/src/app/api/posts/[id]/comments/route.ts
+  s_1d2a7110a98e5e::t_a9236256e34c2e 3,6,8
+frontend/src/server/actions/interactions.ts
+  s_1d2a7110a98e5e::t_d4f3c51f8d10ba 57
+  s_1d2a7110a98e5e::t_8e037ca9c891bf 5
+  s_1d2a7110a98e5e::t_58a5ddecd08f13 31
+frontend/src/server/comment/commentService.ts
+  s_1d2a7110a98e5e::t_8d9cc13cbda344 3,9-10,16-44,46-51,53-59,61-107,110-123,126-129,131-133,135-140,142-146,148,150-153,156-162,164-170
+frontend/src/server/auth/userQueries.ts
+  s_1d2a7110a98e5e::t_122a9846f31fd4 2,4-89,91-118,122-143,145-150,152,155-157,159-162,164-170,172,175-182,184-199,201-228,232-240,242-246,249-267,270-307,310-316
+  s_1d2a7110a98e5e::t_aa3373f2f10986 151
+  s_1d2a7110a98e5e::t_a20e151b85be98 153-154
+  s_1d2a7110a98e5e::t_a8cc86eafabde8 173
+  s_1d2a7110a98e5e::t_99ae70323d7f01 247
+  s_1d2a7110a98e5e::t_e23415a7694aef 268
+  s_1d2a7110a98e5e::t_a5ac0630a71856 308
+  s_1d2a7110a98e5e::t_70c2ec68f8627a 230
+frontend/src/app/api/posts/[id]/view/route.ts
+  s_1d2a7110a98e5e::t_34ceb7dd24e8e6 4,6,15
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_1d2a7110a98e5e::t_49647ce41bcf59 21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "fc975616786c77e6e29ef57684ce7bf17452ebe3",
+  "prompts": {},
+  "sessions": {
+    "s_1d2a7110a98e5e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "82f28945-7968-41ec-9780-e3528d840adb",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
