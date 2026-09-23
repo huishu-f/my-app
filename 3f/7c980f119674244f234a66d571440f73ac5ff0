@@ -1,0 +1,84 @@
+frontend/src/app/[locale]/(dashboard)/layout.tsx
+  s_e02eef1a97575e::t_941642117ab600 3-4
+frontend/src/app/[locale]/(auth)/register/page.tsx
+  s_e02eef1a97575e::t_d45e0c54786457 168
+frontend/src/components/dashboard/ProfilePageContent.tsx
+  s_e02eef1a97575e::t_3069b7004e736c 139-144,147
+  s_e02eef1a97575e::t_5f90bea8d2c9eb 82
+  s_e02eef1a97575e::t_c65f9b2db4d73a 84
+frontend/src/components/blog/PostActions.tsx
+  s_e02eef1a97575e::t_bd8dbde330e870 85
+  s_e02eef1a97575e::t_e2af460b8dc670 66,86
+  s_e02eef1a97575e::t_df8d9f1d1217e7 93
+  s_e02eef1a97575e::t_830544c7bd7e06 124
+  s_e02eef1a97575e::t_6aba129833f57a 104
+  s_e02eef1a97575e::t_8c4072e2b25c88 11-12
+  s_e02eef1a97575e::t_fb04e71c6c1120 65
+frontend/src/i18n/messages/en/profile.ts
+  s_e02eef1a97575e::t_e10bb61ddb8edc 24
+frontend/src/app/styles/components.css
+  s_e02eef1a97575e::t_73fa6e8640809f 18
+frontend/src/components/ui/Button.tsx
+  s_e02eef1a97575e::t_7d00aed2dac870 50,65
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_e02eef1a97575e::t_48f5ad7ed79c32 246
+  s_e02eef1a97575e::t_ef067799974dbd 126,128
+  s_e02eef1a97575e::t_73c283733b2ee3 221-222,230-231
+  s_e02eef1a97575e::t_4e689426eaf4c4 127
+frontend/src/components/blog/PostHeadStats.tsx
+  s_e02eef1a97575e::t_f34e27468a0857 4,10,18,23-24
+  s_e02eef1a97575e::t_bf60593a327881 14,19
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_e02eef1a97575e::t_c024f0d3eed2b9 145
+frontend/src/i18n/messages/zh/profile.ts
+  s_e02eef1a97575e::t_a2a5b662b30b97 22
+frontend/src/i18n/messages/zh/post.ts
+  s_e02eef1a97575e::t_954e0f39e077da 11-12
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_e02eef1a97575e::t_afd9256282378c 100-102
+  s_e02eef1a97575e::t_f0883c6b9edde8 128
+  s_e02eef1a97575e::t_7a1cc7bbe290a6 122
+  s_e02eef1a97575e::t_9988587df5587b 164
+  s_e02eef1a97575e::t_91d8c694e01316 167
+frontend/src/components/auth/AuthGate.tsx
+  s_e02eef1a97575e::t_b37abb2e2329ac 5,13-17
+frontend/src/i18n/messages/zh/common.ts
+  s_e02eef1a97575e::t_d33d134a5711c6 8
+frontend/src/i18n/messages/en/common.ts
+  s_e02eef1a97575e::t_c1dc1bd101fe98 10
+frontend/src/app/[locale]/(auth)/layout.tsx
+  s_e02eef1a97575e::t_bc80d291cedfed 3-4
+frontend/src/app/[locale]/page.tsx
+  s_e02eef1a97575e::t_ec498bf58bd73b 143
+  s_e02eef1a97575e::t_029865ccc67a36 65
+  s_e02eef1a97575e::t_15221e77d89849 18-25,27-29
+  s_e02eef1a97575e::t_c3a1d46610ed00 26
+frontend/src/components/layouts/PageHeader.tsx
+  s_e02eef1a97575e::t_3d606031187bff 16
+frontend/src/i18n/messages/en/post.ts
+  s_e02eef1a97575e::t_07e5e2fea211cc 11-12
+frontend/src/components/ui/EmptyState.tsx
+  s_e02eef1a97575e::t_6ab27d10ae2934 7,9
+frontend/src/components/blog/BackLink.tsx
+  s_e02eef1a97575e::t_6074fe3d1e62d7 26
+frontend/src/components/dashboard/ProfileTabs.tsx
+  s_e02eef1a97575e::t_7b00cd1d7cd1ee 152-153,155-156
+  s_e02eef1a97575e::t_0bc2378239f485 154
+  s_e02eef1a97575e::t_43ae37ec3b290f 43-44,52-53,61-62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "3f7c980f119674244f234a66d571440f73ac5ff0",
+  "prompts": {},
+  "sessions": {
+    "s_e02eef1a97575e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cd8b1141-0abb-49b3-90b5-115fff00ae50",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
