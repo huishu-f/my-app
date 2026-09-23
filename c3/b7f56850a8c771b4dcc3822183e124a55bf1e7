@@ -1,0 +1,64 @@
+frontend/src/server/user/user.repository.ts
+  s_132dd0e21620da::t_3fd81b54e131ab 144,171,212,216,244-248
+frontend/src/server/common/rate-limit.ts
+  s_132dd0e21620da::t_3fd81b54e131ab 46
+frontend/src/components/skeletons/ProfileSkeleton.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 4-8
+frontend/src/server/blog/blog.cache.ts
+  s_132dd0e21620da::t_6c7980818a270a 22
+  s_132dd0e21620da::t_b8c6519795c5df 101
+  s_132dd0e21620da::t_75a35d6f4d741f 94-100,102-106,108-110
+  s_132dd0e21620da::t_51b55d12f2bcb5 107
+frontend/src/server/comment/comment.service.ts
+  s_132dd0e21620da::t_bbdde7492233d1 95
+  s_132dd0e21620da::t_91f87aaee7d4ef 15
+frontend/src/components/dashboard/ProfilePageContent.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 140-142
+frontend/src/components/dashboard/SettingsForm.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 28
+frontend/src/hooks/usePosts.ts
+  s_132dd0e21620da::t_3fd81b54e131ab 10-16
+frontend/src/server/blog/blog.service.ts
+  s_132dd0e21620da::t_3fd81b54e131ab 428-430,481,508
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 33,53
+frontend/src/server/auth/auth.service.ts
+  s_132dd0e21620da::t_18d4b3e171ffb6 124-127
+  s_132dd0e21620da::t_3aa054f9e4e791 34-35
+  s_132dd0e21620da::t_83ab6d65b6e3e0 255
+  s_132dd0e21620da::t_3fd81b54e131ab 73
+  s_132dd0e21620da::t_705fe44157c800 243
+frontend/src/server/comment/comment.repository.ts
+  s_132dd0e21620da::t_3fd81b54e131ab 41
+frontend/src/app/[locale]/(auth)/login/page.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 163-169
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 276
+frontend/src/server/blog/blog.repository.ts
+  s_132dd0e21620da::t_3fd81b54e131ab 223,258,265
+  s_132dd0e21620da::t_1d506792ce9c3e 70,77-78,80,88,97
+frontend/src/app/[locale]/page.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 22,35,141-143
+frontend/src/components/skeletons/PostSidebarSkeleton.tsx
+  s_132dd0e21620da::t_3fd81b54e131ab 7
+frontend/src/server/blog/markdown.service.ts
+  s_132dd0e21620da::t_3fd81b54e131ab 20-25
+frontend/next-env.d.ts
+  s_132dd0e21620da::t_b5cb373f34ac11 3-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "c3b7f56850a8c771b4dcc3822183e124a55bf1e7",
+  "prompts": {},
+  "sessions": {
+    "s_132dd0e21620da": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "852f13b0-7e07-424f-a9fd-04a147a37275",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
