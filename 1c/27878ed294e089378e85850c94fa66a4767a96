@@ -1,0 +1,112 @@
+frontend/src/server/blog/blog.service.ts
+  s_e02eef1a97575e::t_1477e0e72adceb 35,46-48
+  s_e02eef1a97575e::t_6c7d87706aa0f1 356-357,359-366,368-369
+  s_e02eef1a97575e::t_4d0d8503f80377 427-429,455
+  s_e02eef1a97575e::t_9c95631075b169 144-147,152-161,163-168,172-187,190-195,197-199
+  s_e02eef1a97575e::t_af5d4906652888 557
+  s_e02eef1a97575e::t_0891f254b5a707 29
+  s_e02eef1a97575e::t_489245f7246325 291-292,294-297
+  s_e02eef1a97575e::t_93ed0b602f3712 222
+  s_e02eef1a97575e::t_2b421010f8a2de 523-525
+  s_e02eef1a97575e::t_2b950085cc484a 531-532,542-543
+  s_e02eef1a97575e::t_040c13b2679a27 381-384,386
+frontend/src/server/user/user.repository.ts
+  s_e02eef1a97575e::t_f34ae57026477a 292-293,295-303,305-312
+  s_e02eef1a97575e::t_619923a223bbda 214-226,249-255,258
+  s_60d2ceb862f630::t_0da7a6deb88cde 256-257
+  s_e02eef1a97575e::t_ed4e2183118e7f 265,273-274
+  s_e02eef1a97575e::t_c3bf25cab09136 3,6
+  s_e02eef1a97575e::t_e0724c9638e495 7
+frontend/src/lib/apiRequest.ts
+  s_e02eef1a97575e::t_f0f7a4249f4bc9 49-50
+frontend/src/config/site.ts
+  s_e02eef1a97575e::t_40008e3827b697 7-14
+frontend/src/app/sitemap.ts
+  s_e02eef1a97575e::t_c2420ea2315906 20
+  s_e02eef1a97575e::t_9d89e7a7d0c018 4
+frontend/src/server/blog/blog.cache.ts
+  s_e02eef1a97575e::t_e6ed85a0b0f7f3 84-91
+frontend/src/lib/prisma/db.ts
+  s_e02eef1a97575e::t_29509c40c45239 4,10
+frontend/src/server/blog/blog.repository.ts
+  s_e02eef1a97575e::t_ed12ce39c37fa1 132-140
+  s_e02eef1a97575e::t_3a1bd6ca6da65e 101,250-304
+  s_e02eef1a97575e::t_520e73a55add73 78-89,93-100
+  s_e02eef1a97575e::t_faa3b3a3f42a46 103-106,114-118
+  s_e02eef1a97575e::t_4ac5e38a2b585b 3,7
+  s_e02eef1a97575e::t_cd5d6c9256ada8 59-62
+  s_e02eef1a97575e::t_4d485f98325b94 188-190,196,198-199,206-208,215,217-218
+  s_e02eef1a97575e::t_15e5b12c741927 8
+  s_e02eef1a97575e::t_8ca2d22202c491 102
+frontend/src/server/auth/auth.service.ts
+  s_e02eef1a97575e::t_2c03ec831d16bf 244-245
+  s_e02eef1a97575e::t_2961eda26eaac1 39,53,56-61,65-67
+frontend/src/components/blog/PostsSearchInput.tsx
+  s_e02eef1a97575e::t_bb15be95c78bda 54
+frontend/src/app/global-not-found.tsx
+  s_e02eef1a97575e::t_6b516bbb2272ef 1-75
+frontend/src/app/[locale]/layout.tsx
+  s_e02eef1a97575e::t_1d8b8146262e0e 41
+  s_e02eef1a97575e::t_fc38a38233666c 13
+frontend/prisma/schema.prisma
+  s_e02eef1a97575e::t_2f7596acbd2d96 79-81
+frontend/src/app/[locale]/page.tsx
+  s_e02eef1a97575e::t_5d4fa02c428d23 14
+  s_e02eef1a97575e::t_5a106a65bde4ce 27
+frontend/src/server/comment/comment.service.ts
+  s_e02eef1a97575e::t_abd2de7121dc12 9,16
+  s_e02eef1a97575e::t_a5aefe6fd9bb4d 31-32
+  s_e02eef1a97575e::t_e27e3c81ef4946 57-60
+frontend/next.config.ts
+  s_e02eef1a97575e::t_3eb4d804bcf41f 49-50
+frontend/src/app/api/auth/refresh/route.ts
+  s_e02eef1a97575e::t_8ecb9142af534a 9
+  s_e02eef1a97575e::t_ef7dc6797cd700 44
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_e02eef1a97575e::t_eef5e14f8fc554 23
+  s_e02eef1a97575e::t_733c24465dae78 41
+frontend/src/server/comment/comment.repository.ts
+  s_e02eef1a97575e::t_8def53a514b6e9 73-79
+  s_e02eef1a97575e::t_8b2508c2fe48db 3,7
+  s_e02eef1a97575e::t_0660f8e21ed0de 36
+  s_e02eef1a97575e::t_25705ee754cd43 43,45-46
+  s_e02eef1a97575e::t_849507afebd6b3 8
+frontend/AGENTS.md
+  s_e02eef1a97575e::t_83e1c255a4012e 1-9
+frontend/CLAUDE.md
+  s_e02eef1a97575e::t_d6dadf0598a160 1
+frontend/src/lib/category.ts
+  s_92401ebc04e613::t_6458bfa1dbf9c9 3-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "1c27878ed294e089378e85850c94fa66a4767a96",
+  "prompts": {},
+  "sessions": {
+    "s_60d2ceb862f630": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "70de3a07-6e81-4511-ad87-b6604212389b",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_92401ebc04e613": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-a47fcad70941ab578",
+        "model": "unknown"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_e02eef1a97575e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cd8b1141-0abb-49b3-90b5-115fff00ae50",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
