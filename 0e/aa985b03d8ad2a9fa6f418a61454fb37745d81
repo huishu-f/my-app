@@ -1,0 +1,29 @@
+frontend/package.json
+  s_e02eef1a97575e::t_10a05c9ac8b706 19
+frontend/src/components/skeletons/PostSidebarSkeleton.tsx
+  s_e02eef1a97575e::t_d0d7264d12f230 28-43
+frontend/prisma.config.ts
+  s_e02eef1a97575e::t_7b91f85ae40261 1-9
+frontend/src/components/skeletons/ProfileSkeleton.tsx
+  s_e02eef1a97575e::t_3ad2561088eccd 66
+frontend/src/components/skeletons/WriteSkeleton.tsx
+  s_e02eef1a97575e::t_55973b239bdf9a 152-153
+frontend/src/components/skeletons/PostDetailSkeleton.tsx
+  s_e02eef1a97575e::t_81a45dd306a94f 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "0eaa985b03d8ad2a9fa6f418a61454fb37745d81",
+  "prompts": {},
+  "sessions": {
+    "s_e02eef1a97575e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cd8b1141-0abb-49b3-90b5-115fff00ae50",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
