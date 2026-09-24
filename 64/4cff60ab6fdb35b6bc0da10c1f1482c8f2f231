@@ -1,0 +1,68 @@
+frontend/src/components/blog/ViewReporter.tsx
+  s_3dc5bd43a9aeb8::t_0035a8263347c6 19-22
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_3dc5bd43a9aeb8::t_5562b15d0c010d 4
+frontend/src/server/auth/auth.actions.ts
+  s_3dc5bd43a9aeb8::t_e66a5221786dcd 36
+  s_3dc5bd43a9aeb8::t_bbf6af22f2cc39 67
+  s_3dc5bd43a9aeb8::t_7a5c3d2d6cac98 31
+  s_3dc5bd43a9aeb8::t_19e31a07a0646e 125,138
+frontend/src/server/comment/comment.actions.ts
+  s_3dc5bd43a9aeb8::t_ca436230035790 5,39,46-52
+frontend/src/lib/markdown.ts
+  s_3dc5bd43a9aeb8::t_3c145bcc8e05c6 189
+frontend/src/lib/apiRequest.ts
+  s_3dc5bd43a9aeb8::t_f25d82fef371df 4
+frontend/src/server/blog/blog.service.ts
+  s_3dc5bd43a9aeb8::t_fdffcd4a5f2582 24
+  s_3dc5bd43a9aeb8::t_08fa16b8595354 400-403,405
+  s_3dc5bd43a9aeb8::t_4000a8848b5424 409-414
+  s_3dc5bd43a9aeb8::t_e864a62471e8ff 561-567
+  s_3dc5bd43a9aeb8::t_a0022fd94738f4 549
+  s_3dc5bd43a9aeb8::t_85e6c99a6501a7 54-56
+frontend/prisma/schema.prisma
+  s_3dc5bd43a9aeb8::t_38dc08f1685c83 71
+frontend/src/server/blog/blog.cache.ts
+  s_3dc5bd43a9aeb8::t_f95a51a5eb5ba3 56-59
+  s_3dc5bd43a9aeb8::t_98b485e6d3ce9a 7-8,10-11,19-22,43-49,51-55,62-68
+frontend/src/server/blog/blog.actions.ts
+  s_3dc5bd43a9aeb8::t_e0658076328a43 34,40,42,59
+  s_3dc5bd43a9aeb8::t_b045039930d1a5 73-74
+  s_3dc5bd43a9aeb8::t_ebbfdfa72285d2 84
+frontend/src/server/auth/auth.validator.ts
+  s_3dc5bd43a9aeb8::t_8be220df0f997b 2,12,41,47,53-54
+frontend/src/server/comment/comment.service.ts
+  s_3dc5bd43a9aeb8::t_3e5292d202db97 39-42
+  s_3dc5bd43a9aeb8::t_5a812b94028296 3
+  s_3dc5bd43a9aeb8::t_0f47d38424f3fd 49-54,63-64
+  s_3dc5bd43a9aeb8::t_d0383e4d94e922 32
+frontend/src/server/auth/auth.service.ts
+  s_3dc5bd43a9aeb8::t_730853b683bc22 42
+  s_3dc5bd43a9aeb8::t_e75cb3f720b7da 22
+  s_3dc5bd43a9aeb8::t_d76b6b1ab34369 70
+  s_3dc5bd43a9aeb8::t_4379f2742d185e 40
+  s_3dc5bd43a9aeb8::t_4f8ed4212607fc 134
+  s_3dc5bd43a9aeb8::t_b7067a30c035cd 13
+  s_3dc5bd43a9aeb8::t_2afc821b7ede30 80
+  s_3dc5bd43a9aeb8::t_86ddbc21b9b417 104-113
+  s_3dc5bd43a9aeb8::t_c17b1e6de1a6a9 243-253,256-265
+frontend/src/hooks/usePosts.ts
+  s_3dc5bd43a9aeb8::t_2c4f988db8d009 3
+  s_3dc5bd43a9aeb8::t_630f8d5deede7b 76-77,83-85,94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "644cff60ab6fdb35b6bc0da10c1f1482c8f2f231",
+  "prompts": {},
+  "sessions": {
+    "s_3dc5bd43a9aeb8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d29511a1-1eda-4cbf-a518-08f811f55c9a",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
