@@ -1,0 +1,19 @@
+frontend/src/app/[locale]/page.tsx
+  s_3dc5bd43a9aeb8::t_02465ee31e9fae 142
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "3aa9cf6ad25c6a2d3f2d3198951fb95ca1fba819",
+  "prompts": {},
+  "sessions": {
+    "s_3dc5bd43a9aeb8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d29511a1-1eda-4cbf-a518-08f811f55c9a",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
