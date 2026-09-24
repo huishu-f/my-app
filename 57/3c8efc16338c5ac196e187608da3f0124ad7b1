@@ -1,0 +1,93 @@
+frontend/src/lib/markdown.ts
+  s_2648e34420765a::t_0b361dcb88531f 164
+  s_2648e34420765a::t_6e3d93bdc9a24c 142,144,148,159,166
+frontend/src/components/blog/LazyIslands.tsx
+  s_2648e34420765a::t_0b361dcb88531f 51-53
+frontend/src/app/[locale]/page.tsx
+  s_2648e34420765a::t_d123e4d620f66b 11
+frontend/scripts/migrate-http.mjs
+  s_2648e34420765a::t_0b361dcb88531f 67-68
+frontend/src/lib/highlight-languages.ts
+  s_2648e34420765a::t_7ece84318ee8cc 5,21-22,42
+  s_2648e34420765a::t_32e582f9ba08b3 1-4,6-20,23-41,43-57
+frontend/src/hooks/usePosts.ts
+  s_2648e34420765a::t_cd7c1f87678fb3 8
+frontend/src/components/blog/PostStateProvider.tsx
+  s_2648e34420765a::t_7ff7b0805bc8f8 3
+  s_2648e34420765a::t_a5618c1327aa46 9
+frontend/src/lib/apiRequest.ts
+  s_2648e34420765a::t_0f9049e059c271 176-177,180-181
+  s_2648e34420765a::t_da271404f45ec1 186-190
+  s_2648e34420765a::t_ddd3371dfcacf0 4
+frontend/src/server/blog/blog.service.ts
+  s_60d2ceb862f630::t_6466ab8228c5ca 486,504,509,517,528,541,545,549,554,559-560
+  s_2648e34420765a::t_3b3bd1e1f08c86 5-6,22-25,50,56,308,466-485,487-503,505-508,510-516,518-527,529-540,542-544,546-548,550-553,555-558
+frontend/src/server/blog/blog.cache.ts
+  s_2648e34420765a::t_b80af8b85b23df 3
+frontend/src/hooks/useComments.ts
+  s_2648e34420765a::t_0182b4d4f080c1 11
+frontend/src/app/[locale]/(dashboard)/profile/page.tsx
+  s_2648e34420765a::t_edc8726b26f9b7 12
+frontend/src/app/[locale]/posts/(list)/page.tsx
+  s_2648e34420765a::t_3dc470a946ee23 9
+frontend/src/lib/message.ts
+  s_2648e34420765a::t_91dc98f7bc5eae 65
+  s_2648e34420765a::t_a99bbfd2a497f5 89
+  s_2648e34420765a::t_0b361dcb88531f 25-26
+shared/types/blog.ts
+  s_2648e34420765a::t_9d8a4a6ce17524 44
+frontend/src/server/auth/auth.cookie.ts
+  s_2648e34420765a::t_33882088756e4e 30,40
+  s_2648e34420765a::t_0983b4e01415cb 21-22,27-29
+frontend/src/server/blog/markdown.service.ts
+  s_2648e34420765a::t_0b361dcb88531f 12
+  s_2648e34420765a::t_f3c30fc5394917 15
+frontend/src/app/sitemap.ts
+  s_2648e34420765a::t_8a8ac7f299fde1 3
+frontend/src/server/blog/blog.validator.ts
+  s_2648e34420765a::t_7d1ab02b4db305 7,12
+frontend/src/server/common/http/route-handler.ts
+  s_2648e34420765a::t_d37667a5c3b201 4,39,41
+shared/validation/blog.ts
+  s_2648e34420765a::t_0b361dcb88531f 17
+frontend/src/app/[locale]/(dashboard)/write/page.tsx
+  s_2648e34420765a::t_c3120e35c6adff 8
+frontend/src/lib/category.ts
+  s_2648e34420765a::t_d9d3f6c535bdcf 1
+frontend/src/app/[locale]/posts/[id]/page.tsx
+  s_2648e34420765a::t_47070680f5b7d8 21
+frontend/src/app/api/health/route.ts
+  s_2648e34420765a::t_6fd99efc8f2648 15-20
+frontend/src/server/auth/auth.service.ts
+  s_2648e34420765a::t_d751a5b4bdf1ce 25,86,92,102,115,117
+frontend/src/server/blog/blog.repository.ts
+  s_2648e34420765a::t_6564bb66f3737e 243
+frontend/src/server/comment/comment.repository.ts
+  s_2648e34420765a::t_cb48c53d94f2c4 40,42-43,52-54,110,112,114
+frontend/src/server/comment/comment.service.ts
+  s_2648e34420765a::t_03aa48b22a3f60 10,23-24,40-45,100-102
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "573c8efc16338c5ac196e187608da3f0124ad7b1",
+  "prompts": {},
+  "sessions": {
+    "s_2648e34420765a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c2ef5129-75f7-47ed-82c4-6c93efaf09db",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    },
+    "s_60d2ceb862f630": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "70de3a07-6e81-4511-ad87-b6604212389b",
+        "model": "glm-5.2"
+      },
+      "human_author": null
+    }
+  }
+}
