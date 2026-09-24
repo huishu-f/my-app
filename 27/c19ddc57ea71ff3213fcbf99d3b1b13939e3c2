@@ -1,0 +1,19 @@
+frontend/src/components/ui/Button.tsx
+  s_359c21fdb65321::t_cda7e203bb9989 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "27c19ddc57ea71ff3213fcbf99d3b1b13939e3c2",
+  "prompts": {},
+  "sessions": {
+    "s_359c21fdb65321": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cdaf92dd-56cb-4dc2-9ebb-a8c0f8a6fb03",
+        "model": "glm-5.2"
+      },
+      "human_author": "卜二 <5442923+lhfp@user.noreply.gitee.com>"
+    }
+  }
+}
