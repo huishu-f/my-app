@@ -1,0 +1,10 @@
+# 文本文件在仓库与工作区一律用 LF。
+#
+# 为什么必须有这个文件：.prettierrc.mjs 配的是 endOfLine: 'lf'，prettier 校验的是
+# 工作区文件的字节。而 Windows 上 git 默认 core.autocrlf=true 会把工作区检出为 CRLF，
+# 于是 format:check 对着 CRLF 报「风格错误」——182 个文件全红，格式化工具形同虚设，
+# 而真跑格式化又会把整个仓库转成 LF 产出几万行无意义 diff。
+#
+# 加 eol=lf 后 git 不再做 CRLF 转换，工作区、仓库、prettier 三方行尾一致。
+# 仓库索引里本来就全是 LF，所以这次规范化对已提交内容零改动。
+* text=auto eol=lf

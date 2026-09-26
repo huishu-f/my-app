@@ -1,0 +1,14 @@
+[build]
+  base = "/"
+  command = "pnpm install --frozen-lockfile && pnpm run build"
+  publish = "frontend/.next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Netlify 会在执行 build.command 之前自己先装一次依赖。不在这里锁死的话，
+  # 一旦 package.json 改了却没同步提交 pnpm-lock.yaml，那次安装会被静默放行并改写 lockfile，
+  # 后面命令里的 --frozen-lockfile 就形同虚设，依赖漂移只能等到编译阶段才炸。
+  PNPM_FLAGS = "--frozen-lockfile"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

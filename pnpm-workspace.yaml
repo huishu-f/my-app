@@ -1,0 +1,24 @@
+packages:
+  - "frontend"
+  - "shared"
+catalog:
+  zod: ^4.6.5
+  typescript: ^5.9.3
+  eslint: ^9.39.5
+  eslint-config-prettier: ^10.1.8
+  prettier: ^3.9.6
+  '@types/react': ^19.3.0
+allowBuilds:
+  '@parcel/watcher': true
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@swc/core': true
+  esbuild: true
+  msgpackr-extract: true
+  pnpm: true
+  prisma: true
+  unrs-resolver: true
+  workerd: true
+minimumReleaseAgeExclude:
+  - lucide-react@1.46.0
+  - zod@4.6.5

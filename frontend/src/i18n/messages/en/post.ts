@@ -1,0 +1,38 @@
+import type { Messages } from "../zh/post";
+
+const post: Messages = {
+  readingTime: "{minutes} min read",
+  tocLabel: "Contents",
+  tocNav: "In-article navigation",
+  readingProgress: "Reading progress",
+  toc: "Contents",
+  like: "Like",
+  liked: "Liked",
+  views: "Views",
+  likes: "Likes",
+  favorite: "Favorite",
+  favorited: "Favorited",
+  loginToLike: "Sign in to like",
+  loginToFavorite: "Sign in to favorite",
+  commentsCount: "{count} comments",
+  editPost: "Edit",
+  deletePost: "Delete",
+  deletePostDesc: "Cannot be undone. The post and all comments will be deleted.",
+  commentsTitle: "Comments",
+  commentPlaceholder: "Share your thoughts… (⌘/Ctrl+Enter to send)",
+  commentEmpty: "Comment cannot be empty",
+  submitComment: "Comment",
+  commentLoginBefore: "Sign in",
+  commentLoginAfter: " to join the conversation",
+  commentLoadError: "Failed to load comments",
+  noCommentsTitle: "No comments yet",
+  noCommentsDesc: "Be the first to jump in",
+  loadMoreComments: "Load more ({count} left)",
+  deleteCommentTitle: "Delete",
+  deleteCommentDesc: "This cannot be undone.",
+  confirmDeleteBtn: "Delete",
+  prevPost: "Previous post",
+  nextPost: "Next post",
+};
+
+export default post;

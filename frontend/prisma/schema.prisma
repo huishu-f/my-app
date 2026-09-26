@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String   @id
+  email              String   @unique
+  firstName          String
+  lastName           String
+  username           String   @unique
+  avatar             String   @default("")
+  coverImage         String   @default("")
+  bio                String   @default("")
+  location           String   @default("")
+  website            String   @default("")
+  joined             DateTime
+  role               String   @default("Writer")
+  company            String   @default("")
+  verified           Boolean  @default(false)
+  disabled           Boolean  @default(false)
+  tags               String[] @default([])
+  // social
+  socialTwitter      String   @default("")
+  socialGithub       String   @default("")
+  socialLinkedin     String   @default("")
+  // stats
+  statsArticles      Int      @default(0)
+  statsLikes         Int      @default(0)
+  statsViews         Int      @default(0)
+  // auth
+  password           String?
+  tokenVersion       Int      @default(0)
+  // appearance
+  appearanceTheme    String?
+  appearanceFontSize String?
+  // timestamps
+  createdAt          DateTime
+  updatedAt          DateTime
+
+  likedBy     UserPostLike[]
+  favoritedBy UserPostFavorite[]
+  comments    Comment[]
+  posts       Post[]
+}
+
+model Post {
+  id            String   @id
+  title         String
+  summary       String
+  content       String
+  category      String
+  tags          String[]
+  createdAt     DateTime
+  updatedAt     DateTime
+  publishedAt   DateTime?
+  isDraft       Boolean
+  pinned        Boolean  @default(false)
+  coverImage    String?
+  authorId      String?
+  authorName    String?
+  views         Int      @default(0)
+  likes         Int      @default(0)
+  favorites     Int      @default(0)
+  commentsCount Int      @default(0)
+
+  author      User?              @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+  likedBy     UserPostLike[]
+  favoritedBy UserPostFavorite[]
+
+  @@index([category])
+  @@index([authorId])
+  @@index([publishedAt])
+  @@index([isDraft, publishedAt])
+  @@index([createdAt])
+  @@index([tags], type: Gin)
+}
+
+model UserPostLike {
+  userId String
+  postId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([userId, postId])
+}
+
+model UserPostFavorite {
+  userId String
+  postId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([userId, postId])
+}
+
+model Comment {
+  id         String  @id
+  postId     String
+  userId     String
+  userName   String
+  userAvatar String?
+  content    String
+  createdAt  DateTime
+  updatedAt  DateTime
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@index([userId])
+}
+
+model SiteConfig {
+  id       Int    @id @default(1)
+  blogName String
+  author   String
+}
+
+model PostIdMap {
+  oldId String @id
+  newId String
+
+  @@index([newId])
+}
+
+model RateLimit {
+  id        String   @id
+  count     Int      @default(0)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
