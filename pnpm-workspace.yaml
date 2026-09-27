@@ -1,0 +1,4 @@
+# 完全解除 pnpm 10+ 对依赖构建脚本的默认限制。
+# 等价于 pnpm 9 的旧行为：所有依赖的 install 脚本（如 Prisma 的
+# preinstall/postinstall）照常运行，Prisma 的 bin 才会被正常链接。
+dangerouslyAllowAllBuilds: true
