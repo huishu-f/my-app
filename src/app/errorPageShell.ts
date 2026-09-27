@@ -32,6 +32,12 @@ export const ERROR_PAGE_CSS = `
   }
 `;
 
+// global-error / global-not-found 自渲染独立 <html>，不加载 next-themes，
+// 用这段阻塞脚本在首帧前补齐 dark class（行为对齐 ThemeProvider：
+// attribute="class" + defaultTheme="system" + storageKey "theme"），
+// 否则暗色用户看到的是白底错误页。
+export const THEME_INIT_SCRIPT = `try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(d)document.documentElement.classList.add("dark")}catch(e){}`;
+
 export const errorShellStyle = {
   fontFamily: "var(--font-sans)",
   padding: "2rem",

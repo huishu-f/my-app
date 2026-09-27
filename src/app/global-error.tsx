@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ERROR_PAGE_CSS, errorShellStyle, errorTitleStyle, errorDescStyle } from "./errorPageShell";
+import { ERROR_PAGE_CSS, THEME_INIT_SCRIPT, errorShellStyle, errorTitleStyle, errorDescStyle } from "./errorPageShell";
 
 const RELOAD_CSS = `
   /* 主按钮的交互反馈：hover 只做明度变化，focus 走 2px 主色描边（与全站按钮规则一致） */
@@ -40,8 +40,9 @@ export default function GlobalError({
       };
 
   return (
-    <html lang={isEn ? "en" : "zh-CN"}>
+    <html lang={isEn ? "en" : "zh-CN"} suppressHydrationWarning>
       <body className="antialiased">
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <style>{ERROR_PAGE_CSS + RELOAD_CSS}</style>
 
         <div

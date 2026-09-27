@@ -78,7 +78,14 @@ export async function listPostsServer(
   params: PostListParams = {},
   withAuth = false,
 ): Promise<PostsListData> {
-  return withAuth ? listPostsInternal(params) : listPostsCached(params);
+  if (withAuth) return listPostsInternal(params);
+
+  // q 是用户可控的自由文本，进入 unstable_cache 参数会为每个新关键词
+  // 生成一条缓存（可被构造请求无限撑大 Data Cache）。搜索请求绕过缓存
+  // 直接打库（title/summary 有 GIN 索引），查询路径与缓存命中完全一致。
+  if (params.q) return listPosts({ ...normalizeListParams(params), internal: true });
+
+  return listPostsCached(params);
 }
 
 export async function getPostServer(id: string): Promise<PostData> {

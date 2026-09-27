@@ -1,6 +1,6 @@
 "use client";
 
-import { ERROR_PAGE_CSS, errorShellStyle, errorTitleStyle, errorDescStyle } from "./errorPageShell";
+import { ERROR_PAGE_CSS, THEME_INIT_SCRIPT, errorShellStyle, errorTitleStyle, errorDescStyle } from "./errorPageShell";
 
 const copy = {
   zh: {
@@ -35,8 +35,9 @@ export default function GlobalNotFound() {
   const t = copy[lang];
 
   return (
-    <html lang={lang === "en" ? "en" : "zh-CN"}>
+    <html lang={lang === "en" ? "en" : "zh-CN"} suppressHydrationWarning>
       <body className="antialiased">
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <style>{ERROR_PAGE_CSS}</style>
 
         <div

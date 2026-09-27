@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Menu, X, FileText, Home, LogIn, SquareArrowRightExit, UserPlus } from "lucide-react";
@@ -66,6 +66,26 @@ export function MobileMenu() {
     wasOpenRef.current = mobileOpen;
   }, [mobileOpen]);
 
+  // 焦点陷阱：菜单打开时 Tab 循环限制在 sheet 内，不会跑到底层页面。
+  const handleTrap = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== "Tab" || !mobileOpen) return;
+    const root = mobileMenuRef.current;
+    if (!root) return;
+    const focusables = root.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+
   return (
     <>
       <button
@@ -97,6 +117,7 @@ export function MobileMenu() {
           <div
             ref={mobileMenuRef}
             tabIndex={-1}
+            onKeyDown={handleTrap}
             aria-hidden={!mobileOpen}
             inert={!mobileOpen ? true : undefined}
             className={`mobile-sheet ease-smooth transition-[opacity,visibility,translate] duration-[var(--duration-fast)] ${
