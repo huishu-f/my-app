@@ -4,7 +4,6 @@ import Image from "next/image";
 import { notFound, permanentRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import "@/app/styles/hljs-theme.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -22,7 +21,7 @@ import {
 import { isAppErrorWithStatus } from "@server/common/errors";
 import { SITE_URL, STATIC_PARAMS_LIMIT } from "@/config/site";
 import { routing } from "@/i18n/routing";
-import type { Post } from "@shared";
+import type { NeighborPostsData, Post } from "@shared";
 import { tagClassFor, tagVariantFor } from "@/components/ui/Tag";
 import { PostActions } from "@/components/blog/PostActions";
 import { PostHeadStats } from "@/components/blog/PostHeadStats";
@@ -30,7 +29,6 @@ import { PostToc } from "@/components/blog/PostToc";
 import { AuthorActions } from "@/components/blog/AuthorActions";
 import { ViewReporter } from "@/components/blog/ViewReporter";
 import { LazyComments, LazyBackToTop } from "@/components/blog/LazyIslands";
-import { NeighborPostsSkeleton } from "@/components/skeletons/NeighborPostsSkeleton";
 import { PostStateProvider } from "@/components/blog/PostStateProvider";
 import { BackLink } from "@/components/blog/BackLink";
 
@@ -105,10 +103,12 @@ export async function generateMetadata({
   }
 }
 
-async function NeighborPosts({ id }: { id: string }) {
+async function NeighborPosts({
+  neighborPosts,
+}: {
+  neighborPosts: NeighborPostsData | null;
+}) {
   const tPost = await getTranslations("post");
-
-  const neighborPosts = await getNeighborPostsServer(id).catch(() => null);
 
   const prevPost = neighborPosts?.prev ?? null;
 
@@ -165,6 +165,10 @@ export default async function PostDetailPage({
 
   const id = decodePostId(rawId);
 
+  // ponytail: 邻居文章与正文并行取（均为缓存查询），随页面一次到达、单层 loading.tsx
+  // 骨架；若邻居查询将来变慢，再拆回 <Suspense> 流式渲染，局部骨架只出现在这一处。
+  const neighborsPromise = getNeighborPostsServer(id).catch(() => null);
+
   let post: Post;
   try {
     post = (await getPublicPostServer(id)).post;
@@ -182,6 +186,8 @@ export default async function PostDetailPage({
     getTranslations("nav"),
     getTranslations("common"),
   ]);
+
+  const neighborPosts = await neighborsPromise;
 
   const { firstName, lastName } = splitName(post.authorName || "");
 
@@ -266,9 +272,7 @@ export default async function PostDetailPage({
               <LazyComments postId={post.id} user={null} postAuthorId={post.authorId} />
             </div>
 
-            <Suspense fallback={<NeighborPostsSkeleton />}>
-              <NeighborPosts id={id} />
-            </Suspense>
+            <NeighborPosts neighborPosts={neighborPosts} />
           </article>
 
           <PostToc articleId="article-content" />

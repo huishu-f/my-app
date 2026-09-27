@@ -9,7 +9,6 @@ import { PageHeader } from "@/components/layouts/PageHeader";
 import { listPostsServer, getCategoriesServer, getTagsServer } from "@server/blog/blog.cache";
 import { PAGE_SIZE } from "@/config/site";
 import { ALL_CATEGORY } from "@/lib/category";
-import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
@@ -19,7 +18,6 @@ import { PostSidebar } from "@/components/blog/PostSidebar";
 import { PostsSearchInput } from "@/components/blog/PostsSearchInput";
 import { buildPostsUrl } from "@/lib/buildPostsUrl";
 import { postPath } from "@shared";
-import { PostsBodySkeleton } from "@/components/skeletons/PostsBodySkeleton";
 
 export async function generateMetadata({
   params,
@@ -130,125 +128,123 @@ export default async function PostsPage({
     <Container className="page-section">
       <PageHeader title={t("title")} subtitle={t("subtitle")} />
 
-      <Suspense fallback={<PostsBodySkeleton />}>
-        <PostSidebar
-          categories={categories}
-          tags={tags}
-          currentCategory={currentCategory}
-          currentTag={currentTag}
-          zeroResults={posts.length === 0}
-        >
-          <div className="page-actions animate-fade-in mb-6">
-            <p className="text-body text-(length:--type-xs) leading-normal font-medium">
-              {totalPages > 1
-                ? t("totalWithPage", { count: total, current: currentPage, total: totalPages })
-                : t("totalOnly", { count: total })}
-            </p>
-            <div className="row-md flex-wrap">
-              <PostsSearchInput initialValue={q ?? ""} />
-            </div>
+      <PostSidebar
+        categories={categories}
+        tags={tags}
+        currentCategory={currentCategory}
+        currentTag={currentTag}
+        zeroResults={posts.length === 0}
+      >
+        <div className="page-actions animate-fade-in mb-6">
+          <p className="text-body text-(length:--type-xs) leading-normal font-medium">
+            {totalPages > 1
+              ? t("totalWithPage", { count: total, current: currentPage, total: totalPages })
+              : t("totalOnly", { count: total })}
+          </p>
+          <div className="row-md flex-wrap">
+            <PostsSearchInput initialValue={q ?? ""} />
           </div>
+        </div>
 
-          {postsLoadError ? (
-            <div className="animate-fade-in">
-              <EmptyState
-                icon={<Search size={20} strokeWidth={2.5} />}
-                title={t("loadErrorTitle")}
-                description={t("loadErrorDesc")}
-                action={
+        {postsLoadError ? (
+          <div className="animate-fade-in">
+            <EmptyState
+              icon={<Search size={20} strokeWidth={2.5} />}
+              title={t("loadErrorTitle")}
+              description={t("loadErrorDesc")}
+              action={
+                <Button href="/posts" variant="ghost">
+                  {tCommon("refresh")}
+                </Button>
+              }
+            />
+          </div>
+        ) : posts.length === 0 ? (
+          <div className="animate-fade-in">
+            <EmptyState
+              icon={<Search size={20} strokeWidth={2.5} />}
+              title={t("noResultsTitle")}
+              description={t("noResultsDesc")}
+              action={
+                hasFilters ? (
                   <Button href="/posts" variant="ghost">
-                    {tCommon("refresh")}
+                    {t("clearFilters")}
                   </Button>
-                }
+                ) : undefined
+              }
+            />
+          </div>
+        ) : (
+          <div className="card-list animate-fade-in">
+            {posts.map((p) => (
+              <ArticleCard
+                key={p.id}
+                post={p}
+                href={postPath(p.id)}
+                tags={p.tags}
+                badge={p.pinned ? <PinnedBadge /> : undefined}
               />
-            </div>
-          ) : posts.length === 0 ? (
-            <div className="animate-fade-in">
-              <EmptyState
-                icon={<Search size={20} strokeWidth={2.5} />}
-                title={t("noResultsTitle")}
-                description={t("noResultsDesc")}
-                action={
-                  hasFilters ? (
-                    <Button href="/posts" variant="ghost">
-                      {t("clearFilters")}
-                    </Button>
-                  ) : undefined
-                }
-              />
-            </div>
-          ) : (
-            <div className="card-list animate-fade-in">
-              {posts.map((p) => (
-                <ArticleCard
-                  key={p.id}
-                  post={p}
-                  href={postPath(p.id)}
-                  tags={p.tags}
-                  badge={p.pinned ? <PinnedBadge /> : undefined}
-                />
-              ))}
-            </div>
-          )}
+            ))}
+          </div>
+        )}
 
-          {totalPages > 1 && (
-            <nav
-              className="mt-12 flex items-center justify-center gap-2"
-              aria-label={t("pagination")}
-            >
-              {currentPage === 1 ? (
-                <span
-                  className="page-btn pointer-events-none w-9 opacity-40"
-                  aria-label={t("prevPage")}
-                >
-                  <ChevronLeft size={16} />
-                </span>
-              ) : (
-                <Link
-                  href={buildPostsUrl(baseParams, {
-                    page: String(Math.max(1, currentPage - 1)),
-                  })}
-                  className="page-btn w-9"
-                  aria-label={t("prevPage")}
-                >
-                  <ChevronLeft size={16} />
-                </Link>
-              )}
-              {pageNumbers.map((n) => (
-                <Link
-                  key={n}
-                  href={buildPostsUrl(baseParams, { page: String(n) })}
-                  aria-current={n === currentPage ? "page" : undefined}
-                  aria-label={t("pageN", { n })}
-                  className={`page-btn min-w-9 px-2.5 text-(length:--type-xs) ${
-                    n === currentPage ? "page-btn-active" : ""
-                  }`}
-                >
-                  {n}
-                </Link>
-              ))}
-              {currentPage === totalPages ? (
-                <span
-                  className="page-btn pointer-events-none w-9 opacity-40"
-                  aria-label={t("nextPage")}
-                >
-                  <ChevronRight size={16} />
-                </span>
-              ) : (
-                <Link
-                  href={buildPostsUrl(baseParams, {
-                    page: String(Math.min(totalPages, currentPage + 1)),
-                  })}
-                  className="page-btn w-9"
-                  aria-label={t("nextPage")}
-                >
-                  <ChevronRight size={16} />
-                </Link>
-              )}
-            </nav>
-          )}
-        </PostSidebar>
-      </Suspense>
+        {totalPages > 1 && (
+          <nav
+            className="mt-12 flex items-center justify-center gap-2"
+            aria-label={t("pagination")}
+          >
+            {currentPage === 1 ? (
+              <span
+                className="page-btn pointer-events-none w-9 opacity-40"
+                aria-label={t("prevPage")}
+              >
+                <ChevronLeft size={16} />
+              </span>
+            ) : (
+              <Link
+                href={buildPostsUrl(baseParams, {
+                  page: String(Math.max(1, currentPage - 1)),
+                })}
+                className="page-btn w-9"
+                aria-label={t("prevPage")}
+              >
+                <ChevronLeft size={16} />
+              </Link>
+            )}
+            {pageNumbers.map((n) => (
+              <Link
+                key={n}
+                href={buildPostsUrl(baseParams, { page: String(n) })}
+                aria-current={n === currentPage ? "page" : undefined}
+                aria-label={t("pageN", { n })}
+                className={`page-btn min-w-9 px-2.5 text-(length:--type-xs) ${
+                  n === currentPage ? "page-btn-active" : ""
+                }`}
+              >
+                {n}
+              </Link>
+            ))}
+            {currentPage === totalPages ? (
+              <span
+                className="page-btn pointer-events-none w-9 opacity-40"
+                aria-label={t("nextPage")}
+              >
+                <ChevronRight size={16} />
+              </span>
+            ) : (
+              <Link
+                href={buildPostsUrl(baseParams, {
+                  page: String(Math.min(totalPages, currentPage + 1)),
+                })}
+                className="page-btn w-9"
+                aria-label={t("nextPage")}
+              >
+                <ChevronRight size={16} />
+              </Link>
+            )}
+          </nav>
+        )}
+      </PostSidebar>
     </Container>
   );
 }
