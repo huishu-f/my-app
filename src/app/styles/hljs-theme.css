@@ -2,4 +2,14 @@
 
 .dark {
   @import "highlight.js/styles/github-dark.css";
+
+  /* github-dark 的 .hljs 背景 #0d1117 内联进 .dark 后特异性 (0,2,0)，
+     会盖过 typography.css 的 .article-content pre code { background: transparent }，
+     造成代码文字区与 pre 容器（--color-surface）两种底色的补丁感。
+     以更高特异性拉回 token，与亮色侧（github.css 被 typography 覆盖）保持一致。 */
+  & .article-content pre code.hljs,
+  & .article-content code.hljs {
+    background: transparent;
+    padding: 0;
+  }
 }

@@ -12,12 +12,10 @@ import {
   toggleFavorite,
 } from "@server/blog/blog.service";
 import { parseCreatePostBody, parseUpdatePostBody } from "@server/blog/blog.validator";
-import { invalidateBlogCache, invalidatePostCache } from "@server/blog/blog.cache";
+import { invalidateBlogCache, invalidatePostCache, revalidatePostPathAllLocales } from "@server/blog/blog.cache";
 import { isRateLimited } from "@server/common/rate-limit";
 import { NotFoundError, RateLimitError, UnauthorizedError } from "@server/common/errors";
 import { toFailure, clientIp, type ActionResult } from "@server/common/action-result";
-import { postPath } from "@shared";
-import { routing } from "@/i18n/routing";
 import type {
   AuthPayload,
   CreatePostDto,
@@ -34,12 +32,6 @@ export type { ActionResult };
  * `revalidatePath("/[locale]/posts/[id]", "page")` 会作用于该路由下所有已生成页面 ——
  * 一次点赞即清空全站文章页的 ISR 缓存，下一个访客不论访问哪一篇都会回源渲染。
  */
-function revalidatePostPage(postId: string): void {
-  for (const locale of routing.locales) {
-    revalidatePath(`/${locale}${postPath(postId)}`);
-  }
-}
-
 function revalidateListPages(): void {
   revalidatePath("/[locale]", "page");
   revalidatePath("/[locale]/posts", "page");
@@ -56,7 +48,7 @@ async function runMutation<T>(
 
     invalidateBlogCache(postId);
     revalidateListPages();
-    if (postId) revalidatePostPage(postId);
+    if (postId) revalidatePostPathAllLocales(postId);
 
     return { ok: true, data };
   } catch (err) {
@@ -101,8 +93,13 @@ export async function deletePostAction(id: string): Promise<ActionResult<null>> 
   });
 }
 
-export async function toggleLikeAction(postId: string): Promise<ActionResult<LikeData>> {
-  if (await isRateLimited(`posts:like:${await clientIp()}`, 30, 60_000)) {
+/** toggle 类操作共用框架：限流 → 鉴权 → 校验 id → service → 单页失效，不 revalidate 列表页。 */
+async function runToggle<T>(
+  kind: "like" | "favorite",
+  postId: string,
+  mutate: (postId: string, userId: string) => Promise<T>,
+): Promise<ActionResult<T>> {
+  if (await isRateLimited(`posts:${kind}:${await clientIp()}`, 30, 60_000)) {
     return toFailure(
       new RateLimitError("Action too frequent, please try again later"),
       "Interaction",
@@ -116,38 +113,22 @@ export async function toggleLikeAction(postId: string): Promise<ActionResult<Lik
     const id = postId?.trim();
     if (!id) throw new NotFoundError("Post not found");
 
-    const result = await likePost(id, user.id);
+    const result = await mutate(id, user.id);
 
     invalidatePostCache(id);
-    revalidatePostPage(id);
+    revalidatePostPathAllLocales(id);
     return { ok: true, data: result };
   } catch (err) {
     return toFailure(err, "Interaction");
   }
 }
 
+export async function toggleLikeAction(postId: string): Promise<ActionResult<LikeData>> {
+  return runToggle("like", postId, (id, userId) => likePost(id, userId));
+}
+
 export async function toggleFavoriteAction(
   postId: string,
 ): Promise<ActionResult<FavoriteToggleData>> {
-  if (await isRateLimited(`posts:favorite:${await clientIp()}`, 30, 60_000)) {
-    return toFailure(
-      new RateLimitError("Action too frequent, please try again later"),
-      "Interaction",
-    );
-  }
-
-  try {
-    const user = await getAuthPayload();
-    if (!user) throw new UnauthorizedError();
-
-    const id = postId?.trim();
-    if (!id) throw new NotFoundError("Post not found");
-
-    const result = await toggleFavorite(id, user.id);
-    invalidatePostCache(id);
-    revalidatePostPage(id);
-    return { ok: true, data: result };
-  } catch (err) {
-    return toFailure(err, "Interaction");
-  }
+  return runToggle("favorite", postId, (id, userId) => toggleFavorite(id, userId));
 }

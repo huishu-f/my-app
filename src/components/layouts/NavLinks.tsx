@@ -4,7 +4,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { useLinkStatus } from "next/link";
 import { useTranslations } from "next-intl";
 import { NAV_LINKS } from "@/config/site";
-import { isRouteActive } from "@/lib/navigation";
+import { isRouteActive } from "@/lib/url";
 
 function NavPendingMarker() {
   const { pending } = useLinkStatus();

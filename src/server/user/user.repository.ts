@@ -1,7 +1,7 @@
 import "server-only";
 import type { User, UserStats } from "@shared";
 import type { PrismaClient } from "@prisma/client";
-import { getPrisma } from "@/lib/prisma/db";
+import { getPrisma } from "@server/common/db";
 
 type Tx = PrismaClient | Parameters<Parameters<PrismaClient["$transaction"]>[0]>[0];
 

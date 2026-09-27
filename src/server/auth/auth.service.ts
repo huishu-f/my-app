@@ -241,27 +241,26 @@ export async function updateProfile(userId: string, dto: UpdateProfileDto): Prom
   const newName = `${firstName} ${lastName}`.trim() || user.username;
   const newAvatar = avatar || undefined;
 
-  try {
-    const count = await syncCommentAuthorProfile(userId, newName, newAvatar ?? null);
-    if (count > 0) {
-      logger.info(`Synced ${count} comments with updated username/avatar`, { userId });
-    }
-  } catch (err) {
-    logger.error("Failed to sync comment username", {
-      userId,
-      error: err instanceof Error ? err.message : String(err),
-    });
-  }
+  // ponytail: 资料同步是尽力而为的扇出，失败只记日志、不阻断主流程。
+  const safeSync = (label: string, fn: () => Promise<unknown>) =>
+    fn()
+      .then((result) => {
+        const count = typeof result === "number" ? result : null;
+        if (count === null || count > 0) {
+          logger.info(`Synced ${label}`, { userId, ...(count !== null ? { count } : {}) });
+        }
+      })
+      .catch((err: unknown) => {
+        logger.error(`Failed to sync ${label}`, {
+          userId,
+          error: err instanceof Error ? err.message : String(err),
+        });
+      });
 
-  try {
-    await syncPostAuthorName(userId, newName);
-    logger.info("Synced post authorName", { userId });
-  } catch (err) {
-    logger.error("Failed to sync post authorName", {
-      userId,
-      error: err instanceof Error ? err.message : String(err),
-    });
-  }
+  await safeSync("comments with updated username/avatar", () =>
+    syncCommentAuthorProfile(userId, newName, newAvatar ?? null),
+  );
+  await safeSync("post authorName", () => syncPostAuthorName(userId, newName));
 
   return updated;
 }

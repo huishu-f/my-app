@@ -1,5 +1,5 @@
 import "server-only";
-import { getPrisma } from "@/lib/prisma/db";
+import { getPrisma } from "@server/common/db";
 import { logger } from "@server/common/logger";
 
 export async function isRateLimited(
@@ -48,12 +48,15 @@ export function getClientIp(request: { headers: Pick<Headers, "get"> }): string 
   const realIp = request.headers.get("x-real-ip");
   if (realIp) return realIp;
 
-  // ponytail: XFF 的顺序是「客户端, 代理1, 代理2…」，最左段才是客户端地址。
+  // ponytail: XFF 是「自称的客户端, 代理1, …, 边缘代理」——最左段由客户端自由伪造，
+  // 只有最右一段是边缘代理实际写入的直连地址，取它做限流键才不可被轮换绕过。
+  // 精确归一化需要可信代理白名单，配合各平台的专用头（如 x-nf-*）按部署环境收紧。
 
   const xff = request.headers.get("x-forwarded-for");
   if (xff) {
-    const first = xff.split(",")[0]?.trim();
-    if (first) return first;
+    const segments = xff.split(",").map((s) => s.trim()).filter(Boolean);
+    const last = segments[segments.length - 1];
+    if (last) return last;
   }
 
   return "unknown";

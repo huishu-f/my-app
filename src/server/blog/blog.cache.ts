@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
-import { unstable_cache, revalidateTag } from "next/cache";
+import { unstable_cache, revalidatePath, revalidateTag } from "next/cache";
 
 import type {
   CategoriesData,
@@ -12,6 +12,8 @@ import type {
   TagsData,
 } from "@shared";
 import type { Post } from "@shared";
+import { postPath } from "@shared";
+import { routing } from "@/i18n/routing";
 import {
   listPosts,
   getPost,
@@ -136,3 +138,14 @@ export async function listPostsByAuthorServer(authorId: string): Promise<Post[]>
 }
 
 export { findRenamedPostId } from "./blog.service";
+
+/**
+ * 按具体 URL 失效文章页，而不是动态段字面量 —— 后者会把该路由下所有已生成页面
+ * 一并作废（详见 blog.controller / comment.controller 的 ponytail 注释）。
+ * blog 与 comment 两个 controller 共用。
+ */
+export function revalidatePostPathAllLocales(postId: string): void {
+  for (const locale of routing.locales) {
+    revalidatePath(`/${locale}${postPath(postId)}`);
+  }
+}

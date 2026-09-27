@@ -4,12 +4,12 @@ import { useActionState, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Mail, Lock, Clock, User, UserPlus, Check, X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { PasswordToggle } from "@/components/auth/PasswordToggle";
+import { PasswordToggle } from "@/components/ui/PasswordToggle";
 import { Alert } from "@/components/ui/Alert";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { FormField } from "@/components/ui/FormField";
 import { Input } from "@/components/ui/Input";
-import { PasswordStrength } from "@/components/auth/PasswordStrength";
+import { PasswordStrength } from "@/components/ui/PasswordStrength";
 import { msg } from "@/lib/message";
 import { notify } from "@/lib/toast";
 import {

@@ -2,7 +2,7 @@ import "server-only";
 
 import type { PrismaClient } from "@prisma/client";
 import type { Comment } from "@shared";
-import { getPrisma } from "@/lib/prisma/db";
+import { getPrisma } from "@server/common/db";
 
 type Tx = PrismaClient | Parameters<Parameters<PrismaClient["$transaction"]>[0]>[0];
 

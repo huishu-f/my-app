@@ -6,7 +6,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { Menu, X, FileText, Home, LogIn, SquareArrowRightExit, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { NAV_LINKS } from "@/config/site";
-import { isRouteActive } from "@/lib/navigation";
+import { isRouteActive } from "@/lib/url";
 import { useDismissable } from "@/hooks/useDismissable";
 import { useLogoutRedirect } from "@/hooks/useLogoutRedirect";
 import { Avatar } from "../ui/Avatar";

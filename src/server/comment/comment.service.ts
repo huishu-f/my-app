@@ -6,7 +6,7 @@ import { ForbiddenError, NotFoundError, ValidationError } from "@server/common/e
 import sanitizeHtml from "sanitize-html";
 import type { CreateCommentDto, ListCommentsOptions } from "@shared";
 import { findUserById } from "@server/user/user.repository";
-import { getPrisma } from "@/lib/prisma/db";
+import { getPrisma } from "@server/common/db";
 import { assertPostReadable, assertPostCommentable } from "@server/blog/blog.service";
 import { incrementPostField } from "@server/blog/blog.repository";
 import {

@@ -4,7 +4,7 @@ import { useActionState, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { MapPin, Globe, Info, Check, Lock, Image as ImageIcon } from "lucide-react";
-import { PasswordToggle } from "@/components/auth/PasswordToggle";
+import { PasswordToggle } from "@/components/ui/PasswordToggle";
 import { entityName, msg } from "@/lib/message";
 import { notify } from "@/lib/toast";
 import {
@@ -20,7 +20,7 @@ import { SubmitButton } from "@/components/ui/SubmitButton";
 import { FormField } from "@/components/ui/FormField";
 import { Input } from "@/components/ui/Input";
 import { Alert } from "@/components/ui/Alert";
-import { PasswordStrength } from "@/components/auth/PasswordStrength";
+import { PasswordStrength } from "@/components/ui/PasswordStrength";
 import { useAuth } from "@/components/AuthProvider";
 import { clearAuthStatus } from "@/lib/authStatus";
 import { updateProfileAction, changePasswordAction } from "@server/auth/auth.controller";

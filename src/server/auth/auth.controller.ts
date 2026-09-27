@@ -102,6 +102,15 @@ export async function changePasswordAction(input: ChangePasswordDto): Promise<Ac
     const payload = await getAuthPayload();
     if (!payload) throw new UnauthorizedError();
 
+    // ponytail: currentPassword 的比对是防劫持兜底，不限次即可被会话持有者无限穷举。
+    // 账号维度限流，阈值与 login:acct 对齐。
+    if (await isRateLimited(`pwd:acct:${payload.id}`, 10, LOGIN_WINDOW_MS)) {
+      return toFailure(
+        new RateLimitError("Too many attempts, please try again in 5 minutes"),
+        "Auth",
+      );
+    }
+
     const dto = parseChangePasswordBody(input);
     await changePassword(payload.id, dto);
 

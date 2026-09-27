@@ -22,12 +22,13 @@ import {
 } from "@/lib/formFeedback";
 import { getInitials, splitName, formatRelativeTime } from "@/lib/format";
 import { entityName, msg } from "@/lib/message";
+import { notify } from "@/lib/toast";
 import type { Locale } from "@/i18n/config";
 import { COMMENT_MAX_LENGTH, createCommentSchema } from "@shared";
 import { postPath } from "@shared";
 import type { CommentField, CommentsSectionProps, Comment } from "@shared";
 import { CommentCardSkeleton } from "@/components/skeletons/CommentsSkeleton";
-import { buildLoginRedirect } from "@/lib/navigation";
+import { buildLoginRedirect } from "@/lib/url";
 
 const EMPTY_COMMENTS: Comment[] = [];
 
@@ -397,7 +398,10 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
                     }));
                   },
                   onError: (err) => {
-                    resolveSubmitError(err, deleteErrorRules);
+                    // 删除是 Modal 场景、无字段可标红，resolveSubmitError 的 400/409/422
+                    // 归类不会产生 toast，必须把 form 文案（或 rules 兜底）显式弹出。
+                    const failed = resolveSubmitError(err, deleteErrorRules);
+                    notify.fail(failed.form ?? deleteErrorRules.fallback);
                   },
                   onSettled: () => setDeleteTargetId(null),
                 });

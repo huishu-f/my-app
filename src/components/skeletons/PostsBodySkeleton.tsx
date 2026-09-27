@@ -34,6 +34,12 @@ function CardSkeleton() {
             </span>
           </p>
 
+          {/* 真实卡片多数带 tags 行（ArticleCard 条件渲染），预留一行避免加载完成后卡片撑高跳动 */}
+          <div className="flex flex-wrap gap-2">
+            <span className={`${BAR} h-[22px] w-14 rounded-full`} />
+            <span className={`${BAR} h-[22px] w-12 rounded-full`} />
+          </div>
+
           <div className="row-sm meta-text mt-auto flex-wrap">
             <span className={`${BAR} h-5 w-5 shrink-0 rounded-full`} />
             <span className={line("h-[18px]")}>

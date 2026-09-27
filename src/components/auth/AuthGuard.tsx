@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { clearAuthStatus } from "@/lib/authStatus";
-import { safeRedirect } from "@/lib/navigation";
+import { safeRedirect } from "@/lib/url";
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const { user, setMe } = useAuth();

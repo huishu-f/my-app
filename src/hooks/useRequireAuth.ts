@@ -1,7 +1,7 @@
 "use client";
 import { useCallback } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { buildLoginRedirect } from "@/lib/navigation";
+import { buildLoginRedirect } from "@/lib/url";
 import type { User } from "@shared";
 
 export function useRequireAuth(user: User | null, redirectPath: string) {

@@ -9,9 +9,10 @@ export async function clientIp(): Promise<string> {
   return getClientIp({ headers: await headers() });
 }
 
-export type ActionResult<T> =
-  | { ok: true; data: T }
-  | { ok: false; status: number; message: string; details?: ValidationErrorDetail[] };
+// 契约类型的唯一定义在 @shared/types/action.ts，此处 re-export 保持 server 内 import 路径不变。
+import type { ActionResult } from "@shared";
+
+export type { ActionResult };
 
 const INTERNAL_ERROR = "Internal server error";
 

@@ -2,7 +2,7 @@ import "server-only";
 
 import type { Prisma, PrismaClient } from "@prisma/client";
 import type { Post } from "@shared";
-import { getPrisma } from "@/lib/prisma/db";
+import { getPrisma } from "@server/common/db";
 
 type Tx = PrismaClient | Parameters<Parameters<PrismaClient["$transaction"]>[0]>[0];
 
@@ -322,12 +322,4 @@ export async function findPostStatus(
     select: { id: true, isDraft: true, authorId: true },
   });
   return post ?? null;
-}
-
-export async function findPostAuthorIdFromDb(postId: string): Promise<string | null | undefined> {
-  const post = await getPrisma().post.findUnique({
-    where: { id: postId },
-    select: { authorId: true },
-  });
-  return post?.authorId;
 }

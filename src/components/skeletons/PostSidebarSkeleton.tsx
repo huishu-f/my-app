@@ -35,7 +35,7 @@ export function PostSidebarSkeleton() {
 
           <div className="flex flex-wrap gap-1.5">
             {[0, 1, 2].map((i) => (
-              <span key={i} className="badge">
+              <span key={i} className="badge-lg">
                 <span className={`${BAR} block h-4 ${["w-12", "w-16", "w-10"][i]} rounded-full`} />
               </span>
             ))}

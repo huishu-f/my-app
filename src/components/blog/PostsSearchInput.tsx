@@ -68,6 +68,7 @@ export function PostsSearchInput({ initialValue }: PostsSearchInputProps) {
         value={value}
         onChange={(e) => setDraft(e.target.value)}
         placeholder={t("searchPlaceholder")}
+        aria-label={t("searchPlaceholder")}
         className="border-stroke-strong bg-card-bg text-body placeholder:text-faint input-focus h-10 w-full max-w-50 rounded-md border py-0 pr-9 pl-9 text-(length:--type-xs) leading-normal"
       />
       {value && (

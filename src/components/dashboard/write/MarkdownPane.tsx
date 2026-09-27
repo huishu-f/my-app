@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { MarkdownToolbar } from "@/components/blog/MarkdownToolbar";
+import { MarkdownToolbar } from "@/components/dashboard/write/MarkdownToolbar";
 import { getMarkdownRenderer } from "@/lib/markdown";
 
 export type ViewMode = "split" | "edit" | "preview";

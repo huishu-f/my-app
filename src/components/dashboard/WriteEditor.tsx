@@ -22,7 +22,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { useCreatePost, useUpdatePost } from "@/hooks/usePosts";
 import { estimateReadingTime } from "@/lib/markdown";
 import { CATEGORY_VALUES } from "@/lib/category";
-import { hasInAppHistory } from "@/lib/navigation";
+import { hasInAppHistory } from "@/lib/url";
 import { postCreateSchema, postEditPath, postPath } from "@shared";
 import type { PostData, PostFormField } from "@shared";
 import {
@@ -37,7 +37,7 @@ import { MarkdownPane, type ViewMode } from "@/components/dashboard/write/Markdo
 import { PostMetaFields } from "@/components/dashboard/write/PostMetaFields";
 import { CoverField, isCoverUrlAllowed } from "@/components/dashboard/write/CoverField";
 import { UnsavedChangesDialog } from "@/components/dashboard/write/UnsavedChangesDialog";
-import { useUnsavedGuard } from "@/components/dashboard/write/useUnsavedGuard";
+import { useUnsavedGuard } from "@/hooks/useUnsavedGuard";
 
 const DRAFT_DEBOUNCE_MS = 800;
 
@@ -95,10 +95,14 @@ export function WriteEditor({
     summary !== baseline.summary ||
     tags.join("\u0000") !== baseline.tags.join("\u0000");
 
-  const [viewMode, setViewMode] = useState<ViewMode>(() => {
-    if (typeof window === "undefined") return "split";
-    return window.innerWidth < 1024 ? "edit" : "split";
-  });
+  // ponytail: 惰性初始化读 window.innerWidth 会导致 hydration mismatch —— SSR 恒 "split"、
+  // 移动端客户端首帧算出 "edit"，单栏/双栏 DOM 结构不同整树重放。改为两段式：首帧恒
+  // "split" 与 SSR 一致，挂载后再按视口修正为 "edit"。
+  const [viewMode, setViewMode] = useState<ViewMode>("split");
+
+  useEffect(() => {
+    setViewMode((prev) => (prev === "split" && window.innerWidth < 1024 ? "edit" : prev));
+  }, []);
 
   const hasPrefilled = useRef(false);
 

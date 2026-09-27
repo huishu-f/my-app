@@ -120,9 +120,9 @@ export function ProfilePageContent({
 
               {user.tags?.length > 0 && (
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {user.tags.map((t) => (
-                    <span key={t} className="chip-outline">
-                      {t}
+                  {user.tags.map((tag) => (
+                    <span key={tag} className="chip-outline">
+                      {tag}
                     </span>
                   ))}
                 </div>

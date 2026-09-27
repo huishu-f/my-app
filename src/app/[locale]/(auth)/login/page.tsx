@@ -5,7 +5,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { Mail, Lock, Clock, Info } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { PasswordToggle } from "@/components/auth/PasswordToggle";
+import { PasswordToggle } from "@/components/ui/PasswordToggle";
 import { Alert } from "@/components/ui/Alert";
 import { SubmitButton } from "@/components/ui/SubmitButton";
 import { FormField } from "@/components/ui/FormField";
@@ -23,7 +23,7 @@ import {
 } from "@/lib/formFeedback";
 import { useAuth } from "@/components/AuthProvider";
 import { loginAction } from "@server/auth/auth.controller";
-import { safeRedirect } from "@/lib/navigation";
+import { safeRedirect } from "@/lib/url";
 import { loginSchema } from "@shared";
 
 interface LoginState {
@@ -130,7 +130,7 @@ function LoginContent() {
       )}
 
       <form action={formAction} noValidate className="auth-form-stack">
-        <FormField label={t("email")} error={formState.emailError ?? undefined}>
+        <FormField label={t("email")} required error={formState.emailError ?? undefined}>
           <Input
             id="email"
             name="email"
@@ -144,7 +144,7 @@ function LoginContent() {
           />
         </FormField>
 
-        <FormField label={t("password")} error={formState.pwdError ?? undefined}>
+        <FormField label={t("password")} required error={formState.pwdError ?? undefined}>
           <Input
             id="password"
             name="password"

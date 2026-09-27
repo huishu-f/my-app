@@ -25,7 +25,7 @@ import {
   isValidPostId,
 } from "@shared";
 import { stripMarkdown } from "@/lib/markdown";
-import { getPrisma } from "@/lib/prisma/db";
+import { getPrisma } from "@server/common/db";
 import { renderMarkdown } from "./markdown.service";
 import type { PostUpdateData } from "./blog.repository";
 import {
@@ -334,8 +334,15 @@ export async function deletePost(id: string, currentUserId: string): Promise<voi
 
   await getPrisma().$transaction(async (tx) => {
     await deletePostRecord(id, tx);
-    if (!post.isDraft && post.authorId) {
-      await incrementUserStats(post.authorId, "articles", -1, tx);
+    if (post.authorId) {
+      if (!post.isDraft) {
+        await incrementUserStats(post.authorId, "articles", -1, tx);
+      }
+      // 回收作者统计里的获赞数副本：UserPostLike 行随 schema 级联删除，
+      // 但 stats.likes 是手动维护的计数器，不回收会永久虚高。
+      if (post.likes > 0) {
+        await incrementUserStats(post.authorId, "likes", -post.likes, tx);
+      }
     }
   });
 }
@@ -404,11 +411,7 @@ export async function listFavoritePosts(currentUserId: string): Promise<Post[]> 
   }
 
   const posts = await findPosts({ ids: favoritedIds, isDraft: false });
-  return posts.sort((a, b) => {
-    const pa = a.publishedAt || a.createdAt;
-    const pb = b.publishedAt || b.createdAt;
-    return pb.localeCompare(pa);
-  });
+  return sortPosts(posts, false);
 }
 
 export async function listPostsByAuthor(authorId: string): Promise<Post[]> {

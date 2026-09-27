@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { sendSuccess } from "@server/common/http/api-response";
 import { logger } from "@server/common/logger";
-import { getPrisma } from "@/lib/prisma/db";
+import { getPrisma } from "@server/common/db";
 
 export async function GET() {
   try {

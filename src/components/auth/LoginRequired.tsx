@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/Button";
-import { buildLoginRedirect } from "@/lib/navigation";
+import { buildLoginRedirect } from "@/lib/url";
 
 interface LoginRequiredProps {
   icon: ReactNode;

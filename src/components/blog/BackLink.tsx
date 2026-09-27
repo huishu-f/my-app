@@ -3,7 +3,7 @@
 import { useRouter } from "@/i18n/navigation";
 import { ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { hasInAppHistory } from "@/lib/navigation";
+import { hasInAppHistory } from "@/lib/url";
 
 export function BackLink() {
   const router = useRouter();

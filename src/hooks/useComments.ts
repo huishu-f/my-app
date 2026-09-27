@@ -28,10 +28,16 @@ export function useComments(postId: string, pageSize = COMMENTS_PAGE_SIZE) {
 
   const loadedRef = useRef(0);
 
+  // ponytail: loadMore 的竞态防护 —— 主加载每跑一次（refetch/postId 变化）就递增，
+  // in-flight 的 loadMore 返回时发现代际不一致即整体丢弃，避免旧页数据 append 进新列表
+  // 以及 loadedRef 偏移在错误基数上继续累加（评论重复/错乱）。
+  const genRef = useRef(0);
+
   const refetch = useCallback(() => setTick((t) => t + 1), []);
 
   useEffect(() => {
     if (!postId) return;
+    genRef.current += 1;
     let cancelled = false;
     const controller = new AbortController();
     setIsLoading(true);
@@ -62,20 +68,23 @@ export function useComments(postId: string, pageSize = COMMENTS_PAGE_SIZE) {
 
   const loadMore = useCallback(async () => {
     if (!postId || isLoadingMore) return;
+    const gen = genRef.current;
+    const offset = loadedRef.current;
     setIsLoadingMore(true);
     try {
       const result = await api.get<CommentsListData>(`/posts/${postId}/comments`, {
         limit: pageSize,
-        offset: loadedRef.current,
+        offset,
       });
+      if (genRef.current !== gen) return;
       setData((prev) => ({
         comments: [...(prev?.comments ?? []), ...result.comments],
         total: result.total,
         hasMore: result.hasMore,
       }));
-      loadedRef.current += result.comments.length;
+      loadedRef.current = offset + result.comments.length;
     } catch (err) {
-      notify.error(err);
+      if (genRef.current === gen) notify.error(err);
     } finally {
       setIsLoadingMore(false);
     }

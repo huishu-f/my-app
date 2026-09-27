@@ -17,7 +17,10 @@ export function ViewReporter({ postId }: { postId: string }) {
     }
     reported.add(postId);
 
-    api.post<null>(`/posts/${postId}/view`).catch(() => {});
+    api.post<null>(`/posts/${postId}/view`).catch((err) => {
+      // 浏览量上报是 best-effort，失败不打扰用户，但留痕便于排查计数丢失。
+      console.warn(`[ViewReporter] view report failed for ${postId}`, err);
+    });
   }, [postId]);
   return null;
 }

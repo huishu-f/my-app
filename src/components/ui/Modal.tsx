@@ -9,7 +9,8 @@ import { useDismissable } from "@/hooks/useDismissable";
 
 const EXIT_MS = 200;
 
-const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+const FOCUSABLE =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function Modal({ open, onClose, title, children, maxWidth = "max-w-sm" }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -63,7 +64,6 @@ export function Modal({ open, onClose, title, children, maxWidth = "max-w-sm" }:
     };
 
     document.addEventListener("keydown", handleKey);
-    dialogRef.current?.focus();
 
     return () => {
       document.removeEventListener("keydown", handleKey);
@@ -72,6 +72,13 @@ export function Modal({ open, onClose, title, children, maxWidth = "max-w-sm" }:
       if (el && document.contains(el)) el.focus();
     };
   }, [open]);
+
+  // ponytail: 初始焦点必须等 portal 真正挂载（mounted 为 true 的那次 commit）。
+  // 原先在 [open] effect 里 focus，面对尚未渲染的 DOM 静默失效，键盘用户被
+  // aria-modal + Tab 陷阱挡在对话框外，既进不去也出不去。
+  useEffect(() => {
+    if (open && mounted) dialogRef.current?.focus();
+  }, [open, mounted]);
 
   if (!mounted) return null;
 
