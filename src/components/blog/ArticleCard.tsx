@@ -24,6 +24,7 @@ export const ArticleCard = memo(function ArticleCard({
   coverWidth = "aspect-16/10 w-full sm:aspect-auto sm:w-50",
   className = "",
   variant = "horizontal",
+  priority = false,
 }: ArticleCardProps) {
   const locale = useLocale() as Locale;
   const t = useTranslations("common");
@@ -47,6 +48,7 @@ export const ArticleCard = memo(function ArticleCard({
           src={coverImage}
           alt={post.title}
           fill
+          priority={priority}
           sizes={isVertical ? "(max-width: 768px) 100vw, 400px" : "(max-width: 640px) 100vw, 200px"}
           referrerPolicy="no-referrer"
           unoptimized

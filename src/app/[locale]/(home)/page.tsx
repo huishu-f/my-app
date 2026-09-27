@@ -160,7 +160,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </Button>
               </div>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {latestPosts.map((p) => (
+                {latestPosts.map((p, i) => (
                   <ArticleCard
                     key={p.id}
                     post={p}
@@ -168,6 +168,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                     tags={p.tags}
                     badge={p.pinned ? <PinnedBadge /> : undefined}
                     variant="vertical"
+                    priority={i === 0}
                   />
                 ))}
               </div>

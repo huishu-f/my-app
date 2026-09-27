@@ -44,6 +44,9 @@ export interface ArticleCardProps {
 
   coverWidth?: string;
 
+  /** 首屏 LCP 封面传 true（next/image 预加载 + loading="eager"），非首屏一律省略 */
+  priority?: boolean;
+
   className?: string;
 
   variant?: "horizontal" | "vertical";

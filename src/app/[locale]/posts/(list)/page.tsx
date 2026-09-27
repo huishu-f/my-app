@@ -176,15 +176,16 @@ export default async function PostsPage({
           </div>
         ) : (
           <div className="card-list animate-fade-in">
-            {posts.map((p) => (
-              <ArticleCard
-                key={p.id}
-                post={p}
-                href={postPath(p.id)}
-                tags={p.tags}
-                badge={p.pinned ? <PinnedBadge /> : undefined}
-              />
-            ))}
+              {posts.map((p, i) => (
+                <ArticleCard
+                  key={p.id}
+                  post={p}
+                  href={postPath(p.id)}
+                  tags={p.tags}
+                  badge={p.pinned ? <PinnedBadge /> : undefined}
+                  priority={i === 0}
+                />
+              ))}
           </div>
         )}
 
