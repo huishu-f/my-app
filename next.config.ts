@@ -64,10 +64,14 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           /** 开启 DNS 预取 */
           { key: "X-DNS-Prefetch-Control", value: "on" },
-          /** HSTS：强制 HTTPS 两年，含子域与 preload */
+          /**
+           * HSTS：仅 max-age。不带 includeSubDomains/preload —— 当前托管在平台分配的
+           * 共享域名（*.netlify.app / EdgeOne）上，includeSubDomains 会波及同域其他租户，
+           * preload 提交后极难撤回；等绑定了自有域名再启用。
+           */
           {
             key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
+            value: "max-age=63072000",
           },
           /** 禁用相机/麦克风/地理位置权限 */
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },

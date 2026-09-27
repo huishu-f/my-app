@@ -48,6 +48,7 @@ yarn-error.log*
 # OS
 Thumbs.db
 .env*
+!.env.example
 
 # WorkBuddy
 .workbuddy/
