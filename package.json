@@ -4,7 +4,6 @@
   "private": true,
   "description": "Next.js 16 博客平台",
   "scripts": {
-    "setup": "pnpm install",
     "dev": "node scripts/dev.mjs",
     "dev:free-port": "node scripts/dev.mjs --free-port-only",
     "build": "next build",
@@ -12,6 +11,7 @@
     "start": "next start",
     "analyze": "ANALYZE=true next build",
     "clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true,maxRetries:3,retryDelay:100})\"",
+    "clean:all": "pnpm clean && rimraf node_modules",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -23,10 +23,6 @@
     "strip-comments:check": "node scripts/strip-comments.mjs --check",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:reconcile": "prisma db execute --file prisma/reconcile-counters.sql --schema prisma/schema.prisma",
-    "db:migrate:http": "node scripts/migrate-http.mjs",
     "postinstall": "prisma generate"
   },
   "engines": {
