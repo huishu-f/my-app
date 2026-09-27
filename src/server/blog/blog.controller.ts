@@ -1,8 +1,6 @@
 "use server";
 
 // ponytail: 本文件是 Server Actions 模块，不是 HTTP controller —— 不接 Request、
-// 不解析响应、不设状态码，只是 "use server" 导出的异步函数集合。
-// 真正的 Route Handler 包装器叫 defineRoute（server/common/http/route-handler.ts）。
 
 import { revalidatePath } from "next/cache";
 import { getAuthPayload } from "@server/auth/auth.service";
@@ -119,8 +117,7 @@ export async function toggleLikeAction(postId: string): Promise<ActionResult<Lik
     if (!id) throw new NotFoundError("Post not found");
 
     const result = await likePost(id, user.id);
-    // 计数变化只需要刷新被操作的那一篇 + 列表卡片数据，
-    // 其它文章的详情缓存与 taxonomy 不必全量打掉。
+
     invalidatePostCache(id);
     revalidatePostPage(id);
     return { ok: true, data: result };

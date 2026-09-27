@@ -70,7 +70,7 @@ function useTogglePostAssociation<TData extends { [K in TKey]: boolean }, TKey e
   const action = useCallback(
     async (id: string): Promise<TData> => {
       // ponytail: 先发请求再提示。此前成功 toast 在请求发出前就弹了 ——
-      // 失败时用户会先看到一条假的「已点赞」，再看到错误提示。
+
       const data = await apiFn(id);
 
       if (user) {
@@ -80,7 +80,6 @@ function useTogglePostAssociation<TData extends { [K in TKey]: boolean }, TKey e
         patchMe({ [userField]: Array.from(prev) } as Partial<User>);
       }
 
-      // 用服务端返回的真实状态决定文案，与最终写入的关系表保持一致。
       notify.success(msg("toggle", data[dataKey] ? `${kind}On` : `${kind}Off`));
       return data;
     },

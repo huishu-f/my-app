@@ -132,7 +132,7 @@ export function CommentsSection({ postId, user: ssrUser, postAuthorId }: Comment
             },
           },
         );
-        // 用服务端返回的真实对象落地，transition 结束时乐观项被清除也不会闪回。
+
         if (data) {
           appendComment(data);
           updatePost((prev) => ({ ...prev, commentsCount: prev.commentsCount + 1 }));

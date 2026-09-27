@@ -33,11 +33,6 @@ export function invalidateBlogCache(postId?: string): void {
   }
 }
 
-/**
- * 单篇文章级失效：列表数据（"posts" tag，卡片上的计数会变）+ 该篇详情
- * （"post:${id}" tag），不动 taxonomy、不动其它文章的详情缓存。
- * 点赞/收藏/评论走这里；文章增删改仍走 invalidateBlogCache（taxonomy 会变）。
- */
 export function invalidatePostCache(postId: string): void {
   revalidateTag("posts", { expire: 0 });
   revalidateTag(`post:${postId}`, { expire: 0 });

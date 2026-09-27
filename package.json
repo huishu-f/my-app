@@ -12,7 +12,6 @@
     "start": "next start",
     "analyze": "ANALYZE=true next build",
     "clean": "node -e \"require('fs').rmSync('.next',{recursive:true,force:true,maxRetries:3,retryDelay:100})\"",
-    "clean:all": "pnpm clean && rimraf node_modules",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

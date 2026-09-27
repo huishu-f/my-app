@@ -86,7 +86,7 @@ export function WriteEditor({
   const [baseline, setBaseline] = useState<FormSnapshot>(EMPTY_SNAPSHOT);
 
   // ponytail: 是否与 baseline 有差异，决定「这是不是一份未保存的草稿」。
-  // 必须在持久化 effect 之前求值（依赖数组在渲染期求值，放到后面会 TDZ）。
+
   const isDirty =
     title !== baseline.title ||
     category !== baseline.category ||
@@ -124,8 +124,7 @@ export function WriteEditor({
 
   useEffect(() => {
     // ponytail: 只有「与 baseline 不同」的内容才算未保存草稿。
-    // 此前无条件持久化，导致服务端回填的正文被写成一份草稿副本 ——
-    // 用户什么都没改，下次进入编辑器却收到「已恢复上次未保存的草稿」。
+
     if (!isDirty) return;
 
     const timer = setTimeout(() => {
@@ -241,7 +240,7 @@ export function WriteEditor({
 
     const onSuccess = (data: PostData) => {
       clearDraft(draftKey);
-      // 已保存的内容就是新的基线：isDirty 归零，避免刚保存的内容被重新写成草稿。
+
       setBaseline({ title, category, tags, content, coverImage, summary });
 
       if (asDraft) {

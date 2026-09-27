@@ -168,7 +168,7 @@ export async function createUser(user: User): Promise<User> {
   const { likedArticles, favoritedArticles } = user;
 
   // ponytail: user 行与两张关联表必须同事务写入。此前是三段独立写，
-  // 中间失败会留下一个「没有点赞/收藏记录的用户」，调用方无从得知。
+
   await getPrisma().$transaction(async (tx) => {
     await tx.user.create({ data: mapToPrismaData({ ...user }) });
 
@@ -227,7 +227,7 @@ export async function updateUser(id: string, partial: Partial<User>): Promise<Us
   }
 
   // ponytail: 字段更新与关联表重建（deleteMany + createMany）必须同事务。
-  // 此前三段独立写，重建中途失败会直接丢掉用户全部点赞/收藏数据。
+
   return getPrisma().$transaction(async (tx) => {
     let updatedRow: PrismaUser | null = null;
 
@@ -264,7 +264,6 @@ export async function updateUser(id: string, partial: Partial<User>): Promise<Us
       }
     }
 
-    // 如果有关联表更新或没有字段更新，需要 re-fetch 以获取最新关联数据
     if (
       !updatedRow ||
       partial.likedArticles !== undefined ||
@@ -281,13 +280,8 @@ export async function updateUser(id: string, partial: Partial<User>): Promise<Us
   });
 }
 
-/**
- * 原子递增 tokenVersion。读-改-写（`tokenVersion: user.tokenVersion + 1`）在并发下
- * 会丢更新 —— 两次递增读到同一个旧值、写回同一个新值，其中一次被吞掉，
- * 本该吊销的会话仍有有效版本号。
- */
 export async function bumpTokenVersion(id: string): Promise<void> {
-  // updateMany 对不存在的 id 静默返回 0 条，登出流程不会因为用户已消失而 500。
+
   await getPrisma().user.updateMany({
     where: { id },
     data: { tokenVersion: { increment: 1 } },
@@ -317,10 +311,6 @@ export async function incrementUserStats(
   });
 }
 
-/**
- * 切换点赞/收藏关系。返回「切换前是否存在」，让调用方能在同一个事务里算出计数增量。
- * 传 tx 时不自开事务——由调用方把关系表与计数合并进同一个事务。
- */
 export async function toggleUserAssociation(
   id: string,
   field: "likedArticles" | "favoritedArticles",

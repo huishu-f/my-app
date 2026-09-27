@@ -7,7 +7,7 @@ export type { AuthPayload };
 export type { TokenVerifyResult, TokenService };
 
 // ponytail: 钉死签名算法与 iss/aud，避免依赖 jsonwebtoken 的默认算法集合。
-// 副作用：不含 iss/aud 声明的旧 token 会一次性失效，用户需重新登录一次。
+
 const ALGORITHM = "HS256" as const;
 const ISSUER = "my-app";
 const AUDIENCE = "my-app-web";

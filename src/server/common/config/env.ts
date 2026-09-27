@@ -41,8 +41,7 @@ export const env = {
   JWT_EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "7d"),
 
   // ponytail: 宽限期 = 过期后仍可换发新 token 的时长，等价于「会话可续期的最大间隔」。
-  // 默认 7 天时，只要用户 7 天内回过一次站点就能一直续期，会话实际永不失效。
-  // 压到 1 小时后被盗 token 的可用窗口从无限期变成小时级；如需更长会话请显式配置该变量。
+
   JWT_REFRESH_GRACE_SECONDS: getInt("JWT_REFRESH_GRACE_SECONDS", 60 * 60),
 
   BCRYPT_SALT_ROUNDS: getInt("BCRYPT_SALT_ROUNDS", 10),

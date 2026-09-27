@@ -16,7 +16,7 @@ function readCachedUser(): User | null {
     const raw = window.localStorage.getItem(USER_CACHE_KEY);
     if (!raw) return null;
     // ponytail: 缓存是一份本地可写的 JSON 镜像，因此绝不从它读取任何权限字段。
-    // role 先用占位值渲染（仅影响首屏一个标签），真实值由 refreshMe() 从服务端覆盖。
+
     const parsed = JSON.parse(raw) as CachedUser;
     return { ...parsed, role: PLACEHOLDER_ROLE };
   } catch {

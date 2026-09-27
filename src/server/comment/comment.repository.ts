@@ -77,7 +77,6 @@ export async function findCommentById(id: string): Promise<Comment | null> {
   return row ? mapToComment(row) : null;
 }
 
-/** 一次查询同时拿到「评论归属」与「文章作者」，删除鉴权与计数递减不再各打一次库。 */
 export async function findCommentForDelete(id: string): Promise<{
   id: string;
   postId: string;

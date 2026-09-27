@@ -27,7 +27,6 @@ type PrismaPost = {
   commentsCount: number;
 };
 
-/** DB 层 DateTime 与领域类型（ISO 字符串）的唯一换算点，保持 API 面不变。 */
 function iso(d: Date): string {
   return d.toISOString();
 }
@@ -112,8 +111,7 @@ function buildPrismaWhere(where: PostQueryOptions): Prisma.PostWhereInput {
   if (where.tag) prismaWhere.tags = { has: where.tag };
   if (where.ids && where.ids.length > 0) prismaWhere.id = { in: where.ids };
   // ponytail: 搜索条件同样下推 DB。此前先把（最多 1000 篇）命中行全捞进内存，
-  // 再在 JS 里过滤 category/tag、排序、slice 分页 —— total 被捞取上限截断，
-  // 结果超过上限时 totalPages 是错的，后面的页永远翻不到。
+
   if (where.q) {
     prismaWhere.OR = [
       { title: { contains: where.q, mode: "insensitive" } },
@@ -131,8 +129,7 @@ export async function findPosts(where: PostQueryOptions): Promise<Post[]> {
   const sortDir = where.orderBy?.direction ?? "desc";
 
   // ponytail: Postgres 的 ORDER BY x DESC 默认 NULLS FIRST，一篇「已发布但 publishedAt
-  // 为空」的文章会被顶到列表最前面。显式 last 让空值沉底。
-  // 分支写死而不是用计算属性 key，这样 Prisma 能对字段名和排序方向做编译期校验。
+
   if (sortField === "publishedAt") orderBy.push({ publishedAt: { sort: sortDir, nulls: "last" } });
   else if (sortField === "createdAt") orderBy.push({ createdAt: sortDir });
   else orderBy.push({ updatedAt: sortDir });
@@ -195,11 +192,6 @@ function postToCreateData(p: Post): Prisma.PostUncheckedCreateInput {
   };
 }
 
-/**
- * 更新载荷。可空字段用 `null` 表示「清空为 NULL」，用 `undefined`（即缺省）表示「不修改」——
- * 两种语义必须分开。此前 service 用 undefined 表达清空，而映射层把 undefined 当「不动」，
- * 导致「取消发布不清 publishedAt」「删不掉封面图」。
- */
 export type PostUpdateData = Partial<{
   title: string;
   summary: string;
@@ -248,11 +240,7 @@ export async function createPostRecord(post: Post, tx?: Tx): Promise<void> {
   await client.post.create({ data: postToCreateData(post) });
 }
 
-export async function updatePostRecord(
-  id: string,
-  data: PostUpdateData,
-  tx?: Tx,
-): Promise<Post> {
+export async function updatePostRecord(id: string, data: PostUpdateData, tx?: Tx): Promise<Post> {
   const client = tx ?? getPrisma();
   const updated = await client.post.update({
     where: { id },
@@ -266,7 +254,6 @@ export async function deletePostRecord(id: string, tx?: Tx): Promise<void> {
   await client.post.delete({ where: { id } });
 }
 
-/** 递增计数并返回递增后的真实值（用于把准确计数回给客户端，而不是靠读旧值估算）。 */
 export async function incrementPostField(
   id: string,
   field: "views" | "likes" | "favorites" | "commentsCount",

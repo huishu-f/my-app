@@ -7,10 +7,7 @@ import sanitizeHtml from "sanitize-html";
 import type { CreateCommentDto, ListCommentsOptions } from "@shared";
 import { findUserById } from "@server/user/user.repository";
 import { getPrisma } from "@/lib/prisma/db";
-import {
-  assertPostReadable,
-  assertPostCommentable,
-} from "@server/blog/blog.service";
+import { assertPostReadable, assertPostCommentable } from "@server/blog/blog.service";
 import { incrementPostField } from "@server/blog/blog.repository";
 import {
   findCommentsByPostId,
@@ -130,10 +127,6 @@ export async function deleteComment(
   return { postId: row.postId };
 }
 
-/**
- * 改名级联入口：作者改名/换头像后同步其全部评论的冗余副本。
- * 供 auth 域调用（auth 不直接穿透到 comment 的 repository），返回同步条数。
- */
 export async function syncCommentAuthorProfile(
   userId: string,
   userName: string,

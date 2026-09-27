@@ -132,9 +132,6 @@ export async function listPosts(options: ListPostsOptions): Promise<PostsListDat
   const tag = options.tag?.trim();
   const q = options.q?.trim();
 
-  // isDraft / authorId / category / tag / q 全部下推 DB（authorId 保证他人草稿
-  // 不会被捞进内存），搜索与普通列表走同一条 findMany + count 路径，
-  // total 不再受捞取上限截断，totalPages 恒准确。
   const whereOpts = {
     isDraft: isDraftMode ? true : false,
     ...(isDraftMode && options.user ? { authorId: options.user!.id } : {}),
@@ -187,7 +184,7 @@ export async function incrementView(id: string): Promise<void> {
   after(async () => {
     try {
       // ponytail: post.views 与 user.statsViews 是同一事实的两份副本，
-      // 必须同事务写入，否则第二步失败即永久漂移（无明细表可对账）。
+
       await getPrisma().$transaction(async (tx) => {
         await incrementPostField(postId, "views", 1, tx);
         if (authorId) {
@@ -195,9 +192,7 @@ export async function incrementView(id: string): Promise<void> {
         }
       });
       // ponytail: 这行 info 是刻意的可观测锚点。after() 依赖平台的 waitUntil 支持，
-      // 而它在 Netlify 上是否真的执行无法从代码静态确认。部署后在函数日志里搜
-      // "View recorded"：搜得到说明后台写生效；一条都没有就说明平台不支持，
-      // 此时需把写入改为同步执行（客户端本来就是 fire-and-forget，不会阻塞 UI）。
+
       logger.info("View recorded", { postId });
     } catch (err) {
       logger.error("Failed to record view count", {
@@ -302,8 +297,7 @@ export async function updatePost(
     tags: dto.tags !== undefined ? parseTags(dto.tags) : existing.tags,
     isDraft,
     pinned: isDraft ? false : dto.pinned !== undefined ? Boolean(dto.pinned) : existing.pinned,
-    coverImage:
-      dto.coverImage !== undefined ? dto.coverImage.trim() || null : existing.coverImage,
+    coverImage: dto.coverImage !== undefined ? dto.coverImage.trim() || null : existing.coverImage,
     updatedAt: now,
   };
 
@@ -457,10 +451,6 @@ export async function findRenamedPostId(oldId: string): Promise<string | null> {
   return newId && isValidPostId(newId) ? newId : null;
 }
 
-/**
- * 改名级联入口：作者改名后同步其全部文章的 authorName 冗余副本。
- * 供 auth 域调用（auth 不直接穿透到 blog 的 repository）。
- */
 export async function syncPostAuthorName(userId: string, authorName: string): Promise<void> {
   await updatePostAuthorName(userId, authorName);
 }

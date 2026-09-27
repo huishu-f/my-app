@@ -64,7 +64,8 @@ async function tableExists(name) {
 }
 
 async function isRegistered(name) {
-  const rows = await sql`SELECT 1 FROM _prisma_migrations WHERE migration_name = ${name} AND finished_at IS NOT NULL LIMIT 1`;
+  const rows =
+    await sql`SELECT 1 FROM _prisma_migrations WHERE migration_name = ${name} AND finished_at IS NOT NULL LIMIT 1`;
   return rows.length > 0;
 }
 

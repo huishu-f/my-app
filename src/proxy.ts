@@ -27,8 +27,7 @@ export function proxy(request: NextRequest) {
   const { locale, barePath } = extractLocale(pathname);
 
   // ponytail: 这里只做「cookie 是否存在」的边缘快速失败，不是授权判定 —— 它不验签、不查库。
-  // 三层职责是明确的：边缘拦明显未登录（省一次渲染）、服务端 requireUserOrRedirect 判有效
-  // （验签 + tokenVersion + disabled）、客户端 AuthGate 只管加载态。鉴权语义以服务端为准。
+
   if (isProtectedRoute(barePath)) {
     const authToken = request.cookies.get(AUTH_TOKEN_COOKIE)?.value;
     if (!authToken) {

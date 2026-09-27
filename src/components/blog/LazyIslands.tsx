@@ -48,7 +48,9 @@ export function LazyComments(props: CommentsSectionProps) {
     return () => observer.disconnect();
   }, [visible]);
 
-  return <div ref={anchorRef}>{visible ? <CommentsSection {...props} /> : <CommentsSkeleton />}</div>;
+  return (
+    <div ref={anchorRef}>{visible ? <CommentsSection {...props} /> : <CommentsSkeleton />}</div>
+  );
 }
 
 export function LazyBackToTop() {

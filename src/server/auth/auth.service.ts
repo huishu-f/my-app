@@ -33,7 +33,7 @@ import {
   bumpTokenVersion,
   isUniqueConstraintError,
 } from "@server/user/user.repository";
-// 改名级联走各域暴露的 service 入口，auth 不直接穿透 comment/blog 的 repository。
+
 import { syncCommentAuthorProfile } from "@server/comment/comment.service";
 import { syncPostAuthorName } from "@server/blog/blog.service";
 
@@ -49,7 +49,7 @@ async function resolveAuthData(): Promise<{ payload: AuthPayload; user: User } |
 
   const decoded = result.payload;
   // ponytail: 鉴权路径不需要 likedBy/favoritedBy —— 那两个关联表的结果集随用户活跃度
-  // 线性增长，而这里是每个已登录请求的必经之路。需要点赞态的客户端走 getMe。
+
   const user = await findUserById(decoded.id).catch(() => undefined);
   if (!user) return null;
   if ((user.tokenVersion ?? 0) !== decoded.tokenVersion) return null;
@@ -169,8 +169,7 @@ export async function register(dto: RegisterDto): Promise<User> {
     return await createUser(newUser);
   } catch (err) {
     // ponytail: 「先查后写」本身是 TOCTOU —— 两个并发注册可以同时通过上面的 exists 检查。
-    // 此前兜底比对的是一个自造前缀 "Registration conflict"，Prisma 永远不会抛出它，
-    // 于是并发注册落到 500 而不是 409。现在直接判定唯一键冲突码 P2002。
+
     if (isUniqueConstraintError(err)) {
       throw new ConflictError("Email or username already in use");
     }
@@ -179,7 +178,7 @@ export async function register(dto: RegisterDto): Promise<User> {
 }
 
 export async function login(dto: LoginDto): Promise<User> {
-  // 登录返回的 user 会直接交给客户端渲染点赞/收藏态，必须带关联。
+
   const user = await findUserByEmail(dto.email, { withAssociations: true });
   if (!user || !(await passwordService.compare(dto.password, user.password ?? ""))) {
     throw new UnauthorizedError("Email or password incorrect");
@@ -191,7 +190,7 @@ export async function login(dto: LoginDto): Promise<User> {
 }
 
 export async function getMe(userId: string): Promise<User> {
-  // 客户端需要一个含 likedArticles/favoritedArticles 的完整用户对象。
+
   const user = await findUserById(userId, { withAssociations: true });
   if (!user) {
     throw new NotFoundError("User not found");
@@ -242,8 +241,6 @@ export async function updateProfile(userId: string, dto: UpdateProfileDto): Prom
   const newName = `${firstName} ${lastName}`.trim() || user.username;
   const newAvatar = avatar || undefined;
 
-  // Best-effort cascade: name/avatar sync is eventually-consistent,
-  // failures are logged but don't roll back the profile update.
   try {
     const count = await syncCommentAuthorProfile(userId, newName, newAvatar ?? null);
     if (count > 0) {

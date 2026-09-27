@@ -1,7 +1,6 @@
 "use server";
 
 // ponytail: 本文件是 Server Actions 模块，不是 HTTP controller —— 不接 Request、
-// 不解析响应、不设状态码。真正的 Route Handler 包装器叫 defineRoute。
 
 import { cookies } from "next/headers";
 import {
@@ -40,7 +39,7 @@ export async function loginAction(input: LoginDto): Promise<ActionResult<{ user:
     const dto = parseLoginBody(input);
 
     // ponytail: 账号维度独立计数。只按 IP 限流时，攻击者轮换 IP 即可对同一账号无限撞库；
-    // 而共享出口（公司/校园网）的正常用户会互相挤掉那 5 次配额。
+
     if (await isRateLimited(`login:acct:${dto.email.toLowerCase()}`, 10, LOGIN_WINDOW_MS)) {
       return toFailure(
         new RateLimitError("Too many attempts, please try again in 5 minutes"),

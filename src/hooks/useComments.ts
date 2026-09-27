@@ -26,7 +26,6 @@ export function useComments(postId: string, pageSize = COMMENTS_PAGE_SIZE) {
   const [isError, setIsError] = useState(false);
   const [tick, setTick] = useState(0);
 
-  // 已加载条数即下一页的 offset —— 服务端按 createdAt DESC 稳定排序。
   const loadedRef = useRef(0);
 
   const refetch = useCallback(() => setTick((t) => t + 1), []);

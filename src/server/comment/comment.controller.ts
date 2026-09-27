@@ -1,7 +1,6 @@
 "use server";
 
 // ponytail: 本文件是 Server Actions 模块，不是 HTTP controller —— 不接 Request、
-// 不解析响应、不设状态码。真正的 Route Handler 包装器叫 defineRoute。
 
 import { revalidatePath } from "next/cache";
 import { getAuthPayload } from "@server/auth/auth.service";
@@ -46,7 +45,7 @@ export async function createCommentAction(
 
     const dto = parseCreateCommentBody(input);
     const comment = await createComment({ ...dto, postId: id, userId: user.id });
-    // 评论只影响这一篇的详情（评论列表/计数）+ 列表卡片数据，不必全量失效。
+
     invalidatePostCache(id);
     revalidateCommentPages(id);
     return { ok: true, data: comment };
